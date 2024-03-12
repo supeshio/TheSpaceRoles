@@ -15,7 +15,7 @@ public class TSR : BasePlugin
     public const string s_name = "TSR";
     public const string c_name = $"<color=#5ccbff> {s_name} v{version}";
     public const string cs_name = $"<color=#5ccbff> {s_name} <size=80%>v{version}";
-    public const string version = "0.1.1-beta";
+    public const string version = "0.1.2-beta";
     internal static BepInEx.Logging.ManualLogSource Logger;
     public Harmony Harmony = new(Id);
 
