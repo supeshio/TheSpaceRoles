@@ -8,18 +8,19 @@ namespace TheSpaceRoles
     {
         public static void CreateCustomOptions()
         {
+            options.Clear();
 
+            Create("tsr","use_admin", true);
+            Create("tsr","use_recodes_admin", true, "use_admin", Onfunc);
 
-            Create("use_admin", true);
-            Create("use_recodes_admin", true, "use_admin", OnOff);
-            List<string> o = new List<string>();
-            for (int i = 0; i < 100; i++)
+            List<string> o = new();
+            for (float i = 0; i <= 180; i += 2.5f)
             {
-                o.Add(i.ToString());
+                o.Add(Second(i));
             }
-            Create("use", [..o], "0");
+            Create("tsr","use", [..o], "0");
 
-            Create("user", [.. o], "0");
+            Create("tsr","user", [.. o], "0");
         }
     }
 }

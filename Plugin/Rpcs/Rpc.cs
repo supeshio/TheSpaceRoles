@@ -68,14 +68,14 @@ namespace TheSpaceRoles
         public static MessageWriter SendRpc(Rpcs rpc)
         {
 
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(global::PlayerControl.LocalPlayer.NetId, (byte)rpc, SendOption.Reliable);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpc, SendOption.Reliable);
             return writer;
             
         }
         public static MessageWriter SendRpcUsebility(Rpcs rpc,Roles roleId,int playerId,int id)
         {
 
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(global::PlayerControl.LocalPlayer.NetId, (byte)rpc, SendOption.Reliable);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpc, SendOption.Reliable);
             writer.Write(playerId);
             writer.Write((int)roleId);
             writer.Write(id);

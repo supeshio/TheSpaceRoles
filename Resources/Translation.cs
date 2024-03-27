@@ -12,6 +12,7 @@ namespace TheSpaceRoles
     public static class Translation
     {
         public static Dictionary<string, string[]> tranlatedata = new();
+        public static List<string>Errors = new();
         public static void Load()
         {
             var fileName = Assembly.GetExecutingAssembly().GetManifestResourceStream("TheSpaceRoles.Resources.Translation.csv");
@@ -22,7 +23,7 @@ namespace TheSpaceRoles
 
                 string[] strs = line.Split(",");
 
-                if (strs[0] == "" ||line == "" || line[0] == '#') continue;
+                if (strs[0] == null|| strs.Length < 2|| strs[0] == ""||line == "" || line[0] == '#') continue;
                 try
                 {
                     List<string> list = new();
@@ -39,8 +40,9 @@ namespace TheSpaceRoles
                     Logger.Info(line);
                 }
             }
+            Logger.Info(string.Join(",",tranlatedata.Keys));
         }
-        public static string GetString(string str)
+        public static string Get(string str)
         {
 
             str = str.ToLower();
@@ -48,7 +50,16 @@ namespace TheSpaceRoles
             SupportedLangs langId = TranslationController.Instance?.currentLanguage?.languageID ?? DataManager.settings.language.CurrentLanguage ;
             
             int lang = (int)langId +1;
-            if (!tranlatedata.ContainsKey(str)) { Logger.Info(str);  return str; }
+            if (!tranlatedata.ContainsKey(str))
+            {
+                if (!Errors.Contains(str))
+                {
+
+                    Errors.Add(str); Logger.Info(str); return str;
+                }
+                return str;
+
+            }
             
             var data = tranlatedata[str];
             if(data.Length > lang)
@@ -66,6 +77,18 @@ namespace TheSpaceRoles
             {
                 return data[0];
             }
+        }
+        public static string GetString(string str,string[] strs = null)
+        {
+            string getstr = Get(str);
+            if (strs==null) return getstr;
+
+
+            for (int i = 0; i < strs.Length; i++){
+                getstr = getstr.Replace("{"+ i  +"}", strs[i]);
+                
+            }
+            return getstr;
         }
     }
 }
