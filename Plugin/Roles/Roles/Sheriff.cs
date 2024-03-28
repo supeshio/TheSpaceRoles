@@ -1,8 +1,4 @@
-﻿using Hazel;
-using Steamworks;
-using System.Linq;
-using TheSpaceRoles.Plugin.Roles;
-using UnityEngine;
+﻿using UnityEngine;
 using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
@@ -31,21 +27,22 @@ namespace TheSpaceRoles
                 30,
                 () => KillButtons.KillButtonSetTarget(2.5f, Color),
                 __instance.KillButton.graphic.sprite,
-                ()=> {
+                () =>
+                {
                     var pc = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(2.5f, Color));
-                    
+
                     if (DataBase.AllPlayerTeams[pc.PlayerId] != Teams.Crewmate)
                     {
-                        RpcMurderPlayer.RpcMurder(PlayerControl.LocalPlayer,pc,DeathReason.SheriffKill);
+                        RpcMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, pc, DeathReason.SheriffKill);
 
 
                     }
                     else
                     {
-                        RpcMurderPlayer.RpcMurder(pc,PlayerControl.LocalPlayer,DeathReason.SheriffSuicide);
+                        RpcMurderPlayer.RpcMurder(pc, PlayerControl.LocalPlayer, DeathReason.SheriffSuicide);
                     }
                 },
-                () => SheriffKillButton.Timer = SheriffKillButton.maxTimer ,
+                () => SheriffKillButton.Timer = SheriffKillButton.maxTimer,
                 "Kill",
                 false);
 

@@ -1,10 +1,4 @@
-﻿using Hazel;
-using System.Linq;
-using TheSpaceRoles.Plugin.Roles;
-using UnityEngine;
-using static TheSpaceRoles.Helper;
-
-namespace TheSpaceRoles
+﻿namespace TheSpaceRoles
 {
     public class Impostor : CustomRole
     {

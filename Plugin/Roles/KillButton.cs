@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HarmonyLib;
 using System.Linq;
-using System.Runtime.Intrinsics.Arm;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
 using TheSpaceRoles.Plugin.Roles;
 using UnityEngine;
 
@@ -15,15 +10,15 @@ namespace TheSpaceRoles
     {
 
         private static readonly int Desat = Shader.PropertyToID("_Desat");
-        [HarmonyPatch(nameof(KillButton.SetTarget)),HarmonyPostfix]
-        public static void SetTargetPlayer(KillButton __instance )
+        [HarmonyPatch(nameof(KillButton.SetTarget)), HarmonyPostfix]
+        public static void SetTargetPlayer(KillButton __instance)
         {
-            if(__instance==null) { return; }
-            if (__instance.gameObject.active==false) return;
+            if (__instance == null) { return; }
+            if (__instance.gameObject.active == false) return;
             var player = KillButtonSetTarget(
                 GameOptionsManager.Instance.currentNormalGameOptions.KillDistance,
-                GetLink.ColorFromTeams[Teams.Impostor],notIncludeTeamIds:[Teams.Impostor]);
-            if(player != -1)
+                GetLink.ColorFromTeams[Teams.Impostor], notIncludeTeamIds: [Teams.Impostor]);
+            if (player != -1)
             {
                 __instance.currentTarget = DataBase.AllPlayerControls().First(x => x.PlayerId == player);
 
@@ -42,13 +37,13 @@ namespace TheSpaceRoles
             //Logger.Info(string.Join(",", DataBase.AllPlayerRoles.Where(x => x.Value.Any(y => y.Role == Roles.Mini)).Select(x => x.Key).ToArray()));
         }
 
-        public static int KillButtonSetTarget(float targetdistance, Color color, Teams[] notIncludeTeamIds = null, int[] notIncludeIds = null, int target = -1, bool canBeTargetInVentPlayer = false, int[] IncludeIds = null) 
+        public static int KillButtonSetTarget(float targetdistance, Color color, Teams[] notIncludeTeamIds = null, int[] notIncludeIds = null, int target = -1, bool canBeTargetInVentPlayer = false, int[] IncludeIds = null)
         {
             var nIids = notIncludeIds?.ToList() ?? [];
-            nIids.AddRange(DataBase.AllPlayerRoles.Where(x=>x.Value.Any(y=>y.Role==Roles.Mini)).Select(x=>x.Key).ToList());
+            nIids.AddRange(DataBase.AllPlayerRoles.Where(x => x.Value.Any(y => y.Role == Roles.Mini)).Select(x => x.Key).ToList());
 
-            
-            if(IncludeIds != null)
+
+            if (IncludeIds != null)
             {
                 foreach (var item in IncludeIds)
                 {
@@ -60,12 +55,12 @@ namespace TheSpaceRoles
 
             }
 
-            return PlayerControlButtonControls.SetTarget(targetdistance, color,notIncludeTeamIds , [.. nIids], target,canBeTargetInVentPlayer);
+            return PlayerControlButtonControls.SetTarget(targetdistance, color, notIncludeTeamIds, [.. nIids], target, canBeTargetInVentPlayer);
         }
-        [HarmonyPatch(nameof(KillButton.CheckClick)),HarmonyPostfix]
+        [HarmonyPatch(nameof(KillButton.CheckClick)), HarmonyPostfix]
         public static void Click(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
         {
-            RpcMurderPlayer.Murder(__instance.PlayerId,target.PlayerId,DeathReason.ImpostorKill);
+            RpcMurderPlayer.Murder(__instance.PlayerId, target.PlayerId, DeathReason.ImpostorKill);
         }
     }
 }

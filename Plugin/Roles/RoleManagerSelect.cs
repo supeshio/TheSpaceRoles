@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Il2CppSystem.CodeDom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +11,13 @@ namespace TheSpaceRoles
     public static class GameStarter
     {
         [HarmonyPatch(typeof(RoleManager))]
-        [HarmonyPatch(nameof(RoleManager.SelectRoles)),HarmonyPrefix]
+        [HarmonyPatch(nameof(RoleManager.SelectRoles)), HarmonyPrefix]
         public static void Reset()
         {
 
             AmongUsClient.Instance.FinishRpcImmediately(Rpc.SendRpc(Rpcs.DataBaseReset));
             DataBase.ResetAndPrepare();
-            foreach(int pid in DataBase.AllPlayerControls().Select(x=>x.PlayerId))
+            foreach (int pid in DataBase.AllPlayerControls().Select(x => x.PlayerId))
             {
                 var name = DataBase.AllPlayerControls().First(x => x.PlayerId == pid).cosmetics.nameText.text;
 
@@ -30,7 +29,7 @@ namespace TheSpaceRoles
             }
         }
         [HarmonyPatch(typeof(RoleManager))]
-        [HarmonyPatch(nameof(RoleManager.SelectRoles)),HarmonyPostfix]
+        [HarmonyPatch(nameof(RoleManager.SelectRoles)), HarmonyPostfix]
 
         public static void Select()
         {
@@ -49,7 +48,7 @@ namespace TheSpaceRoles
 
                 foreach (var item in DataBase.AllPlayerRoles)
                 {
-                    Logger.Info(item.Key+ " : "+string.Join(",",item.Value.Select(x=>x.Role)));
+                    Logger.Info(item.Key + " : " + string.Join(",", item.Value.Select(x => x.Role)));
                 }
 
 
@@ -60,7 +59,7 @@ namespace TheSpaceRoles
         }
         public static void RemainingPlayerSetRoles()
         {
-            foreach( var item in DataBase.AllPlayerControls().Select(x => x.PlayerId))
+            foreach (var item in DataBase.AllPlayerControls().Select(x => x.PlayerId))
             {
                 if (DataBase.AllPlayerRoles.ContainsKey(item))
                 {
@@ -70,7 +69,7 @@ namespace TheSpaceRoles
                 {
 
                     var roles = GetLink.GetCustomRoleNormal(DataBase.AllPlayerTeams[item]).Role;
-                    SetRole(item,(int)roles);
+                    SetRole(item, (int)roles);
 
                     //Rpc
                     var writer = Rpc.SendRpc(Rpcs.SetRole);
@@ -109,9 +108,9 @@ namespace TheSpaceRoles
                 var list = DataBase.AllPlayerRoles[playerId].ToList();
                 var p = GetLink.GetCustomRole((Roles)roleId);
                 p.PlayerId = playerId;
-                p.PlayerName = DataBase.AllPlayerControls().First(x=>x.PlayerId==playerId).name.Replace("<color=.*>",string.Empty).Replace("</color>",string.Empty);
+                p.PlayerName = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).name.Replace("<color=.*>", string.Empty).Replace("</color>", string.Empty);
                 list.Add(p);
-                DataBase.AllPlayerRoles[playerId] =[..list];
+                DataBase.AllPlayerRoles[playerId] = [.. list];
             }
             else
             {

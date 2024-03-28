@@ -1,9 +1,5 @@
-﻿using Hazel;
-using Il2CppInterop.Generator.Passes;
-using System.Linq;
-using TheSpaceRoles.Plugin.Roles;
+﻿using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements.UIR;
 using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
@@ -24,30 +20,30 @@ namespace TheSpaceRoles
             //Logger.Info("minimini");
             var pc = PlayerControl.LocalPlayer;
             SetPlayerScale(pc, 0.4f);
-            var writer = Rpc.SendRpcUsebility(Rpcs.UseAbility,Role,PlayerId,0);
+            var writer = Rpc.SendRpcUsebility(Rpcs.UseAbility, Role, PlayerId, 0);
             writer.Write(0);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            Timer =MaxTimer;
+            Timer = MaxTimer;
             SetAge(PlayerId, 0);
-           
+
         }
         public override void Update()
         {
 
             Timer -= Time.deltaTime;
-            if (age>=20)return;
-            if(MaxTimer - Timer > (age+1) * MaxTimer/20)
+            if (age >= 20) return;
+            if (MaxTimer - Timer > (age + 1) * MaxTimer / 20)
             {
                 age += 1;
                 var writer = Rpc.SendRpcUsebility(Rpcs.UseAbility, Role, PlayerId, 0);
                 writer.Write(age);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
-                SetAge(PlayerId,age);
+                SetAge(PlayerId, age);
             }
         }
         public override void APUpdate()
         {
-            if(age>=20)
+            if (age >= 20)
             {
 
                 DataBase.AllPlayerControls().First(x => x.PlayerId == PlayerId).cosmetics.nameText.text = $"{PlayerName}";
@@ -63,15 +59,15 @@ namespace TheSpaceRoles
 
 
         }
-        public static void SetAge(int playerId,int _age) 
+        public static void SetAge(int playerId, int _age)
         {
             var player = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId);
             var mini = (Mini)DataBase.AllPlayerRoles[playerId].First(x => x.Role == Roles.Mini);
             mini.age = _age;
             DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).cosmetics.nameText.text = $"{mini.PlayerName}({mini.age})";
 
-            SetPlayerScale(player,0.4f+_age/20f * 0.6f);
-            
+            SetPlayerScale(player, 0.4f + _age / 20f * 0.6f);
+
             if (mini.age >= 20) DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).cosmetics.nameText.text = $"{mini.PlayerName}";
             Logger.Info($"{_age}");
         }

@@ -1,14 +1,11 @@
-using System;
+using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using Il2CppInterop.Runtime;
-using System.Threading.Tasks;
 using UnityEngine;
 using IntPtr = System.IntPtr;
 using Object = UnityEngine.Object;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
 namespace TheSpaceRoles;
 
@@ -22,7 +19,7 @@ public class Sprites
 
     public static Sprite GetSprite(string path, float pixelsPerUnit = 115f)
     {
-        
+
         try
         {
             if (CachedSprites.TryGetValue(path + pixelsPerUnit, out var sprite)) return sprite;
@@ -49,10 +46,10 @@ public class Sprites
     {
         try
         {
-            if (CachedTexture.TryGetValue(path ,out var texture2D)) return texture2D;
+            if (CachedTexture.TryGetValue(path, out var texture2D)) return texture2D;
             Texture2D texture = new Texture2D(2, 2, TextureFormat.ARGB32, true);
             Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream(path); 
+            Stream stream = assembly.GetManifestResourceStream(path);
             var byteTexture = new byte[stream.Length];
             var read = stream.Read(byteTexture, 0, (int)stream.Length);
             LoadImage(texture, byteTexture, false);

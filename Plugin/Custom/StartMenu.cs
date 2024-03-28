@@ -24,7 +24,7 @@ namespace TheSpaceRoles
             AddtionalText.transform.localScale = Vector3.one;
 
 
-            //spriteredrer.transform.parent = __instance.transform;
+            //spriteredrer.transform.@obj_parent = __instance.transform;
 
         }
     }
@@ -37,7 +37,7 @@ namespace TheSpaceRoles
             __instance.text.text += $"\n{TSR.c_name}";
         }
     }
-    [HarmonyPatch(typeof(MainMenuManager),nameof(MainMenuManager.Start))]
+    [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public static class MainMenuStartPatch
     {
         public static void Prefix()

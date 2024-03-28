@@ -1,21 +1,18 @@
 ﻿using HarmonyLib;
-using Steamworks;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace TheSpaceRoles
 {
 
-    public class CustomButton:ActionButton
+    public class CustomButton : ActionButton
     {
         /// <summary>
         /// 新役職作るとき入れるとこ
         /// CustomButtonを入れる
         /// </summary>
-        public static List<CustomButton> buttons = new() {};
+        public static List<CustomButton> buttons = new() { };
 
 
 
@@ -101,8 +98,8 @@ namespace TheSpaceRoles
 
             }
             catch (Exception ex) { Logger.Error(ex.ToString()); }
-            
-            
+
+
             DataBase.buttons.Add(this);
         }
         public void HudUpdate()
@@ -113,8 +110,8 @@ namespace TheSpaceRoles
             }
 
             PlayerControl local = PlayerControl.LocalPlayer;
-            
-            if(Timer >= 0)
+
+            if (Timer >= 0)
             {
                 if (this.hasEffect && this.isEffectActive)
                 {
@@ -126,11 +123,11 @@ namespace TheSpaceRoles
 
                 }
             }
-            if(Timer <= 0) 
+            if (Timer <= 0)
             {
                 atFirsttime = true;
                 Timer = 0;
-                if(hasEffect && isEffectActive) 
+                if (hasEffect && isEffectActive)
                 {
                     isEffectActive = false;
                     Timer = maxTimer;
@@ -141,7 +138,7 @@ namespace TheSpaceRoles
             }
             if (Timer <= 0) this.actionButton.cooldownTimerText.text = "";
             var canuse = CanUse();
-            if(canuse != -1)
+            if (canuse != -1)
             {
                 actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.EnabledColor;
                 actionButton.graphic.material.SetFloat(Desat, 0f);
@@ -186,7 +183,7 @@ namespace TheSpaceRoles
         public void Click()
         {
 
-            if(Timer <= 0 && !isEffectActive) 
+            if (Timer <= 0 && !isEffectActive)
             {
                 if (hasEffect)
                 {
@@ -214,23 +211,24 @@ namespace TheSpaceRoles
         public void MeetingEnds()
         {
             //if()表示してもいいかどうかしらべなきゃいけない
-            if(IsDead) return;
+            if (IsDead) return;
             SetActive(true);
             atFirsttime = true;
             OnMeetingEnds();
         }
     }
-    [HarmonyPatch(typeof(HudManager),nameof(HudManager.Update))]
+    [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public static class HudUpdate
     {
         public static void Prefix(HudManager __instance)
         {
-            if(DataBase.buttons.Count == 0) return; 
-            DataBase.buttons.Do(x=>x.HudUpdate());
+            if (DataBase.buttons.Count == 0) return;
+            DataBase.buttons.Do(x => x.HudUpdate());
         }
     }
     [HarmonyPatch]
-    public static class MeetingHudPatch{
+    public static class MeetingHudPatch
+    {
 
         [HarmonyPatch(typeof(MeetingIntroAnimation))]
         [HarmonyPatch(nameof(MeetingIntroAnimation.Start))]

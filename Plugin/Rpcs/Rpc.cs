@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
 using Hazel;
-using System.Linq;
-using UnityEngine.Networking.Types;
 
 namespace TheSpaceRoles
 {
@@ -20,7 +18,7 @@ namespace TheSpaceRoles
             }
             public static void Postfix(byte callId, MessageReader reader)
             {
-                if(callId >= 60)
+                if (callId >= 60)
                 {
                     Logger.Info($"{(Rpcs)callId}");
                 }
@@ -37,14 +35,14 @@ namespace TheSpaceRoles
                         GameStarter.SetTeam(t1, t2);
                         break;
                     case Rpcs.RpcMurderPlayer:
-                        RpcMurderPlayer.Murder(reader.ReadInt32(),reader.ReadInt32(),(DeathReason)reader.ReadInt32());
+                        RpcMurderPlayer.Murder(reader.ReadInt32(), reader.ReadInt32(), (DeathReason)reader.ReadInt32());
                         break;
                     case Rpcs.DataBaseReset:
 
                         DataBase.ResetAndPrepare();
                         break;
                     case Rpcs.SendRoomTimer:
-                        LobbyTimer.GameStartManagerUpdatePatch.TimerSet(reader.ReadSingle(),reader.ReadSingle());
+                        LobbyTimer.GameStartManagerUpdatePatch.TimerSet(reader.ReadSingle(), reader.ReadSingle());
                         break;
                     case Rpcs.ShareOptions:
                         CustomOption.GetOptionSelections(reader);
@@ -61,7 +59,7 @@ namespace TheSpaceRoles
                         }
 
                         break;
-                        
+
                 }
             }
         }
@@ -70,9 +68,9 @@ namespace TheSpaceRoles
 
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(global::PlayerControl.LocalPlayer.NetId, (byte)rpc, SendOption.Reliable);
             return writer;
-            
+
         }
-        public static MessageWriter SendRpcUsebility(Rpcs rpc,Roles roleId,int playerId,int id)
+        public static MessageWriter SendRpcUsebility(Rpcs rpc, Roles roleId, int playerId, int id)
         {
 
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(global::PlayerControl.LocalPlayer.NetId, (byte)rpc, SendOption.Reliable);
@@ -105,5 +103,5 @@ namespace TheSpaceRoles
         SheriffKill,
         SheriffSuicide,
     }
-    
+
 }

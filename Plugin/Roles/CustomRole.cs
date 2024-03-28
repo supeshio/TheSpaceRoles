@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
-using JetBrains.Annotations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static TheSpaceRoles.Helper;
@@ -14,7 +12,7 @@ namespace TheSpaceRoles
         public string PlayerName;
         public Teams[] teamsSupported = Enum.GetValues(typeof(Teams)).Cast<Teams>().ToArray();
         public Roles Role;
-        public Color Color = new(0,0,0);
+        public Color Color = new(0, 0, 0);
         public bool HasKillButton = false;
         public bool HasAbilityButton = false;
         public int[] AbilityButtonType = [];
@@ -33,7 +31,7 @@ namespace TheSpaceRoles
         public virtual void APUpdate() { }
         public string ColoredRoleName()
         {
-            return ColoredText(Color, Translation.GetString("role."+Role.ToString() + ".name"));
+            return ColoredText(Color, Translation.GetString("role." + Role.ToString() + ".name"));
         }
 
     }
@@ -42,7 +40,7 @@ namespace TheSpaceRoles
     {
         public static bool OnGameStarted = false;
         public static bool IsGameStarting = false;
-        [HarmonyPatch(nameof(HudManager.OnGameStart)),HarmonyPostfix]
+        [HarmonyPatch(nameof(HudManager.OnGameStart)), HarmonyPostfix]
         public static void ButtonCreate(HudManager __instance)
         {
 
@@ -53,14 +51,14 @@ namespace TheSpaceRoles
             ButtonCooldownEnabled = false;
             ButtonCooldown = 10f;
             DataBase.buttons.Clear();
-            if(DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
+            if (DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
             {
                 //var k = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Select(x => x.Role.ToString()).ToArray();
                 //Logger.Info(string.Join(",", k));
 
                 DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(__instance));
             }
-            
+
 
 
         }
@@ -74,7 +72,7 @@ namespace TheSpaceRoles
             {
 
                 DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.Update());
-                DataBase.AllPlayerRoles.Do(y=>y.Value.Do(x => x.APUpdate()));
+                DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.APUpdate()));
             }
         }
 

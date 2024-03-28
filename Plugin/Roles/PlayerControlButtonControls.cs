@@ -1,11 +1,7 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TheSpaceRoles.Plugin.Roles
 {
@@ -20,13 +16,13 @@ namespace TheSpaceRoles.Plugin.Roles
         /// <param name="target">誰基準か</param>
         /// <param name="canBeTargetInVentPlayer">ベント内のプレイヤーを含むか</param>
         /// <returns>一番近いplayerのid  もし-1が帰ってきたらターゲットいないです</returns>
-        public static int SetTarget( float  targetdistance,Color color,Teams[] notIncludeTeamIds = null,int[] notIncludeIds = null,int target = -1,bool canBeTargetInVentPlayer = false)
+        public static int SetTarget(float targetdistance, Color color, Teams[] notIncludeTeamIds = null, int[] notIncludeIds = null, int target = -1, bool canBeTargetInVentPlayer = false)
         {
             DataBase.AllPlayerControls().Do(x => x.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 0f));
             DataBase.AllPlayerControls().Do(x => x.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", color));
             int id = -1;
             float distance = 100000000;
-            if(target == -1)
+            if (target == -1)
             {
                 target = PlayerControl.LocalPlayer.PlayerId;
             }
@@ -56,24 +52,24 @@ namespace TheSpaceRoles.Plugin.Roles
                     continue;
                 }
                 if (target == x.PlayerId) continue;
-                PlayerControl p =Helper.GetPlayerControlFromId(target);
+                PlayerControl p = Helper.GetPlayerControlFromId(target);
                 Vector2 vec = p.transform.position;
                 Vector2 vec2 = x.transform.position;
                 vec -= vec2;
                 float dis = vec.magnitude;
 
-                if (distance > dis) 
+                if (distance > dis)
                 {
                     id = x.PlayerId;
                     distance = dis;
                 }
             }
-            if(targetdistance >= distance) 
+            if (targetdistance >= distance)
             {
                 Helper.GetPlayerControlFromId(id).cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 1f);
                 return id;
 
-                
+
             }
             return -1;
 

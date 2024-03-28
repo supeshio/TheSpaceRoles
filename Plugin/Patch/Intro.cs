@@ -1,15 +1,11 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 
 namespace TheSpaceRoles
 {
-    [HarmonyPatch(typeof(IntroCutscene),nameof(IntroCutscene.ShowTeam))]
+    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowTeam))]
     public static class IntroShowTeam
     {
         public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
@@ -48,10 +44,11 @@ namespace TheSpaceRoles
         }
         public static void Postfix(IntroCutscene __instance)
         {
-            
+
         }
-        public static Color RoleColor(){
-            if(DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Color == new Color(0,0,0))
+        public static Color RoleColor()
+        {
+            if (DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Color == new Color(0, 0, 0))
             {
                 return IntroShowTeam.TeamColor();
             }

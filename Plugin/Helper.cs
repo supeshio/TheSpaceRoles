@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -114,11 +113,11 @@ namespace TheSpaceRoles
         public static PlayerControl GetPlayerControlFromId(int id) => DataBase.AllPlayerControls().First(x => x.PlayerId == id);
 
 
-        public static void SetPlayerScale(PlayerControl pc,float scale)
+        public static void SetPlayerScale(PlayerControl pc, float scale)
         {
-            pc.transform.FindChild("BodyForms").localScale =Vector3.one * scale;
-            pc.transform.FindChild("Cosmetics").localScale = Vector3.one * scale *0.5f;
-            pc.GetComponent<CircleCollider2D>().radius = 0.2234f * scale; 
+            pc.transform.FindChild("BodyForms").localScale = Vector3.one * scale;
+            pc.transform.FindChild("Cosmetics").localScale = Vector3.one * scale * 0.5f;
+            pc.GetComponent<CircleCollider2D>().radius = 0.2234f * scale;
 
         }
 

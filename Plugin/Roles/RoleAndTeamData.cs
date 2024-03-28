@@ -93,7 +93,7 @@ namespace TheSpaceRoles
             new Crewmate(),
             new Impostor(),
         };
-        public static Dictionary<Teams, Color> ColorFromTeams= new()
+        public static Dictionary<Teams, Color> ColorFromTeams = new()
         {
             {Teams.Crewmate,Palette.CrewmateBlue},
             {Teams.Impostor,Palette.ImpostorRed}
@@ -113,8 +113,8 @@ namespace TheSpaceRoles
         }
         public static Teams[] GetAllTeams()
         {
-            var teams = new List<Teams>();  
-            foreach(Teams team in Enum.GetValues(typeof(Teams)))
+            var teams = new List<Teams>();
+            foreach (Teams team in Enum.GetValues(typeof(Teams)))
             {
                 teams.Add(team);
 

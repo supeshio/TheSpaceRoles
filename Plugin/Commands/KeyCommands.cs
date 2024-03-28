@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Il2CppMono.Unity;
 using InnerNet;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,7 +65,7 @@ namespace TheSpaceRoles.Plugin
                         }
 
                 }
-                
+
             }
             catch
             {

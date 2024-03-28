@@ -1,9 +1,4 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TheSpaceRoles
 {
@@ -34,11 +29,11 @@ namespace TheSpaceRoles
         }
     }*/
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
-    public static class PlayerControlMurderPlayerPatch 
+    public static class PlayerControlMurderPlayerPatch
     {
         public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
         {
-            RpcMurderPlayer.RpcMurder(__instance, target,DeathReason.ImpostorKill,false);
+            RpcMurderPlayer.RpcMurder(__instance, target, DeathReason.ImpostorKill, false);
         }
     }
 

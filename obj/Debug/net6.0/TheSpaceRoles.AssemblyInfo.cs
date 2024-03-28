@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Many Funny Roles!")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d8d45b285e095e070c83fd11039c8f4b0b21562")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+54a8470f55415fceedc9d210c6e4c8793696edca")]
 [assembly: System.Reflection.AssemblyProductAttribute("TheSpaceRoles")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TheSpaceRoles")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
