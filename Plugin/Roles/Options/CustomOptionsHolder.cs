@@ -30,23 +30,7 @@ namespace TheSpaceRoles
 
                         var op = option[i];
                         if (op == null) continue;
-                        op.Check(b);
-                        if (op.func == null || op.parentId == null)
-                        {
-                            b++;
-                        }
-                        else
-                        {
-                            if (op.func(op.selection))
-                            {
-                                b++;
-                            }
-                            else
-                            {
-
-                            }
-
-                        }
+                        op.Check(ref b);
                     }
                 }
             }
@@ -68,10 +52,30 @@ namespace TheSpaceRoles
 
             TSROptions = [
             Create(setting.TSRSettings, "use_admin", true),
-            Create(setting.TSRSettings, "use_recodes_admin", true, "use_admin", OnOff),
+            Create(setting.TSRSettings, "use_recodes_admin", true, "use_admin", funcOn),
             Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0")
-            
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(setting.TSRSettings, "use", sec, "0"),
+            Create(setting.TSRSettings, "user", sec, "0"),
+
             ];
         }
 

@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Services.Core.Telemetry.Internal;
 using UnityEngine;
+using UnityEngine.Events;
 using static Il2CppSystem.DateTimeParse;
 
 namespace TheSpaceRoles
@@ -196,6 +198,8 @@ namespace TheSpaceRoles
         public setting obj_parent;
         public TextMeshPro Title_TMP;
         public TextMeshPro Value_TMP;
+        public SpriteRenderer right;
+        public SpriteRenderer left;
         public CustomOption(setting parent,string name,
             object[] selections, object dafaultValue, string parentId = null, Func<int, bool> func = null, Action onChange = null
             )
@@ -213,7 +217,7 @@ namespace TheSpaceRoles
 
             @object = new GameObject();
             var renderer = @object.AddComponent<SpriteRenderer>();
-            renderer.sprite = Sprites.GetSpriteFromResources("banner.png",200);
+            renderer.sprite = Sprites.GetSpriteFromResources("ui.banner.png",200);
             renderer.color = Helper.ColorFromColorcode("#333333");
             @object.name = name;
             @object.transform.parent = GetTransformFromSetting(parent);
@@ -232,11 +236,13 @@ namespace TheSpaceRoles
             Title_TMP.enableWordWrapping = false;
             Title_TMP.outlineWidth = 0.8f;
             Title_TMP.autoSizeTextContainer = false;
+            Title_TMP.enableAutoSizing = true;
             Title_TMP.transform.localPosition = new Vector3(-2.3f, 0, -1);
             Title_TMP.transform.localScale = Vector3.one;
             Title_TMP.gameObject.layer = HudManager.Instance.gameObject.layer;
             Title_TMP.m_sharedMaterial = HudManager.Instance.GameSettings.m_sharedMaterial;
-            Title_TMP.gameObject.AddComponent<TextContainer>().rectTransform.sizeDelta = new Vector2(50, 0);
+            Title_TMP.rectTransform.pivot = new Vector2(0, 0.5f);
+            Title_TMP.rectTransform.sizeDelta = new Vector2(2.7f, 0.5f);
 
             Value_TMP = new GameObject("Value_TMP").AddComponent<TextMeshPro>();
             Value_TMP.transform.parent = @object.transform;
@@ -248,51 +254,118 @@ namespace TheSpaceRoles
             Value_TMP.enableWordWrapping = false;
             Value_TMP.outlineWidth = 0.8f;
             Value_TMP.enableAutoSizing = true;
-            Value_TMP.transform.localPosition = new Vector3(0.7f, -0.25f, -1);
+            Value_TMP.transform.localPosition = new Vector3(1.3f, 0f, -1);
             Value_TMP.transform.localScale = Vector3.one;
             Value_TMP.gameObject.layer = HudManager.Instance.gameObject.layer;
             Value_TMP.m_sharedMaterial = HudManager.Instance.GameSettings.m_sharedMaterial;
-            Value_TMP.gameObject.AddComponent<TextContainer>().rectTransform.sizeDelta = new Vector2(1f, 0.5f);
+            Value_TMP.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            Value_TMP.rectTransform.sizeDelta = new Vector2(1, 0.5f);
 
+
+            right = new GameObject().AddComponent<SpriteRenderer>();
+            right.sprite = Sprites.GetSpriteFromResources("ui.double_right.png",80);
+            right.gameObject.layer = HudManager.Instance.gameObject.layer;
+            right.transform.parent = @object.transform;
+            right.transform.localScale = Vector3.one;
+            right.transform.localPosition = new Vector3(2.1f, 0, -1);
+            right.color= Color.white;
+            right.material = HudManager.Instance.GameSettings.m_sharedMaterial;
+            right.gameObject.AddComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+            var rbutton = right.gameObject.AddComponent<PassiveButton>();
+            rbutton.OnClick = new();
+            rbutton.OnMouseOut = new UnityEvent();
+            rbutton.OnMouseOver = new UnityEvent();
+            rbutton._CachedZ_k__BackingField = 0.1f;
+            rbutton.CachedZ = 0.1f;
+            rbutton.Colliders =  new[] { right.GetComponent<BoxCollider2D>() };
+            rbutton.OnClick.AddListener((System.Action)(() => { updateSelection(selection + 1); }));
+            rbutton.OnMouseOver.AddListener((System.Action)(() => { right.color = Palette.AcceptedGreen; }));
+            rbutton.OnMouseOut.AddListener((System.Action)(() => { right.color = Color.white; }));
+            rbutton.HoverSound = HudManager.Instance.Chat.GetComponentsInChildren<ButtonRolloverHandler>().FirstOrDefault().HoverSound;
+            rbutton.ClickSound = HudManager.Instance.Chat.quickChatMenu.closeButton.ClickSound;
+
+
+            left = new GameObject().AddComponent<SpriteRenderer>();
+            left.sprite = Sprites.GetSpriteFromResources("ui.double_left.png",80);
+            left.gameObject.layer = HudManager.Instance.gameObject.layer;
+            left.transform.parent = @object.transform;
+            left.transform.localScale = Vector3.one;
+            left.color = Color.white;
+            left.transform.localPosition = new Vector3(0.5f, 0, -1);
+            left.material = HudManager.Instance.GameSettings.m_sharedMaterial;
+            left.gameObject.AddComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+            var lbutton = left.gameObject.AddComponent<PassiveButton>();
+            lbutton.OnClick = new();
+            lbutton.OnMouseOut = new UnityEvent();
+            lbutton.OnMouseOver = new UnityEvent();
+            lbutton._CachedZ_k__BackingField = 0.1f;
+            lbutton.CachedZ = 0.1f;
+            lbutton.Colliders = new[] { left.GetComponent<BoxCollider2D>() };
+            lbutton.OnClick.AddListener((UnityAction)(() => { updateSelection(selection - 1); }));
+            lbutton.OnMouseOver.AddListener((UnityAction)(() => { left.color = Palette.AcceptedGreen; }));
+            lbutton.OnMouseOut.AddListener((UnityAction)(() => { left.color = Color.white; }));
+            lbutton.HoverSound = HudManager.Instance.Chat.GetComponentsInChildren<ButtonRolloverHandler>().FirstOrDefault().HoverSound;
+            lbutton.ClickSound = HudManager.Instance.Chat.quickChatMenu.closeButton.ClickSound;
 
         }
         public static CustomOption Create(setting parent,string name, bool DefaultValue = false, string parentId = null, Func<int, bool> func = null, Action onChange = null)
         {
             return new CustomOption(parent,name, ["Off", "On"], DefaultValue ? "On" : "Off", parentId, func, onChange);
         }
-        public static Func<int, bool> OnOff = x => x == 0;
-
+        public static Func<int, bool> funcOn = x => x == 0;
+        public static Func<int, bool> funcOff = x => x != 0;
         public static CustomOption Create(setting parent,string name, string[] selections, string selection, string parentId = null, Func<int, bool> func = null, Action onChange = null)
         {
             return new CustomOption(parent,name, selections, selection, parentId, func, onChange);
         }
         public void updateSelection(int newSelection)
         {
+            entry.Value = ((newSelection % selections.Length )+ selections.Length ) % selections.Length ;
             Logger.Info($"{name}:{selection}");
             ShareOptionSelections();
             CustomOptionsHolder.AllCheck();
         }
-        public void Check(int i)
+        public void Check(ref int i)
         {
-            Logger.Info(name,"Check");
+            Value_TMP.text = GetSelectionName();
             if(func == null || parentId == null)
             {
-
-                @object.active = true;
                 @object.transform.localPosition = new Vector3(3, 2f - 0.5f * i, 0);
+                i++;
             }
             else
             {
-
-                if (func(selection))
+                int result = -1;
+                //parentIdを探す
+                foreach(var customoptions in CustomOptionsHolder.Options)
                 {
-                    @object.active = true;
-                    @object.transform.localPosition = new Vector3(3, 2f - 0.3f * i, 0);
+                    foreach(var option in customoptions)
+                    {
+                        if(option.name == parentId)
+                        {
+                            result = func(option.selection) ?1:0;
+                        }
+                    }
+                }
+                bool res = false;
+                if(result == -1)
+                {
+                    Logger.Error($"(parentId:{parentId}) is not included in Holder.Options");
                 }
                 else
                 {
-                    @object.transform.localPosition = new Vector3(0, 200, 0);
-                    @object.active = false;
+                    res = result == 1 ? true:false;
+                }
+
+                Logger.Info(name + ":" + selections[selection] + ", func:"+res, "Check");
+                if (res)
+                {
+                    @object.transform.localPosition = new Vector3(3, 2f - 0.5f * i, 0);
+                    i++;
+                }
+                else
+                {
+                    @object.transform.localPosition = new Vector3(80, 200, 0);
                 }
             }
         }
