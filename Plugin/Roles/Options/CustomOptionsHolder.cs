@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Hazel.Dtls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using static TheSpaceRoles.CustomOption;
+using static TheSpaceRoles.Translation;
 
 
 namespace TheSpaceRoles
@@ -20,61 +23,84 @@ namespace TheSpaceRoles
             try
             {
 
-                foreach (var option in Options)
+                foreach (CustomOptionSelectorSetting value in Enum.GetValues(typeof(CustomOptionSelectorSetting)))
                 {
-                    if (option == null||option.Count == 0) continue;
-                    int b = 0;
-                    Logger.Info(option.Count.ToString());
-                    for (int i = 0; i < option.Count; i++)
-                    {
 
-                        var op = option[i];
-                        if (op == null) continue;
-                        op.Check(ref b);
+                    foreach (var option in Options)
+                    {
+                        if (option == null || option.Count == 0) continue;
+                        int b = 0;
+                        Logger.Info(option.Count.ToString());
+
+
+                        for (int i = 0; i < option.Count; i++)
+                        {
+                            if (option[i].obj_parent == value)
+                            {
+
+                                var op = option[i];
+                                if (op == null) continue;
+                                op.Check(ref b);
+                            }
+                        }
                     }
                 }
             }
-            catch(Exception e) 
+            catch (Exception e)
             {
-                Logger.Error(e.Source + "\n" + e.Message +"\n"+e.StackTrace);
+                Logger.Error(e.Source + "\n" + e.Message + "\n" + e.StackTrace);
             }
         }
-        
+        public static Func<string>[] GetSeconds(float sec=60f,float delta_sec=2.5f)
+        {
+
+            List<Func<string>> second = [];
+            for (float i = 0; i <= sec; i += delta_sec)
+            {
+                second.Add(Sec(i));
+            }
+            return [.. second];
+        }
+        public static Func<string>[] GetSecondsIncludeUnlimited(float sec = 60f, float delta_sec = 2.5f,bool include_off = true)
+        {
+
+            List<Func<string>> second = [];
+
+            second.Add(()=>GetString("tsroption.selection.unlimited"));
+            if (include_off) second.Add(Sec(0));
+
+            for (float i = 0; i <= sec; i += delta_sec)
+            {
+                second.Add(Sec(i));
+            }
+            return [.. second];
+        }
+        public static Func<string> GetSecond(float sec)
+        {
+            return sec.ToString;
+        }
+
         public static void CreateCustomOptions()
         {
             if (TSROptions.Count != 0) return;
-            List<string> second = [];
-            for (float i = 0; i < 100; i+=2.5f)
-            {
-                second.Add(i.ToString());
-            }
-            string[] sec = [.. second];
 
             TSROptions = [
-            Create(setting.TSRSettings, "use_admin", true),
-            Create(setting.TSRSettings, "use_recodes_admin", true, "use_admin", funcOn),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
-            Create(setting.TSRSettings, "use", sec, "0"),
-            Create(setting.TSRSettings, "user", sec, "0"),
+            Create(CustomOptionSelectorSetting.InformationEquipment, "use_records_admin", true),
+            Create(CustomOptionSelectorSetting.InformationEquipment, "limit_admin",GetSecondsIncludeUnlimited(180),Unlimited()),
+
+            Create(CustomOptionSelectorSetting.InformationEquipment, "limit_vital",GetSecondsIncludeUnlimited(180),Unlimited()),
+
+            Create(CustomOptionSelectorSetting.InformationEquipment, "limit_camera",GetSecondsIncludeUnlimited(180),Unlimited()),
+
+            Create(CustomOptionSelectorSetting.InformationEquipment, "limit_doorlog",GetSecondsIncludeUnlimited(180),Unlimited()),
+
+            Create(CustomOptionSelectorSetting.InformationEquipment, "limit_binoculars",GetSecondsIncludeUnlimited(180),Unlimited()),
+
+            Create(CustomOptionSelectorSetting.General, "seee", GetSeconds(), ()=>"0"),
+            Create(CustomOptionSelectorSetting.General, "seer", GetSeconds(180), ()=>"0"),
+
+            Create(CustomOptionSelectorSetting.Starter, "use", GetSeconds(180,1), ()=>"0"),
+            Create(CustomOptionSelectorSetting.Starter, "user", GetSeconds(120,10), ()=>"0"),
 
             ];
         }
