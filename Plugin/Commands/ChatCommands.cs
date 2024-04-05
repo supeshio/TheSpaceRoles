@@ -178,6 +178,28 @@ namespace TheSpaceRoles
                     case "/lt":
                         (addchat, TSR.LobbyTimer.Value) = Helper.ChatBool(chats, "LobbyTimer", TSR.LobbyTimer, ref addchat);
                         break;
+                    case "/\\":
+                        for(int i = 0; i < Palette.PlayerColors.Length; i++)
+                        {
+                            string st = "";
+                            if (i <= 18)
+                            {
+                                st = Palette.ColorNames[i].ToString();
+                            }
+                            else
+                            {
+                                st =
+                                CustomColor.ColorStrings[i-18+50000];
+                            }
+                            addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■")+ Helper.ColoredText(Palette.PlayerColors[i], "<b>"  +st + "</b>\n");
+                        }
+                        break;
+                    case "//":
+                        for (int i = 0; i < Palette.PlayerColors.Length; i++)
+                        {
+                            addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■") + Helper.ColoredText(Palette.PlayerColors[i], "<b>" + Palette.ColorNames[i] + "</b>\n");
+                        }
+                        break;
                 }
                 if (addchat != "")
                 {

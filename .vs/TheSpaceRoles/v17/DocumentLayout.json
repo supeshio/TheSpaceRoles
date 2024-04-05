@@ -3,40 +3,96 @@
   "WorkspaceRootPath": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\customoptionsholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\customoptionsholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\commands\\chatcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\commands\\chatcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\customoptions .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\customoptions .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\customcolors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\customcolors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\customoptionselector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\customoptionselector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\hatextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\hatextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\customoptionselectorholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\customoptionselectorholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\hatstabpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\hatstabpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\patch\\deletepet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\patch\\deletepet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\hatdataextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\hatdataextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\customhatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\customhatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\hatsloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\hatsloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\resources\\translation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:resources\\translation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\customhat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\customhat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\customhathashes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\customhathashes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\module\\config\\skinsconfigfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\module\\config\\skinsconfigfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\resources\\sprites.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:resources\\sprites.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\roleoptions\\roleoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\roleoptions\\roleoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\roleoptions\\roleoptionsholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\roleoptions\\roleoptionsholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\tsroptions\\customoptionsholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\tsroptions\\customoptionsholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\tsroptions\\customoptionselectorholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\tsroptions\\customoptionselectorholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\custombutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\custombutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\options\\tsroptions\\customoptionselector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\options\\tsroptions\\customoptionselector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\roleandteamdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\roleandteamdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\resources\\translation.csv||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:resources\\translation.csv||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\patch\\deletepet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\patch\\deletepet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\resources\\translation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:resources\\translation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\thespaceroles.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -53,10 +109,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\killbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\killbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\rpcs\\rpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -101,14 +153,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\roles\\crewmate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\roles\\crewmate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\roles\\roleandteamdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\roles\\roleandteamdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|c:\\users\\taiti\\documents\\github\\thespaceroles\\plugin\\custom\\customcolors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D421A41-D6FD-4047-9F66-27932F660CEE}|TheSpaceRoles.csproj|solutionrelative:plugin\\custom\\customcolors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -118,17 +162,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 262,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Helper.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Helper.cs",
               "RelativeDocumentMoniker": "Plugin\\Helper.cs",
               "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Helper.cs",
               "RelativeToolTip": "Plugin\\Helper.cs",
-              "ViewState": "AQIAAGkAAAAAAAAAAAAAwI4AAAAAAAAA",
+              "ViewState": "AQIAAKQAAAAAAAAAAIA4wLQAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-11T06:35:18.134Z",
               "IsPinned": true,
@@ -136,59 +180,189 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CustomOptions .cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\CustomOptions .cs",
-              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\CustomOptions .cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\CustomOptions .cs",
-              "RelativeToolTip": "Plugin\\Roles\\Options\\CustomOptions .cs",
-              "ViewState": "AQIAACYBAAAAAAAAAAAAAD8BAAA4AAAA",
+              "DocumentIndex": 3,
+              "Title": "HatsTabPatch.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\HatsTabPatch.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\HatsTabPatch.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\HatsTabPatch.cs",
+              "RelativeToolTip": "Plugin\\Module\\HatsTabPatch.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-27T10:51:15.048Z",
+              "WhenOpened": "2024-04-04T14:13:36.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HatDataExtension.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\HatDataExtension.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\HatDataExtension.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\HatDataExtension.cs",
+              "RelativeToolTip": "Plugin\\Module\\HatDataExtension.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAABAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T02:55:50.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CustomColors.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\CustomColors.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\CustomColors.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\CustomColors.cs",
+              "RelativeToolTip": "Plugin\\Module\\CustomColors.cs",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAnwFcAAABfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-14T06:13:14.674Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ChatCommands.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Commands\\ChatCommands.cs",
+              "RelativeDocumentMoniker": "Plugin\\Commands\\ChatCommands.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Commands\\ChatCommands.cs",
+              "RelativeToolTip": "Plugin\\Commands\\ChatCommands.cs",
+              "ViewState": "AQIAAKwAAAAAAAAAAAAowL8AAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T06:32:45.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HatExtension.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\HatExtension.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\HatExtension.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\HatExtension.cs",
+              "RelativeToolTip": "Plugin\\Module\\HatExtension.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T02:54:32.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CustomHatManager.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\CustomHatManager.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\CustomHatManager.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\CustomHatManager.cs",
+              "RelativeToolTip": "Plugin\\Module\\CustomHatManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T06:13:09.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HatsLoader.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\HatsLoader.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\HatsLoader.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\HatsLoader.cs",
+              "RelativeToolTip": "Plugin\\Module\\HatsLoader.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T07:28:30.503Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CustomHat.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\CustomHat.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\CustomHat.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\CustomHat.cs",
+              "RelativeToolTip": "Plugin\\Module\\CustomHat.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABEAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T06:09:00.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CustomHatHashes.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\CustomHatHashes.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\CustomHatHashes.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\CustomHatHashes.cs",
+              "RelativeToolTip": "Plugin\\Module\\CustomHatHashes.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T06:10:14.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SkinsConfigFile.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\config\\SkinsConfigFile.cs",
+              "RelativeDocumentMoniker": "Plugin\\Module\\config\\SkinsConfigFile.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Module\\config\\SkinsConfigFile.cs",
+              "RelativeToolTip": "Plugin\\Module\\config\\SkinsConfigFile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T07:14:50.534Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Sprites.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Resources\\Sprites.cs",
+              "RelativeDocumentMoniker": "Resources\\Sprites.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Resources\\Sprites.cs",
+              "RelativeToolTip": "Resources\\Sprites.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAkwE4AAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-09T04:17:14.814Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "RoleOptions.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\RoleOptions\\RoleOptions.cs",
+              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\RoleOptions\\RoleOptions.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\RoleOptions\\RoleOptions.cs",
+              "RelativeToolTip": "Plugin\\Roles\\Options\\RoleOptions\\RoleOptions.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAABFwCAAAACRAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-04T10:44:17.688Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "RoleOptionsHolder.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\RoleOptions\\RoleOptionsHolder.cs",
+              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\RoleOptions\\RoleOptionsHolder.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\RoleOptions\\RoleOptionsHolder.cs",
+              "RelativeToolTip": "Plugin\\Roles\\Options\\RoleOptions\\RoleOptionsHolder.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-04T11:00:51.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "CustomOptionsHolder.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\CustomOptionsHolder.cs",
-              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\CustomOptionsHolder.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\CustomOptionsHolder.cs",
-              "RelativeToolTip": "Plugin\\Roles\\Options\\CustomOptionsHolder.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAAQwFgAAACAAAAA",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\TSROptions\\CustomOptionsHolder.cs",
+              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\TSROptions\\CustomOptionsHolder.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\TSROptions\\CustomOptionsHolder.cs",
+              "RelativeToolTip": "Plugin\\Roles\\Options\\TSROptions\\CustomOptionsHolder.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAIwBMAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-17T11:11:44.249Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DeletePet.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Patch\\DeletePet.cs",
-              "RelativeDocumentMoniker": "Plugin\\Patch\\DeletePet.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Patch\\DeletePet.cs",
-              "RelativeToolTip": "Plugin\\Patch\\DeletePet.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-03T03:36:42.833Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "DataBase.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\DataBase.cs",
-              "RelativeDocumentMoniker": "Plugin\\Roles\\DataBase.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\DataBase.cs",
-              "RelativeToolTip": "Plugin\\Roles\\DataBase.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAQwCQAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-14T13:05:21.008Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 17,
               "Title": "CustomButton.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\CustomButton.cs",
               "RelativeDocumentMoniker": "Plugin\\Roles\\CustomButton.cs",
@@ -201,7 +375,98 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 16,
+              "Title": "CustomOptionSelectorHolder.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\TSROptions\\CustomOptionSelectorHolder.cs",
+              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\TSROptions\\CustomOptionSelectorHolder.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\TSROptions\\CustomOptionSelectorHolder.cs",
+              "RelativeToolTip": "Plugin\\Roles\\Options\\TSROptions\\CustomOptionSelectorHolder.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBgAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-30T04:18:24.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Plugin.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Plugin.cs",
+              "RelativeDocumentMoniker": "Plugin\\Plugin.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Plugin.cs",
+              "RelativeToolTip": "Plugin\\Plugin.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAABFwBwAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-13T08:29:49.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "DataBase.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\DataBase.cs",
+              "RelativeDocumentMoniker": "Plugin\\Roles\\DataBase.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\DataBase.cs",
+              "RelativeToolTip": "Plugin\\Roles\\DataBase.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAQwCQAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-14T13:05:21.008Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CustomOptionSelector.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\TSROptions\\CustomOptionSelector.cs",
+              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\TSROptions\\CustomOptionSelector.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\TSROptions\\CustomOptionSelector.cs",
+              "RelativeToolTip": "Plugin\\Roles\\Options\\TSROptions\\CustomOptionSelector.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAcwC4AAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-30T03:59:49.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DeletePet.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Patch\\DeletePet.cs",
+              "RelativeDocumentMoniker": "Plugin\\Patch\\DeletePet.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Patch\\DeletePet.cs",
+              "RelativeToolTip": "Plugin\\Patch\\DeletePet.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-03T03:36:42.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "RoleAndTeamData.cs",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\RoleAndTeamData.cs",
+              "RelativeDocumentMoniker": "Plugin\\Roles\\RoleAndTeamData.cs",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\RoleAndTeamData.cs",
+              "RelativeToolTip": "Plugin\\Roles\\RoleAndTeamData.cs",
+              "ViewState": "AQIAAFIAAAAAAAAAAAAcwGsAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-14T13:05:21.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Translation.csv",
+              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Resources\\Translation.csv",
+              "RelativeDocumentMoniker": "Resources\\Translation.csv",
+              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Resources\\Translation.csv",
+              "RelativeToolTip": "Resources\\Translation.csv",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002120|",
+              "WhenOpened": "2024-04-04T10:47:57.022Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
               "Title": "TheSpaceRoles.csproj",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\TheSpaceRoles.csproj",
               "RelativeDocumentMoniker": "TheSpaceRoles.csproj",
@@ -214,33 +479,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CustomOptionSelectorHolder.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\CustomOptionSelectorHolder.cs",
-              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\CustomOptionSelectorHolder.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\CustomOptionSelectorHolder.cs",
-              "RelativeToolTip": "Plugin\\Roles\\Options\\CustomOptionSelectorHolder.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBgAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-30T04:18:24.613Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CustomOptionSelector.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\CustomOptionSelector.cs",
-              "RelativeDocumentMoniker": "Plugin\\Roles\\Options\\CustomOptionSelector.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Options\\CustomOptionSelector.cs",
-              "RelativeToolTip": "Plugin\\Roles\\Options\\CustomOptionSelector.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAUwCcAAABeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-30T03:59:49.339Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 32,
               "Title": "GameEndPatch.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Rpcs\\GameEndPatch.cs",
               "RelativeDocumentMoniker": "Plugin\\Rpcs\\GameEndPatch.cs",
@@ -253,7 +492,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 29,
               "Title": "Sheriff.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Roles\\Sheriff.cs",
               "RelativeDocumentMoniker": "Plugin\\Roles\\Roles\\Sheriff.cs",
@@ -266,20 +505,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Sprites.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Resources\\Sprites.cs",
-              "RelativeDocumentMoniker": "Resources\\Sprites.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Resources\\Sprites.cs",
-              "RelativeToolTip": "Resources\\Sprites.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAA6wCwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-09T04:17:14.814Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 22,
               "Title": "Translation.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Resources\\Translation.cs",
               "RelativeDocumentMoniker": "Resources\\Translation.cs",
@@ -292,33 +518,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Plugin.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Plugin.cs",
-              "RelativeDocumentMoniker": "Plugin\\Plugin.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Plugin.cs",
-              "RelativeToolTip": "Plugin\\Plugin.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAIBRwBwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-13T08:29:49.648Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 24,
               "Title": "StartMenu.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Custom\\StartMenu.cs",
               "RelativeDocumentMoniker": "Plugin\\Custom\\StartMenu.cs",
               "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Custom\\StartMenu.cs",
               "RelativeToolTip": "Plugin\\Custom\\StartMenu.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAABFwC8AAABNAAAA",
+              "ViewState": "AQIAACkAAAAAAAAAAEBYwC8AAABNAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-04T15:58:19.789Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 26,
               "Title": "KillButton.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\KillButton.cs",
               "RelativeDocumentMoniker": "Plugin\\Roles\\KillButton.cs",
@@ -331,7 +544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 30,
               "Title": "Kill.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Rpcs\\Kill.cs",
               "RelativeDocumentMoniker": "Plugin\\Rpcs\\Kill.cs",
@@ -344,7 +557,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 25,
               "Title": "PlayerControlButtonControls.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\PlayerControlButtonControls.cs",
               "RelativeDocumentMoniker": "Plugin\\Roles\\PlayerControlButtonControls.cs",
@@ -357,7 +570,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 27,
               "Title": "Rpc.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Rpcs\\Rpc.cs",
               "RelativeDocumentMoniker": "Plugin\\Rpcs\\Rpc.cs",
@@ -370,7 +583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 28,
               "Title": "Intro.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Patch\\Intro.cs",
               "RelativeDocumentMoniker": "Plugin\\Patch\\Intro.cs",
@@ -383,7 +596,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 34,
               "Title": "ModStampPatch.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Patch\\ModStampPatch.cs",
               "RelativeDocumentMoniker": "Plugin\\Patch\\ModStampPatch.cs",
@@ -396,7 +609,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 31,
               "Title": "PlayerControl.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\PlayerControl.cs",
               "RelativeDocumentMoniker": "Plugin\\Roles\\PlayerControl.cs",
@@ -409,7 +622,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 37,
               "Title": "Crewmate.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Roles\\Crewmate.cs",
               "RelativeDocumentMoniker": "Plugin\\Roles\\Roles\\Crewmate.cs",
@@ -422,7 +635,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 36,
               "Title": "Impostor.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\Roles\\Impostor.cs",
               "RelativeDocumentMoniker": "Plugin\\Roles\\Roles\\Impostor.cs",
@@ -435,7 +648,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 35,
               "Title": "LobbyTimer.cs",
               "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Custom\\LobbyTimer.cs",
               "RelativeDocumentMoniker": "Plugin\\Custom\\LobbyTimer.cs",
@@ -444,32 +657,6 @@
               "ViewState": "AQIAAFEAAAAAAAAAAAAmwHMAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-14T13:44:55.734Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "RoleAndTeamData.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\RoleAndTeamData.cs",
-              "RelativeDocumentMoniker": "Plugin\\Roles\\RoleAndTeamData.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Roles\\RoleAndTeamData.cs",
-              "RelativeToolTip": "Plugin\\Roles\\RoleAndTeamData.cs",
-              "ViewState": "AQIAAE8AAAAAAAAAAAAcwGsAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-14T13:05:21.586Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "CustomColors.cs",
-              "DocumentMoniker": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Custom\\CustomColors.cs",
-              "RelativeDocumentMoniker": "Plugin\\Custom\\CustomColors.cs",
-              "ToolTip": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\Plugin\\Custom\\CustomColors.cs",
-              "RelativeToolTip": "Plugin\\Custom\\CustomColors.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-14T06:13:14.674Z",
               "EditorCaption": ""
             }
           ]

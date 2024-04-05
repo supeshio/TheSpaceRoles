@@ -62,7 +62,24 @@ public class Sprites
         }
         return null;
     }
-
+    public static Texture2D LoadTextureFromDisk(string path)
+    {
+        try
+        {
+            if (File.Exists(path))
+            {
+                Texture2D texture = new Texture2D(2, 2, TextureFormat.ARGB32, true);
+                var byteTexture = Il2CppSystem.IO.File.ReadAllBytes(path);
+                ImageConversion.LoadImage(texture, byteTexture, false);
+                return texture;
+            }
+        }
+        catch
+        {
+            Logger.Error("Error loading texture from disk: " + path);
+        }
+        return null;
+    }
     internal delegate bool d_LoadImage(IntPtr tex, IntPtr data, bool markNonReadable);
     internal static d_LoadImage iCall_LoadImage;
 
