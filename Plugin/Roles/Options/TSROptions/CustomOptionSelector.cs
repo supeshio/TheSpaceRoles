@@ -85,7 +85,7 @@ namespace TheSpaceRoles
             text.transform.localPosition = new Vector3(0f, 0, -1);
             text.transform.localScale = Vector3.one;
             text.gameObject.layer = HudManager.Instance.gameObject.layer;
-            text.m_sharedMaterial = HudManager.Instance.GameSettings.m_sharedMaterial;
+            text.m_sharedMaterial = Data.textMaterial;
             text.rectTransform.pivot = new Vector2(0.5f, 0.5f);
             text.rectTransform.sizeDelta = new Vector2(2f, 1.6f);
 

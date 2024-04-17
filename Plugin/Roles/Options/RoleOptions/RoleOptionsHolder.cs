@@ -12,11 +12,7 @@ namespace TheSpaceRoles
     {
         public static List<RoleOptions> roleOptions = new();
         public static Roles selectedRoles = Roles.None;
-        public static void RoleOptionsCreate()
-        {
-            GameObject gameObject = new("Roles");
-            gameObject.transform.parent = HudManager.Instance.transform.FindChild("CustomSettings").FindChild("CustomRoleSettings");
-            gameObject.transform.localPosition = Vector3.zero;
+        public static void RoleOptionsCreate() {
 
             roleOptions = [];
             int i = 0;

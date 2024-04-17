@@ -158,10 +158,23 @@ namespace TheSpaceRoles
             customroleSettings.transform.parent = cSettings.transform ;
             customroleSettings.active = false;
             customroleSettings.transform.localPosition = Vector3.zero;
+            var v = new GameObject("Roles");
+            v.transform.parent = customroleSettings.transform;
+            v.transform.localPosition = Vector3.zero;
+            v.active = true;
+            var b = new GameObject("Teams");
+            b.transform.parent = customroleSettings.transform;
+            b.transform.localPosition = Vector3.zero;
+            b.active =true;
+            var added = new GameObject("AddedRoles");
+            added.transform.parent = customroleSettings.transform;
+            added.transform.localPosition = Vector3.zero;
+            added.active = true;
             CustomOptionSelectorHolder.CreateSelector();
             CustomOptionsHolder.CreateCustomOptions();
             CustomOptionsHolder.AllCheck();
             RoleOptionsHolder.RoleOptionsCreate();
+            RoleOptionTeamsHolder.Create();
         }
 
 
@@ -237,7 +250,7 @@ namespace TheSpaceRoles
             Title_TMP.transform.localPosition = new Vector3(-2.3f, 0, -1);
             Title_TMP.transform.localScale = Vector3.one;
             Title_TMP.gameObject.layer = HudManager.Instance.gameObject.layer;
-            Title_TMP.m_sharedMaterial = HudManager.Instance.GameSettings.m_sharedMaterial;
+            Title_TMP.m_sharedMaterial = Data.textMaterial;
             Title_TMP.rectTransform.pivot = new Vector2(0, 0.5f);
             Title_TMP.rectTransform.sizeDelta = new Vector2(2.7f, 0.5f);
 
@@ -254,7 +267,7 @@ namespace TheSpaceRoles
             Value_TMP.transform.localPosition = new Vector3(1.3f, 0f, -1);
             Value_TMP.transform.localScale = Vector3.one;
             Value_TMP.gameObject.layer = HudManager.Instance.gameObject.layer;
-            Value_TMP.m_sharedMaterial = HudManager.Instance.GameSettings.m_sharedMaterial;
+            Value_TMP.m_sharedMaterial = Data.textMaterial;
             Value_TMP.rectTransform.pivot = new Vector2(0.5f, 0.5f);
             Value_TMP.rectTransform.sizeDelta = new Vector2(1, 0.5f);
 
@@ -266,7 +279,7 @@ namespace TheSpaceRoles
             right.transform.localScale = Vector3.one;
             right.transform.localPosition = new Vector3(2.1f, 0, -1);
             right.color= Color.white;
-            right.material = HudManager.Instance.GameSettings.m_sharedMaterial;
+            right.material = Data.textMaterial;
             right.gameObject.AddComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
             var rbutton = right.gameObject.AddComponent<PassiveButton>();
             rbutton.OnClick = new();
@@ -289,7 +302,7 @@ namespace TheSpaceRoles
             left.transform.localScale = Vector3.one;
             left.color = Color.white;
             left.transform.localPosition = new Vector3(0.5f, 0, -1);
-            left.material = HudManager.Instance.GameSettings.m_sharedMaterial;
+            left.material = Data.textMaterial;
             left.gameObject.AddComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
             var lbutton = left.gameObject.AddComponent<PassiveButton>();
             lbutton.OnClick = new();

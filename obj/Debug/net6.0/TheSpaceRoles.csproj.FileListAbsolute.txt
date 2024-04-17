@@ -17,7 +17,6 @@ C:\Users\taiti\Documents\GitHub\TheSpaceRoles\obj\Debug\net6.0\TheSpaceRoles.Gen
 C:\Users\taiti\Documents\GitHub\TheSpaceRoles\obj\Debug\net6.0\TheSpaceRoles.AssemblyInfoInputs.cache
 C:\Users\taiti\Documents\GitHub\TheSpaceRoles\obj\Debug\net6.0\TheSpaceRoles.AssemblyInfo.cs
 C:\Users\taiti\Documents\GitHub\TheSpaceRoles\obj\Debug\net6.0\TheSpaceRoles.csproj.CoreCompileInputs.cache
-C:\Users\taiti\Documents\GitHub\TheSpaceRoles\obj\Debug\net6.0\TheSpaceRoles.sourcelink.json
 C:\Users\taiti\Documents\GitHub\TheSpaceRoles\bin\Debug\net6.0\TheSpaceRoles.deps.json
 C:\Users\taiti\Documents\GitHub\TheSpaceRoles\bin\Debug\net6.0\TheSpaceRoles.dll
 C:\Users\taiti\Documents\GitHub\TheSpaceRoles\bin\Debug\net6.0\TheSpaceRoles.pdb

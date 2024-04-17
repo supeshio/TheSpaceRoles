@@ -30,6 +30,16 @@ namespace TheSpaceRoles
             ColorUtility.TryParseHtmlString("#" + colorcode.ToString(), out Color color);
             return color;
         }
+        public static UnityEngine.Color ColorEditHSV(Color color,float h=0,float s=0,float v=0,float a = 1)
+        {
+            Color.RGBToHSV(color,out float h1,out float s1, out float v1);
+            h1 += h;
+            s1 += s;
+            v1 += v;
+            color = Color.HSVToRGB(h1, s1, v1);
+            color.a = a;
+            return color;
+        }
         public static string ColoredText(Color color, string text)
         {
             return "<color=#" + ColorUtility.ToHtmlStringRGB(color) + ">" + text;
