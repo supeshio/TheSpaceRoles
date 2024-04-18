@@ -18,7 +18,7 @@ namespace TheSpaceRoles
             AddtionalText.fontSize = 2;
             AddtionalText.alignment = TextAlignmentOptions.Right;
             AddtionalText.enableWordWrapping = false;
-            AddtionalText.transform.parent = __instance.transform;
+            AddtionalText.transform.SetParent(__instance.transform);
             AddtionalText.transform.localPosition = new Vector3(0, 0, 0);
             AddtionalText.transform.localScale = Vector3.one;
 

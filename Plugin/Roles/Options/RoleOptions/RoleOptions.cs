@@ -28,19 +28,20 @@ namespace TheSpaceRoles
         public RoleOptions(Roles roles,int i)
         {
             this.roles = roles;
+            //Logger.Info(roles.ToString());
             this.num = i;
             @object = new GameObject(roles.ToString());
             @object.active = true;
             var renderer = @object.AddComponent<SpriteRenderer>();
             renderer.sprite = Sprites.GetSpriteFromResources("ui.role_option.png", 400);
             renderer.color = Helper.ColorFromColorcode("#222222");
-            @object.transform.parent = HudManager.Instance.transform.FindChild("CustomSettings").FindChild("CustomRoleSettings").FindChild("Roles");
+            @object.transform.SetParent( HudManager.Instance.transform.FindChild("CustomSettings").FindChild("CustomRoleSettings").FindChild("Roles"));
             @object.active = true;
             @object.layer = HudManager.Instance.gameObject.layer;
             @object.transform.localPosition = new( -4.4f,2f -0.36f*num,0);
 
             Title_TMP = new GameObject("Title_TMP").AddComponent<TextMeshPro>();
-            Title_TMP.transform.parent = @object.transform;
+            Title_TMP.transform.SetParent(@object.transform);
             Title_TMP.fontStyle = FontStyles.Bold;
             Title_TMP.text = GetRoleName;
             Title_TMP.color = GetLink.GetCustomRole(roles).Color;
@@ -109,7 +110,7 @@ namespace TheSpaceRoles
                     DragMode = true;
                     HoldinggameObject = UnityEngine.Object.Instantiate(@object);
                     mousePos = @object.transform.position-GetMouse;
-                    HoldinggameObject.transform.parent = @object.transform.parent;
+                    HoldinggameObject.transform.SetParent(@object.transform.parent);
                     HoldinggameObject.transform.FindChild("Title_TMP").GetComponent<TextMeshPro>().color = Helper.ColorEditHSV(GetLink.GetCustomRole(roles).Color, a: 0.95f);
                     HoldinggameObject.GetComponent<SpriteRenderer>().color = Helper.ColorFromColorcode("#2222227f");
                 }
@@ -130,17 +131,13 @@ namespace TheSpaceRoles
                         UnityEngine.Object.Destroy(HoldinggameObject.GetComponent<BoxCollider2D>());
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                         RaycastHit2D hit2d = Physics2D.Raycast(ray.origin, ray.direction);
-                        Logger.Info(ray.direction.ToString());
                         if (hit2d && hit2d.transform.gameObject == MouseHolding)
                         {
                             foreach(var team in RoleOptionTeamsHolder.TeamsHolder)
                             {
                                 if (team.@object.name == hit2d.transform.gameObject.name)
                                 {
-                                    if(GetLink.GetCustomRole(this.roles)?.teamsSupported?.ToList()?.Contains(team.teams) == null)
-                                    {
-                                        continue;
-                                    }
+                                    if(GetLink.GetCustomRole(this.roles)?.teamsSupported?.ToList()?.Contains(team.teams) == null)continue;
                                     if (GetLink.GetCustomRole(this.roles).teamsSupported.ToList().Contains(team.teams))
                                     {
 
@@ -150,31 +147,58 @@ namespace TheSpaceRoles
                                     } 
                                 }
                             }
+                            foreach (var team in RoleOptionTeamRoles.RoleOptionsInTeam)
+                            {
+                                if (null != hit2d.transform?.gameObject?.name)
+                                {
+                                    if (GetLink.GetCustomRole(this.roles)?.teamsSupported?.ToList()?.Contains(team.team) == null) continue;
+                                    if (GetLink.GetCustomRole(this.roles).teamsSupported.ToList().Contains(team.team))
+                                    {
+
+                                        SelectedTeams = team.team;
+                                        HoldinggameObject.GetComponent<SpriteRenderer>().color = Helper.ColorEditHSV(GetLink.ColorFromTeams[team.team], v: -0.3f, s: 0.3f, a: 0.7f);
+                                    }
+                                }
+                            }
                         }
 
                     }
-                    Logger.Info($"Timer:{timer}");
                 }
             }
             else
             {
-                DragMode = false;
-                MouseHolding=false;
-                GameObject.Destroy(HoldinggameObject);
-                HoldinggameObject=null;
-                _ = Time.deltaTime;
-                timer = 0;
+                if (HoldinggameObject != null)
+                {
+
+                    if (SelectedTeams != null)
+                    {
+                        Logger.Info(roles.ToString());
+                        var ROteams = RoleOptionTeamsHolder.TeamsHolder.First(x => x.teams == (Teams)SelectedTeams);
+
+                        RoleOptionTeamRoles.RoleOptionsInTeam.Add(new RoleOptionTeamRoles(ROteams, roles));
+                    }
+
+
+
+                    DragMode = false;
+                    MouseHolding = false;
+                    GameObject.Destroy(HoldinggameObject);
+                    HoldinggameObject = null;
+                    _ = Time.deltaTime;
+
+                    timer = 0;
+                    SelectedTeams = null;
+                }
             }
-            RoleOptionTeams.Drag();
         }
     }
     [HarmonyPatch(typeof(PassiveButton), nameof(PassiveButton.Update))]
-    public static class PassiveButtonUpdate
+    public static class RoleOptionsManager
     {
         public static void Postfix(PassiveButton __instance){
-            foreach(var item in Enum.GetValues(typeof(Roles)))
+            foreach(var role in Enum.GetValues(typeof(Roles)))
             { 
-                if(__instance.name == item.ToString())
+                if(__instance.name == role.ToString())
                 {
                     foreach(var item_ in RoleOptionsHolder.roleOptions)
                     {
@@ -186,7 +210,36 @@ namespace TheSpaceRoles
                     }
                 }
             }
-            
+
+            RoleOptionTeams.Drag();
+        }
+        [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+        private static class HudManagerUpdate
+        {
+            private static void Postfix()
+            {
+                SetNums();
+                
+            }
+        }
+        public static void SetNums()
+        {
+
+            int i = 0;
+            int team = 0;
+            foreach (var roleop in RoleOptionTeamsHolder.TeamsHolder)
+            {
+
+                roleop.SetPos(i + team*1.2f);
+                List<RoleOptionTeamRoles> items = RoleOptionTeamRoles.RoleOptionsInTeam.Where(x => x.team == roleop.teams).ToList();
+                foreach (var item in items)
+                {
+                    i++;
+                    item.SetPos(i + team  * 1.2f);
+                }
+
+                team++;
+            }
         }
     }
 }

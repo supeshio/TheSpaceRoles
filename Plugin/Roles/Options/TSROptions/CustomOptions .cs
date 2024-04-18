@@ -147,27 +147,27 @@ namespace TheSpaceRoles
         {
 
             var cSettings = new GameObject("CustomSettings");
-            cSettings.transform.parent = HudManager.Instance.transform;
+            cSettings.transform.SetParent(HudManager.Instance.transform);
             cSettings.active = true;
             cSettings.transform.localPosition = new(0,0,-160);
             var tsrSettings = new GameObject("TSRSettings");
-            tsrSettings.transform.parent = cSettings.transform;
+            tsrSettings.transform.SetParent(cSettings.transform);
             tsrSettings.active = false;
             tsrSettings.transform.localPosition = Vector3.zero;
             var customroleSettings = new GameObject("CustomRoleSettings");
-            customroleSettings.transform.parent = cSettings.transform ;
+            customroleSettings.transform.SetParent(cSettings.transform) ;
             customroleSettings.active = false;
             customroleSettings.transform.localPosition = Vector3.zero;
             var v = new GameObject("Roles");
-            v.transform.parent = customroleSettings.transform;
+            v.transform.SetParent( customroleSettings.transform);
             v.transform.localPosition = Vector3.zero;
             v.active = true;
             var b = new GameObject("Teams");
-            b.transform.parent = customroleSettings.transform;
+            b.transform.SetParent( customroleSettings.transform);
             b.transform.localPosition = Vector3.zero;
             b.active =true;
             var added = new GameObject("AddedRoles");
-            added.transform.parent = customroleSettings.transform;
+            added.transform.SetParent(customroleSettings.transform);
             added.transform.localPosition = Vector3.zero;
             added.active = true;
             CustomOptionSelectorHolder.CreateSelector();
@@ -230,14 +230,14 @@ namespace TheSpaceRoles
             renderer.sprite = Sprites.GetSpriteFromResources("ui.banner.png",200);
             renderer.color = Helper.ColorFromColorcode("#333333");
             @object.name = name;
-            @object.transform.parent = HudManager.Instance.transform.FindChild("CustomSettings").FindChild("TSRSettings").FindChild(parent.ToString()).FindChild("E");
+            @object.transform.SetParent(HudManager.Instance.transform.FindChild("CustomSettings").FindChild("TSRSettings").FindChild(parent.ToString()).FindChild("E"));
             @object.active = true;
             @object.layer = HudManager.Instance.gameObject.layer;
             @object.transform.localPosition = Vector3.zero;
             @object.transform.localScale = new(0.9f,0.9f,0.9f);
 
             Title_TMP = new GameObject("Title_TMP").AddComponent<TextMeshPro>();
-            Title_TMP.transform.parent = @object.transform;
+            Title_TMP.transform.SetParent(@object.transform);
             Title_TMP.fontStyle = FontStyles.Bold;
             Title_TMP.text = GetName();
             Title_TMP.fontSize = Title_TMP.fontSizeMax= 2f;
@@ -255,7 +255,7 @@ namespace TheSpaceRoles
             Title_TMP.rectTransform.sizeDelta = new Vector2(2.7f, 0.5f);
 
             Value_TMP = new GameObject("Value_TMP").AddComponent<TextMeshPro>();
-            Value_TMP.transform.parent = @object.transform;
+            Value_TMP.transform.SetParent(@object.transform);
             Value_TMP.fontStyle = FontStyles.Bold;
             Value_TMP.text = GetSelectionName();
             Value_TMP.fontSize = Value_TMP.fontSizeMax = 2f;
@@ -275,7 +275,7 @@ namespace TheSpaceRoles
             right = new GameObject().AddComponent<SpriteRenderer>();
             right.sprite = Sprites.GetSpriteFromResources("ui.double_right.png",80);
             right.gameObject.layer = HudManager.Instance.gameObject.layer;
-            right.transform.parent = @object.transform;
+            right.transform.SetParent(@object.transform);
             right.transform.localScale = Vector3.one;
             right.transform.localPosition = new Vector3(2.1f, 0, -1);
             right.color= Color.white;
@@ -298,7 +298,7 @@ namespace TheSpaceRoles
             left = new GameObject().AddComponent<SpriteRenderer>();
             left.sprite = Sprites.GetSpriteFromResources("ui.double_left.png",80);
             left.gameObject.layer = HudManager.Instance.gameObject.layer;
-            left.transform.parent = @object.transform;
+            left.transform.SetParent(@object.transform);
             left.transform.localScale = Vector3.one;
             left.color = Color.white;
             left.transform.localPosition = new Vector3(0.5f, 0, -1);

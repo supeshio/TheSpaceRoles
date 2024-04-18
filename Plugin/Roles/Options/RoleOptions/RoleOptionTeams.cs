@@ -1,13 +1,8 @@
-﻿using AmongUs.QuickChat;
-using HarmonyLib;
+﻿using Steamworks;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using static TheSpaceRoles.RoleOptionTeamRoles;
 
 namespace TheSpaceRoles
 {
@@ -16,15 +11,17 @@ namespace TheSpaceRoles
         public Teams teams;
         public GameObject @object;
         public TextMeshPro Title_TMP;
+        public float num;
         public RoleOptionTeams(Teams teams,int num)
         {
+            this.num = num;
             this.teams = teams;
             @object = new GameObject(teams.ToString())
             {
                 active = true
             };
-            @object.transform.parent = HudManager.Instance.transform.FindChild("CustomSettings").FindChild("CustomRoleSettings").FindChild("Teams");
-            @object.transform.localPosition = new(-2.0f, 2f - 0.36f * num, 0);
+            @object.transform.SetParent(HudManager.Instance.transform.FindChild("CustomSettings").FindChild("CustomRoleSettings").FindChild("Teams"));
+            RoleOptionsManager.SetNums();
             @object.transform.localScale = Vector3.one;
             @object.layer = HudManager.Instance.gameObject.layer;
             @object.tag = "teams";
@@ -42,9 +39,9 @@ namespace TheSpaceRoles
 
 
             Title_TMP = new GameObject("Title_TMP").AddComponent<TextMeshPro>();
-            Title_TMP.transform.parent = @object.transform;
+            Title_TMP.transform.SetParent(@object.transform);
             Title_TMP.fontStyle = FontStyles.Bold;
-            Title_TMP.text = teams.ToString();
+            Title_TMP.text = Translation.GetString("team."+teams.ToString()+".name");
             Title_TMP.color = Color.white;
             Title_TMP.fontSize = Title_TMP.fontSizeMax = 2f;
             Title_TMP.fontSizeMin = 1f;
@@ -62,6 +59,12 @@ namespace TheSpaceRoles
             var box = @object.AddComponent<BoxCollider2D>();
             box.size = renderer.bounds.size;
         }
+        public void SetPos(float num)
+        {
+            this.num = num;
+
+            @object.transform.localPosition = new(-2.0f, 2f - 0.36f * num, 0);
+        }
         public void Dragging()
         {
 
@@ -78,22 +81,39 @@ namespace TheSpaceRoles
         }
         public static void Drag()
         {
+            try
+            {
 
-            if (RoleOptions.DragMode)
-            {
-                foreach (var item in RoleOptionTeamsHolder.TeamsHolder)
+                if (RoleOptions.DragMode)
                 {
-                    item.Dragging();
+                    foreach (var item in RoleOptionTeamsHolder.TeamsHolder)
+                    {
+                        item.Dragging();
+                    }
+                    foreach (var item in RoleOptionTeamRoles.RoleOptionsInTeam)
+                    {
+                        item.Dragging();
+                    }
+                }
+                else
+                {
+                    foreach (var item in RoleOptionTeamsHolder.TeamsHolder)
+                    {
+                        var renderer = item.@object.GetComponent<SpriteRenderer>();
+                        renderer.color = GetLink.ColorFromTeams.ContainsKey(item.teams) ? GetLink.ColorFromTeams[item.teams] : Color.clear;
+                    }
+                    foreach (var item in RoleOptionTeamRoles.RoleOptionsInTeam)
+                    {
+                        var renderer = item.@object.GetComponent<SpriteRenderer>();
+                        renderer.color = GetLink.ColorFromTeams.ContainsKey(item.team) ? GetLink.ColorFromTeams[item.team] : Color.clear;
+                    }
                 }
             }
-            else
+            catch
             {
-                foreach (var item in RoleOptionTeamsHolder.TeamsHolder)
-                {
-                    var renderer = item.@object.GetComponent<SpriteRenderer>();
-                    renderer.color = GetLink.ColorFromTeams.ContainsKey(item.teams) ? GetLink.ColorFromTeams[item.teams] : Color.clear;
-                }
+
             }
+
         }
         public void VirtualAddRole(Roles roles)
         {/*

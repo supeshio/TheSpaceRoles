@@ -29,10 +29,8 @@ namespace TheSpaceRoles
         public virtual void WasKilled() { }
         public virtual void Update() { }
         public virtual void APUpdate() { }
-        public string ColoredRoleName()
-        {
-            return ColoredText(Color, Translation.GetString("role." + Role.ToString() + ".name"));
-        }
+        public string ColoredRoleName => ColoredText(Color, Translation.GetString("role." + Role.ToString() + ".name"));
+        public string RoleName => Translation.GetString("role." + Role.ToString() + ".name");
 
     }
     [HarmonyPatch(typeof(HudManager))]

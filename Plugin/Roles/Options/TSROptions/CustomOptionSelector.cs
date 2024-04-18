@@ -37,7 +37,7 @@ namespace TheSpaceRoles
         {
             this.Setting = setting;
             @object = new(setting.ToString());
-            @object.transform.parent = HudManager.Instance.transform.FindChild("CustomSettings").FindChild("TSRSettings");
+            @object.transform.SetParent(HudManager.Instance.transform.FindChild("CustomSettings").FindChild("TSRSettings"));
             @object.transform.localPosition = new Vector3(-3f, 1.5f - (float)setting *1f, -1);
             @object.layer = HudManager.Instance.gameObject.layer;
             var renderer = @object.AddComponent<SpriteRenderer>();
@@ -67,13 +67,13 @@ namespace TheSpaceRoles
 
             GameObject empty = new("E");
             empty.SetActive(false);
-            empty.transform.parent = @object.transform;
+            empty.transform.SetParent(@object.transform);
             empty.transform.localPosition= - @object.transform.localPosition;
             var v = @object.transform.localScale;
             empty.transform.localRotation = Quaternion.identity;
             TextMeshPro text = new GameObject("Title_TMP").AddComponent<TextMeshPro>();
             text.text = Translation.GetString("tsroptionselector."+setting.ToString());
-            text.transform.parent = @object.transform;
+            text.transform.SetParent(@object.transform);
             text.fontStyle = FontStyles.Bold;
             text.fontSizeMax = 3f;
             text.fontSize = text.fontSizeMin = 1f;
