@@ -290,7 +290,7 @@
           }
         },
         "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
+          "build/_._": {}
         }
       },
       "Microsoft.NETCore.Platforms/1.1.1": {
@@ -374,22 +374,6 @@
         },
         "runtime": {
           "lib/net5.0/_._": {
-            "related": ".xml"
-          }
-        }
-      },
-      "Reactor/2.2.0": {
-        "type": "package",
-        "dependencies": {
-          "BepInEx.Unity.IL2CPP": "6.0.0-be.670"
-        },
-        "compile": {
-          "lib/net6.0/Reactor.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/Reactor.dll": {
             "related": ".xml"
           }
         }
@@ -1386,7 +1370,7 @@
           }
         },
         "build": {
-          "buildTransitive/netcoreapp3.1/System.Text.Json.targets": {}
+          "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
       "System.Threading/4.3.0": {
@@ -1959,20 +1943,6 @@
         "lib/netstandard2.0/MonoMod.Utils.xml",
         "monomod.utils.22.5.1.1.nupkg.sha512",
         "monomod.utils.nuspec"
-      ]
-    },
-    "Reactor/2.2.0": {
-      "sha512": "foMHya01tmr//3tw+kO7FmY1ojnR0m+ShMU6sxogbnWeO85lmX3QM8aSIsYeAhtJSThf6Ben6iTM4O0KgVcmqw==",
-      "type": "package",
-      "path": "reactor/2.2.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "icon.png",
-        "lib/net6.0/Reactor.dll",
-        "lib/net6.0/Reactor.xml",
-        "reactor.2.2.0.nupkg.sha512",
-        "reactor.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
@@ -4710,8 +4680,7 @@
       "AmongUs.GameLibs.Steam >= 2024.3.5",
       "BepInEx.IL2CPP.MSBuild >= 2.1.0-rc.1",
       "BepInEx.PluginInfoProps >= 2.*",
-      "BepInEx.Unity.IL2CPP >= 6.0.0-be.*",
-      "Reactor >= 2.2.0"
+      "BepInEx.Unity.IL2CPP >= 6.0.0-be.*"
     ]
   },
   "packageFolders": {
@@ -4783,10 +4752,6 @@
             "include": "Compile",
             "target": "Package",
             "version": "[6.0.0-be.*, )"
-          },
-          "Reactor": {
-            "target": "Package",
-            "version": "[2.2.0, )"
           }
         },
         "imports": [
@@ -4800,12 +4765,26 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.27, 6.0.27]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.27, 6.0.27]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.27, 6.0.27]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.406\\RuntimeIdentifierGraph.json"
       }
     }
   }

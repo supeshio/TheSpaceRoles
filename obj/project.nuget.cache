@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZYe6svsYbZYirIXmpD2InSZRR97Mxgn0SDDkbFJt7TN2WoRf3FAnsaQIBdfXdY7jGb4a03gY3KuJ9YG5GAIRMQ==",
+  "dgSpecHash": "FdIjmzitivdFAlou3g9o1YBwMEaPUSUuP1Gui+XDAlbEeNkgUH5k/10wNOCs7fuc4UP+nfUyn28Yj+93EEjSng==",
   "success": true,
   "projectFilePath": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\TheSpaceRoles.csproj",
   "expectedPackageFiles": [
@@ -29,7 +29,6 @@
     "C:\\Users\\taiti\\.nuget\\packages\\mono.cecil\\0.11.4\\mono.cecil.0.11.4.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\monomod.runtimedetour\\22.5.1.1\\monomod.runtimedetour.22.5.1.1.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\monomod.utils\\22.5.1.1\\monomod.utils.22.5.1.1.nupkg.sha512",
-    "C:\\Users\\taiti\\.nuget\\packages\\reactor\\2.2.0\\reactor.2.2.0.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
@@ -94,7 +93,10 @@
     "C:\\Users\\taiti\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\system.text.json\\6.0.7\\system.text.json.6.0.7.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
-    "C:\\Users\\taiti\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512"
+    "C:\\Users\\taiti\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
+    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512"
   ],
   "logs": []
 }

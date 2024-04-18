@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
@@ -96,7 +97,10 @@ namespace TheSpaceRoles
         public static Dictionary<Teams, Color> ColorFromTeams = new()
         {
             {Teams.Crewmate,Palette.CrewmateBlue},
-            {Teams.Impostor,Palette.ImpostorRed}
+            {Teams.Impostor, Palette.ImpostorRed },
+            {Teams.Madmate,ColorFromColorcode("#aa1010")},
+            {Teams.Jackal,ColorFromColorcode("#09afff") },
+            {Teams.Jester,ColorFromColorcode("#ea618e")}
         };
 
 

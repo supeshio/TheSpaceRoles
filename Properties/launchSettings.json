@@ -10,6 +10,10 @@
     "TSR4 run": {
       "commandName": "Executable",
       "executablePath": "C:\\Users\\taiti\\Desktop\\AmongUsMods\\startBat\\start4.bat"
+    },
+    "TSR rrrrr": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\taiti\\Desktop\\AmongUsMods\\startBat\\start1.bat"
     }
   }
 }

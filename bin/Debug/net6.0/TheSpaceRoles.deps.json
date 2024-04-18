@@ -11,8 +11,7 @@
           "AmongUs.GameLibs.Steam": "2024.3.5",
           "BepInEx.IL2CPP.MSBuild": "2.1.0-rc.1",
           "BepInEx.PluginInfoProps": "2.1.0",
-          "BepInEx.Unity.IL2CPP": "6.0.0-be.688",
-          "Reactor": "2.2.0"
+          "BepInEx.Unity.IL2CPP": "6.0.0-be.688"
         },
         "runtime": {
           "TheSpaceRoles.dll": {}
@@ -124,17 +123,6 @@
           "System.Reflection.Emit.ILGeneration": "4.7.0",
           "System.Reflection.Emit.Lightweight": "4.7.0",
           "System.Reflection.TypeExtensions": "4.7.0"
-        }
-      },
-      "Reactor/2.2.0": {
-        "dependencies": {
-          "BepInEx.Unity.IL2CPP": "6.0.0-be.688"
-        },
-        "runtime": {
-          "lib/net6.0/Reactor.dll": {
-            "assemblyVersion": "2.2.0.0",
-            "fileVersion": "2.2.0.0"
-          }
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
@@ -804,13 +792,6 @@
       "sha512": "sha512-vBObO1atXxhi2C4AuC53y87Bqeogi9xIrD1Ym3YWr5uxc8Nrm8SrsFeD1i3x04R999+XQ3FdeHrbXScyWYEHqQ==",
       "path": "monomod.utils/22.5.1.1",
       "hashPath": "monomod.utils.22.5.1.1.nupkg.sha512"
-    },
-    "Reactor/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-foMHya01tmr//3tw+kO7FmY1ojnR0m+ShMU6sxogbnWeO85lmX3QM8aSIsYeAhtJSThf6Ben6iTM4O0KgVcmqw==",
-      "path": "reactor/2.2.0",
-      "hashPath": "reactor.2.2.0.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
       "type": "package",
