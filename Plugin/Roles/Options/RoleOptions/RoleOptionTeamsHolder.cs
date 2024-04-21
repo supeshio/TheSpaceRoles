@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TheSpaceRoles
 {
@@ -14,7 +11,7 @@ namespace TheSpaceRoles
             int i = 0;
             foreach (Teams team in Enum.GetValues(typeof(Teams)))
             {
-                TeamsHolder.Add(new RoleOptionTeams(team,i));
+                TeamsHolder.Add(new RoleOptionTeams(team, i));
                 i++;
             }
         }

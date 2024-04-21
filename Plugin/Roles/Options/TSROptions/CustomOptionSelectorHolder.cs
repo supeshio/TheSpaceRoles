@@ -1,14 +1,9 @@
-﻿using Rewired.Utils.Classes.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using System;
 
 namespace TheSpaceRoles
 {
-    public enum CustomOptionSelectorSetting{
+    public enum CustomOptionSelectorSetting
+    {
         General,
         InformationEquipment,
         Starter
@@ -17,7 +12,7 @@ namespace TheSpaceRoles
     {
         public static void CreateSelector()
         {
-            foreach(CustomOptionSelectorSetting option in Enum.GetValues(typeof(CustomOptionSelectorSetting)))
+            foreach (CustomOptionSelectorSetting option in Enum.GetValues(typeof(CustomOptionSelectorSetting)))
             {
                 _ = new CustomOptionSelector(option);
             }

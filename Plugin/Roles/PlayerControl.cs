@@ -25,14 +25,14 @@ namespace TheSpaceRoles
                     var d = DataBase.AllPlayerControls().First(x => x.PlayerId == i).cosmetics.nameText;
                     GameObject gameObject = new("roletext");
                     TextMeshPro RoleText = gameObject.AddComponent<TextMeshPro>();
-                    RoleText.transform.parent = d.transform.parent;
+                    RoleText.transform.SetParent(d.transform.parent);
                     RoleText.transform.localPosition = new Vector3(d.transform.localPosition.x, d.transform.localPosition.y - 0.25f, d.transform.localPosition.z);
                     RoleText.alignment = TextAlignmentOptions.Center;
                     RoleText.tag = d.tag;
                     RoleText.fontSize = d.fontSize;
                     RoleText.sortingOrder = d.sortingOrder;
                     RoleText.sortingLayerID = d.sortingLayerID;
-                    RoleText.text = $"<size=85%>{string.Join("</color>×", rolemaster.Select(x => x.ColoredRoleName())/*+"</color>"*/)}";
+                    RoleText.text = $"<size=85%>{string.Join("</color>×", rolemaster.Select(x => x.ColoredRoleName)/*+"</color>"*/)}";
                     RoleText.transform.localScale = Vector3.one;
                     RoleText.m_sharedMaterial = d.m_sharedMaterial;
                     RoleText.fontStyle = d.fontStyle;

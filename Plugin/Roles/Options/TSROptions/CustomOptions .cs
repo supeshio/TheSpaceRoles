@@ -2,15 +2,11 @@
 using BepInEx.Configuration;
 using HarmonyLib;
 using Hazel;
-using Steamworks;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.Services.Core.Telemetry.Internal;
 using UnityEngine;
 using UnityEngine.Events;
-using static Il2CppSystem.DateTimeParse;
 
 namespace TheSpaceRoles
 {
@@ -147,32 +143,33 @@ namespace TheSpaceRoles
         {
 
             var cSettings = new GameObject("CustomSettings");
-            cSettings.transform.parent = HudManager.Instance.transform;
+            cSettings.transform.SetParent(HudManager.Instance.transform);
             cSettings.active = true;
-            cSettings.transform.localPosition = new(0,0,-160);
+            cSettings.transform.localPosition = new(0, 0, -160);
             var tsrSettings = new GameObject("TSRSettings");
-            tsrSettings.transform.parent = cSettings.transform;
+            tsrSettings.transform.SetParent(cSettings.transform);
             tsrSettings.active = false;
             tsrSettings.transform.localPosition = Vector3.zero;
             var customroleSettings = new GameObject("CustomRoleSettings");
-            customroleSettings.transform.parent = cSettings.transform ;
+            customroleSettings.transform.SetParent(cSettings.transform);
             customroleSettings.active = false;
             customroleSettings.transform.localPosition = Vector3.zero;
             var v = new GameObject("Roles");
-            v.transform.parent = customroleSettings.transform;
+            v.transform.SetParent(customroleSettings.transform);
             v.transform.localPosition = Vector3.zero;
             v.active = true;
             var b = new GameObject("Teams");
-            b.transform.parent = customroleSettings.transform;
+            b.transform.SetParent(customroleSettings.transform);
             b.transform.localPosition = Vector3.zero;
-            b.active =true;
+            b.active = true;
             var added = new GameObject("AddedRoles");
-            added.transform.parent = customroleSettings.transform;
+            added.transform.SetParent(customroleSettings.transform);
             added.transform.localPosition = Vector3.zero;
             added.active = true;
             CustomOptionSelectorHolder.CreateSelector();
             CustomOptionsHolder.CreateCustomOptions();
             CustomOptionsHolder.AllCheck();
+            RoleOptionsDescription.StartExplain();
             RoleOptionsHolder.RoleOptionsCreate();
             RoleOptionTeamsHolder.Create();
         }
@@ -190,10 +187,11 @@ namespace TheSpaceRoles
         public static int preset = 0;
         public string GetName() => Translation.GetString("tsroption." + name);
         //public string GetSelectionName() => Translation.GetString("tsroption.selection.sec", [selections[selection].ToString()]);
-        public string GetSelectionName(){
+        public string GetSelectionName()
+        {
 
             return selections[selection]();
-            
+
         }
         public string name;
         public string parentId;
@@ -210,7 +208,7 @@ namespace TheSpaceRoles
         public TextMeshPro Value_TMP;
         public SpriteRenderer right;
         public SpriteRenderer left;
-        public CustomOption(CustomOptionSelectorSetting parent,string name,
+        public CustomOption(CustomOptionSelectorSetting parent, string name,
             Func<string>[] selections, Func<string> dafaultValue, string parentId = null, Func<int, bool> func = null, Action onChange = null
             )
         {
@@ -227,20 +225,20 @@ namespace TheSpaceRoles
 
             @object = new GameObject();
             var renderer = @object.AddComponent<SpriteRenderer>();
-            renderer.sprite = Sprites.GetSpriteFromResources("ui.banner.png",200);
+            renderer.sprite = Sprites.GetSpriteFromResources("ui.banner.png", 200);
             renderer.color = Helper.ColorFromColorcode("#333333");
             @object.name = name;
-            @object.transform.parent = HudManager.Instance.transform.FindChild("CustomSettings").FindChild("TSRSettings").FindChild(parent.ToString()).FindChild("E");
+            @object.transform.SetParent(HudManager.Instance.transform.FindChild("CustomSettings").FindChild("TSRSettings").FindChild(parent.ToString()).FindChild("E"));
             @object.active = true;
             @object.layer = HudManager.Instance.gameObject.layer;
             @object.transform.localPosition = Vector3.zero;
-            @object.transform.localScale = new(0.9f,0.9f,0.9f);
+            @object.transform.localScale = new(0.9f, 0.9f, 0.9f);
 
             Title_TMP = new GameObject("Title_TMP").AddComponent<TextMeshPro>();
-            Title_TMP.transform.parent = @object.transform;
+            Title_TMP.transform.SetParent(@object.transform);
             Title_TMP.fontStyle = FontStyles.Bold;
             Title_TMP.text = GetName();
-            Title_TMP.fontSize = Title_TMP.fontSizeMax= 2f;
+            Title_TMP.fontSize = Title_TMP.fontSizeMax = 2f;
             Title_TMP.fontSizeMin = 1f;
             Title_TMP.alignment = TextAlignmentOptions.Left;
             Title_TMP.enableWordWrapping = false;
@@ -255,7 +253,7 @@ namespace TheSpaceRoles
             Title_TMP.rectTransform.sizeDelta = new Vector2(2.7f, 0.5f);
 
             Value_TMP = new GameObject("Value_TMP").AddComponent<TextMeshPro>();
-            Value_TMP.transform.parent = @object.transform;
+            Value_TMP.transform.SetParent(@object.transform);
             Value_TMP.fontStyle = FontStyles.Bold;
             Value_TMP.text = GetSelectionName();
             Value_TMP.fontSize = Value_TMP.fontSizeMax = 2f;
@@ -273,12 +271,12 @@ namespace TheSpaceRoles
 
 
             right = new GameObject().AddComponent<SpriteRenderer>();
-            right.sprite = Sprites.GetSpriteFromResources("ui.double_right.png",80);
+            right.sprite = Sprites.GetSpriteFromResources("ui.double_right.png", 80);
             right.gameObject.layer = HudManager.Instance.gameObject.layer;
-            right.transform.parent = @object.transform;
+            right.transform.SetParent(@object.transform);
             right.transform.localScale = Vector3.one;
             right.transform.localPosition = new Vector3(2.1f, 0, -1);
-            right.color= Color.white;
+            right.color = Color.white;
             right.material = Data.textMaterial;
             right.gameObject.AddComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
             var rbutton = right.gameObject.AddComponent<PassiveButton>();
@@ -287,7 +285,7 @@ namespace TheSpaceRoles
             rbutton.OnMouseOver = new UnityEvent();
             rbutton._CachedZ_k__BackingField = 0.1f;
             rbutton.CachedZ = 0.1f;
-            rbutton.Colliders =  new[] { right.GetComponent<BoxCollider2D>() };
+            rbutton.Colliders = new[] { right.GetComponent<BoxCollider2D>() };
             rbutton.OnClick.AddListener((System.Action)(() => { updateSelection(selection + 1); }));
             rbutton.OnMouseOver.AddListener((System.Action)(() => { right.color = Palette.AcceptedGreen; }));
             rbutton.OnMouseOut.AddListener((System.Action)(() => { right.color = Color.white; }));
@@ -296,9 +294,9 @@ namespace TheSpaceRoles
 
 
             left = new GameObject().AddComponent<SpriteRenderer>();
-            left.sprite = Sprites.GetSpriteFromResources("ui.double_left.png",80);
+            left.sprite = Sprites.GetSpriteFromResources("ui.double_left.png", 80);
             left.gameObject.layer = HudManager.Instance.gameObject.layer;
-            left.transform.parent = @object.transform;
+            left.transform.SetParent(@object.transform);
             left.transform.localScale = Vector3.one;
             left.color = Color.white;
             left.transform.localPosition = new Vector3(0.5f, 0, -1);
@@ -318,17 +316,17 @@ namespace TheSpaceRoles
             lbutton.ClickSound = HudManager.Instance.Chat.quickChatMenu.closeButton.ClickSound;
 
         }
-        public static Func<string> GetOptionSelection(string str,string[] strs = null)
+        public static Func<string> GetOptionSelection(string str, string[] strs = null)
         {
-            return ()=> Translation.GetString("tsroption.selection."+str,strs);
+            return () => Translation.GetString("tsroption.selection." + str, strs);
         }
-        
+
         public static Func<string> On() => GetOptionSelection("on");
         public static Func<string> Off() => GetOptionSelection("off");
         public static Func<string> Unlimited() => GetOptionSelection("unlimited");
         public static Func<string> Right() => GetOptionSelection("right");
         public static Func<string> Left() => GetOptionSelection("left");
-        public static Func<string> Sec(float x) => GetOptionSelection("second",[x.ToString()]);
+        public static Func<string> Sec(float x) => GetOptionSelection("second", [x.ToString()]);
 
         public static Func<int, bool> funcOn = x => x != 0;
         public static Func<int, bool> funcOff = x => x == 0;
@@ -338,9 +336,9 @@ namespace TheSpaceRoles
         {
             return new CustomOption(parent, name, [Off(), On()], DefaultValue ? On() : Off(), parentId, func, onChange);
         }
-        public static CustomOption Create(CustomOptionSelectorSetting parent,string name, Func<string>[] selections, Func<string> selection, string parentId = null, Func<int, bool> func = null, Action onChange = null)
+        public static CustomOption Create(CustomOptionSelectorSetting parent, string name, Func<string>[] selections, Func<string> selection, string parentId = null, Func<int, bool> func = null, Action onChange = null)
         {
-            return new CustomOption(parent,name, selections, selection, parentId, func, onChange);
+            return new CustomOption(parent, name, selections, selection, parentId, func, onChange);
         }
 
 
@@ -348,7 +346,7 @@ namespace TheSpaceRoles
 
         public void updateSelection(int newSelection)
         {
-            entry.Value = ((newSelection % selections.Length )+ selections.Length ) % selections.Length ;
+            entry.Value = ((newSelection % selections.Length) + selections.Length) % selections.Length;
             Logger.Info($"{name}:{selection}");
             ShareOptionSelections();
             CustomOptionsHolder.AllCheck();
@@ -356,7 +354,7 @@ namespace TheSpaceRoles
         public void Check(ref int i)
         {
             Value_TMP.text = GetSelectionName();
-            if(func == null || parentId == null)
+            if (func == null || parentId == null)
             {
                 @object.transform.localPosition = new Vector3(3, 2f - 0.5f * i, 0);
                 i++;
@@ -365,27 +363,27 @@ namespace TheSpaceRoles
             {
                 int result = -1;
                 //parentIdを探す
-                foreach(var customoptions in CustomOptionsHolder.Options)
+                foreach (var customoptions in CustomOptionsHolder.Options)
                 {
-                    foreach(var option in customoptions)
+                    foreach (var option in customoptions)
                     {
-                        if(option.name == parentId)
+                        if (option.name == parentId)
                         {
-                            result = func(option.selection) ?1:0;
+                            result = func(option.selection) ? 1 : 0;
                         }
                     }
                 }
                 bool res = false;
-                if(result == -1)
+                if (result == -1)
                 {
                     Logger.Error($"(parentId:{parentId}) is not included in Holder.Options");
                 }
                 else
                 {
-                    res = result == 1 ? true:false;
+                    res = result == 1 ? true : false;
                 }
 
-                Logger.Info(name + ":" + selections[selection] + ", func:"+res, "Check");
+                Logger.Info(name + ":" + selections[selection] + ", func:" + res, "Check");
                 if (res)
                 {
                     @object.transform.localPosition = new Vector3(3, 2f - 0.5f * i, 0);
@@ -403,10 +401,10 @@ namespace TheSpaceRoles
             if (PlayerControl.AllPlayerControls.Count <= 1 || AmongUsClient.Instance?.AmHost == false && PlayerControl.LocalPlayer == null) return;
 
             MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)Rpcs.ShareOptions, Hazel.SendOption.Reliable);
-            
+
 
             writer.WritePacked((uint)CustomOptionsHolder.Options.Select(x => x.Count).Sum());
-            foreach(var options in CustomOptionsHolder.Options)
+            foreach (var options in CustomOptionsHolder.Options)
             {
                 foreach (CustomOption option in options)
                 {
@@ -425,7 +423,7 @@ namespace TheSpaceRoles
                 foreach (CustomOption option in options)
                 {
                     uint i = reader.ReadPackedUInt32();
-                    option.entry.Value= (int)i;
+                    option.entry.Value = (int)i;
                 }
             }
             CustomOptionsHolder.AllCheck();
@@ -440,7 +438,7 @@ namespace TheSpaceRoles
             CustomOption.ShareOptionSelections();
         }
     }
-    [HarmonyPatch(typeof(GameSettingMenu),nameof(GameSettingMenu.Close))]
+    [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Close))]
     public class GameSettingMenuClosePatch
     {
         public static void Postfix()

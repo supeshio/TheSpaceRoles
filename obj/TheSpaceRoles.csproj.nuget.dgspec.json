@@ -25,12 +25,8 @@
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.bepinex.dev/v3/index.json": {},
-          "https://nuget.samboy.dev/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -57,18 +53,17 @@
               "target": "Package",
               "version": "[2024.3.5, )"
             },
+            "AsmResolver": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
             "BepInEx.IL2CPP.MSBuild": {
               "target": "Package",
               "version": "[2.1.0-rc.1, )"
             },
-            "BepInEx.PluginInfoProps": {
-              "target": "Package",
-              "version": "[2.*, )"
-            },
             "BepInEx.Unity.IL2CPP": {
-              "include": "Compile",
               "target": "Package",
-              "version": "[6.0.0-be.*, )"
+              "version": "[6.0.0-be.688, )"
             }
           },
           "imports": [
@@ -85,15 +80,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.27, 6.0.27]"
+              "version": "[6.0.29, 6.0.29]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.27, 6.0.27]"
+              "version": "[6.0.29, 6.0.29]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.27, 6.0.27]"
+              "version": "[6.0.29, 6.0.29]"
             }
           ],
           "frameworkReferences": {
@@ -101,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }

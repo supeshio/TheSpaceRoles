@@ -1,11 +1,8 @@
 using AmongUs.Data.Legacy;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using Il2CppSystem.Runtime.Serialization;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 namespace TheSpaceRoles
 {
@@ -34,9 +31,9 @@ namespace TheSpaceRoles
         }
         public static void Load()
         {
-            List<StringNames> longList = [..Palette.ColorNames];
-            List<Color32> colorList = [..Palette.PlayerColors];
-            List<Color32> shadowList = [..Palette.ShadowColors];
+            List<StringNames> longList = [.. Palette.ColorNames];
+            List<Color32> colorList = [.. Palette.PlayerColors];
+            List<Color32> shadowList = [.. Palette.ShadowColors];
 
             List<CustomColor> colors =
             [
@@ -107,7 +104,7 @@ namespace TheSpaceRoles
                 }
             }
         }
-            [HarmonyPatch(typeof(PlayerTab), nameof(PlayerTab.OnEnable))]
+        [HarmonyPatch(typeof(PlayerTab), nameof(PlayerTab.OnEnable))]
         private static class PlayerTabEnablePatch
         {
             public static void Postfix(PlayerTab __instance)

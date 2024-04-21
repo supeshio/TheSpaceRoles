@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HarmonyLib;
 
 namespace TheSpaceRoles
 {
-    [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.CheckMurder))]
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckMurder))]
     public static class DeletePet
     {
         public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl player)
@@ -15,7 +10,7 @@ namespace TheSpaceRoles
             player.RpcSetPet("");
         }
     }
-    [HarmonyPatch(typeof(PetBehaviour),nameof(PetBehaviour.SetMourning))]
+    [HarmonyPatch(typeof(PetBehaviour), nameof(PetBehaviour.SetMourning))]
     public static class Pet
     {
         public static void Prefix(PetBehaviour __instance

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FdIjmzitivdFAlou3g9o1YBwMEaPUSUuP1Gui+XDAlbEeNkgUH5k/10wNOCs7fuc4UP+nfUyn28Yj+93EEjSng==",
+  "dgSpecHash": "ehvqYSLjMt6rIZG2AsKmduThAeSXLsTlKFv7UvyONUC/ZiP92x7J4VhM/E67lEJinF2ZjCvk/eQkEX+FHcD5Xw==",
   "success": true,
   "projectFilePath": "C:\\Users\\taiti\\Documents\\GitHub\\TheSpaceRoles\\TheSpaceRoles.csproj",
   "expectedPackageFiles": [
@@ -12,7 +12,6 @@
     "C:\\Users\\taiti\\.nuget\\packages\\assetripper.versionutilities\\1.3.1\\assetripper.versionutilities.1.3.1.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\bepinex.core\\6.0.0-be.688\\bepinex.core.6.0.0-be.688.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\bepinex.il2cpp.msbuild\\2.1.0-rc.1\\bepinex.il2cpp.msbuild.2.1.0-rc.1.nupkg.sha512",
-    "C:\\Users\\taiti\\.nuget\\packages\\bepinex.plugininfoprops\\2.1.0\\bepinex.plugininfoprops.2.1.0.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\bepinex.unity.common\\6.0.0-be.688\\bepinex.unity.common.6.0.0-be.688.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\bepinex.unity.il2cpp\\6.0.0-be.688\\bepinex.unity.il2cpp.6.0.0-be.688.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\disarm\\2022.1.0-master.26\\disarm.2022.1.0-master.26.nupkg.sha512",
@@ -94,9 +93,9 @@
     "C:\\Users\\taiti\\.nuget\\packages\\system.text.json\\6.0.7\\system.text.json.6.0.7.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\taiti\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
-    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512"
+    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.29\\microsoft.windowsdesktop.app.ref.6.0.29.nupkg.sha512",
+    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.29\\microsoft.netcore.app.ref.6.0.29.nupkg.sha512",
+    "C:\\Users\\taiti\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.29\\microsoft.aspnetcore.app.ref.6.0.29.nupkg.sha512"
   ],
   "logs": []
 }
