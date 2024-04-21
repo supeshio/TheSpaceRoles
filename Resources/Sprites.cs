@@ -129,7 +129,7 @@ public class Sprites
         }
         if (parent != null)
         {
-            val.transform.SetParent( parent.transform);
+            val.transform.SetParent(parent.transform);
         }
         val.transform.position = new Vector3(0f, 0f, 0f);
         SpriteRenderer component = val.GetComponent<SpriteRenderer>();

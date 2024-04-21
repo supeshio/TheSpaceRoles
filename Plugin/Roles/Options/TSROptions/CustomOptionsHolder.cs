@@ -1,8 +1,5 @@
-﻿using Hazel.Dtls;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using static TheSpaceRoles.CustomOption;
 using static TheSpaceRoles.Translation;
 
@@ -51,7 +48,7 @@ namespace TheSpaceRoles
                 Logger.Error(e.Source + "\n" + e.Message + "\n" + e.StackTrace);
             }
         }
-        public static Func<string>[] GetSeconds(float sec=60f,float delta_sec=2.5f)
+        public static Func<string>[] GetSeconds(float sec = 60f, float delta_sec = 2.5f)
         {
 
             List<Func<string>> second = [];
@@ -61,12 +58,12 @@ namespace TheSpaceRoles
             }
             return [.. second];
         }
-        public static Func<string>[] GetSecondsIncludeUnlimited(float sec = 60f, float delta_sec = 2.5f,bool include_off = true)
+        public static Func<string>[] GetSecondsIncludeUnlimited(float sec = 60f, float delta_sec = 2.5f, bool include_off = true)
         {
 
             List<Func<string>> second = [];
 
-            second.Add(()=>GetString("tsroption.selection.unlimited"));
+            second.Add(() => GetString("tsroption.selection.unlimited"));
             if (include_off) second.Add(Sec(0));
 
             for (float i = 0; i <= sec; i += delta_sec)

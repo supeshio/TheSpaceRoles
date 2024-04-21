@@ -100,9 +100,9 @@ namespace TheSpaceRoles
             {Teams.Impostor, Palette.ImpostorRed },
             {Teams.Madmate,ColorFromColorcode("#aa1010")},
             {Teams.Jackal,ColorFromColorcode("#09afff") },
-            {Teams.Jester,ColorFromColorcode("#ea618e")}
+            {Teams.Jester, ColorFromColorcode("#ea618e") },
         };
-
+        public static Color GetOtherRolesColor => ColorFromColorcode("#777777");
 
         public static CustomRole GetCustomRole(Roles roles)
         {

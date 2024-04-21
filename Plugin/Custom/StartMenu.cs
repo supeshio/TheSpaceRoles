@@ -37,7 +37,8 @@ namespace TheSpaceRoles
         }
     }
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Start))]
-    public static class HudStart{
+    public static class HudStart
+    {
         public static void Postfix(HudManager __instance)
         {
             Data.textMaterial = __instance.GameSettings.fontMaterial;

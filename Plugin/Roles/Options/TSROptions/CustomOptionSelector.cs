@@ -1,16 +1,9 @@
-﻿using AmongUs.GameOptions;
-using HarmonyLib;
-using Iced.Intel;
-using Il2CppSystem;
-using System;
+﻿using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using static TheSpaceRoles.CustomOption;
 
 namespace TheSpaceRoles
 {
@@ -38,7 +31,7 @@ namespace TheSpaceRoles
             this.Setting = setting;
             @object = new(setting.ToString());
             @object.transform.SetParent(HudManager.Instance.transform.FindChild("CustomSettings").FindChild("TSRSettings"));
-            @object.transform.localPosition = new Vector3(-3f, 1.5f - (float)setting *1f, -1);
+            @object.transform.localPosition = new Vector3(-3f, 1.5f - (float)setting * 1f, -1);
             @object.layer = HudManager.Instance.gameObject.layer;
             var renderer = @object.AddComponent<SpriteRenderer>();
             renderer.color = Helper.ColorFromColorcode("#333333");
@@ -53,26 +46,32 @@ namespace TheSpaceRoles
             Button._CachedZ_k__BackingField = 0.1f;
             Button.CachedZ = 0.1f;
             Button.Colliders = new[] { @object.GetComponent<BoxCollider2D>() };
-            Button.OnClick.AddListener((System.Action)(() => {
-                @object.transform.FindChild("E").gameObject.active = true; 
-                selectors.First(x => x.Setting == Select).Check(); 
-                Select = Setting;}));
+            Button.OnClick.AddListener((System.Action)(() =>
+            {
+                @object.transform.FindChild("E").gameObject.active = true;
+                selectors.First(x => x.Setting == Select).Check();
+                Select = Setting;
+            }));
 
-            Button.OnMouseOver.AddListener((System.Action)(() => { 
-                renderer.color =Select==Setting ? Helper.ColorFromColorcode("#cccccc") : Helper.ColorFromColorcode("#555555"); }));
-            Button.OnMouseOut.AddListener((System.Action)(() => {
-                renderer.color = Select == Setting ? Helper.ColorFromColorcode("#cccccc"): Helper.ColorFromColorcode("#333333"); }));
+            Button.OnMouseOver.AddListener((System.Action)(() =>
+            {
+                renderer.color = Select == Setting ? Helper.ColorFromColorcode("#cccccc") : Helper.ColorFromColorcode("#555555");
+            }));
+            Button.OnMouseOut.AddListener((System.Action)(() =>
+            {
+                renderer.color = Select == Setting ? Helper.ColorFromColorcode("#cccccc") : Helper.ColorFromColorcode("#333333");
+            }));
             Button.HoverSound = HudManager.Instance.Chat.GetComponentsInChildren<ButtonRolloverHandler>().FirstOrDefault().HoverSound;
             Button.ClickSound = HudManager.Instance.Chat.quickChatMenu.closeButton.ClickSound;
 
             GameObject empty = new("E");
             empty.SetActive(false);
             empty.transform.SetParent(@object.transform);
-            empty.transform.localPosition= - @object.transform.localPosition;
+            empty.transform.localPosition = -@object.transform.localPosition;
             var v = @object.transform.localScale;
             empty.transform.localRotation = Quaternion.identity;
             TextMeshPro text = new GameObject("Title_TMP").AddComponent<TextMeshPro>();
-            text.text = Translation.GetString("tsroptionselector."+setting.ToString());
+            text.text = Translation.GetString("tsroptionselector." + setting.ToString());
             text.transform.SetParent(@object.transform);
             text.fontStyle = FontStyles.Bold;
             text.fontSizeMax = 3f;
@@ -101,12 +100,12 @@ namespace TheSpaceRoles
         public void Check()
         {
             @object.GetComponent<SpriteRenderer>().color = Helper.ColorFromColorcode("#333333");
-            @object.transform.FindChild("E").gameObject.active =false;
+            @object.transform.FindChild("E").gameObject.active = false;
         }
-        
+
     }
 
-    [HarmonyPatch(typeof(GameOptionsMenu),nameof(GameOptionsMenu.enabled))]
+    [HarmonyPatch(typeof(GameOptionsMenu), nameof(GameOptionsMenu.enabled))]
     public static class CustomOptionSelect
     {
 

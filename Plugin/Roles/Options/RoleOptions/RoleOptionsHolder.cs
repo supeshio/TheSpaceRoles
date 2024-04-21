@@ -1,10 +1,6 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace TheSpaceRoles
 {
@@ -12,15 +8,16 @@ namespace TheSpaceRoles
     {
         public static List<RoleOptions> roleOptions = new();
         public static Roles selectedRoles = Roles.None;
-        public static void RoleOptionsCreate() {
+        public static void RoleOptionsCreate()
+        {
 
             roleOptions = [];
             int i = 0;
             //一旦全部取得にしてるけど後で変えるかも?
 
-            foreach(Roles role in Enum.GetValues(typeof(Roles)))
+            foreach (Roles role in Enum.GetValues(typeof(Roles)))
             {
-                if (GetLink.CustomRoleLink.Any(x=>x.Role == role))
+                if (GetLink.CustomRoleLink.Any(x => x.Role == role))
                 {
                     roleOptions.Add(new RoleOptions(role, i));
 
