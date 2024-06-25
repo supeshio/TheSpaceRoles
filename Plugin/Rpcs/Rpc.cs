@@ -48,7 +48,7 @@ namespace TheSpaceRoles
                         LobbyTimer.GameStartManagerUpdatePatch.TimerSet(reader.ReadSingle(), reader.ReadSingle());
                         break;
                     case Rpcs.ShareOptions:
-                        CustomOption.GetOptionSelections(reader);
+                        //CustomOption.GetOptionSelections(reader);
                         break;
                     case Rpcs.GameEnd:
                         //int team = reader.ReadInt32();

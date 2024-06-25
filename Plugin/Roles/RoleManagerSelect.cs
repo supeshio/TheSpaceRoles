@@ -59,7 +59,8 @@ namespace TheSpaceRoles
                         {
 
                             string s = team + "_" + role + "_" + "spawncount";
-                            var value = TSR.Instance.Config.Bind($"Preset{CustomOption.preset}", s, 0).Value;
+                            var value = TSR.Instance.Config.Bind($"Preset", s, 0).Value;
+                            //var value = TSR.Instance.Config.Bind($"Preset{CustomOption.preset}", s, 0).Value;
                             if (value > 0)
                             {
                                 if (!roles.ContainsKey(team))
@@ -72,7 +73,8 @@ namespace TheSpaceRoles
                             }
                         }
                         string s_ = "-1_" + role + "_" + "spawncount";
-                        var value_ = TSR.Instance.Config.Bind($"Preset{CustomOption.preset}", s_, 0).Value;
+                        //var value_ = TSR.Instance.Config.Bind($"Preset{CustomOption.preset}", s_, 0).Value;
+                        var value_ = TSR.Instance.Config.Bind($"Preset", s_, 0).Value;
                         if (value_ > 0)
                         {
 

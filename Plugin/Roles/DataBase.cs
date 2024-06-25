@@ -127,12 +127,12 @@ namespace TheSpaceRoles
 
             HudManagerGame.OnGameStarted = true;
 
-            CustomOptionSelector.selectors.Clear();
-            CustomOptionsHolder.Options.Do(x => x.Clear());
-            RoleOptionsHolder.roleOptions.Clear();
-            RoleOptionTeamsHolder.TeamsHolder.Clear();
-            RoleOptionTeamRoles.RoleOptionsInTeam.Clear();
-            ScrollerP.scrollers.Clear();
+            //CustomOptionSelector.selectors.Clear();
+            //CustomOptionsHolder.Options.Do(x => x.Clear());
+            //RoleOptionsHolder.roleOptions.Clear();
+            //RoleOptionTeamsHolder.TeamsHolder.Clear();
+            //RoleOptionTeamRoles.RoleOptionsInTeam.Clear();
+            //ScrollerP.scrollers.Clear();
         }
 
         public static Dictionary<Teams, int> GetPlayerCountInTeam()

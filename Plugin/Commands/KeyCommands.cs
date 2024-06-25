@@ -20,10 +20,10 @@ namespace TheSpaceRoles.Plugin
 
         public static int undocount = 1;
 
-        public static List<string> chattexts = new List<string>();
+        public static List<string> chattexts = new();
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
         [HarmonyPostfix]
-        public static void player_Postfix()
+        public static void PlayerPostfix()
         {
 
             //Debug
@@ -47,7 +47,7 @@ namespace TheSpaceRoles.Plugin
                 {
                     if (Input.GetKey((KeyCode)304) && Input.GetKey((KeyCode)303) && Input.GetKey((KeyCode)104))
                     {
-                        ((Behaviour)__instance).enabled = false;
+                        __instance.enabled = false;
                         __instance.RpcEndGame((GameOverReason)3, false);
                         __instance.RpcEndGame((GameOverReason)8, false);
                         Logger.Info("廃村処理", "", "Postfix");

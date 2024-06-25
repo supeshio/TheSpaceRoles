@@ -170,9 +170,9 @@ namespace TheSpaceRoles
         public static void AddChat(string Chat, ChatController __instance)
         {
             string name = (PlayerControl.LocalPlayer).name;
-            PlayerControl.LocalPlayer.SetName($"<size=180%>{TSR.cs_name}", false);
+            PlayerControl.LocalPlayer.SetName($"<size=180%>{TSR.cs_name}");
             __instance.AddChat(PlayerControl.LocalPlayer, "\n<size=90%>" + Chat, true);
-            PlayerControl.LocalPlayer.SetName(name, false);
+            PlayerControl.LocalPlayer.SetName(name);
         }
 
         public static Tuple<string, bool> ChatBool(string[] str, string text, ConfigEntry<bool> config, ref string AddChat)

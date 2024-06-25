@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>TSR4 run</ActiveDebugProfile>
+    <ActiveDebugProfile>TSR run</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

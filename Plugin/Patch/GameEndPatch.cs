@@ -66,8 +66,8 @@ namespace TheSpaceRoles
                 if ((int)reason >= 10)
                 {
                     var winteam = (Teams)(reason - 10);
-                    TempData.winners = new();
-                    var v = TempData.winners;
+                    EndGameResult.CachedWinners = new();
+                    var v = EndGameResult.CachedWinners;
 
                     Logger.Info("WinTeam:" + winteam.ToString());
                     foreach (var item in DataBase.AllPlayerRoles)
@@ -75,11 +75,11 @@ namespace TheSpaceRoles
                         if (item.Value.Any(c => c.Team.Team == winteam))
                         {
 
-                            v.Add(new WinningPlayerData(DataBase.AllPlayerControls().First(y => y.PlayerId == item.Key).Data));
+                            v.Add(new CachedPlayerData(DataBase.AllPlayerControls().First(y => y.PlayerId == item.Key).Data));
                         }
                         else if (item.Value.Any(c => c.Team.AdditionalWinCheck(winteam)))
                         {
-                            v.Add(new WinningPlayerData(DataBase.AllPlayerControls().First(y => y.PlayerId == item.Key).Data));
+                            v.Add(new CachedPlayerData(DataBase.AllPlayerControls().First(y => y.PlayerId == item.Key).Data));
                             item.Value.DoIf(x => x.Team.AdditionalWinCheck(winteam) && !AdditionalWinnerTeams.Contains(x.Team.Team), x => AdditionalWinnerTeams.Add(x.Team.Team));
                         }
                         else
@@ -91,7 +91,7 @@ namespace TheSpaceRoles
                             }
                         }
                     }
-                    TempData.winners = v;
+                    EndGameResult.CachedWinners = v;
                 }
                 else
                 {

@@ -21,7 +21,7 @@ namespace TheSpaceRoles
     [HarmonyPatch(typeof(Vent), nameof(Vent.CanUse))]
     public static class VentCanUsePatch
     {
-        public static bool Prefix(Vent __instance, ref float __result, [HarmonyArgument(0)] GameData.PlayerInfo pinf, [HarmonyArgument(1)] out bool canUse, [HarmonyArgument(2)] out bool couldUse)
+        public static bool Prefix(Vent __instance, ref float __result, [HarmonyArgument(0)] NetworkedPlayerInfo pinf, [HarmonyArgument(1)] out bool canUse, [HarmonyArgument(2)] out bool couldUse)
         {
             PlayerControl pc = pinf.Object;
             couldUse = DataBase.AllPlayerRoles[pc.PlayerId].Any(x => x.CanUseVent == true);
