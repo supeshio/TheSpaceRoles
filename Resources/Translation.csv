@@ -1,0 +1,108 @@
+key,,,,,,,,,,,,,,,,,
+lang.short,en,,pt-BR,pt,ko,ru,nl,fp,fr,de,it,ja,es,zh-CN,zh-TW,ga,ja2
+en_lang,English,Latam,Brazilian,Portuguese,Korean,Russian,Dutch,Filipino,French,German,Italian,Japanese,Spanish,Schinese,Tchinese,Irish,Japanese2
+,,,,,,,,,,,,,,,,,
+tsroption.selection.on,On,,,,,,,,,,,オン,,,,,
+tsroption.selection.off,Off,,,,,,,,,,,オフ,,,,,
+tsroption.selection.second,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}秒,{0}s,{0}s,{0}s,{0}s,{0}秒
+tsroption.selection.right,Right,,,,,,,,,,,右,,,,,
+tsroption.selection.left,Left,,,,,,,,,,,左,,,,,
+tsroption.selection.unlimited,Unlimited,,,,,,,,,,,無制限,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+tsroptionselector.general,General,,,,,,,,,,,一般設定,,,,,
+tsroptionselector.informationequipment,Information Equipment,,,,,,,,,,,情報機器設定,,,,,
+tsroptionselector.starter,Starter,,,,,,,,,,,設定,,,,,
+,,,,,,,,,,,,,,,,,
+##一般設定,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+#admin,,,,,,,,,,,,,,,,,
+tsroption.use_admin,Can use admin,,,,,,,,,,,アドミンを使えるか,,,,,
+tsroption.use_records_admin,Can use Admin in Records,,,,,,,,,,,アーカイブのアドミンを使えるか,,,,,
+tsroption.limit_admin,Admin Duration,,,,,,,,,,,アドミンの制限時間,,,,,
+,,,,,,,,,,,,,,,,,
+#vital,,,,,,,,,,,,,,,,,
+tsroption.use_vital,Can use Vital,,,,,,,,,,,バイタルを使えるか,,,,,
+tsroption.limit_vital,Vitals Duration,,,,,,,,,,,バイタルの制限時間,,,,,
+,,,,,,,,,,,,,,,,,
+#camera,,,,,,,,,,,,,,,,,
+tsroption.use_camera,Can use Camera,,,,,,,,,,,カメラを使えるか,,,,,
+tsroption.limit_camera,Camera Duration,,,,,,,,,,,カメラの制限時間,,,,,
+,,,,,,,,,,,,,,,,,
+#doorlog,,,,,,,,,,,,,,,,,
+tsroption.use_doorlog,Can use Doorlog,,,,,,,,,,,ドアログを使えるか,,,,,
+tsroption.limit_doorlog,Doorlog Duration,,,,,,,,,,,ドアログの制限時間,,,,,
+,,,,,,,,,,,,,,,,,
+#binoculars,,,,,,,,,,,,,,,,,
+tsroption.use_binoculars,Can use Binoculars,,,,,,,,,,,双眼鏡を使えるか,,,,,
+tsroption.limit_binoculars,Binoculars Duration,,,,,,,,,,,双眼鏡の制限時間,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+tsroption.map.random,Random Map,,,,,,,,,,,ランダムマップ,,,,,
+tsroption.ladder_cooldown,Ladder Cooldown,,,,,,,,,,,梯子のクールダウン,,,,,
+tsroption.zipline_cooldown,ZipLine Cooldown,,,,,,,,,,,ジップラインのクールダウン,,,,,
+tsroption.moving_platform_position,Moving PlatForm Position,,,,,,,,,,,昇降機の位置,,,,,
+tsroption.scan_simultaneous,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+deathreason.disconnect,Disconnected,,,,,,,,,,,切断,,,,,切断
+deathreason.votedout,Ejected,,,,,,,,,,,追放,,,,,処刑
+deathreason.impostorkill,Killed By Impostor,,,,,,,,,,,殺害,,,,,殺害
+deathreason.sheriffkill,Killed By Sheriff,,,,,,,,,,,射殺,,,,,射殺
+deathreason.sheriffsuicide,Suicide By Sheriff,,,,,,,,,,,自爆,,,,,自爆
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+##Team,,,,,,,,,,,,,,,,,
+#other teams,,,,,,,,,,,,,,,,,
+team.other.name,Neutral,,,,,,,,,,,ニュートラル,,,,,第三陣営
+#crewmate,,,,,,,,,,,,,,,,,
+team.crewmate.name,Crewmate,,,,,,,,,,,クルー,,,,,村人陣営
+team.crewmate.description,comming soon...,,,,,,,,,,,"<size=130%>{team.crewmate.coloredname}</size>
+目的:タスクを全て完了するかインポスターを全員この船から追放すること
+クルーメイトの目的は与えられたタスクを完了しこの船を全て修理する、またはこの中に潜んでいるインポスターを追放することだ。タスクを進めながらアドミン、カメラ、バイタルを上手く活用し、インポスターを特定しろ。
+また、場合によってはインポスター以外にも我々の中に皆殺しを目的としている者がいるかもしれない...",,,,,
+,,,,,,,,,,,,,,,,,
+#impostor,,,,,,,,,,,,,,,,,
+team.impostor.name,Impostor,,,,,,,,,,,インポスター,,,,,人狼陣営
+team.impostor.intro,Do the task and eject the Imposter,,,,,,,,,,,タスクを行い、インポスターを追放しろ,,,,,
+team.impostor.description,comming soon...,,,,,,,,,,,"<size=130%>{team.impostor.coloredname}</size>
+勝利条件:{team.crewmate.coloredname}とその他の陣営を全員殺害するかサボタージュでこの船を破壊すること
+ベントやサボタージュを上手く活用し、{team.crewmate.coloredname}を皆殺しにしてやろう。時にはタスクをしているフリをしたり、緊急会議を招集することで{team.crewmate.coloredname}から仲間だと思わせるのも大切だ。",,,,,
+,,,,,,,,,,,,,,,,,
+team.madmate.name,Madmate,,,,,,,,,,,マッドメイト,,,,,狂人陣営
+team.jester.name,Jester,,,,,,,,,,,ジェスター,,,,,てるてる陣営
+team.jackal.name,Jackal,,,,,,,,,,,ジャッカル,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+##Role,,,,,,,,,,,,,,,,,
+#crewmate,,,,,,,,,,,,,,,,,
+role.crewmate.name,Crewmate,,,,,,,,,,,クルーメイト,,,,,市民
+role.crewmate.intro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、{team.impostor.coloredname}を追放しろ,,,,,仕事をこなし、{team.impostor.coloredname}を処刑せよ
+role.crewmate.sintro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、{team.impostor.coloredname}を追放しろ,,,,,仕事をこなし、{team.impostor.coloredname}を処刑せよ
+,,,,,,,,,,,,,,,,,
+#impostor,,,,,,,,,,,,,,,,,
+role.impostor.name,Impostor,,,,,,,,,,,インポスター,,,,,人狼
+role.impostor.intro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,{team.crewmate.coloredname}を全滅させろ,,,,,村を壊滅させろ
+role.impostor.sintro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,{team.crewmate.coloredname}を全滅させろ,,,,,村を壊滅させろ
+,,,,,,,,,,,,,,,,,
+#sheriff,,,,,,,,,,,,,,,,,
+role.sheriff.name,Sheriff,,,,,,,,,,,シェリフ,,,,,執行官
+role.sheriff.intro,Let justice be done,,,,,,,,,,,正義の鉄槌を,,,,,正義の鉄槌を
+role.sheriff.sintro,Let justice be done,,,,,,,,,,,正義の鉄槌を,,,,,正義の鉄槌を
+role.sheriff.description,coming soon,,,,,,,,,,,"所属陣営:{team.crewmate.coloredname}
+シェリフはキルボタンを持ち、インポスターやその他のクルーメイト以外の陣営をキルすることができる。
+しかし誤ってクルーメイトをキルしようとしてしまうと自爆してしまう。
+怪しい人をキルしてクルーメイト陣営を勝利に導こう。",,,,,
+怪しい人をキルしてクルーメイト陣営を勝利に導こう。,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+#mini,,,,,,,,,,,,,,,,,
+role.mini.name,Mini,,,,,,,,,,,ミニ,,,,,小人
+role.mini.intro,Let's fight while protected,,,,,,,,,,,守られながら戦おう,,,,,守られながら戦おう
+role.mini.sintro,Let's fight while protected,,,,,,,,,,,守られながら戦おう,,,,,守られながら戦おう
