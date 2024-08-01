@@ -24,6 +24,7 @@ namespace TheSpaceRoles
         //default
         Crewmate,
         Impostor,
+        MadMate,
         Jackal,
         Jester,
         Arsonist,
@@ -32,6 +33,10 @@ namespace TheSpaceRoles
         Prosecutor,//検察官?
         Pursuer,//追跡者?
         Thief,//泥棒?
+        Vampire,//ヴァンパイア
+        SerialKiller,//シリアルキラー
+
+
 
         //all or other(ここから　
         Mayor,//all
@@ -59,7 +64,8 @@ namespace TheSpaceRoles
     }
     public enum Teams : int
     {
-        Crewmate = 0,
+        None = 0,
+        Crewmate,
         Madmate,
         Impostor,
         Jackal,
@@ -72,37 +78,113 @@ namespace TheSpaceRoles
         Pursuer,//追跡者?
         Thief//泥棒?
     }
-
+    public enum CustomGameOverReason : int
+    {
+        GhostTown,
+        Jester,
+    }
 
     /// <summary>
     /// Linkだよ!!
     /// </summary>
     public static class GetLink
     {
+        public static List<CustomRole> CustomRoleLink =>
+        [
 
-        public static List<CustomRole> CustomRoleLink = new()
-        {
             new Crewmate(),
             new Impostor(),
             new Sheriff(),
             new Mini(),
-        };
+            new Vampire(),
+            new SerialKiller(),
+            new Madmate(),
+            new Jackal(),
+            new Guesser(),
+        ];
 
-
-        public static List<CustomRole> CustomRoleNormalLink = new()
-        {
+        public static List<CustomRole> CustomRoleNormalLink =>
+        [
             new Crewmate(),
             new Impostor(),
-        };
-        public static Dictionary<Teams, Color> ColorFromTeams = new()
+            new Madmate(),
+            new Jackal(),
+        ];
+
+        public static List<CustomTeam> CustomTeamLink =>
+        [
+            new CrewmateTeam(),
+            new ImpostorTeam(),
+            new JackalTeam(),
+            new JesterTeam(),
+            new MadmateTeam(),
+
+        ];
+
+
+
+
+
+        /*public static Dictionary<Teams, Color> ColorFromTeams = new()
         {
             {Teams.Crewmate,Palette.CrewmateBlue},
             {Teams.Impostor, Palette.ImpostorRed },
             {Teams.Madmate,ColorFromColorcode("#aa1010")},
             {Teams.Jackal,ColorFromColorcode("#09afff") },
             {Teams.Jester, ColorFromColorcode("#ea618e") },
-        };
+        };*/
+        public static Color ColorFromTeams(Teams team)
+        {
+
+            try
+            {
+
+                return CustomTeamLink.First(x => x.Team == team).Color;
+            }
+            catch
+            {
+
+            }
+            return Color.magenta;
+
+        }
+        public static CustomTeam GetCustomTeam(Teams team)
+        {
+            if (!CustomTeamLink.Any(x => x.Team == team)) { Logger.Error($"{team} is not contained in RoleMasterLink"); return null; }
+            return CustomTeamLink.First(x => x.Team == team);
+
+
+        }
+        public static string GetOtherColoredName => Helper.ColoredText(GetOtherRolesColor, Translation.GetString("team.other.name"));
+
         public static Color GetOtherRolesColor => ColorFromColorcode("#777777");
+
+        public static string GetColoredTeamName(Teams team)
+        {
+            if (CustomTeamLink.Any(s => s.Team == team))
+            {
+                return CustomTeamLink.First(x => x.Team == team).ColoredTeamName;
+            }
+            if ((int)team == -1)
+            {
+                return ColoredText(Color.magenta, Translation.GetString("team.additional.name"));
+            }
+            return ColoredText(Color.magenta, Translation.GetString("team." + team.ToString() + ".name"));
+
+
+        }
+        public static string GetColoredRoleName(Roles role)
+        {
+            if (CustomRoleLink.Any(s => s.Role == role))
+            {
+                return CustomRoleLink.First(x => x.Role == role).ColoredRoleName;
+            }
+            return ColoredText(Color.magenta, Translation.GetString("team." + role.ToString() + ".name"));
+
+
+        }
+
+        public static string GetColoredTeamName(Roles role) => GetCustomRole(role).ColoredRoleName;
 
         public static CustomRole GetCustomRole(Roles roles)
         {
@@ -123,7 +205,7 @@ namespace TheSpaceRoles
                 teams.Add(team);
 
             }
-            return teams.ToArray();
+            return [.. teams];
         }
 
     }

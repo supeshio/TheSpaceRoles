@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace TheSpaceRoles.Plugin.Roles
+namespace TheSpaceRoles
 {
     public static class PlayerControlButtonControls
     {

@@ -26,7 +26,7 @@ namespace TheSpaceRoles
                     GameObject gameObject = new("roletext");
                     TextMeshPro RoleText = gameObject.AddComponent<TextMeshPro>();
                     RoleText.transform.SetParent(d.transform.parent);
-                    RoleText.transform.localPosition = new Vector3(d.transform.localPosition.x, d.transform.localPosition.y - 0.25f, d.transform.localPosition.z);
+                    RoleText.transform.localPosition = new Vector3(d.transform.localPosition.x, d.transform.localPosition.y + 0.25f, d.transform.localPosition.z);
                     RoleText.alignment = TextAlignmentOptions.Center;
                     RoleText.tag = d.tag;
                     RoleText.fontSize = d.fontSize;

@@ -40,11 +40,107 @@ namespace TheSpaceRoles
             if (PlayerControl.LocalPlayer.AmOwner)
             {
 
-                Dictionary<Teams, int> roles = new Dictionary<Teams, int>() { { Teams.Impostor, 1 } };
-                SendRpcSetTeam(roles);
+
+                int[] players = DataBase.AllPlayerControls().Select(x => (int)x.PlayerId).ToArray();
+
+                Dictionary<Teams, int> teams = new() { };
+                foreach (Teams team in Enum.GetValues(typeof(Teams)))
+                {
+                    teams.Add(team, 0);
+                }
+
+                Dictionary<Teams, Dictionary<Roles, int>> roles = [];
+
+                foreach (Roles role in Enum.GetValues(typeof(Roles)))
+                {
+                    if (GetLink.CustomRoleLink.Any(x => x.Role == role))
+                    {
+                        foreach (var team in GetLink.GetCustomRole(role).teamsSupported)
+                        {
+
+                            string s = team + "_" + role + "_" + "spawncount";
+                            var value = TSR.Instance.Config.Bind($"Preset", s, 0).Value;
+                            //var value = TSR.Instance.Config.Bind($"Preset{CustomOption.preset}", s, 0).Value;
+                            if (value > 0)
+                            {
+                                if (!roles.ContainsKey(team))
+                                {
+                                    roles.Add(team, []);
+                                }
+                                roles[team].Add(role, value);
+                                //Logger.Info($"{team}_{role}:{value}");
+                                teams[team] += value;
+                            }
+                        }
+                        string s_ = "-1_" + role + "_" + "spawncount";
+                        //var value_ = TSR.Instance.Config.Bind($"Preset{CustomOption.preset}", s_, 0).Value;
+                        var value_ = TSR.Instance.Config.Bind($"Preset", s_, 0).Value;
+                        if (value_ > 0)
+                        {
+
+                            if (!roles.ContainsKey((Teams)(-1)))
+                            {
+                                roles.Add((Teams)(-1), []);
+                            }
+                            roles[(Teams)(-1)].Add(role, value_);
+                            Logger.Info($"Additional_{role}:{value_}");
+                        }
+                    }
+                }
+                //SetTeam
+                SendRpcSetTeam(teams);
+
+                //SetRoles
+                foreach (var team in roles)
+                {
+                    if ((int)team.Key == -1)
+                    {
+
+                        foreach (var role in team.Value)
+                        {
+                            Logger.Info($"Additional_{role.Key}:{role.Value}");
+                            for (int i = 0; i < role.Value; i++)
+                            {
+                                SendRpcSetRole(role.Key, DataBase.AllPlayerTeams.Select(x => x.Key).ToArray());
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var role in team.Value)
+                        {
+                            Logger.Info($"{team.Key}_{role.Key}:{role.Value}");
+                            for (int i = 0; i < role.Value; i++)
+                            {
+                                Logger.Info($"{team.Key}_{role.Key}({i})");
+                                if (players.Any(x => DataBase.AllPlayerTeams[x] == team.Key))
+                                {
+
+                                    int[] teamplayers = players.Where(x => DataBase.AllPlayerTeams[x] == team.Key).ToArray();
+                                    var v = SendRpcSetRole(role.Key, teamplayers);
+                                    players.ToList().RemoveAll(x => x == v);
+                                }
+                            }
+                        }
+
+                    }
+                }
+                /*
+
                 SendRpcSetRole(Roles.Sheriff, DataBase.AllPlayerTeams.Where(x => new Sheriff().teamsSupported.Contains(x.Value)).Select(x => x.Key).ToArray());
+                //SendRpcSetRole(Roles.Vampire, DataBase.AllPlayerTeams.Where(x => new Vampire().teamsSupported.Contains(x.Value)).Select(x => x.Key).ToArray());
+                SendRpcSetRole(Roles.SerialKiller, DataBase.AllPlayerTeams.Where(x => new SerialKiller().teamsSupported.Contains(x.Value)).Select(x => x.Key).ToArray());
+                */
+
                 RemainingPlayerSetRoles();
                 SendRpcSetRole(Roles.Mini, DataBase.AllPlayerTeams.Where(x => new Mini().teamsSupported.Contains(x.Value)).Select(x => x.Key).ToArray());
+
+
+
+
+
+
 
                 foreach (var item in DataBase.AllPlayerRoles)
                 {
@@ -79,11 +175,10 @@ namespace TheSpaceRoles
                 }
             }
 
-
         }
-        public static void SendRpcSetRole(Roles roles, int[] players)
+        public static int SendRpcSetRole(Roles roles, int[] players)
         {
-            if (players.Length == 0) { Logger.Warning("players ないよおおおおおお"); return; }
+            if (players.Length == 0) { Logger.Warning("players ないよおおおおおお"); return -1; }
             //設定作ってないけどここでほんとは分岐
             //ここではmainとして扱う
             var a = players[Random(0, players.Length - 1)];
@@ -94,7 +189,7 @@ namespace TheSpaceRoles
             writer.Write(a);
             writer.Write((int)roles);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-
+            return a;
         }
 
         public static void SetRole(int playerId, int roleId)
@@ -107,17 +202,16 @@ namespace TheSpaceRoles
             {
                 var list = DataBase.AllPlayerRoles[playerId].ToList();
                 var p = GetLink.GetCustomRole((Roles)roleId);
-                p.PlayerId = playerId;
-                p.PlayerName = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).name.Replace("<color=.*>", string.Empty).Replace("</color>", string.Empty);
+                p.ReSet(playerId, DataBase.AllPlayerTeams[playerId]);
+                p.Team.Role = p;
                 list.Add(p);
                 DataBase.AllPlayerRoles[playerId] = [.. list];
             }
             else
             {
                 var p = GetLink.GetCustomRole((Roles)roleId);
-                p.PlayerId = playerId;
-                p.PlayerName = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).name.Replace("<color=.*>", string.Empty).Replace("</color>", string.Empty);
-
+                p.ReSet(playerId, DataBase.AllPlayerTeams[playerId]);
+                p.Team.Role = p;
                 DataBase.AllPlayerRoles.Add(playerId, [p]);
 
             }
@@ -128,8 +222,8 @@ namespace TheSpaceRoles
         {
             List<byte> ImpIds = DataBase.AllPlayerControls().Where(x => x.Data.Role.TeamType == RoleTeamTypes.Impostor).Select(x => x.PlayerId).ToList();
             List<byte> CrewIds = DataBase.AllPlayerControls().Where(x => x.Data.Role.TeamType != RoleTeamTypes.Impostor).Select(x => x.PlayerId).ToList();
-            Logger.Info(string.Join("\n", DataBase.AllPlayerControls().Select(x => x.Data.Role.TeamType).ToArray()));
-            Logger.Info($"imp:{ImpIds.Count}  c:{CrewIds.Count}");
+            //Logger.Info(string.Join("\n", DataBase.AllPlayerControls().Select(x => x.Data.Role.TeamType).ToArray()));
+            //Logger.Info($"imp:{ImpIds.Count}  c:{CrewIds.Count}");
 
             foreach ((Teams teams1, int count) in teams)
             {

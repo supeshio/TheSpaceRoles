@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace TheSpaceRoles
@@ -15,7 +15,7 @@ namespace TheSpaceRoles
         public static void Load()
         {
             var fileName = Assembly.GetExecutingAssembly().GetManifestResourceStream("TheSpaceRoles.Resources.Translation.csv");
-            StreamReader sr = new StreamReader(fileName);
+            StreamReader sr = new(fileName);
             while (!sr.EndOfStream)
             {
                 string line = sr.ReadLine();
@@ -61,11 +61,12 @@ namespace TheSpaceRoles
             }
 
             var data = tranlatedata[str];
+
             if (data.Length > lang)
             {
                 if (data[lang] == "")
                 {
-                    return data[0];
+                    return data[1];
                 }
                 else
                 {
@@ -74,81 +75,74 @@ namespace TheSpaceRoles
             }
             else
             {
-                return data[0];
+                return data[1];
             }
         }
+
         public static string GetString(string str, string[] strs = null)
         {
+
             string getstr = Get(str);
-            if (strs == null) return getstr;
-
-
-            for (int i = 0; i < strs.Length; i++)
+            if (strs != null)
             {
-                getstr = getstr.Replace("{" + i + "}", strs[i]);
 
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    getstr = getstr.Replace("{" + i + "}", strs[i]);
+
+                }
             }
+
             var ext = ExtractTextBetweenBrackets(getstr);
             foreach (var item in ext)
             {
                 var items = item.Split('.');
-                if (items[0]=="role")
+                try
                 {
-                    if (items[2] == "coloredname")
+
+                    if (items[0] == "role")
                     {
-                        getstr = getstr.Replace("{" + item + "}",GetLink.GetCustomRole((Roles)Enum.Parse(typeof(Roles), items[1])).ColoredRoleName);
+                        if (items[2] == "coloredname")
+                        {
+                            getstr = getstr.Replace("{" + item + "}", GetLink.GetCustomRole((Roles)Enum.Parse(typeof(Roles), items[1], true)).ColoredRoleName);
+                        }
+                    }
+                    if (items[0] == "team")
+                    {
+                        if (items[2] == "coloredname")
+                        {
+                            if (items[1] == "other")
+                            {
+                                getstr = getstr.Replace("{" + item + "}", Helper.ColoredText(GetLink.GetOtherRolesColor, GetString("team.other.name")));
+                            }
+                            else
+                            {
+                                getstr = getstr.Replace("{" + item + "}", GetLink.GetCustomTeam((Teams)Enum.Parse(typeof(Teams), items[1], true)).ColoredTeamName);
+
+                            }
+
+                        }
                     }
                 }
-                if (items[0] == "team")
+                catch
                 {
-                    if (items[2] == "coloredname")
-                    {
-                        if (items[3] == "other")
-                        {
-                            getstr = getstr.Replace("{" + item + "}", Helper.ColoredText(GetLink.GetOtherRolesColor, GetString("team.other.name")));
-                        }
-                        else
-                        {
-                            getstr = getstr.Replace("{" + item + "}", Helper.ColoredText(GetLink.ColorFromTeams[(Teams)Enum.Parse(typeof(Teams), items[1], true)], GetString("team" + ((Teams)Enum.Parse(typeof(Teams), items[1])).ToString() + "name")));
 
-                        }
-
-                    }
                 }
 
             }
-
             return getstr;
-        }
-       private static bool SWord(string sentence,string word)
-        {
-            return sentence.StartsWith(word);
-        }
-        private static string GetText(List<string> str, Dictionary<string,object> dic)
-        {
-            dic.TryGetValue(str[0], out var text);
-            if (text.GetType() != typeof(string))
-            {
-                var strs = str.DeepCopy();
-                strs.RemoveAt(0); 
-                text = GetText(str, (Dictionary<string, object>)text);
-            }
-            return text.ToString();
         }
         static List<string> ExtractTextBetweenBrackets(string input)
         {
-            List<string> result = new List<string>();
+            List<string> result = new();
 
             // 正規表現を使用して、"{" と "}" の間のテキストを抽出
-            Regex regex = new(@"\{(.*?)\}", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            Regex regex = new("{(.*?)}", RegexOptions.IgnoreCase | RegexOptions.Singleline);
             MatchCollection matches = regex.Matches(input);
-
+            result.AddRange(
             // 抽出したテキストをリストに追加
-            foreach (Match match in matches)
-            {
-                result.Add(match.Groups[1].Value);
-            }
-
+            from Match match in matches
+            select match.Groups[1].Value);
             return result;
         }
     }

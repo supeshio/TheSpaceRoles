@@ -90,11 +90,11 @@ namespace TheSpaceRoles
                         string s;
                         if (chats[0] == "/name")
                         {
-                            s = chat.Substring(6);
+                            s = chat[6..];
                         }
                         else
                         {
-                            s = chat.Substring(3);
+                            s = chat[3..];
                         }
                         s = s.Replace("\\n", "<br>");
                         if (s.Length > 0)
@@ -178,28 +178,41 @@ namespace TheSpaceRoles
                     case "/lt":
                         (addchat, TSR.LobbyTimer.Value) = Helper.ChatBool(chats, "LobbyTimer", TSR.LobbyTimer, ref addchat);
                         break;
-                    case "/\\":
-                        for (int i = 0; i < Palette.PlayerColors.Length; i++)
-                        {
-                            string st = "";
-                            if (i <= 18)
+                        //case "/debug":
+                        //    (addchat, TSR.DebugMode.Value) = Helper.ChatBool(chats, "DebugMode", TSR.LobbyTimer, ref addchat);
+                        //    break;
+
+
+                }
+                if (TSR.DebugMode.Value)
+                {
+
+                    switch (chats[0])
+                    {
+
+                        case "/\\":
+                            for (int i = 0; i < Palette.PlayerColors.Length; i++)
                             {
-                                st = Palette.ColorNames[i].ToString();
+                                string st = "";
+                                if (i <= 18)
+                                {
+                                    st = Palette.ColorNames[i].ToString();
+                                }
+                                else
+                                {
+                                    st =
+                                    CustomColor.ColorStrings[i - 18 + 50000];
+                                }
+                                addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■") + Helper.ColoredText(Palette.PlayerColors[i], "<b>" + st + "</b>\n");
                             }
-                            else
+                            break;
+                        case "//":
+                            for (int i = 0; i < Palette.PlayerColors.Length; i++)
                             {
-                                st =
-                                CustomColor.ColorStrings[i - 18 + 50000];
+                                addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■") + Helper.ColoredText(Palette.PlayerColors[i], "<b>" + Palette.ColorNames[i] + "</b>\n");
                             }
-                            addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■") + Helper.ColoredText(Palette.PlayerColors[i], "<b>" + st + "</b>\n");
-                        }
-                        break;
-                    case "//":
-                        for (int i = 0; i < Palette.PlayerColors.Length; i++)
-                        {
-                            addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■") + Helper.ColoredText(Palette.PlayerColors[i], "<b>" + Palette.ColorNames[i] + "</b>\n");
-                        }
-                        break;
+                            break;
+                    }
                 }
                 if (addchat != "")
                 {
@@ -211,6 +224,7 @@ namespace TheSpaceRoles
                 }
                 __instance.freeChatField.Clear();
                 return false;
+
             }
             else
             {

@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>TheSpaceRoles</AssemblyName>
+    <Description>Many Funny Roles!</Description>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Version>1.0.0</Version>
+    <LangVersion>preview</LangVersion>
+    <RootNamespace>TheSpaceRoles</RootNamespace>
+	  <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+	  <DefineConstants>$(DefineConstants);STEAM</DefineConstants>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <ApplicationIcon />
+	  <Win32Resource />
+  </PropertyGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\**" />
+    </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AsmResolver" Version="5.1.0" />
+		<PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.688" />
+		<PackageReference Include="AmongUs.GameLibs.Steam" Version="2024.6.18" />
+		<PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="2.1.0-rc.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="$(AmongUs)/BepInEx/core/*.dll" />
+		<Reference Include="$(AmongUs)/BepInEx/interop/*.dll" />
+	</ItemGroup>
+
+
+
+
+    <Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" UseSymboliclinksIfPossible="true" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="Pre" UseSymboliclinksIfPossible="true" />
+    </Target>
+</Project>

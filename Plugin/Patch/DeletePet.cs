@@ -7,7 +7,7 @@ namespace TheSpaceRoles
     {
         public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl player)
         {
-            player.RpcSetPet("");
+            /* player.RpcSetPet("");*/
         }
     }
     [HarmonyPatch(typeof(PetBehaviour), nameof(PetBehaviour.SetMourning))]
@@ -16,9 +16,9 @@ namespace TheSpaceRoles
         public static void Prefix(PetBehaviour __instance
             )
         {
-            Logger.Info("DeletePet");
+            /*Logger.Info("DeletePet");
             __instance.gameObject.transform.localPosition = new(0, 0, 1000);
-            __instance.targetPlayer.RpcSetPet("");
+            __instance.targetPlayer.RpcSetPet("");*/
         }
     }
 }

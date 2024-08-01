@@ -20,27 +20,34 @@ namespace TheSpaceRoles.Plugin
 
         public static int undocount = 1;
 
-        public static List<string> chattexts = new List<string>();
+        public static List<string> chattexts = new();
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+        [HarmonyPostfix]
+        public static void PlayerPostfix()
+        {
+
+            //Debug
+            if (TSR.DebugMode.Value && Input.GetKeyDown(KeyCode.N))
+            {
+                Logger.Info("N");
+                KillAnimationPatch.AnimCancel = true;
+                HudManager.Instance.KillOverlay.ShowKillAnimation(PlayerControl.AllPlayerControls[Helper.Random(0, PlayerControl.AllPlayerControls.Count - 1)].Data, PlayerControl.LocalPlayer.Data);
+            }
+        }
+
+
 
         [HarmonyPatch(typeof(GameManager), "FixedUpdate")]
         [HarmonyPostfix]
         public static void Postfix(GameManager __instance)
         {
-            //IL_0013: Unknown result type (might be due to invalid IL or missing references)
-            //IL_0019: Invalid comparison between Unknown and I4
-            //IL_00b6: Unknown result type (might be due to invalid IL or missing references)
-            //IL_00bc: Invalid comparison between Unknown and I4
-            //IL_00c3: Unknown result type (might be due to invalid IL or missing references)
-            //IL_00c9: Invalid comparison between Unknown and I4
-            //IL_012a: Unknown result type (might be due to invalid IL or missing references)
-            //IL_0107: Unknown result type (might be due to invalid IL or missing references)
             try
             {
                 if (((InnerNetClient)AmongUsClient.Instance).AmHost && (int)((InnerNetClient)AmongUsClient.Instance).GameState == 2)
                 {
                     if (Input.GetKey((KeyCode)304) && Input.GetKey((KeyCode)303) && Input.GetKey((KeyCode)104))
                     {
-                        ((Behaviour)__instance).enabled = false;
+                        __instance.enabled = false;
                         __instance.RpcEndGame((GameOverReason)3, false);
                         __instance.RpcEndGame((GameOverReason)8, false);
                         Logger.Info("廃村処理", "", "Postfix");

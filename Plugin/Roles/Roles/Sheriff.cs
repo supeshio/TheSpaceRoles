@@ -12,7 +12,7 @@ namespace TheSpaceRoles
             teamsSupported = [Teams.Crewmate];
             Role = Roles.Sheriff;
             Color = ColorFromColorcode("#ffd700");
-            HasKillButton = true;
+            HasKillButton = false;
         }
         public override void HudManagerStart(HudManager __instance)
         {
@@ -21,8 +21,8 @@ namespace TheSpaceRoles
 
             }
             SheriffKillButton = new CustomButton(
-                __instance,
-                CustomButton.SelectButtonPos(0),
+                __instance, "SheriffKillButton",
+                ButtonPos.Kill,
                 KeyCode.Q,
                 30,
                 () => KillButtons.KillButtonSetTarget(2.5f, Color),
@@ -33,13 +33,13 @@ namespace TheSpaceRoles
 
                     if (DataBase.AllPlayerTeams[pc.PlayerId] != Teams.Crewmate)
                     {
-                        RpcMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, pc, DeathReason.SheriffKill);
+                        CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, pc, DeathReason.SheriffKill);
 
 
                     }
                     else
                     {
-                        RpcMurderPlayer.RpcMurder(pc, PlayerControl.LocalPlayer, DeathReason.SheriffSuicide);
+                        UnCheckedMurderPlayer.RpcMurder(pc, PlayerControl.LocalPlayer, DeathReason.SheriffSuicide);
                     }
                 },
                 () => SheriffKillButton.Timer = SheriffKillButton.maxTimer,

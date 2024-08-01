@@ -29,16 +29,19 @@ namespace TheSpaceRoles
         }
         public override void Update()
         {
-
-            Timer -= Time.deltaTime;
-            if (age >= 20) return;
-            if (MaxTimer - Timer > (age + 1) * MaxTimer / 20)
+            if (PlayerId == PlayerControl.LocalPlayer.PlayerId)
             {
-                age += 1;
-                var writer = Rpc.SendRpcUsebility(Rpcs.UseAbility, Role, PlayerId, 0);
-                writer.Write(age);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                SetAge(PlayerId, age);
+
+                Timer -= Time.deltaTime;
+                if (age >= 20) return;
+                if (MaxTimer - Timer > (age + 1) * MaxTimer / 20)
+                {
+                    age += 1;
+                    var writer = Rpc.SendRpcUsebility(Rpcs.UseAbility, Role, PlayerId, 0);
+                    writer.Write(age);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    SetAge(PlayerId, age);
+                }
             }
         }
         public override void APUpdate()

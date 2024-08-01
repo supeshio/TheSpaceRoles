@@ -11,30 +11,24 @@ namespace TheSpaceRoles
         public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
         {
 
-            __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) =>
+            __instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
             {
 
-                __instance.TeamTitle.color = TeamColor();
-                __instance.TeamTitle.text = Translation.GetString($"team.{DataBase.AllPlayerTeams[PlayerControl.LocalPlayer.PlayerId]}.name");
+                __instance.BackgroundBar.material.color = TeamColor();
+                __instance.TeamTitle.text = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Team.ColoredTeamName;
 
             })));
         }
-        public static void Postfix(IntroCutscene __instance)
-        {
+        public static Color TeamColor() => DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Team.Color;
 
-
-        }
-
-        public static Color TeamColor() => GetLink.ColorFromTeams[DataBase.AllPlayerTeams[PlayerControl.LocalPlayer.PlayerId]];
     }
     [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
     public static class IntroShowRole
     {
         public static void Prefix(IntroCutscene __instance)
         {
-            __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) =>
+            __instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
             {
-
                 __instance.RoleBlurbText.color = RoleColor();
                 __instance.RoleBlurbText.text = Translation.GetString($"role.{DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Role}.intro");
                 __instance.RoleText.color = RoleColor();

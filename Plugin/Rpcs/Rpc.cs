@@ -34,8 +34,11 @@ namespace TheSpaceRoles
                         int t2 = reader.ReadInt32();
                         GameStarter.SetTeam(t1, t2);
                         break;
-                    case Rpcs.RpcMurderPlayer:
-                        RpcMurderPlayer.Murder(reader.ReadInt32(), reader.ReadInt32(), (DeathReason)reader.ReadInt32());
+                    case Rpcs.CheckedMurderPlayer:
+                        CheckedMurderPlayer.Murder(reader.ReadInt32(), reader.ReadInt32(), (DeathReason)reader.ReadInt32());
+                        break;
+                    case Rpcs.UnCheckedMurderPlayer:
+                        UnCheckedMurderPlayer.Murder(reader.ReadInt32(), reader.ReadInt32(), (DeathReason)reader.ReadInt32());
                         break;
                     case Rpcs.DataBaseReset:
 
@@ -45,7 +48,20 @@ namespace TheSpaceRoles
                         LobbyTimer.GameStartManagerUpdatePatch.TimerSet(reader.ReadSingle(), reader.ReadSingle());
                         break;
                     case Rpcs.ShareOptions:
-                        CustomOption.GetOptionSelections(reader);
+                        //CustomOption.GetOptionSelections(reader);
+                        break;
+                    case Rpcs.GameEnd:
+                        //int team = reader.ReadInt32();
+                        //int i = reader.ReadInt32();
+                        //List<Teams> ints = new List<Teams>();
+                        //for (int j = 0; j < i; j++)
+                        //{
+                        //     ints.Add((Teams)reader.ReadInt32());
+                        //}
+
+
+
+                        //GameEnd.CustomEndGame((Teams)team, [..ints]);
                         break;
                     case Rpcs.UseAbility:
                         int useAbilityPlayerId = reader.ReadInt32();
@@ -93,7 +109,9 @@ namespace TheSpaceRoles
         GameEnd,
         ShareOptions,
         UseAbility,
-        RpcMurderPlayer,//A kill B : A/B/Reasons
+        CheckedMurderPlayer,//A kill B : A/B/Reasons
+        UnCheckedMurderPlayer,//A kill B but not killanimation is only B : A/B/Reasons
+
     }
     public enum DeathReason : int
     {
@@ -102,6 +120,10 @@ namespace TheSpaceRoles
         ImpostorKill,
         SheriffKill,
         SheriffSuicide,
+        BittenByVampire,
+        SerialKillerKill,
+        SerialKillerSuicide,
+        JackalKill
     }
 
 }

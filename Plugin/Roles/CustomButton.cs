@@ -1,11 +1,22 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace TheSpaceRoles
 {
 
+    public enum ButtonPos
+    {
+        Use = 0,
+        Report,
+        Sabotage,
+        Kill,
+        Vent,
+        Custom,
+
+    }
     public class CustomButton : ActionButton
     {
         /// <summary>
@@ -13,7 +24,6 @@ namespace TheSpaceRoles
         /// CustomButtonを入れる
         /// </summary>
         public static List<CustomButton> buttons = new() { };
-
 
 
         public static Vector2 SelectButtonPos(int c) => c switch
@@ -28,9 +38,10 @@ namespace TheSpaceRoles
             _ => new Vector2(-3, 3),
         };
 
-
+        public string Name;
         public ActionButton actionButton;
         public HudManager hudManager;
+        public ButtonPos ButtonPosition;
         public float maxTimer;
         public float Timer;
 
@@ -42,19 +53,23 @@ namespace TheSpaceRoles
         public Func<int> CanUse;
         public string buttonText = "";
         public bool atFirsttime;
+        public TextMeshPro AddtionalText;
 
         public Sprite sprite;
         public KeyCode keyCode;
         public Action OnClick;
         public Action OnMeetingEnds;
-        public Action OnEffectEnds;
+        public Action OnEffectStart;
+        public Action OnEffectUpdate;
+        public Action OnEffectEnd;
         private static readonly int Desat = Shader.PropertyToID("_Desat");
 
 
         public bool IsDead = false;
         public CustomButton(
             HudManager hudManager,
-            Vector2 pos,
+            string name,
+            ButtonPos buttonPos,
             KeyCode keycode,
             float maxTimer,
             Func<int> canUse,
@@ -65,10 +80,13 @@ namespace TheSpaceRoles
             bool HasEffect,
             bool canEffectCancel = false,
             float EffectDuration = 0,
-            Action OnEffectStarts = null,
-            Action OnEffectEnds = null
+            Action OnEffectStart = null,
+            Action OnEffectUpdate = null,
+            Action OnEffectEnd = null
             )
         {
+            this.Name = name;
+            this.ButtonPosition = buttonPos;
             this.hudManager = hudManager;
             this.keyCode = keycode;
             this.OnClick = Onclick;
@@ -82,11 +100,15 @@ namespace TheSpaceRoles
             this.canEffectCancel = canEffectCancel;
             this.maxEffectTimer = EffectDuration;
             this.atFirsttime = true;
+            this.OnEffectStart = OnEffectStart;
+            this.OnEffectUpdate = OnEffectUpdate;
+            this.OnEffectEnd = OnEffectEnd;
             actionButton = Instantiate(hudManager.KillButton, hudManager.KillButton.transform.parent);
             actionButton.buttonLabelText.text = buttonText;
             actionButton.graphic.sprite = sprite;
-            actionButton.transform.position.Set(pos.x, pos.y, -9);
             actionButton.cooldownTimerText.text = ((int)Timer).ToString();
+            actionButton.gameObject.name = name;
+            this.actionButton.transform.SetSiblingIndex((int)ButtonPosition);
             PassiveButton passiveButton = actionButton.GetComponent<PassiveButton>();
             passiveButton.enabled = true;
 
@@ -98,6 +120,25 @@ namespace TheSpaceRoles
 
             }
             catch (Exception ex) { Logger.Error(ex.ToString()); }
+
+
+
+            var gameob = new GameObject("Text");
+            gameob.transform.SetParent(actionButton.transform);
+            gameob.SetActive(true);
+            AddtionalText = gameob.AddComponent<TextMeshPro>();
+            AddtionalText.color = Color.white;
+            AddtionalText.fontSizeMin = AddtionalText.fontSize = AddtionalText.fontSizeMax = 1.2f;
+            AddtionalText.alignment = TextAlignmentOptions.Center;
+            AddtionalText.outlineWidth = 0.8f;
+            AddtionalText.enableWordWrapping = false;
+            AddtionalText.autoSizeTextContainer = true;
+            AddtionalText.transform.localPosition = new Vector3(0f, 0.6f, -1f);
+            AddtionalText.gameObject.layer = HudManager.Instance.gameObject.layer;
+            AddtionalText.m_sharedMaterial = Data.textMaterial;
+
+
+
 
 
             DataBase.buttons.Add(this);
@@ -129,26 +170,38 @@ namespace TheSpaceRoles
                 Timer = 0;
                 if (hasEffect && isEffectActive)
                 {
-                    isEffectActive = false;
                     Timer = maxTimer;
+                    isEffectActive = false;
                     actionButton.cooldownTimerText.color = Palette.EnabledColor;
-                    OnEffectEnds();
+
+                    this.OnEffectEnd?.Invoke();
                 }
 
             }
             if (Timer <= 0) this.actionButton.cooldownTimerText.text = "";
             var canuse = CanUse();
-            if (canuse != -1)
+            if (!isEffectActive)
             {
-                actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.EnabledColor;
-                actionButton.graphic.material.SetFloat(Desat, 0f);
+
+                if (canuse != -1)
+                {
+                    actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.EnabledColor;
+                    actionButton.graphic.material.SetFloat(Desat, 0f);
+                }
+                else
+                {
+
+                    actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.DisabledClear;
+                    actionButton.graphic.material.SetFloat(Desat, 1f);
+                }
+
             }
             else
             {
 
-                actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.DisabledClear;
-                actionButton.graphic.material.SetFloat(Desat, 1f);
+                this.OnEffectUpdate?.Invoke();
             }
+
 
             if (atFirsttime == false)
             {
@@ -192,6 +245,9 @@ namespace TheSpaceRoles
                     isEffectActive = true;
                     Timer = maxEffectTimer;
                     OnClick();
+                    actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.AcceptedGreen;
+                    actionButton.cooldownTimerText.color = Palette.AcceptedGreen;
+                    actionButton.graphic.material.SetFloat(Desat, 0f);
                 }
                 else
                 {
@@ -214,44 +270,56 @@ namespace TheSpaceRoles
             if (IsDead) return;
             SetActive(true);
             atFirsttime = true;
-            OnMeetingEnds();
-        }
-    }
-    [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
-    public static class HudUpdate
-    {
-        public static void Prefix(HudManager __instance)
-        {
-            if (DataBase.buttons.Count == 0) return;
-            DataBase.buttons.Do(x => x.HudUpdate());
+
+            OnMeetingEnds?.Invoke();
         }
     }
     [HarmonyPatch]
-    public static class MeetingHudPatch
+    public static class CustomButtonstatic
     {
 
-        [HarmonyPatch(typeof(MeetingIntroAnimation))]
-        [HarmonyPatch(nameof(MeetingIntroAnimation.Start))]
-        public static void Prefix()
+        [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+        public static class HudUpdate
+        {
+            public static void Prefix(HudManager __instance)
+            {
+                if (DataBase.buttons.Count == 0) return;
+                DataBase.buttons.Do(x => x.HudUpdate());
+            }
+        }
+        [HarmonyPatch]
+        public static class MeetingHudPatch
         {
 
-            if (DataBase.buttons.Count == 0) return;
-            DataBase.buttons.Do(x => x.MeetingStarts());
+            [HarmonyPatch(typeof(MeetingIntroAnimation))]
+            [HarmonyPatch(nameof(MeetingIntroAnimation.Start))]
+            public static void Prefix()
+            {
+
+                if (DataBase.buttons.Count == 0) return;
+                DataBase.buttons.Do(x => x.MeetingStarts());
+
+            }
 
         }
 
-    }
+        [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
+        public static class WrapUpPatch
+        {
+            public static void Prefix()
+            {
 
-    [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
-    public static class WrapUpPatch
-    {
-        public static void Prefix()
+                if (DataBase.buttons.Count == 0) return;
+                DataBase.buttons.Do(x => x.MeetingEnds());
+            }
+        }
+        [HarmonyPatch]
+        public static class ActionButtonPatch
         {
 
-            if (DataBase.buttons.Count == 0) return;
-            DataBase.buttons.Do(x => x.MeetingEnds());
         }
     }
+
 
 
 }
