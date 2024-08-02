@@ -14,7 +14,7 @@ namespace TheSpaceRoles
         public static void Postfix(VersionShower __instance)
         {
             TextMeshPro AddtionalText = new GameObject("text").AddComponent<TextMeshPro>();
-            AddtionalText.text = TSR.c_name;
+            AddtionalText.text = TSR.c_name_v;
             AddtionalText.fontSize = 2;
             AddtionalText.alignment = TextAlignmentOptions.Right;
             AddtionalText.enableWordWrapping = false;
@@ -33,7 +33,8 @@ namespace TheSpaceRoles
         public static void Postfix(PingTracker __instance)
         {
 
-            __instance.text.text += $"\n{TSR.c_name}";
+            __instance.text.text += $"\n{TSR.c_name_v}";
+            __instance.text.alignment = TextAlignmentOptions.Top ;
         }
     }
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Start))]
