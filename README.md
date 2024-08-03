@@ -8,7 +8,7 @@
  [English](https://github.com/supeshio/TheSpaceRoles/blob/main/README-EN.md)<br>
  
  ## リリース
- AmongUsのバージョン **2024.03.05**<br>
+ AmongUsのバージョン **2024.6.18**<br>
  **最新バージョン [Here](https://github.com/supeshio/TheSpaceRoles/releases/latest)**<br>
 
 ## [Mod機能(Wiki)](https://github.com/supeshio/TheSpaceRoles/wiki/MOD%E6%A9%9F%E8%83%BD)<br>
@@ -21,12 +21,17 @@
 - [The Other Roles](https://github.com/TheOtherRolesAU/TheOtherRoles)<br>
   役職など多くの要素の参考元<br>
   TheOtherRolesのディベロッパーの皆様ありがとうございます!<br>
+  非常にリスペクトしています<br>
+  
 - [Super New Roles](https://github.com/SuperNewRoles/SuperNewRoles)<br>
   機能などの参考元<br>
+  
   よっキングさん&その他SNRディベロッパーの皆様ありがとうございます!<br>
 - [Town Of Plus](https://github.com/tugaru1975/TownOfPlus)<br>
   機能一部参考元<br>
+  
   tugaru1975さんありがとうございます!<br>
 - [Among-Us-Sheriff-Mod](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod)<br>
+
   シェリフの参考元<br>
   Among-Us-Sheriff-Modのディベロッパーの皆様ありがとうございます!<br>
