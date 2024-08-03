@@ -34,7 +34,7 @@ namespace TheSpaceRoles
         {
 
             __instance.text.text += $"\n{TSR.c_name_v}";
-            __instance.text.alignment = TextAlignmentOptions.Top ;
+            __instance.text.alignment = TextAlignmentOptions.Top;
         }
     }
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Start))]

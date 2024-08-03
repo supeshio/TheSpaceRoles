@@ -7,15 +7,15 @@ namespace TheSpaceRoles
 {
     public static class CustomOptionsHolder
     {
-        public static Func<string>[] GetSecondsIncludeUnlimited(float sec = 60f, float delta_sec = 2.5f, bool include_off = true)
+        public static Func<string>[] GetSecondsIncludeUnlimited(float sec = 60f, float delta_sec = 2.5f, bool include_0 = true)
         {
 
             List<Func<string>> second = [];
 
             second.Add(() => GetString("option.selection.unlimited"));
-            if (include_off) second.Add(Sec(0));
+            if (include_0) second.Add(Sec(0));
 
-            for (float i = 0; i <= sec; i += delta_sec)
+            for (float i = delta_sec; i <= sec; i += delta_sec)
             {
                 second.Add(Sec(i));
             }
@@ -45,25 +45,24 @@ namespace TheSpaceRoles
         public static void CreateCustomOptions()
         {
             if (CustomOption.options.Count != 0) return;
-            HeaderMasked.Create(OptionType.General, "admin");
+            HeaderCreate(OptionType.General, "admin");
             //Create(OptionType.Default, "use_records_admin", true);
-            Create(OptionType.General, "use_records_admin", true);
             Create(OptionType.General, "limit_admin", GetSecondsIncludeUnlimited(180), 0);
 
+            HeaderCreate(OptionType.General, "vital");
             Create(OptionType.General, "limit_vital", GetSecondsIncludeUnlimited(180), 0);
 
+            HeaderCreate(OptionType.General, "camera");
             Create(OptionType.General, "limit_camera", GetSecondsIncludeUnlimited(180), 0);
 
+            HeaderCreate(OptionType.General, "doorlog");
             Create(OptionType.General, "limit_doorlog", GetSecondsIncludeUnlimited(180), 0);
 
+            HeaderCreate(OptionType.General, "binoculars");
             Create(OptionType.General, "limit_binoculars", GetSecondsIncludeUnlimited(180), 0);
 
-            /*
-            Create(CustomOptionSelectorSetting.General, "seee", GetSeconds(), ()=>"0"),
-            Create(CustomOptionSelectorSetting.General, "seer", GetSeconds(180), ()=>"0"),
-
-            Create(CustomOptionSelectorSetting.Starter, "use", GetSeconds(180,1), ()=>"0"),
-            Create(CustomOptionSelectorSetting.Starter, "user", GetSeconds(120,10), ()=>"0"),*/
+            HeaderCreate(OptionType.General, "map");
+            //Create(OptionType.General, "random_map", [()=>"",], 0);
 
 
         }
