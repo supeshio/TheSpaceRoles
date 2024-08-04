@@ -92,24 +92,38 @@ namespace TheSpaceRoles
             {
                 option.OptionCloneSet();
             }
-            foreach(var option in optionTypeCounter)
-            {
 
-                switch (option.Key)
+            foreach(var optiontype in optionTypeCounter)
+            {
+                Scroller sc = null;
+                GameOptionsMenu gameOptionsMenu = null;
+                switch (optiontype.Key)
                 {
-                    case OptionType.Default:
-                        GameSettingMenu.Instance.GameSettingsTab.scrollBar.SetBoundsMax(-option.Value ,- 1.65f);
-                        GameSettingMenu.Instance.GameSettingsTab.scrollBar.ContentXBounds = new FloatRange(-option.Value, -1.65f);
-                        break;
+                    
                     case OptionType.General:
-                        CustomOptions.TSRTab.scrollBar.SetBoundsMax(-option.Value, -1.65f);
-                        TSRTab.scrollBar.ContentXBounds = new FloatRange(-option.Value, -1.65f);
-                        break;
-                    case OptionType.Roles:
-                        GameSettingMenu.Instance.RoleSettingsTab.scrollBar.SetBoundsMax(-option.Value, -1.65f);
-                        GameSettingMenu.Instance.RoleSettingsTab.scrollBar.ContentXBounds = new FloatRange(-option.Value, -1.65f);
+                        sc = CustomOptions.TSRTab.scrollBar;
+                        gameOptionsMenu = TSRTab;
                         break;
                 }
+                if (sc == null) continue;
+                ////sc.ContentXBounds = new FloatRange(-option.Value, -1.65f);
+                //sc.ScrollbarYBounds = new FloatRange(0, 0);
+                //Rect safeArea = Screen.safeArea;
+                //float aspect = Mathf.Min((Camera.main).aspect, safeArea.width / safeArea.height);
+                //float safeOrthographicSize = CameraSafeArea.GetSafeOrthographicSize(Camera.main);
+                //float MinX = 0.1f - safeOrthographicSize * aspect;
+                //sc.ContentXBounds = new FloatRange(MinX, MinX);
+                //float num = 1.44f;
+                //int l = 0;
+                //int singles = 0;
+                //int headers = 0;
+                //int lines = 0;
+                //var curType = OptionType.General;
+
+                //float actual_spacing = (headers * 0.85f + lines * 0.59f) / (headers + lines);
+                //sc.CalculateAndSetYBounds((options.Where(x=>x.optionType==optiontype.Key).Count()), 2f, 6f, actual_spacing);
+                sc.ContentYBounds = new FloatRange( 0, -1.5f-optiontype.Value);
+
             }
         }
 
@@ -186,16 +200,16 @@ namespace TheSpaceRoles
                 switch (optionType)
                 {
                     case OptionType.Default:
-                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, GameSettingMenu.Instance.GameSettingsTab.scrollBar.Inner);
+                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, GameSettingMenu.Instance.GameSettingsTab.settingsContainer);
                         break;
                     case OptionType.General:
-                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(CustomOptions.TSRTab.categoryHeaderOrigin, CustomOptions.TSRTab.scrollBar.Inner);
+                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, CustomOptions.TSRTab.settingsContainer);
                         break;
                     case OptionType.Roles:
                         categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, GameSettingMenu.Instance.RoleSettingsTab.scrollBar.Inner);
                         break;
                 }
-                Logger.Info((SpriteRenderer.Instantiate(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin).Background == null).ToString());
+                
                 categoryHeaderMasked.SetHeader(StringNames.ImpostorsCategory, 20);
                 categoryHeaderMasked.Title.text = Title();
                 categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, optionTypeCounter[optionType], -2f);
@@ -273,10 +287,10 @@ namespace TheSpaceRoles
                             })));
                 stringOption.Value = stringOption.oldValue = selection;
                 stringOption.OnValueChanged = new Action<OptionBehaviour>((o) => { });
-                
+                OptionTypeCounterCountup(optionType, -0.45f);
+
             }
 
-            OptionTypeCounterCountup(optionType, -0.45f);
         }
 
 
