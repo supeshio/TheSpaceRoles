@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.TextCore;
 using static TheSpaceRoles.CustomOption;
 
 namespace TheSpaceRoles
@@ -15,55 +16,93 @@ namespace TheSpaceRoles
     {
         public static GameOptionsMenu TSRTab;
         public static PassiveButton TSRButton;
+        public static GameOptionsMenu RoleTab;
+        public static PassiveButton RoleButton;
+        public static GameOptionsMenu CrewmateTab;
+        public static PassiveButton CrewmateButton;
+        public static GameOptionsMenu NeutralTab;
+        public static PassiveButton NeutralButton;
+        public static GameOptionsMenu ImpostorTab;
+        public static PassiveButton ImpostorButton;
         [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start)), HarmonyPostfix]
         public static void ContinueCoStart(GameSettingMenu __instance)
         {
             Logger.Info("Start");
             __instance.PresetsTab.gameObject.SetActive(false);
             __instance.GamePresetsButton.gameObject.SetActive(false);
+            __instance.RoleSettingsButton.gameObject.SetActive(false);
+            __instance.transform.FindChild("What Is This?").gameObject.SetActive(false);
             TSRButton = UnityEngine.Object.Instantiate(__instance.GameSettingsButton.gameObject).GetComponent<PassiveButton>();
             TSRTab = UnityEngine.Object.Instantiate(__instance.GameSettingsTab.gameObject).GetComponent<GameOptionsMenu>();
 
-            TSRButton.gameObject.SetActive(true);
-            TSRButton.transform.SetParent(__instance.GamePresetsButton.transform.parent);
-            TSRTab.transform.SetParent(__instance.GameSettingsTab.transform.parent);
-            TSRTab.transform.localPosition = __instance.GameSettingsTab.transform.localPosition;
-            TSRTab.scrollBar.allowX = false;
+            RoleButton = UnityEngine.Object.Instantiate(__instance.GameSettingsButton.gameObject).GetComponent<PassiveButton>();
+            RoleTab = UnityEngine.Object.Instantiate(__instance.GameSettingsTab.gameObject).GetComponent<GameOptionsMenu>();
+
+            ImpostorButton = UnityEngine.Object.Instantiate(__instance.GameSettingsButton.gameObject).GetComponent<PassiveButton>();
+            ImpostorTab = UnityEngine.Object.Instantiate(__instance.GameSettingsTab.gameObject).GetComponent<GameOptionsMenu>();
+            CrewmateButton = UnityEngine.Object.Instantiate(__instance.GameSettingsButton.gameObject).GetComponent<PassiveButton>();
+            CrewmateTab = UnityEngine.Object.Instantiate(__instance.GameSettingsTab.gameObject).GetComponent<GameOptionsMenu>();
+            NeutralButton = UnityEngine.Object.Instantiate(__instance.GameSettingsButton.gameObject).GetComponent<PassiveButton>();
+            NeutralTab = UnityEngine.Object.Instantiate(__instance.GameSettingsTab.gameObject).GetComponent<GameOptionsMenu>();
+
+
+            GameOptionsMenu[] tabs = [__instance.GameSettingsTab, TSRTab, RoleTab, CrewmateTab, ImpostorTab, NeutralTab];
+
+            PassiveButton[] buttons = [__instance.GameSettingsButton, TSRButton, RoleButton, CrewmateButton, ImpostorButton, NeutralButton];
+            foreach (var tab in tabs)
+            {
+                if (tab == __instance.GameSettingsTab) continue;
+                tab.transform.SetParent(__instance.GameSettingsTab.transform.parent);
+                //tab.transform.localPosition = __instance.GameSettingsTab.transform.localPosition;
+                tab.scrollBar.allowX = false;
+
+                tab.scrollBar.Inner.DestroyChildren();
+                tab.RefreshChildren();
+                tab.transform.localPosition = __instance.GameSettingsTab.transform.localPosition;
+
+            }
+            foreach (var button in buttons)
+            {
+
+                button.gameObject.SetActive(true);
+                button.transform.SetParent(__instance.GamePresetsButton.transform.parent);
+                var t = button.transform.FindChild("FontPlacer").FindChild("Text_TMP").GetComponent<TextMeshPro>();
+            }
             __instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
             {
 
-                TSRButton.transform.FindChild("FontPlacer").FindChild("Text_TMP").GetComponent<TextMeshPro>().text = $"{TSR.c_name}</color> 設定";
+                TSRButton.transform.FindChild("FontPlacer").FindChild("Text_TMP").GetComponent<TextMeshPro>().text = Translation.GetString("option.setting_mod");
+                RoleButton.transform.FindChild("FontPlacer").FindChild("Text_TMP").GetComponent<TextMeshPro>().text = Translation.GetString("option.setting_role");
+                CrewmateButton.transform.FindChild("FontPlacer").FindChild("Text_TMP").GetComponent<TextMeshPro>().text = Translation.GetString("option.setting_crewmate");
+                ImpostorButton.transform.FindChild("FontPlacer").FindChild("Text_TMP").GetComponent<TextMeshPro>().text = Translation.GetString("option.setting_impostor");
+                NeutralButton.transform.FindChild("FontPlacer").FindChild("Text_TMP").GetComponent<TextMeshPro>().text = Translation.GetString("option.setting_neutral");
 
             })));
 
-            TSRTab.scrollBar.Inner.DestroyChildren();
-            TSRTab.RefreshChildren();
 
-            Logger.Info(TSRButton.transform.parent.name);
+            //Logger.Info(TSRButton.transform.parent.name);
             //-2.96 -0.42 -2
 
-            GameObject[] buttons = [__instance.GameSettingsButton.gameObject, TSRButton.gameObject, __instance.RoleSettingsButton.gameObject];
             int i = 0;
             foreach (var item in buttons)
             {
-                item.transform.localPosition = new Vector3(-2.96f, -0.42f - i * 0.6f, -2f);
+                item.transform.localScale = Vector3.one * 0.75f;
+                item.transform.localPosition = new Vector3(-2.96f, 0.9f - i * 0.55f, -2f);
                 i++;
             }
-
-            List<PassiveButton> passiveButtons = [__instance.GameSettingsButton, TSRButton, __instance.RoleSettingsButton];
-            //[__instance.GameSettingsTab,TSRTab,__instance.RoleSettingsTab];
-            for (int j = 0; j < passiveButtons.Count; j++)
+            for (int j = 0; j < buttons.Count(); j++)
             {
                 int copyindex = j;
-                var button = passiveButtons[j];
+                var button = buttons[j];
                 button.OnClick = new();
                 button.OnClick.AddListener((UnityAction)(() =>
                 {
                     __instance.GameSettingsTab.gameObject.SetActive(false);
                     __instance.RoleSettingsTab.gameObject.SetActive(false);
                     __instance.PresetsTab.gameObject.SetActive(false);
-                    passiveButtons.Do(x => { x.transform.FindChild("Selected").gameObject.SetActive(false); });
-                    TSRTab.gameObject.SetActive(false);
+                    buttons.Do(x => { x.transform.FindChild("Selected").gameObject.SetActive(false); });
+
+                    tabs.Do(x => x.gameObject.SetActive(false));
                     if (copyindex == 0)
                     {
                         __instance.GameSettingsTab.gameObject.SetActive(true);
@@ -75,8 +114,21 @@ namespace TheSpaceRoles
                     }
                     else if (copyindex == 2)
                     {
+                        RoleTab.gameObject.SetActive(true);
+                    }
+                    else if (copyindex == 3)
+                    {
+                        CrewmateTab.gameObject.SetActive(true);
+                    }
+                    else if (copyindex == 4)
+                    {
 
-                        __instance.RoleSettingsTab.gameObject.SetActive(true);
+                        ImpostorTab.gameObject.SetActive(true);
+                    }
+                    else if (copyindex == 5)
+                    {
+
+                        NeutralTab.gameObject.SetActive(true);
                     }
                 }));
             }
@@ -88,41 +140,35 @@ namespace TheSpaceRoles
             }
             CustomOptionsHolder.CreateCustomOptions();
             Logger.Info("opt");
-            foreach(var option in CustomOption.options)
+            foreach (var option in CustomOption.options)
             {
                 option.OptionCloneSet();
             }
 
-            foreach(var optiontype in optionTypeCounter)
+            foreach (var optiontype in optionTypeCounter)
             {
                 Scroller sc = null;
-                GameOptionsMenu gameOptionsMenu = null;
                 switch (optiontype.Key)
                 {
-                    
+
                     case OptionType.General:
                         sc = CustomOptions.TSRTab.scrollBar;
-                        gameOptionsMenu = TSRTab;
+                        break;
+                    case OptionType.Roles:
+                        sc = CustomOptions.RoleTab.scrollBar;
+                        break;
+                    case OptionType.Crewmate:
+                        sc = CustomOptions.CrewmateTab.scrollBar;
+                        break;
+                    case OptionType.Impostor:
+                        sc = CustomOptions.ImpostorTab.scrollBar;
+                        break;
+                    case OptionType.Neutral:
+                        sc = CustomOptions.NeutralTab.scrollBar;
                         break;
                 }
                 if (sc == null) continue;
-                ////sc.ContentXBounds = new FloatRange(-option.Value, -1.65f);
-                //sc.ScrollbarYBounds = new FloatRange(0, 0);
-                //Rect safeArea = Screen.safeArea;
-                //float aspect = Mathf.Min((Camera.main).aspect, safeArea.width / safeArea.height);
-                //float safeOrthographicSize = CameraSafeArea.GetSafeOrthographicSize(Camera.main);
-                //float MinX = 0.1f - safeOrthographicSize * aspect;
-                //sc.ContentXBounds = new FloatRange(MinX, MinX);
-                //float num = 1.44f;
-                //int l = 0;
-                //int singles = 0;
-                //int headers = 0;
-                //int lines = 0;
-                //var curType = OptionType.General;
-
-                //float actual_spacing = (headers * 0.85f + lines * 0.59f) / (headers + lines);
-                //sc.CalculateAndSetYBounds((options.Where(x=>x.optionType==optiontype.Key).Count()), 2f, 6f, actual_spacing);
-                sc.ContentYBounds = new FloatRange( 0, -1.5f-optiontype.Value);
+                sc.ContentYBounds = new FloatRange(0, -1.5f - optiontype.Value);
 
             }
         }
@@ -145,7 +191,12 @@ namespace TheSpaceRoles
             Default,
             General,
             Roles,
+            Crewmate,
+            Impostor,
+         
+            Neutral,
         }
+        public Color color = Color.white;
         public string nameId;
         public Func<string>[] selections;
         public ModOption ModOption;
@@ -166,10 +217,37 @@ namespace TheSpaceRoles
             }
             return k.ToArray();
         }
-        public string Value() => Translation.GetString(selections[selection]());
-        public string Title() => Translation.GetString($"option.{nameId}");
-        public CustomOption(OptionType optionType, string nameId, Func<string>[] selections, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false)
+        public string Value()
         {
+
+            return /*"<b>"*/  Translation.GetString(selections[selection]());
+        }
+        public string Title()
+        {
+
+            if (nameId.StartsWith("header.team_"))
+            {
+                var ids = nameId.Split('_');
+                return /*"<b>"*/  GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
+            }
+            if (nameId.StartsWith("team_"))
+            {
+                var ids = nameId.Split('_');
+                return /*"<b>"*/  GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
+            }
+            if (nameId.StartsWith("role_"))
+            {
+                var ids = nameId.Split('_');
+                if (ids[2] == "count")
+                {
+                    return /*"<b>"*/  GetLink.CustomRoleLink.First(x => x.Role.ToString().ToLower() == ids[1].ToLower()).ColoredRoleName;
+                }
+            }
+            return /*"<b>"*/  Translation.GetString($"option.{nameId}");
+        }
+        public CustomOption(OptionType optionType, string nameId, Func<string>[] selections, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false,string colorcode = "#ffffff")
+        {
+            this.color = Helper.ColorFromColorcode(colorcode);
             this.nameId = nameId;
             this.defaultSelection = defaultSelection;
             this.onChange = onChange;
@@ -206,14 +284,28 @@ namespace TheSpaceRoles
                         categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, CustomOptions.TSRTab.settingsContainer);
                         break;
                     case OptionType.Roles:
-                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, GameSettingMenu.Instance.RoleSettingsTab.scrollBar.Inner);
+                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, CustomOptions.RoleTab.settingsContainer);
+                        break;
+                    case OptionType.Crewmate:
+                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, CustomOptions.CrewmateTab.settingsContainer);
+                        break;
+                    case OptionType.Impostor:
+                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, CustomOptions.ImpostorTab.settingsContainer);
+                        break;
+                    case OptionType.Neutral:
+                        categoryHeaderMasked = GameObject.Instantiate<CategoryHeaderMasked>(GameSettingMenu.Instance.GameSettingsTab.categoryHeaderOrigin, CustomOptions.NeutralTab.settingsContainer);
                         break;
                 }
-                
+                if (categoryHeaderMasked == null) Logger.Error("CategroyHeaderMasked is not found");
                 categoryHeaderMasked.SetHeader(StringNames.ImpostorsCategory, 20);
                 categoryHeaderMasked.Title.text = Title();
+                categoryHeaderMasked.Title.outlineColor = Color.black;
+                categoryHeaderMasked.Title.outlineWidth = 0.1f;
+                categoryHeaderMasked.Title.fontSize = categoryHeaderMasked.Title.fontSizeMax = categoryHeaderMasked.Title.fontSizeMin =3f; 
+                categoryHeaderMasked.Title.fontStyle = TMPro.FontStyles.Bold;
                 categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, optionTypeCounter[optionType], -2f);
                 categoryHeaderMasked.transform.localScale = Vector3.one * 0.63f;
+                //categoryHeaderMasked.Background.color = color;
                 OptionTypeCounterCountup(optionType, -0.63f);
 
                 //GameSettingMenu.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
@@ -232,17 +324,36 @@ namespace TheSpaceRoles
                         stringOption = GameObject.Instantiate(GameSettingMenu.Instance.GameSettingsTab.stringOptionOrigin, GameSettingMenu.Instance.GameSettingsTab.settingsContainer);
 
                         stringOption.SetClickMask(GameSettingMenu.Instance.GameSettingsTab.ButtonClickMask);
-                            break;
+                        break;
                     case OptionType.General:
                         //Scroller/SliderInner
                         stringOption = GameObject.Instantiate(GameSettingMenu.Instance.GameSettingsTab.stringOptionOrigin, CustomOptions.TSRTab.settingsContainer);
 
-                        stringOption.SetClickMask(CustomOptions.TSRTab.ButtonClickMask); 
+                        stringOption.SetClickMask(CustomOptions.TSRTab.ButtonClickMask);
                         break;
                     case OptionType.Roles:
-                        stringOption = GameObject.Instantiate(GameSettingMenu.Instance.GameSettingsTab.stringOptionOrigin, GameSettingMenu.Instance.RoleSettingsTab.scrollBar.Inner);
+                        //Scroller/SliderInner
+                        stringOption = GameObject.Instantiate(GameSettingMenu.Instance.GameSettingsTab.stringOptionOrigin, CustomOptions.RoleTab.settingsContainer);
 
-                        stringOption.SetClickMask(GameSettingMenu.Instance.RoleSettingsTab.ButtonClickMask);
+                        stringOption.SetClickMask(CustomOptions.RoleTab.ButtonClickMask);
+                        break;
+                    case OptionType.Crewmate:
+                        //Scroller/SliderInner
+                        stringOption = GameObject.Instantiate(GameSettingMenu.Instance.GameSettingsTab.stringOptionOrigin, CustomOptions.CrewmateTab.settingsContainer);
+
+                        stringOption.SetClickMask(CustomOptions.CrewmateTab.ButtonClickMask);
+                        break;
+                    case OptionType.Impostor:
+                        //Scroller/SliderInner
+                        stringOption = GameObject.Instantiate(GameSettingMenu.Instance.GameSettingsTab.stringOptionOrigin, CustomOptions.ImpostorTab.settingsContainer);
+
+                        stringOption.SetClickMask(CustomOptions.ImpostorTab.ButtonClickMask);
+                        break;
+                    case OptionType.Neutral:
+                        //Scroller/SliderInner
+                        stringOption = GameObject.Instantiate(GameSettingMenu.Instance.GameSettingsTab.stringOptionOrigin, CustomOptions.NeutralTab.settingsContainer);
+
+                        stringOption.SetClickMask(CustomOptions.NeutralTab.ButtonClickMask);
                         break;
                 }
                 stringOption.gameObject.name = nameId;
@@ -250,10 +361,35 @@ namespace TheSpaceRoles
                 ModOption.StringOption = stringOption;
                 ModOption.StringOption.Values = new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppStructArray<StringNames>(100);
                 ModOption.StringOption.Value = 0;
+                //ModOption.StringOption.LabelBackground.sprite = Sprites.GetSpriteFromResources("ui.option_background.png");
+                ModOption.StringOption.LabelBackground.color = color;
                 ModOption.TitleText = ModOption.StringOption.TitleText;
                 ModOption.ValueText = ModOption.StringOption.ValueText;
+                ModOption.StringOption.TitleText.outlineColor = Color.black;
+                ModOption.StringOption.TitleText.outlineWidth = 0.1f;
+                ModOption.StringOption.TitleText.enableAutoSizing = false;
+                ModOption.StringOption.TitleText.enableWordWrapping = false;
+                ModOption.StringOption.TitleText.alignment = TextAlignmentOptions.Left;
+                ModOption.StringOption.TitleText.fontSize = ModOption.StringOption.TitleText.fontSizeMax = ModOption.StringOption.TitleText.fontSizeMin = 3f;
+                ModOption.StringOption.TitleText.fontStyle = TMPro.FontStyles.Bold;
                 ModOption.CustomOption = this;
                 Logger.Info(nameId);
+
+                ModOption.StringOption.ValueText.transform.localPosition = new(3.5f, -0.046f, -1);
+
+                //ModOption.StringOption..transform.localPosition = new Vector3(3.5f, -0.05f, 0);
+                ModOption.StringOption.LabelBackground.transform.localPosition = new(-1.5f, -0.06f, 0);
+                ModOption.StringOption.LabelBackground.GetComponent<SpriteRenderer>().size = new(6, 0.7f);
+                ModOption.StringOption.TitleText.transform.localPosition = new Vector3(-3f, -0.06f, -3); 
+                ModOption.StringOption.transform.FindChild("ValueBox").localPosition = new(3.5f, - 0.05f, 0);
+                ModOption.StringOption.transform.FindChild("MinusButton (1)").localPosition = new(2.1f, -0.05f, 0);
+                ModOption.StringOption.transform.FindChild("PlusButton (1)").localPosition = new(4.2f, -0.05f, 0);
+                //ValueBox 3.5 -0.05 0
+                //valuetext 3.5 -0.046 -1
+                //plus 0.7 minus -1.4
+
+                //labelback size (6,0.7)  -1.5,-0.062,0
+                //title -3.6 -0.06 -3
                 //TORから
                 SpriteRenderer[] componentsInChildren = stringOption.GetComponentsInChildren<SpriteRenderer>(true);
                 for (int i = 0; i < componentsInChildren.Length; i++)
@@ -276,7 +412,7 @@ namespace TheSpaceRoles
                     catch
                     { }
                 }
-                
+
                 //
                 stringOption.transform.localPosition = new Vector3(0.952f, optionTypeCounter[optionType], -2);
                 UpdateSelection(defaultSelection);
@@ -317,18 +453,18 @@ namespace TheSpaceRoles
         public static Func<int, bool> funcOff = x => x == 0;
 
 
-        public static CustomOption Create(OptionType optionType, string name, bool DefaultValue = false, Func<bool> Show = null, Action onChange = null)
+        public static CustomOption Create(OptionType optionType, string name, bool DefaultValue = false, Func<bool> Show = null, Action onChange = null,string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, [Off(), On()], DefaultValue ? 1 : 0, Show, onChange);
+            return new CustomOption(optionType, name, [Off(), On()], DefaultValue ? 1 : 0, Show, onChange, colorcode: colorcode);
         }
-        public static CustomOption Create(OptionType optionType, string name, Func<string>[] selections, int selection, Func<bool> Show = null, Action onChange = null)
+        public static CustomOption Create(OptionType optionType, string name, Func<string>[] selections, int selection, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, selections, selection, Show, onChange);
+            return new CustomOption(optionType, name, selections, selection, Show, onChange, colorcode: colorcode);
         }
 
-        public static CustomOption HeaderCreate(OptionType optionType, string nameId)
+        public static CustomOption HeaderCreate(OptionType optionType, string nameId, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, nameId, [],0,isHeader:true);
+            return new CustomOption(optionType, nameId, [], 0, isHeader: true,colorcode:colorcode);
         }
 
         public void UpdateSelection(int selecting)
@@ -363,7 +499,7 @@ namespace TheSpaceRoles
             private static bool Decrease(StringOption __instance)
             {
                 CustomOption option = CustomOption.options.First(x => x.ModOption.StringOption == __instance);
-                if (option == null) return true; 
+                if (option == null) return true;
                 option.UpdateSelection(option.selection - 1);
                 //option.ModOption.Decrease();
                 return false;
@@ -385,5 +521,5 @@ namespace TheSpaceRoles
             //}
         }
     }
-    
+
 }
