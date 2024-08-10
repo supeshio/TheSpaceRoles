@@ -9,7 +9,7 @@
 
             teamsSupported = [Teams.Madmate];
             Role = Roles.MadMate;
-            Color = Palette.ImpostorRed;
+            Color = new MadmateTeam().Color;
             HasKillButton = false;
         }
         public override void HudManagerStart(HudManager __instance)

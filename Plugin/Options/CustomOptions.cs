@@ -132,13 +132,16 @@ namespace TheSpaceRoles
                     }
                 }));
             }
+            if (CustomOption.options.Count == 0)
+            {
+                CustomOptionsHolder.CreateCustomOptions();
+            }
             optionTypeCounter.Clear();
             foreach (OptionType item in Enum.GetValues(typeof(OptionType)))
             {
 
                 CustomOption.optionTypeCounter.Add(item, 1.5f);
             }
-            CustomOptionsHolder.CreateCustomOptions();
             Logger.Info("opt");
             foreach (var option in CustomOption.options)
             {
@@ -178,7 +181,6 @@ namespace TheSpaceRoles
     public class CustomOption
     {
 
-
         public static Dictionary<OptionType, float> optionTypeCounter = new();
 
         public static void OptionTypeCounterCountup(OptionType optionType, float i = 1)
@@ -200,12 +202,12 @@ namespace TheSpaceRoles
         public string nameId;
         public Func<string>[] selections;
         public ModOption ModOption;
-        public int selection;
+        public int selection() => entry.Value;
         public int defaultSelection;
         public ConfigEntry<int> entry;
         public Action onChange;
         public OptionType optionType;
-        public static List<CustomOption> options = [];
+        public static List<CustomOption> options = new();
         Func<bool> Show;
         CategoryHeaderMasked categoryHeaderMasked;
         public StringNames[] GetStringNames(string[] str)
@@ -220,7 +222,7 @@ namespace TheSpaceRoles
         public string Value()
         {
 
-            return /*"<b>"*/  Translation.GetString(selections[selection]());
+            return /*"<b>"*/  Translation.GetString(selections[selection()]());
         }
         public string Title()
         {
@@ -360,7 +362,7 @@ namespace TheSpaceRoles
                 Logger.Info(stringOption.name, nameId);
                 ModOption.StringOption = stringOption;
                 ModOption.StringOption.Values = new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppStructArray<StringNames>(100);
-                ModOption.StringOption.Value = 0;
+                ModOption.StringOption.Value = selection();
                 //ModOption.StringOption.LabelBackground.sprite = Sprites.GetSpriteFromResources("ui.option_background.png");
                 ModOption.StringOption.LabelBackground.color = color;
                 ModOption.TitleText = ModOption.StringOption.TitleText;
@@ -413,16 +415,16 @@ namespace TheSpaceRoles
                     { }
                 }
 
-                //
+
+                stringOption.OnValueChanged = new Action<OptionBehaviour>((o) => { });
                 stringOption.transform.localPosition = new Vector3(0.952f, optionTypeCounter[optionType], -2);
-                UpdateSelection(defaultSelection);
+                UpdateSelection(selection());
                 GameSettingMenu.Instance.StartCoroutine(Effects.Lerp(0f, new Action<float>((p) =>
                             {
                                 ModOption.StringOption.TitleText.text = Title();
                                 ModOption.StringOption.ValueText.text = Value();
                             })));
-                stringOption.Value = stringOption.oldValue = selection;
-                stringOption.OnValueChanged = new Action<OptionBehaviour>((o) => { });
+                ModOption.StringOption.Value = ModOption.StringOption.oldValue = selection();
                 OptionTypeCounterCountup(optionType, -0.45f);
 
             }
@@ -431,15 +433,17 @@ namespace TheSpaceRoles
 
 
 
-
-
+        public static CustomOption GetOption(string nameId)
+        {
+            return options.First(x => x.nameId == nameId);
+        }
 
 
         public static Func<string> GetOptionSelection(string str, string[] strs = null)
         {
             return () => Translation.GetString("option.selection." + str, strs);
         }
-        public bool GetBool() => selection == 0;
+        public bool GetBool() => selection() == 0;
         public static Func<string> On() => GetOptionSelection("on");
         public static Func<string> Off() => GetOptionSelection("off");
         public static Func<string> Unlimited() => GetOptionSelection("unlimited");
@@ -473,12 +477,11 @@ namespace TheSpaceRoles
             if (!ModOption.isHeader)
             {
 
-                if (selecting != selection)
+                entry.Value = ModOption.StringOption.Value = ModOption.StringOption.oldValue = selecting;
+                ModOption.StringOption.ValueText.text = Value();
+                if (selecting != selection())
                 {
-                    Logger.Info($"{nameId}:{selection} -> {selecting}");
-
-                    selection = ModOption.StringOption.Value = ModOption.StringOption.oldValue = selecting;
-                    ModOption.StringOption.ValueText.text = Value();
+                    Logger.Info($"{nameId}:{selection()} -> {selecting}");
                     if (onChange != null) onChange.Invoke();
                 }
             }
@@ -491,7 +494,7 @@ namespace TheSpaceRoles
             {
                 CustomOption option = CustomOption.options.First(x => x.ModOption.StringOption == __instance);
                 if (option == null) return true;
-                option.UpdateSelection(option.selection + 1);
+                option.UpdateSelection(option.selection() + 1);
                 //option.ModOption.Increase();
                 return false;
             }
@@ -500,7 +503,7 @@ namespace TheSpaceRoles
             {
                 CustomOption option = CustomOption.options.First(x => x.ModOption.StringOption == __instance);
                 if (option == null) return true;
-                option.UpdateSelection(option.selection - 1);
+                option.UpdateSelection(option.selection() - 1);
                 //option.ModOption.Decrease();
                 return false;
             }

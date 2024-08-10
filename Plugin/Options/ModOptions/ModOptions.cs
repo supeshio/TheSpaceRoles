@@ -12,12 +12,12 @@ namespace TheSpaceRoles
         public CategoryHeaderMasked categoryHeaderMasked;
         public void Increase()
         {
-            CustomOption.UpdateSelection((CustomOption.selection + 1 + CustomOption.selections.Length) % CustomOption.selections.Length);
+            CustomOption.UpdateSelection((CustomOption.selection() + 1 + CustomOption.selections.Length) % CustomOption.selections.Length);
 
         }
         public void Decrease()
         {
-            CustomOption.UpdateSelection((CustomOption.selection - 1 + CustomOption.selections.Length) % CustomOption.selections.Length);
+            CustomOption.UpdateSelection((CustomOption.selection() - 1 + CustomOption.selections.Length) % CustomOption.selections.Length);
         }
     }
 }
