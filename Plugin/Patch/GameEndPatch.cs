@@ -72,15 +72,15 @@ namespace TheSpaceRoles
                     Logger.Info("WinTeam:" + winteam.ToString());
                     foreach (var item in DataBase.AllPlayerRoles)
                     {
-                        if (item.Value.Any(c => c.Team.Team == winteam))
+                        if (item.Value.Any(c => c.CustomTeam.Team == winteam))
                         {
 
                             v.Add(new CachedPlayerData(DataBase.AllPlayerControls().First(y => y.PlayerId == item.Key).Data));
                         }
-                        else if (item.Value.Any(c => c.Team.AdditionalWinCheck(winteam)))
+                        else if (item.Value.Any(c => c.CustomTeam.AdditionalWinCheck(winteam)))
                         {
                             v.Add(new CachedPlayerData(DataBase.AllPlayerControls().First(y => y.PlayerId == item.Key).Data));
-                            item.Value.DoIf(x => x.Team.AdditionalWinCheck(winteam) && !AdditionalWinnerTeams.Contains(x.Team.Team), x => AdditionalWinnerTeams.Add(x.Team.Team));
+                            item.Value.DoIf(x => x.CustomTeam.AdditionalWinCheck(winteam) && !AdditionalWinnerTeams.Contains(x.CustomTeam.Team), x => AdditionalWinnerTeams.Add(x.CustomTeam.Team));
                         }
                         else
                         {
@@ -117,11 +117,11 @@ namespace TheSpaceRoles
                 {
                     foreach (var item in roles.Value)
                     {
-                        if (item.Team.WinCheck())
+                        if (item.CustomTeam.WinCheck())
                         {
-                            if (!WinTeams.Contains(item.Team.Team))
+                            if (!WinTeams.Contains(item.CustomTeam.Team))
                             {
-                                WinTeams.Add(item.Team.Team);
+                                WinTeams.Add(item.CustomTeam.Team);
                             }
                         }
                     }

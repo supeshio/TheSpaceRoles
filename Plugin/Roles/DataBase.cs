@@ -20,7 +20,7 @@ namespace TheSpaceRoles
         public static List<CustomButton> buttons = [];
         public static PlayerControl[] AllPlayerControls()
         {
-            return PlayerControl.AllPlayerControls.ToArray().Where(x => !x.isDummy).ToArray();
+            return PlayerControl.AllPlayerControls.ToArray();
         }
         /// <summary>
         /// VoteAreaのすべてのプレイヤー
@@ -125,12 +125,12 @@ namespace TheSpaceRoles
             HudManagerGame.IsGameStarting = false;
 
             HudManagerGame.OnGameStarted = true;
+            Logger.Info("DataBaseReseted");
 
         }
 
         public static Dictionary<Teams, int> GetPlayerCountInTeam()
         {
-
 
             Dictionary<Teams, int> result = [];
 
@@ -142,9 +142,10 @@ namespace TheSpaceRoles
             {
                 if (p.Value.Any(x => !x.Dead))
                 {
-                    result[p.Value[0].Team.Team]++;
+                    result[p.Value[0].CustomTeam.Team]++;
                 }
             }
+            //Logger.Info($"Impostor :{result[Teams.Impostor]},Crewmate :{GetAsCrewmatePlayerCount()}");
             return result;
         }
         /// <summary>
@@ -156,7 +157,8 @@ namespace TheSpaceRoles
             int i = 0;
             foreach (var p in AllPlayerRoles)
             {
-                if (p.Value.Any(x => !x.Dead) && p.Value[0].Role != Roles.Impostor && p.Value[0].Role != Roles.Jackal)
+                //Logger.Info(p.Value[0].Role.ToString());
+                if (p.Value.Any(x => !x.Dead) && p.Value[0].team != Teams.Impostor && p.Value[0].team != Teams.Jackal)
                 {
                     i++;
                 }

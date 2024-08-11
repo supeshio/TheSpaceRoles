@@ -6,7 +6,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.TextCore;
 using static TheSpaceRoles.CustomOption;
 
 namespace TheSpaceRoles
@@ -195,7 +194,7 @@ namespace TheSpaceRoles
             Roles,
             Crewmate,
             Impostor,
-         
+
             Neutral,
         }
         public Color color = Color.white;
@@ -247,7 +246,7 @@ namespace TheSpaceRoles
             }
             return /*"<b>"*/  Translation.GetString($"option.{nameId}");
         }
-        public CustomOption(OptionType optionType, string nameId, Func<string>[] selections, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false,string colorcode = "#ffffff")
+        public CustomOption(OptionType optionType, string nameId, Func<string>[] selections, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
         {
             this.color = Helper.ColorFromColorcode(colorcode);
             this.nameId = nameId;
@@ -303,7 +302,7 @@ namespace TheSpaceRoles
                 categoryHeaderMasked.Title.text = Title();
                 categoryHeaderMasked.Title.outlineColor = Color.black;
                 categoryHeaderMasked.Title.outlineWidth = 0.1f;
-                categoryHeaderMasked.Title.fontSize = categoryHeaderMasked.Title.fontSizeMax = categoryHeaderMasked.Title.fontSizeMin =3f; 
+                categoryHeaderMasked.Title.fontSize = categoryHeaderMasked.Title.fontSizeMax = categoryHeaderMasked.Title.fontSizeMin = 3f;
                 categoryHeaderMasked.Title.fontStyle = TMPro.FontStyles.Bold;
                 categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, optionTypeCounter[optionType], -2f);
                 categoryHeaderMasked.transform.localScale = Vector3.one * 0.63f;
@@ -382,8 +381,8 @@ namespace TheSpaceRoles
                 //ModOption.StringOption..transform.localPosition = new Vector3(3.5f, -0.05f, 0);
                 ModOption.StringOption.LabelBackground.transform.localPosition = new(-1.5f, -0.06f, 0);
                 ModOption.StringOption.LabelBackground.GetComponent<SpriteRenderer>().size = new(6, 0.7f);
-                ModOption.StringOption.TitleText.transform.localPosition = new Vector3(-3f, -0.06f, -3); 
-                ModOption.StringOption.transform.FindChild("ValueBox").localPosition = new(3.5f, - 0.05f, 0);
+                ModOption.StringOption.TitleText.transform.localPosition = new Vector3(-3f, -0.06f, -3);
+                ModOption.StringOption.transform.FindChild("ValueBox").localPosition = new(3.5f, -0.05f, 0);
                 ModOption.StringOption.transform.FindChild("MinusButton (1)").localPosition = new(2.1f, -0.05f, 0);
                 ModOption.StringOption.transform.FindChild("PlusButton (1)").localPosition = new(4.2f, -0.05f, 0);
                 //ValueBox 3.5 -0.05 0
@@ -457,7 +456,7 @@ namespace TheSpaceRoles
         public static Func<int, bool> funcOff = x => x == 0;
 
 
-        public static CustomOption Create(OptionType optionType, string name, bool DefaultValue = false, Func<bool> Show = null, Action onChange = null,string colorcode = "#4f4f4f")
+        public static CustomOption Create(OptionType optionType, string name, bool DefaultValue = false, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
             return new CustomOption(optionType, name, [Off(), On()], DefaultValue ? 1 : 0, Show, onChange, colorcode: colorcode);
         }
@@ -468,7 +467,7 @@ namespace TheSpaceRoles
 
         public static CustomOption HeaderCreate(OptionType optionType, string nameId, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, nameId, [], 0, isHeader: true,colorcode:colorcode);
+            return new CustomOption(optionType, nameId, [], 0, isHeader: true, colorcode: colorcode);
         }
 
         public void UpdateSelection(int selecting)

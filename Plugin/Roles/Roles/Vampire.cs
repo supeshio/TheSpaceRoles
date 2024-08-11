@@ -10,7 +10,7 @@ namespace TheSpaceRoles
         public Vampire()
         {
 
-            teamsSupported = [Teams.Impostor];
+            team = Teams.Impostor;
             Role = Roles.Vampire;
             Color = Palette.ImpostorRed;
             HasKillButton = false;

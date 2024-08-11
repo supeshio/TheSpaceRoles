@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using static TheSpaceRoles.CustomOption;
 using static TheSpaceRoles.Translation;
@@ -65,29 +64,33 @@ namespace TheSpaceRoles
         }
         public static string GetTeamColor(Teams teams)
         {
-            Color c =GetLink.ColorFromTeams(teams);
-            return "#" + ColorUtility.ToHtmlStringRGB(Helper.ColorEditHSV(c,s:-0.2f,v:0.2f));
+            Color c = GetLink.ColorFromTeams(teams);
+            return "#" + ColorUtility.ToHtmlStringRGB(Helper.ColorEditHSV(c, s: -0.2f, v: 0.2f));
         }
+        public static Dictionary<Teams, CustomOption> teamoptions = new();
+        public static Dictionary<Roles, CustomOption> roleoptions = new();
         public static void CreateRoleOption()
         {
-            HeaderCreate(OptionType.Roles, $"rolemax"); 
-            Create(OptionType.Roles, $"team_{Teams.Crewmate.ToString().ToLower()}", GetCountList(), 0,colorcode: "#cccccc");
-            Create(OptionType.Roles, $"team_{Teams.Impostor.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc");
-            Create(OptionType.Roles, $"team_{Teams.Madmate.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc");
-            Create(OptionType.Roles, $"team_{Teams.Jackal.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc");
-            Create(OptionType.Roles, $"team_{Teams.Jester.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc");
-            Logger.Info(ColorUtility.ToHtmlStringRGB(GetLink.ColorFromTeams(Teams.Jester)));
+            HeaderCreate(OptionType.Roles, $"rolemax");
+            //teamoptions.Add( Teams.Crewmate,Create(OptionType.Roles, $"team_{Teams.Crewmate.ToString().ToLower()}", GetCountList(), 0,colorcode: "#cccccc"));
+            teamoptions.Add(Teams.Impostor, Create(OptionType.Roles, $"team_{Teams.Impostor.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
+            teamoptions.Add(Teams.Madmate, Create(OptionType.Roles, $"team_{Teams.Madmate.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
+            teamoptions.Add(Teams.Jackal, Create(OptionType.Roles, $"team_{Teams.Jackal.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
+            teamoptions.Add(Teams.Jester, Create(OptionType.Roles, $"team_{Teams.Jester.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
             foreach (Teams team in GetLink.GetAllTeams())
             {
                 if (Teams.None == team) continue;
                 if ((int)team >= 6) return;
-                HeaderCreate(OptionType.Roles, $"team_{team}", colorcode:"#cccccc");
+                HeaderCreate(OptionType.Roles, $"team_{team}", colorcode: "#cccccc");
                 foreach (CustomRole role in GetLink.CustomRoleLink)
                 {
-                    if (role.teamsSupported.Contains(team))
+                    if (role.team == team)
                     {
+                        if (GetLink.GetCustomRoleNormal(role.team).Role != role.Role)
+                        {
 
-                        Create(OptionType.Roles, $"role_{role.Role}_count", GetCountList(), 0);
+                            roleoptions.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", GetCountList(), 0));
+                        }
                     }
                 }
                 //GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;

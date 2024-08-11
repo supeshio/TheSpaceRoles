@@ -5,7 +5,7 @@
         public MadmateTeam()
         {
             Team = Teams.Madmate;
-            Color = Helper.ColorFromColorcode("#9e1212");
+            Color = Helper.ColorFromColorcode("#ff3636");
             HasKillButton = false;
             CanRepairSabotage = true;
             CanUseAdmin = true;

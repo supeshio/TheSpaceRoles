@@ -17,7 +17,7 @@ option.setting_impostor,Impostor Setting,,,,,,,,,,,インポスター設定,,,,,
 option.setting_neutral,Neutral Setting,,,,,,,,,,,ニュートラル設定,,,,,
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
-option.header.rolemax,Max Number Of Roles,,,,,,,,,,,最大役職数,,,,,
+option.header.rolemax,Max Number Of Roles,,,,,,,,,,,陣営ごとの人数,,,,,
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
@@ -146,21 +146,26 @@ role.template.description,,,,,,,,,,,,_,,,,,
 ,,,,,,,,,,,,,,,,,
 #crewmate,,,,,,,,,,,,,,,,,
 role.crewmate.name,Crewmate,,,,,,,,,,,クルーメイト,,,,,市民
-role.crewmate.intro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、{team.impostor.coloredname}を追放しろ,,,,,仕事をこなし、{team.impostor.coloredname}を処刑せよ
-role.crewmate.sintro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、{team.impostor.coloredname}を追放しろ,,,,,仕事をこなし、{team.impostor.coloredname}を処刑せよ
+role.crewmate.intro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、インポスターを追放しろ,,,,,仕事をこなし、人狼を処刑せよ
+role.crewmate.sintro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、インポスターを追放しろ,,,,,仕事をこなし、人狼を処刑せよ
 role.crewmate.description,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 #impostor,,,,,,,,,,,,,,,,,
 role.impostor.name,Impostor,,,,,,,,,,,インポスター,,,,,人狼
-role.impostor.intro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,{team.crewmate.coloredname}を全滅させろ,,,,,村を壊滅させろ
-role.impostor.sintro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,{team.crewmate.coloredname}を全滅させろ,,,,,村を壊滅させろ
+role.impostor.intro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,クルーメイトを全滅させろ,,,,,村を壊滅させろ
+role.impostor.sintro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,クルーメイトを全滅させろ,,,,,村を壊滅させろ
 role.impostor.description,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
-#guesser,,,,,,,,,,,,,,,,,
-role.guesser.name,Guesser,,,,,,,,,,,ゲッサー,,,,,
-role.guesser.intro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
-role.guesser.sintro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
-role.guesser.description,,,,,,,,,,,,*,,,,,
+#niceguesser,,,,,,,,,,,,,,,,,
+role.niceguesser.name,Guesser,,,,,,,,,,,ナイスゲッサー,,,,,推測者
+role.niceguesser.intro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
+role.niceguesser.sintro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
+role.niceguesser.description,,,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.impostor.coloredname}を撃ち抜こう。,,,,,
+#evilguesser,,,,,,,,,,,,,,,,,
+role.evilguesser.name,Evil Guesser,,,,,,,,,,,イビルゲッサー,,,,,
+role.evilguesser.intro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
+role.evilguesser.sintro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
+role.evilguesser.description,,,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.crewmate.coloredname}や{team.other.colorednameを撃ち抜こう。,,,,,
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
@@ -171,11 +176,16 @@ role.sheriff.sintro,Let justice be done,,,,,,,,,,,正義の鉄槌を,,,,,正義�
 role.sheriff.description,coming soon,,,,,,,,,,,{role.sheriff.coloredname}はキルボタンを持ち、{team.impostor.coloredname}や{team.other.coloredname}の陣営をキルすることができる。\nしかし誤って{team.crewmate.coloredname}をキルしようとしてしまうと自爆してしまう。\n怪しい人をキルして{team.crewmate.coloredname}を勝利に導こう。,,,,,怪しい人をキルしてクルーメイト陣営を勝利に導こう。
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
-#mini,,,,,,,,,,,,,,,,,
-role.mini.name,Mini,,,,,,,,,,,ミニ,,,,,小人
-role.mini.intro,Let's fight while protected,,,,,,,,,,,守られながら戦おう,,,,,守られながら戦おう
-role.mini.sintro,Let's fight while protected,,,,,,,,,,,守られながら戦おう,,,,,守られながら戦おう
-role.mini.description,,,,,,,,,,,,,,,,,,
+#nicemini,,,,,,,,,,,,,,,,,
+role.nicemini.name,Nice Mini,,,,,,,,,,,ナイスミニ,,,,,小人
+role.nicemini.intro,Let's fight while protected,,,,,,,,,,,守られながらインポスターを追放せよ,,,,,守られながらインポスターを追放せよ
+role.nicemini.sintro,Let's fight while protected,,,,,,,,,,,守られながらインポスターを追放せよ,,,,,守られながらインポスターを追放せよ
+role.nicemini.description,,,,,,,,,,,,,,,,,,
+#evilmini,,,,,,,,,,,,,,,,,
+role.evilmini.name,EvilMini,,,,,,,,,,,イビルミニ,,,,,小狼
+role.evilmini.intro,Let's fight while protected,,,,,,,,,,,守られながら村を壊滅させろ,,,,,守られながら村を壊滅させろ
+role.evilmini.sintro,Let's fight while protected,,,,,,,,,,,守られながら村を壊滅させろ,,,,,守られながら村を壊滅させろ
+role.evilini.description,,,,,,,,,,,,,,,,,,
 #vampire,,,,,,,,,,,,,,,,,
 role.vampire.name,Vampire,,,,,,,,,,,ヴァンパイア,,,,,吸血鬼
 role.vampire.intro,,,,,,,,,,,,あたしヴァンパイア,,,,,あたしヴァンパイア

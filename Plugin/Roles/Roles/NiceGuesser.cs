@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace TheSpaceRoles
 {
-    public class Guesser : CustomRole
+    public class NiceGuesser : CustomRole
     {
         public List<Target> targets = [];
-        public Guesser()
+        public NiceGuesser()
         {
-            teamsSupported = GetLink.GetAllTeams();
-            Role = Roles.Guesser;
+            team = Teams.Crewmate;
+            Role = Roles.NiceGuesser;
             Color = Helper.ColorFromColorcode("#FFCC00");
         }
         public override void HudManagerStart(HudManager hudManager)

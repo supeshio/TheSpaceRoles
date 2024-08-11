@@ -8,7 +8,7 @@ namespace TheSpaceRoles
         public Jackal()
         {
 
-            teamsSupported = [Teams.Jackal];
+            team = Teams.Jackal;
             Role = Roles.Jackal;
             Color = ColorFromColorcode("#00b4eb");
             CanUseVent = true;

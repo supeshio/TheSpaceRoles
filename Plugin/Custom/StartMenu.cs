@@ -43,6 +43,10 @@ namespace TheSpaceRoles
         public static void Postfix(HudManager __instance)
         {
             Data.textMaterial = __instance.Chat.quickChatMenu.timer.text.fontMaterial;
+            if (CustomOption.options.Count == 0)
+            {
+                CustomOptionsHolder.CreateCustomOptions();
+            }
         }
     }
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]

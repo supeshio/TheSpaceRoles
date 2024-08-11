@@ -9,7 +9,7 @@ namespace TheSpaceRoles
         public Sheriff()
         {
 
-            teamsSupported = [Teams.Crewmate];
+            team = Teams.Crewmate;
             Role = Roles.Sheriff;
             Color = ColorFromColorcode("#ffd700");
             HasKillButton = false;

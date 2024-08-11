@@ -72,7 +72,7 @@ namespace TheSpaceRoles
 
             Vector2 truePosition = targetingPlayer.GetTruePosition();
             var allPlayers = ShipStatus.Instance.AllVents;
-            Logger.Info(num.ToString() + $"((({targetingPlayer.Data.IsDead || targetingPlayer.inVent} {allPlayers.Count}");
+            //Logger.Info(num.ToString() + $"((({targetingPlayer.Data.IsDead || targetingPlayer.inVent} {allPlayers.Count}");
             for (int i = 0; i < allPlayers.Count; i++)
             {
                 Vent ventInfo = allPlayers[i];
@@ -84,7 +84,7 @@ namespace TheSpaceRoles
                 {
                     Vector2 vector = new Vector2(ventInfo.transform.position.x, ventInfo.transform.position.y) - truePosition;
                     float magnitude = vector.magnitude;
-                    Logger.Info(allPlayers[i].name + $"({ventInfo.Id})" + ":" + $"{magnitude <= num}");
+                    //Logger.Info(allPlayers[i].name + $"({ventInfo.Id})" + ":" + $"{magnitude <= num}");
                     if (magnitude <= num && !PhysicsHelpers.AnyNonTriggersBetween(truePosition, vector.normalized, magnitude, Constants.ShipAndObjectsMask))
                     {
                         result = ventInfo;

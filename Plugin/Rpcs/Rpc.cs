@@ -29,11 +29,6 @@ namespace TheSpaceRoles
                         int r2 = reader.ReadInt32();
                         GameStarter.SetRole(r1, r2);
                         break;
-                    case Rpcs.SetTeam:
-                        int t1 = reader.ReadInt32();
-                        int t2 = reader.ReadInt32();
-                        GameStarter.SetTeam(t1, t2);
-                        break;
                     case Rpcs.CheckedMurderPlayer:
                         CheckedMurderPlayer.Murder(reader.ReadInt32(), reader.ReadInt32(), (DeathReason)reader.ReadInt32());
                         break;
@@ -69,8 +64,11 @@ namespace TheSpaceRoles
                         int useAbilityId = reader.ReadInt32();
                         switch ((Roles)useAbilityRoleId)
                         {
-                            case Roles.Mini:
-                                Mini.SetAge(useAbilityPlayerId, reader.ReadInt32());
+                            case Roles.NiceMini:
+                                NiceMini.SetAge(useAbilityPlayerId, reader.ReadInt32());
+                                break;
+                            case Roles.EvilMini:
+                                EvilMini.SetAge(useAbilityPlayerId, reader.ReadInt32());
                                 break;
                         }
 

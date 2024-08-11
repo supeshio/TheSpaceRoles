@@ -38,7 +38,7 @@ public class TSR : BasePlugin
 
     /*
      後でやること
-    playerJoin時に部屋爆破までの時間を伝える。
+     playerJoin時に部屋爆破までの時間を伝える。<- バニラにあるよ
      
      
      

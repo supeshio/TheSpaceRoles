@@ -55,11 +55,14 @@ namespace TheSpaceRoles
         Spy,//c,j?
         Portalmaker,//c ?
         Securityguard,//c
-        Guesser,//all
+        //Guesser,//all
         Medium,//c
         Trapper,//all
 
-        Mini,
+        NiceMini,
+        EvilMini,
+        NiceGuesser,
+        EvilGuesser,
 
     }
     public enum Teams : int
@@ -95,12 +98,15 @@ namespace TheSpaceRoles
             new Crewmate(),
             new Impostor(),
             new Sheriff(),
-            new Mini(),
+            new NiceMini(),
             new Vampire(),
             new SerialKiller(),
             new Madmate(),
             new Jackal(),
-            new Guesser(),
+            new NiceGuesser(),
+            new EvilGuesser(),
+            new EvilMini(),
+            new Jester(),
         ];
 
         public static List<CustomRole> CustomRoleNormalLink =>
@@ -109,6 +115,7 @@ namespace TheSpaceRoles
             new Impostor(),
             new Madmate(),
             new Jackal(),
+            new Jester(),
         ];
 
         public static List<CustomTeam> CustomTeamLink =>
@@ -193,9 +200,9 @@ namespace TheSpaceRoles
         }
         public static CustomRole GetCustomRoleNormal(Teams teams)
         {
-            if (!CustomRoleNormalLink.Any(x => x.teamsSupported.Contains(teams))) { Logger.Error($"{teams} is not contained in RoleMasterNoramlLink"); return null; }
+            if (!CustomRoleNormalLink.Any(x => x.team == teams)) { Logger.Error($"{teams} is not contained in RoleMasterNoramlLink"); return null; }
 
-            return CustomRoleNormalLink.First(x => x.teamsSupported.Contains(teams));
+            return CustomRoleNormalLink.First(x => x.team == teams);
         }
         public static Teams[] GetAllTeams()
         {

@@ -5,7 +5,7 @@
         public Impostor()
         {
 
-            teamsSupported = [Teams.Impostor];
+            team = Teams.Impostor;
             Role = Roles.Impostor;
             Color = Palette.ImpostorRed;
             HasKillButton = true;
