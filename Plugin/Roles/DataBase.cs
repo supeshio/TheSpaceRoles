@@ -11,6 +11,7 @@ namespace TheSpaceRoles
         /// </summary>
         public static Dictionary<int, CustomRole[]> AllPlayerRoles = [];//playerId,roles
 
+        public static List<Roles> AssignedRoles = [];
         /// <summary>
         /// playerId,Teams型で陣営型を入れれる
         /// </summary>
@@ -115,6 +116,7 @@ namespace TheSpaceRoles
 
         public static void ResetAndPrepare()
         {
+            AssignedRoles.Clear();
             AllPlayerTeams.Clear();
             AllPlayerRoles.Clear();
             AllPlayerDeathReasons.Clear();

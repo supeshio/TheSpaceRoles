@@ -19,12 +19,6 @@
     </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AsmResolver" Version="5.1.0" />
-		<PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.688" />
-		<PackageReference Include="AmongUs.GameLibs.Steam" Version="2024.6.18" />
-		<PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="2.1.0-rc.1" />
-	</ItemGroup>
-	<ItemGroup>
 		<Reference Include="$(AmongUs)/BepInEx/core/*.dll" />
 		<Reference Include="$(AmongUs)/BepInEx/interop/*.dll" />
 	</ItemGroup>

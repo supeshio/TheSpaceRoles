@@ -82,6 +82,30 @@ namespace TheSpaceRoles
             bc.material = basecolor.material;
             bc.color = basecolor.color;
             bc.size = basecolor.size;
+
+            var Cremate = new GameObject("Guesser_Crewmate_Button") ;
+            Cremate.layer = Data.UILayer;
+            Cremate.transform.parent = parent;
+            Cremate.transform.localScale = basecolor.transform.localScale * times * 0.4f;
+            Cremate.transform.localPosition = new Vector3(-1.2f, 1.5f, -17f);
+
+
+            var Impostor = new GameObject("Guesser_Impostor_Button");
+            Impostor.layer = Data.UILayer;
+            Impostor.transform.parent = parent;
+            Impostor.transform.localScale = basecolor.transform.localScale * times * 0.4f;
+            Impostor.transform.localPosition = new Vector3(-1.2f, 1.5f, -17f);
+
+
+            foreach (var role in DataBase.AssignedRoles)
+            {
+                if (GetLink.GetCustomRole(role).team == Teams.Crewmate)
+                {
+
+                }
+            }
+
+
         }
 
         public class Target

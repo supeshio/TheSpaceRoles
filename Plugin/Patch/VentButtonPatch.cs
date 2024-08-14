@@ -92,8 +92,7 @@ namespace TheSpaceRoles
                     }
                 }
             }
-            if (result == null)
-                Logger.Info("null");
+            //if (result == null) Logger.Info("null");
             return result;
         }
     }

@@ -34,6 +34,19 @@ namespace TheSpaceRoles
 
 
             }
+            //アサインされた役職を求める。
+            foreach (var roleop in CustomOptionsHolder.roleoptions)
+            {
+                if(roleop.Value.selection() != 0)
+                {
+                    if (!DataBase.AssignedRoles.Contains(roleop.Key))
+                    {
+                        DataBase.AssignedRoles.Add(roleop.Key);
+                    }
+                }
+            }
+
+
             //Resetするべ
             //今回はC3 I1
             //Sheriff 1
