@@ -383,8 +383,8 @@ namespace TheSpaceRoles
                 ModOption.StringOption.LabelBackground.GetComponent<SpriteRenderer>().size = new(6, 0.7f);
                 ModOption.StringOption.TitleText.transform.localPosition = new Vector3(-3f, -0.06f, -3);
                 ModOption.StringOption.transform.FindChild("ValueBox").localPosition = new(3.5f, -0.05f, 0);
-                ModOption.StringOption.transform.FindChild("MinusButton (1)").localPosition = new(2.1f, -0.05f, 0);
-                ModOption.StringOption.transform.FindChild("PlusButton (1)").localPosition = new(4.2f, -0.05f, 0);
+                ModOption.StringOption.transform.FindChild("MinusButton").localPosition = new(2.1f, -0.05f, 0);
+                ModOption.StringOption.transform.FindChild("PlusButton").localPosition = new(4.9f, -0.05f, 0);
                 //ValueBox 3.5 -0.05 0
                 //valuetext 3.5 -0.046 -1
                 //plus 0.7 minus -1.4
