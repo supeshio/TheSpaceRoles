@@ -99,7 +99,7 @@ namespace TheSpaceRoles
 
             foreach (var role in DataBase.AssignedRoles)
             {
-                if (GetLink.GetCustomRole(role).team == Teams.Crewmate)
+                if (RoleData.GetCustomRoleFromRole(role).team == Teams.Crewmate)
                 {
 
                 }

@@ -29,17 +29,18 @@ namespace TheSpaceRoles
         public bool? CanRepairSabotage = null;
         public bool? CanUseVentMoving = null;
         public bool? HasTask = null;
+        public List<CustomOption> Options = new List<CustomOption>();
         public void Init()
         {
-            CanUseVent = CanUseVent == null ? GetLink.GetCustomTeam(CustomTeam.Team).CanUseVent : CanUseVent;
-            CanUseAdmin = CanUseAdmin == null ? GetLink.GetCustomTeam(CustomTeam.Team).CanUseAdmin : CanUseAdmin;
-            CanUseBinoculars = CanUseBinoculars == null ? GetLink.GetCustomTeam(CustomTeam.Team).CanUseBinoculars : CanUseBinoculars;
-            CanUseCamera = CanUseCamera == null ? GetLink.GetCustomTeam(CustomTeam.Team).CanUseCamera : CanUseCamera;
-            CanUseDoorlog = CanUseDoorlog == null ? GetLink.GetCustomTeam(CustomTeam.Team).CanUseDoorlog : CanUseDoorlog;
-            CanUseBinoculars = CanUseBinoculars == null ? GetLink.GetCustomTeam(CustomTeam.Team).CanUseBinoculars : CanUseBinoculars;
-            CanRepairSabotage = CanRepairSabotage == null ? GetLink.GetCustomTeam(CustomTeam.Team).CanUseBinoculars : CanRepairSabotage;
-            CanUseVentMoving = CanUseVentMoving == null ? GetLink.GetCustomTeam(CustomTeam.Team).CanUseVentMoving : CanUseVentMoving;
-            HasTask = HasTask == null ? GetLink.GetCustomTeam(CustomTeam.Team).HasTask : HasTask;
+            CanUseVent = CanUseVent == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseVent : CanUseVent;
+            CanUseAdmin = CanUseAdmin == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseAdmin : CanUseAdmin;
+            CanUseBinoculars = CanUseBinoculars == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseBinoculars : CanUseBinoculars;
+            CanUseCamera = CanUseCamera == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseCamera : CanUseCamera;
+            CanUseDoorlog = CanUseDoorlog == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseDoorlog : CanUseDoorlog;
+            CanUseBinoculars = CanUseBinoculars == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseBinoculars : CanUseBinoculars;
+            CanRepairSabotage = CanRepairSabotage == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseBinoculars : CanRepairSabotage;
+            CanUseVentMoving = CanUseVentMoving == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseVentMoving : CanUseVentMoving;
+            HasTask = HasTask == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).HasTask : HasTask;
 
         }
         public void ResetStart()
@@ -82,6 +83,7 @@ namespace TheSpaceRoles
         public bool Dead = false;
         public bool Exiled = false;
 
+        public virtual void OptionCreate(HudManager hudManager) { }
         public virtual void HudManagerStart(HudManager hudManager) { }
 
         public virtual void MeetingUpdate(MeetingHud meeting) { }
@@ -100,7 +102,7 @@ namespace TheSpaceRoles
         public string RoleDescription()
         {
             string r = "";
-            string f = "<b>" + GetLink.GetCustomTeam(team).ColoredTeamName + "</b>";
+            string f = "<b>" + RoleData.GetCustomTeamFromTeam(team).ColoredTeamName + "</b>";
 
 
 
@@ -126,7 +128,7 @@ namespace TheSpaceRoles
             PlayerId = playerId;
             PlayerControl = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId);
             PlayerName = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).name.Replace("<color=.*>", string.Empty).Replace("</color>", string.Empty); ;
-            CustomTeam = GetLink.GetCustomTeam(team);
+            CustomTeam = RoleData.GetCustomTeamFromTeam(team);
             Init();
         }
         [HarmonyPatch(typeof(MeetingHud))]

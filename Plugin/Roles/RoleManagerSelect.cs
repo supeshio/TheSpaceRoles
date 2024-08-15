@@ -35,7 +35,7 @@ namespace TheSpaceRoles
 
             }
             //アサインされた役職を求める。
-            foreach (var roleop in CustomOptionsHolder.roleoptions)
+            foreach (var roleop in CustomOptionsHolder.RoleOptions_Count)
             {
                 if(roleop.Value.selection() != 0)
                 {
@@ -60,7 +60,7 @@ namespace TheSpaceRoles
                 List<int> players = DataBase.AllPlayerControls().Select(x => (int)x.PlayerId).ToList();
 
                 Logger.Info(players.Count.ToString());
-                foreach (var keyValuePair in CustomOptionsHolder.roleoptions)
+                foreach (var keyValuePair in CustomOptionsHolder.RoleOptions_Count)
                 {
                     var role = keyValuePair.Key;
                     var customOption = keyValuePair.Value.selection();
@@ -69,14 +69,14 @@ namespace TheSpaceRoles
                     for (int i = 0; i < customOption; i++)
 
                     {
-                        if (tr.ContainsKey(GetLink.GetCustomRole(role).team))
+                        if (tr.ContainsKey(RoleData.GetCustomRoleFromRole(role).team))
                         {
 
-                            tr[GetLink.GetCustomRole(role).team].Add(GetLink.GetCustomRole(role).Role);
+                            tr[RoleData.GetCustomRoleFromRole(role).team].Add(RoleData.GetCustomRoleFromRole(role).Role);
                         }
                         else
                         {
-                            tr.Add(GetLink.GetCustomRole(role).team, [GetLink.GetCustomRole(role).Role]);
+                            tr.Add(RoleData.GetCustomRoleFromRole(role).team, [RoleData.GetCustomRoleFromRole(role).Role]);
 
                         }
                         Logger.Info($"{customOption}");
@@ -84,18 +84,18 @@ namespace TheSpaceRoles
 
 
                 }
-                if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() > CustomOptionsHolder.teamoptions[Teams.Impostor].selection())
+                if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() > CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].selection())
                 {
-                    for (int i = 0; i < DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() - CustomOptionsHolder.teamoptions[Teams.Impostor].selection(); i++)
+                    for (int i = 0; i < DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() - CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].selection(); i++)
                     {
 
                         var k = DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).ToList();
                         k[RandomNext(k.Count())].RpcSetRole(AmongUs.GameOptions.RoleTypes.Crewmate);
                     }
                 }
-                else if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() < CustomOptionsHolder.teamoptions[Teams.Impostor].selection())
+                else if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].selection())
                 {
-                    for (int i = 0; i < CustomOptionsHolder.teamoptions[Teams.Impostor].selection() - DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count(); i++)
+                    for (int i = 0; i < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].selection() - DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count(); i++)
                     {
 
                         var k = DataBase.AllPlayerControls().Where(x => x.Data.RoleType != AmongUs.GameOptions.RoleTypes.Impostor).ToList();
@@ -105,7 +105,7 @@ namespace TheSpaceRoles
 
                 List<int> p = DataBase.AllPlayerControls().Where(x => x.Data.RoleType == RoleTypes.Impostor).Select(x => (int)x.PlayerId).ToList();
                 var team = Teams.Impostor;
-                var teammembers = CustomOptionsHolder.teamoptions[team].selection();
+                var teammembers = CustomOptionsHolder.TeamOptions_Count[team].selection();
                 var v = tr[team];
                 for (int i = 0; i < teammembers; i++)
                 {
@@ -115,8 +115,8 @@ namespace TheSpaceRoles
                     {
 
                         var playertag = RandomNext(p.Count);
-                        SendRpcSetRole(GetLink.GetCustomRoleNormal(team).Role, p[playertag]);
-                        Logger.Info(p[playertag].ToString() + $" is {GetLink.GetCustomRoleNormal(team).Role}");
+                        SendRpcSetRole(RoleData.GetCustomRole_NormalFromTeam(team).Role, p[playertag]);
+                        Logger.Info(p[playertag].ToString() + $" is {RoleData.GetCustomRole_NormalFromTeam(team).Role}");
                         players.Remove(p[playertag]);
                     }
                     else
@@ -141,7 +141,7 @@ namespace TheSpaceRoles
                     team = item.Key;
                     if (team == Teams.Crewmate) continue;
                     if (team == Teams.Impostor) continue;
-                    teammembers = CustomOptionsHolder.teamoptions[team].selection();
+                    teammembers = CustomOptionsHolder.TeamOptions_Count[team].selection();
                     v = item.Value;
                     for (int i = 0; i < teammembers; i++)
                     {
@@ -151,8 +151,8 @@ namespace TheSpaceRoles
                         {
 
                             var player = RandomNext(players.Count);
-                            SendRpcSetRole(GetLink.GetCustomRoleNormal(team).Role, players[player]);
-                            Logger.Info(players[player].ToString() + $" is {GetLink.GetCustomRoleNormal(team).Role}");
+                            SendRpcSetRole(RoleData.GetCustomRole_NormalFromTeam(team).Role, players[player]);
+                            Logger.Info(players[player].ToString() + $" is {RoleData.GetCustomRole_NormalFromTeam(team).Role}");
                             players.RemoveAt(player);
                         }
                         else
@@ -179,8 +179,8 @@ namespace TheSpaceRoles
                     {
 
                         var playertag = RandomNext(players.Count);
-                        SendRpcSetRole(GetLink.GetCustomRoleNormal(team).Role, players[playertag]);
-                        Logger.Info(players[playertag].ToString() + $" is {GetLink.GetCustomRoleNormal(team).Role}");
+                        SendRpcSetRole(RoleData.GetCustomRole_NormalFromTeam(team).Role, players[playertag]);
+                        Logger.Info(players[playertag].ToString() + $" is {RoleData.GetCustomRole_NormalFromTeam(team).Role}");
                         players.RemoveAt(playertag);
                     }
                     else
@@ -320,7 +320,7 @@ namespace TheSpaceRoles
                 else
                 {
 
-                    var roles = GetLink.GetCustomRoleNormal(DataBase.AllPlayerTeams[item]).Role;
+                    var roles = RoleData.GetCustomRole_NormalFromTeam(DataBase.AllPlayerTeams[item]).Role;
                     SetRole(item, (int)roles);
 
                     //Rpc
@@ -368,7 +368,7 @@ namespace TheSpaceRoles
             if (DataBase.AllPlayerRoles.ContainsKey(playerId))
             {
                 var list = DataBase.AllPlayerRoles[playerId].ToList();
-                var p = GetLink.GetCustomRole((Roles)roleId);
+                var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
                 p.ReSet(playerId);
                 p.CustomTeam.Role = p;
                 list.Add(p);
@@ -376,7 +376,7 @@ namespace TheSpaceRoles
             }
             else
             {
-                var p = GetLink.GetCustomRole((Roles)roleId);
+                var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
                 p.ReSet(playerId);
                 p.CustomTeam.Role = p;
                 DataBase.AllPlayerRoles.Add(playerId, [p]);
@@ -385,12 +385,12 @@ namespace TheSpaceRoles
             if (DataBase.AllPlayerTeams.ContainsKey(playerId))
             {
 
-                DataBase.AllPlayerTeams[playerId] = GetLink.GetCustomRole((Roles)roleId).team;
+                DataBase.AllPlayerTeams[playerId] = RoleData.GetCustomRoleFromRole((Roles)roleId).team;
             }
             else
             {
 
-                DataBase.AllPlayerTeams.Add(playerId, GetLink.GetCustomRole((Roles)roleId).team);
+                DataBase.AllPlayerTeams.Add(playerId, RoleData.GetCustomRoleFromRole((Roles)roleId).team);
             }
 
         }

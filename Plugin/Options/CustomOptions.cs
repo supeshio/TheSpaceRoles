@@ -229,25 +229,29 @@ namespace TheSpaceRoles
             if (nameId.StartsWith("header.team_"))
             {
                 var ids = nameId.Split('_');
-                return /*"<b>"*/  GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
+                return /*"<b>"*/  RoleData.GetCustomTeams.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
             }
             if (nameId.StartsWith("team_"))
             {
                 var ids = nameId.Split('_');
-                return /*"<b>"*/  GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
+                return /*"<b>"*/  RoleData.GetCustomTeams.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
             }
             if (nameId.StartsWith("role_"))
             {
                 var ids = nameId.Split('_');
                 if (ids[2] == "count")
                 {
-                    return /*"<b>"*/  GetLink.CustomRoleLink.First(x => x.Role.ToString().ToLower() == ids[1].ToLower()).ColoredRoleName;
+                    return /*"<b>"*/  RoleData.GetCustomRoles.First(x => x.Role.ToString().ToLower() == ids[1].ToLower()).ColoredRoleName;
                 }
             }
             return /*"<b>"*/  Translation.GetString($"option.{nameId}");
         }
         public CustomOption(OptionType optionType, string nameId, Func<string>[] selections, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
         {
+            if(options.Any(x=>x.nameId== nameId))
+            {
+                return;
+            }
             this.color = Helper.ColorFromColorcode(colorcode);
             this.nameId = nameId;
             this.defaultSelection = defaultSelection;

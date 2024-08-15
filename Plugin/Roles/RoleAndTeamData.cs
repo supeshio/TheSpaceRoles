@@ -90,9 +90,9 @@ namespace TheSpaceRoles
     /// <summary>
     /// Linkだよ!!
     /// </summary>
-    public static class GetLink
+    public static class RoleData
     {
-        public static List<CustomRole> CustomRoleLink =>
+        public static List<CustomRole> GetCustomRoles =>
         [
 
             new Crewmate(),
@@ -109,7 +109,7 @@ namespace TheSpaceRoles
             new Jester(),
         ];
 
-        public static List<CustomRole> CustomRoleNormalLink =>
+        public static List<CustomRole> GetCustomRoles_Normal =>
         [
             new Crewmate(),
             new Impostor(),
@@ -118,7 +118,7 @@ namespace TheSpaceRoles
             new Jester(),
         ];
 
-        public static List<CustomTeam> CustomTeamLink =>
+        public static List<CustomTeam> GetCustomTeams =>
         [
             new CrewmateTeam(),
             new ImpostorTeam(),
@@ -140,13 +140,13 @@ namespace TheSpaceRoles
             {Teams.Jackal,ColorFromColorcode("#09afff") },
             {Teams.Jester, ColorFromColorcode("#ea618e") },
         };*/
-        public static Color ColorFromTeams(Teams team)
+        public static Color GetColorFromTeams(Teams team)
         {
 
             try
             {
 
-                return CustomTeamLink.First(x => x.Team == team).Color;
+                return GetCustomTeams.First(x => x.Team == team).Color;
             }
             catch
             {
@@ -155,10 +155,10 @@ namespace TheSpaceRoles
             return Color.magenta;
 
         }
-        public static CustomTeam GetCustomTeam(Teams team)
+        public static CustomTeam GetCustomTeamFromTeam(Teams team)
         {
-            if (!CustomTeamLink.Any(x => x.Team == team)) { Logger.Error($"{team} is not contained in RoleMasterLink"); return null; }
-            return CustomTeamLink.First(x => x.Team == team);
+            if (!GetCustomTeams.Any(x => x.Team == team)) { Logger.Error($"{team} is not contained in RoleMasterLink"); return null; }
+            return GetCustomTeams.First(x => x.Team == team);
 
 
         }
@@ -166,11 +166,11 @@ namespace TheSpaceRoles
 
         public static Color GetOtherRolesColor => ColorFromColorcode("#777777");
 
-        public static string GetColoredTeamName(Teams team)
+        public static string GetColoredTeamNameFromTeam(Teams team)
         {
-            if (CustomTeamLink.Any(s => s.Team == team))
+            if (GetCustomTeams.Any(s => s.Team == team))
             {
-                return CustomTeamLink.First(x => x.Team == team).ColoredTeamName;
+                return GetCustomTeams.First(x => x.Team == team).ColoredTeamName;
             }
             if ((int)team == -1)
             {
@@ -180,29 +180,29 @@ namespace TheSpaceRoles
 
 
         }
-        public static string GetColoredRoleName(Roles role)
+        public static string GetColoredRoleNameFromRole(Roles role)
         {
-            if (CustomRoleLink.Any(s => s.Role == role))
+            if (GetCustomRoles.Any(s => s.Role == role))
             {
-                return CustomRoleLink.First(x => x.Role == role).ColoredRoleName;
+                return GetCustomRoles.First(x => x.Role == role).ColoredRoleName;
             }
             return ColoredText(Color.magenta, Translation.GetString("team." + role.ToString() + ".name"));
 
 
         }
 
-        public static string GetColoredTeamName(Roles role) => GetCustomRole(role).ColoredRoleName;
+        public static string GetColoredTeamNameFromRole(Roles role) => GetCustomRoleFromRole(role).ColoredRoleName;
 
-        public static CustomRole GetCustomRole(Roles roles)
+        public static CustomRole GetCustomRoleFromRole(Roles roles)
         {
-            if (!CustomRoleLink.Any(x => x.Role == roles)) { Logger.Error($"{roles} is not contained in RoleMasterLink"); return null; }
-            return CustomRoleLink.First(x => x.Role == roles);
+            if (!GetCustomRoles.Any(x => x.Role == roles)) { Logger.Error($"{roles} is not contained in RoleMasterLink"); return null; }
+            return GetCustomRoles.First(x => x.Role == roles);
         }
-        public static CustomRole GetCustomRoleNormal(Teams teams)
+        public static CustomRole GetCustomRole_NormalFromTeam(Teams teams)
         {
-            if (!CustomRoleNormalLink.Any(x => x.team == teams)) { Logger.Error($"{teams} is not contained in RoleMasterNoramlLink"); return null; }
+            if (!GetCustomRoles_Normal.Any(x => x.team == teams)) { Logger.Error($"{teams} is not contained in RoleMasterNoramlLink"); return null; }
 
-            return CustomRoleNormalLink.First(x => x.team == teams);
+            return GetCustomRoles_Normal.First(x => x.team == teams);
         }
         public static Teams[] GetAllTeams()
         {

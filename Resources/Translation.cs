@@ -104,7 +104,7 @@ namespace TheSpaceRoles
                     {
                         if (items[2] == "coloredname")
                         {
-                            getstr = getstr.Replace("{" + item + "}", GetLink.GetCustomRole((Roles)Enum.Parse(typeof(Roles), items[1], true)).ColoredRoleName);
+                            getstr = getstr.Replace("{" + item + "}", RoleData.GetCustomRoleFromRole((Roles)Enum.Parse(typeof(Roles), items[1], true)).ColoredRoleName);
                         }
                     }
                     if (items[0] == "team")
@@ -113,11 +113,11 @@ namespace TheSpaceRoles
                         {
                             if (items[1] == "other")
                             {
-                                getstr = getstr.Replace("{" + item + "}", Helper.ColoredText(GetLink.GetOtherRolesColor, GetString("team.other.name")));
+                                getstr = getstr.Replace("{" + item + "}", Helper.ColoredText(RoleData.GetOtherRolesColor, GetString("team.other.name")));
                             }
                             else
                             {
-                                getstr = getstr.Replace("{" + item + "}", GetLink.GetCustomTeam((Teams)Enum.Parse(typeof(Teams), items[1], true)).ColoredTeamName);
+                                getstr = getstr.Replace("{" + item + "}", RoleData.GetCustomTeamFromTeam((Teams)Enum.Parse(typeof(Teams), items[1], true)).ColoredTeamName);
 
                             }
 

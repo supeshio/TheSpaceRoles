@@ -11,7 +11,7 @@ namespace TheSpaceRoles
         {
             team = Teams.Impostor;
             Role = Roles.EvilGuesser;
-            Color = GetLink.ColorFromTeams(Teams.Impostor);
+            Color = RoleData.GetColorFromTeams(Teams.Impostor);
             HasKillButton = true;
         }
         public override void HudManagerStart(HudManager hudManager)

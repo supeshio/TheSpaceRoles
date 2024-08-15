@@ -22,6 +22,26 @@ namespace TheSpaceRoles
             }
             return [.. second];
         }
+        public static Func<string>[] GetSeconds(float sec = 60f, float delta_sec = 2.5f, bool include_0 = true)
+        {
+
+            List<Func<string>> second = [];
+;
+            if (include_0) second.Add(Sec(0));
+
+            for (float i = delta_sec; i <= sec; i += delta_sec)
+            {
+                second.Add(Sec(i));
+            }
+            return [.. second];
+        }
+        public static Func<string>[] GetKillArea()
+        {
+            AmongUs.GameOptions.FloatArrayOptionNames.KillDistances
+            List<Func<string>> killarea = [];//short
+            killarea.Add(()=>"killarea");
+            return [.. killarea];
+        }
         public static Func<string> GetSecond(float sec)
         {
             return sec.ToString;
@@ -64,32 +84,33 @@ namespace TheSpaceRoles
         }
         public static string GetTeamColor(Teams teams)
         {
-            Color c = GetLink.ColorFromTeams(teams);
+            Color c = RoleData.GetColorFromTeams(teams);
             return "#" + ColorUtility.ToHtmlStringRGB(Helper.ColorEditHSV(c, s: -0.2f, v: 0.2f));
         }
-        public static Dictionary<Teams, CustomOption> teamoptions = new();
-        public static Dictionary<Roles, CustomOption> roleoptions = new();
+        public static Dictionary<Teams, CustomOption> TeamOptions_Count = new();
+        public static Dictionary<Roles, CustomOption> RoleOptions_Count = new();
+        public static Dictionary<Roles, List<CustomOption>> roleFamilarOptions = new();
         public static void CreateRoleOption()
         {
             HeaderCreate(OptionType.Roles, $"rolemax");
             //teamoptions.Add( Teams.Crewmate,Create(OptionType.Roles, $"team_{Teams.Crewmate.ToString().ToLower()}", GetCountList(), 0,colorcode: "#cccccc"));
-            teamoptions.Add(Teams.Impostor, Create(OptionType.Roles, $"team_{Teams.Impostor.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
-            teamoptions.Add(Teams.Madmate, Create(OptionType.Roles, $"team_{Teams.Madmate.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
-            teamoptions.Add(Teams.Jackal, Create(OptionType.Roles, $"team_{Teams.Jackal.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
-            teamoptions.Add(Teams.Jester, Create(OptionType.Roles, $"team_{Teams.Jester.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
-            foreach (Teams team in GetLink.GetAllTeams())
+            TeamOptions_Count.Add(Teams.Impostor, Create(OptionType.Roles, $"team_{Teams.Impostor.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
+            TeamOptions_Count.Add(Teams.Madmate, Create(OptionType.Roles, $"team_{Teams.Madmate.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
+            TeamOptions_Count.Add(Teams.Jackal, Create(OptionType.Roles, $"team_{Teams.Jackal.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
+            TeamOptions_Count.Add(Teams.Jester, Create(OptionType.Roles, $"team_{Teams.Jester.ToString().ToLower()}", GetCountList(), 0, colorcode: "#cccccc"));
+            foreach (Teams team in RoleData.GetAllTeams())
             {
                 if (Teams.None == team) continue;
                 if ((int)team >= 6) return;
                 HeaderCreate(OptionType.Roles, $"team_{team}", colorcode: "#cccccc");
-                foreach (CustomRole role in GetLink.CustomRoleLink)
+                foreach (CustomRole role in RoleData.GetCustomRoles)
                 {
                     if (role.team == team)
                     {
-                        if (GetLink.GetCustomRoleNormal(role.team).Role != role.Role)
+                        if (RoleData.GetCustomRole_NormalFromTeam(role.team).Role != role.Role)
                         {
 
-                            roleoptions.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", GetCountList(), 0));
+                            RoleOptions_Count.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", GetCountList(), 0));
                         }
                     }
                 }
@@ -97,6 +118,14 @@ namespace TheSpaceRoles
 
 
 
+            }
+
+            foreach(var customrole in RoleData.GetCustomRoles)
+            {
+                foreach (var option in customrole.Options)
+                {
+                    roleFamilarOptions.Add();
+                }
             }
         }
     }
