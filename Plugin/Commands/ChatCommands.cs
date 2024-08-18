@@ -211,6 +211,8 @@ namespace TheSpaceRoles
                             {
                                 addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■") + Helper.ColoredText(Palette.PlayerColors[i], "<b>" + Palette.ColorNames[i] + "</b>\n");
                             }
+                            var ob =GameObject.Instantiate(FastDestroyableSingleton<NotificationPopper>.Instance.notificationMessageOrigin, FastDestroyableSingleton<NotificationPopper>.Instance.transform).GetComponent<LobbyNotificationMessage>();
+                            ob.SetUp($"<b>血液型</b> を <b>ab</b> に設定する", ob.Icon.sprite,Color.white,(Il2CppSystem.Action)(() => { }));
                             break;
                     }
                 }

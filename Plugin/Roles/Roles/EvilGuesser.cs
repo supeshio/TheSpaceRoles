@@ -83,6 +83,11 @@ namespace TheSpaceRoles
             bc.material = basecolor.material;
             bc.color = basecolor.color;
             bc.size = basecolor.size;
+
+            foreach (var role in DataBase.AssignedRoles)
+            {
+
+            }
         }
 
         public class Target

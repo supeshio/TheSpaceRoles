@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Hazel;
+using System.Linq;
 
 namespace TheSpaceRoles
 {
@@ -43,7 +44,7 @@ namespace TheSpaceRoles
                         LobbyTimer.GameStartManagerUpdatePatch.TimerSet(reader.ReadSingle(), reader.ReadSingle());
                         break;
                     case Rpcs.ShareOptions:
-                        //CustomOption.GetOptionSelections(reader);
+                        CustomOption.RecieveOption(reader);
                         break;
                     case Rpcs.GameEnd:
                         //int team = reader.ReadInt32();

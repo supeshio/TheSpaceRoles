@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AmongUs.GameOptions;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static TheSpaceRoles.CustomOption;
 using static TheSpaceRoles.Translation;
@@ -35,11 +37,35 @@ namespace TheSpaceRoles
             }
             return [.. second];
         }
-        public static Func<string>[] GetKillArea()
+        public static Func<string>[] GetAreasize(float size = 5f, float delta_size = 1f, bool include_0 = true)
         {
-            AmongUs.GameOptions.FloatArrayOptionNames.KillDistances
+
+            List<Func<string>> areas = [];
+            if (include_0) areas.Add(()=>Translation.GetString("option.selection.areasize",["0"]));
+
+            for (float i = delta_size; i <= size; i += delta_size)
+            {
+                Logger.Info(i.ToString());
+                string area = Translation.GetString("option.selection.areasize", [i.ToString()]);
+                areas.Add(() => area);
+            }
+            return [.. areas];
+        }
+        public static List<float> KillDistances = new() { 0.5f, 1f, 1.8f, 2.5f };
+        public static Func<string>[] GetKillDistances(bool defaultkilldistance = true)
+        {
+
+            List<string> strings = ["veryshort", "short", "medium", "long"];
             List<Func<string>> killarea = [];//short
-            killarea.Add(()=>"killarea");
+            foreach(string i in strings) 
+            {
+                killarea.Add(()=>Translation.GetString("option.selection.killdistance."+i));
+            }
+            if (defaultkilldistance)
+            {
+
+                killarea.Add(() => Translation.GetString("option.selection.killdistance.default"));
+            }
             return [.. killarea];
         }
         public static Func<string> GetSecond(float sec)
@@ -101,30 +127,59 @@ namespace TheSpaceRoles
             foreach (Teams team in RoleData.GetAllTeams())
             {
                 if (Teams.None == team) continue;
-                if ((int)team >= 6) return;
-                HeaderCreate(OptionType.Roles, $"team_{team}", colorcode: "#cccccc");
-                foreach (CustomRole role in RoleData.GetCustomRoles)
-                {
-                    if (role.team == team)
-                    {
-                        if (RoleData.GetCustomRole_NormalFromTeam(role.team).Role != role.Role)
-                        {
+                if ((int)team >= 6) break;
+                Logger.Info($"{team}", $"teamLogger_{team}");
 
-                            RoleOptions_Count.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", GetCountList(), 0));
+                    HeaderCreate(OptionType.Roles, $"team_{team}", colorcode: "#cccccc");
+                    if (RoleData.GetCustomRoles.Count > 0)
+                    {
+                        foreach (CustomRole role in RoleData.GetCustomRoles.Where(x=>x.team==team))
+                        {
+                            Logger.Info($"{role}", $"roleLogger_{role.Role}");
+                                if (RoleData.GetCustomRole_NormalFromTeam(role.team).Role != role.Role)
+                                {
+
+                                    RoleOptions_Count.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", GetCountList(), 0));
+                                }
                         }
+                        //GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
+
                     }
-                }
-                //GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
 
 
 
             }
+            Logger.Fatel("what?","teamimpostors");
+            //HeaderCreate(OptionType.Impostor, $"team_impostor");
+            //HeaderCreate(OptionType.Crewmate, $"team_crewmate");
+            //HeaderCreate(OptionType.Neutral, $"team_jackal");
 
-            foreach(var customrole in RoleData.GetCustomRoles)
+            foreach (var customrole in RoleData.GetCustomRoles)
             {
+                if (customrole==null)
+                {
+                    Logger.Info("what?");
+                    continue;
+                }
+                    Logger.Info(customrole.Role.ToString());
+                roleFamilarOptions.Add(customrole.Role, []);
+                switch (customrole.team)
+                {
+                    case Teams.Crewmate:
+                        roleFamilarOptions[customrole.Role].Add(HeaderCreate(OptionType.Crewmate, $"role_{customrole.Role}_header"));
+                        break;
+                    case Teams.Impostor:
+                    case Teams.Madmate:
+                        roleFamilarOptions[customrole.Role].Add(HeaderCreate(OptionType.Impostor, $"role_{customrole.Role}_header"));
+                        break;
+                    default:
+                        roleFamilarOptions[customrole.Role].Add(HeaderCreate(OptionType.Neutral, $"role_{customrole.Role}_header"));
+                        break ;
+                }
+                customrole.OptionCreate();
                 foreach (var option in customrole.Options)
                 {
-                    roleFamilarOptions.Add();
+                    roleFamilarOptions[customrole.Role].Add(option);
                 }
             }
         }

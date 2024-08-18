@@ -83,7 +83,7 @@ namespace TheSpaceRoles
         public bool Dead = false;
         public bool Exiled = false;
 
-        public virtual void OptionCreate(HudManager hudManager) { }
+        public virtual void OptionCreate() { }
         public virtual void HudManagerStart(HudManager hudManager) { }
 
         public virtual void MeetingUpdate(MeetingHud meeting) { }

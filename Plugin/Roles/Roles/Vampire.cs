@@ -2,6 +2,7 @@
 using static TheSpaceRoles.Helper;
 using static TheSpaceRoles.CustomOptionsHolder;
 using static TheSpaceRoles.CustomOption;
+using System.Linq;
 
 namespace TheSpaceRoles
 {
@@ -17,35 +18,38 @@ namespace TheSpaceRoles
             Color = Palette.ImpostorRed;
             HasKillButton = false;
         }
-        public static CustomOption KillDelayTime;
+        public static CustomOption KillDelayTime = null;
         public static CustomOption KillCoolDown;
+        public static CustomOption KillDistance;
+        public static CustomOption UseGarlic;
         public static CustomOption GarlicAreaSize;
-        public override void OptionCreate(HudManager hudManager)
+        public override void OptionCreate()
         {
             if(KillDelayTime != null)return;
 
-            KillDelayTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role_vampire_killdelaytime",GetSeconds(20,1,false),10);
-            KillCoolDown = Create(CustomOption.OptionType.Impostor, "role_vampire_killcooldown");
-            GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role_vampire_garlicareasize",);
+            Logger.Info(string.Join(",",GetAreasize(5, 1, false).Select(x=>x()).ToList()),"GetAreaSize_Vampire");
+            KillDelayTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.vampire.killdelaytime", CustomOptionsHolder.GetSeconds(20,1,false),9);
+            KillDistance = Create(CustomOption.OptionType.Impostor, "role.vampire.killdistance", GetKillDistances(), 4);
+            KillCoolDown = Create(CustomOption.OptionType.Impostor, "role.vampire.killcooldown", CustomOptionsHolder.GetSeconds(),12);
+            UseGarlic = Create(CustomOption.OptionType.Impostor, "role.vampire.usegarlic",true);
+            GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role.vampire.garlicareasize", GetAreasize(10,1,false), 4,Show:UseGarlic.GetBool);
+
             //キル遅延時間、キルク、ニンニク内だと特殊キルができなくなりその上でさらに通常キルもできなくなるかの設定
-            Options.Add();
+            Options = [KillDelayTime, KillCoolDown, GarlicAreaSize,KillDistance];
         }
         public override void HudManagerStart(HudManager __instance)
         {
-            if (DataBase.AllPlayerRoles.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r))
-            {
-
-            }
+            DataBase.AllPlayerRoles.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r);
             VampireBitebutton = new CustomButton(
                 __instance, "VampireKillButton",
                 ButtonPos.Kill,
                 KeyCode.Q,
-                30,
-                () => KillButtons.KillButtonSetTarget(2.5f, Color, [Teams.Impostor]),
+                KillCoolDown.GetSeconds(),
+                () => KillButtons.KillButtonSetTarget(KillDistance.GetKillDistance(), Color, [Teams.Impostor]),
                 __instance.KillButton.graphic.sprite,
                 () =>
                 {
-                    BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(2.5f, Color, [Teams.Impostor]));
+                    BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(KillDistance.GetKillDistance(), Color, [Teams.Impostor]));
                 },
                 () => VampireBitebutton.Timer = VampireBitebutton.maxTimer,
                 "Kill",

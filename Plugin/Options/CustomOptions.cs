@@ -1,5 +1,7 @@
-﻿using BepInEx.Configuration;
+﻿using AmongUs.GameOptions;
+using BepInEx.Configuration;
 using HarmonyLib;
+using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,14 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start)), HarmonyPostfix]
         public static void ContinueCoStart(GameSettingMenu __instance)
         {
+            GameOptionsData.KillDistances = new(new float[] { 0.5f, 1f, 1.8f, 2.5f });
+            GameOptionsData.KillDistanceStrings = new(new string[] { "Very Short", "Short", "Medium", "Long" });
+
+
+
+
+
+
             Logger.Info("Start");
             __instance.PresetsTab.gameObject.SetActive(false);
             __instance.GamePresetsButton.gameObject.SetActive(false);
@@ -176,6 +186,18 @@ namespace TheSpaceRoles
         }
 
     }
+    [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
+    public static class JoinGamePatch
+    {
+        public static void Postfix()
+        {
+            if (AmongUsClient.Instance.AmHost)
+            {
+                ShareAllOptions();
+
+            }
+        }
+    }
     [HarmonyPatch]
     public class CustomOption
     {
@@ -273,7 +295,6 @@ namespace TheSpaceRoles
             }
             options.Add(this);
         }
-
         public void OptionCloneSet()
         {
             if (ModOption.isHeader)
@@ -435,6 +456,32 @@ namespace TheSpaceRoles
         }
 
 
+        public static List<float> KillDistances = new() { 0.5f, 1f, 1.8f, 2.5f };
+
+        public float GetKillDistance()
+        {
+            if (selections.Length < 4)
+            {
+                return KillDistances[selection()];
+            }
+            else
+            {
+                return KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
+            }
+        }
+        public float GetSeconds(float sec = 60f, float delta_sec = 2.5f, bool include_0 = true)
+        {
+
+            List<float> second = [];
+            ;
+            if (include_0) second.Add(0);
+
+            for (float i = delta_sec; i <= sec; i += delta_sec)
+            {
+                second.Add(i);
+            }
+            return second[selection()];
+        }
 
         public static CustomOption GetOption(string nameId)
         {
@@ -480,13 +527,55 @@ namespace TheSpaceRoles
             if (!ModOption.isHeader)
             {
 
-                entry.Value = ModOption.StringOption.Value = ModOption.StringOption.oldValue = selecting;
-                ModOption.StringOption.ValueText.text = Value();
+                Logger.Info($"{nameId}:{selection()} -> {selecting}");
                 if (selecting != selection())
                 {
-                    Logger.Info($"{nameId}:{selection()} -> {selecting}");
                     if (onChange != null) onChange.Invoke();
+                    //var ob = GameObject.Instantiate(FastDestroyableSingleton<NotificationPopper>.Instance.notificationMessageOrigin, FastDestroyableSingleton<NotificationPopper>.Instance.transform).GetComponent<LobbyNotificationMessage>();
+                    //ob.SetUp($"<b>{Title()}</b> を <b>{Value()}</b> に設定する", FastDestroyableSingleton<NotificationPopper>.Instance.notificationMessageOrigin.Icon.sprite, Color.white, (Action)(() => { FastDestroyableSingleton<NotificationPopper>.Instance.activeMessages.Remove(ob); }));
+                    //FastDestroyableSingleton<NotificationPopper>.Instance.activeMessages.Add(ob);
                 }
+                if (AmongUsClient.Instance.AmHost)
+                {
+
+                     ShareOption();
+                     ModOption.StringOption.Value = ModOption.StringOption.oldValue =selecting; ModOption.StringOption.ValueText.text = Value();
+                }
+                entry.Value =selecting;
+                
+            }
+        }
+        public static void ShareAllOptions()
+        {
+            var rpc = Rpc.SendRpc(Rpcs.ShareOptions);
+            rpc.Write((uint)options.Where(x=>!x.ModOption.isHeader).Count());
+            foreach (var option in options.Where(x => !x.ModOption.isHeader))
+            {
+
+                    rpc.Write(option.nameId);
+                    rpc.Write((uint)option.entry.Value);
+            }
+            AmongUsClient.Instance.FinishRpcImmediately(rpc);
+        }
+        public void ShareOption()
+        {
+                if (!ModOption.isHeader)
+                {
+                    var rpc = Rpc.SendRpc(Rpcs.ShareOptions);
+                rpc.Write((uint)1);
+                rpc.Write(nameId);
+                rpc.Write((uint)selection());
+                    AmongUsClient.Instance.FinishRpcImmediately(rpc);
+                }
+        }
+        public static void RecieveOption(MessageReader reader)
+        {
+            uint count = reader.ReadUInt32();
+            for(int i = 0; i < count; i++)
+            {
+                string str =reader.ReadString();
+                uint value = reader.ReadUInt32();
+                options.FirstOrDefault(x => x.nameId == str).UpdateSelection((int)value);
             }
         }
         [HarmonyPatch(typeof(StringOption))]
@@ -527,5 +616,4 @@ namespace TheSpaceRoles
             //}
         }
     }
-
 }
