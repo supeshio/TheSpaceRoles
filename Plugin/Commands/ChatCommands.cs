@@ -2,6 +2,7 @@
 using HarmonyLib;
 using InnerNet;
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using TheSpaceRoles.Plugin;
 using UnityEngine;
@@ -207,6 +208,7 @@ namespace TheSpaceRoles
                             }
                             break;
                         case "//":
+                            addchat += Path.GetDirectoryName(Application.dataPath).ToString()+"\n";
                             for (int i = 0; i < Palette.PlayerColors.Length; i++)
                             {
                                 addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■") + Helper.ColoredText(Palette.PlayerColors[i], "<b>" + Palette.ColorNames[i] + "</b>\n");

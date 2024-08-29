@@ -11,16 +11,16 @@ namespace TheSpaceRoles
 {
     public static class CustomHatManager
     {
-        public const string ResourcesDirectory = "TheOtherHats";
+        public const string ResourcesDirectory = "TheSpaceHats";
         public const string InnerslothPackageName = "Innersloth Hats";
         public const string DeveloperPackageName = "Developer Hats";
-        internal static readonly Tuple<string, string> Repository = new("supeshio", "TheSpaceRoles");
+        internal static readonly Tuple<string, string> Repository = new("supeshio", "TheSpaceHats");
         internal static string RepositoryUrl
         {
             get
             {
                 var (owner, repository) = Repository;
-                return $"https://raw.githubusercontent.com/{owner}/{repository}/master";
+                return $"https://raw.githubusercontent.com/{owner}/{repository}/main";
             }
         }
 
@@ -33,19 +33,19 @@ namespace TheSpaceRoles
         internal static readonly Dictionary<string, HatViewData> ViewDataCache = new();
         internal static readonly Dictionary<string, HatExtension> ExtensionCache = new();
 
-        //private static readonly HatsLoader Loader;
+        private static readonly HatsLoader Loader;
 
         internal static HatExtension TestExtension { get; private set; }
 
         static CustomHatManager()
         {
-            //Loader = TSR.Instance.AddComponent<HatsLoader>();
+            Loader = TSR.Instance.AddComponent<HatsLoader>();
         }
 
-        /*internal static void LoadHats()
+        internal static void LoadHats()
         {
             Loader.FetchHats();
-        }*/
+        }
 
         internal static bool TryGetCached(this HatParent hatParent, out HatViewData asset)
         {
