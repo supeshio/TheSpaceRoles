@@ -13,8 +13,6 @@ namespace TheSpaceRoles;
 internal static class HatsTabPatches
 {
     private static TextMeshPro textTemplate;
-
-
     [HarmonyPatch(typeof(HatsTab), nameof(HatsTab.OnEnable))]
     [HarmonyPrefix]
     private static bool OnEnablePrefix(HatsTab __instance)

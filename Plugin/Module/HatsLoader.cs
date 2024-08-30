@@ -6,6 +6,8 @@ using static TheSpaceRoles.CustomHatManager;
 using BepInEx.Unity.IL2CPP.Utils;
 using System.Text.Json;
 using System.IO;
+using System;
+using System.Collections.Generic;
 
 namespace TheSpaceRoles
 {
@@ -48,29 +50,91 @@ namespace TheSpaceRoles
             www.downloadHandler.Dispose();
             www.Dispose();
 
+            www = new UnityWebRequest();
+
+            TSR.Logger.LogMessage($"Download manifest at: {RepositoryUrl}/{LoadHatjson}");
+            www.SetUrl($"{RepositoryUrl}/{LoadHatjson}");
+            www.downloadHandler = new DownloadHandlerBuffer();
+            var operation2 = www.SendWebRequest();
+
+            while (!operation2.isDone)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Logger.Error(www.error);
+                yield break;
+            }
+
+            var response2 = JsonSerializer.Deserialize<repoConfig>(www.downloadHandler.text, new JsonSerializerOptions
+            {
+                AllowTrailingCommas = true
+            });
+            www.downloadHandler.Dispose();
+            www.Dispose();
+
             if (!Directory.Exists(HatsDirectory)) Directory.CreateDirectory(HatsDirectory);
 
-            UnregisteredHats.AddRange(SanitizeHats(response));
-            var toDownload = GenerateDownloadList(UnregisteredHats);
-            if (false/*イベント処理はいるらしい*/) UnregisteredHats.AddRange(CustomHatManager.loadHorseHats());
 
-            TSR.Logger.LogMessage($"I'll download {toDownload.Count} hat files");
+
+
+
+            //if (false/*イベント処理はいるらしい*/) UnregisteredHats.AddRange(CustomHatManager.loadHorseHats());
+
+            UnregisteredHats.AddRange(SanitizeHats(response));
+            foreach (var repo in response2.Hats)
+            {
+                www = new UnityWebRequest();
+                www.SetMethod(UnityWebRequest.UnityWebRequestMethod.Get);//$"https://raw.githubusercontent.com/{owner}/{repository}/main"
+                string OtherRepositoryURL = "https://raw.githubusercontent.com/" + repo.Repository;
+                Logger.Message($"Download manifest at: {OtherRepositoryURL}/{ManifestFileName}");
+                www.SetUrl($"{OtherRepositoryURL}/{ManifestFileName}");
+                www.downloadHandler = new DownloadHandlerBuffer();
+                var op = www.SendWebRequest();
+
+                while (!op.isDone)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+
+                if (www.isNetworkError || www.isHttpError)
+                {
+                    TSR.Logger.LogError(www.error);
+                    yield break;
+                }
+
+                var res = JsonSerializer.Deserialize<SkinsConfigFile>(www.downloadHandler.text, new JsonSerializerOptions
+                {
+                    AllowTrailingCommas = true
+                });
+                www.downloadHandler.Dispose();
+                www.Dispose(); 
+                UnregisteredHats.AddRange(SanitizeHats(res,OtherRepositoryURL));
+            }
+
+            UnregisteredHats.AddRange(SanitizeHats(response, RepositoryUrl));
+            var toDownload = GenerateDownloadList(UnregisteredHats);
+
+            Logger.Message($"I'll download {toDownload.Count} hat files");
 
             foreach (var fileName in toDownload)
             {
-                yield return CoDownloadHatAsset(fileName);
+                Logger.Message($"downloading hat: {fileName}");
+                yield return CoDownloadHatAsset(fileName.Item1,fileName.Item2);
             }
 
             isRunning = false;
         }
 
-        private static IEnumerator CoDownloadHatAsset(string fileName)
+        private static IEnumerator CoDownloadHatAsset(string fileName,string url)
         {
             var www = new UnityWebRequest();
             www.SetMethod(UnityWebRequest.UnityWebRequestMethod.Get);
             fileName = fileName.Replace(" ", "%20");
-            TSR.Logger.LogMessage($"downloading hat: {fileName}");
-            www.SetUrl($"{RepositoryUrl}/hats/{fileName}");
+            TSR.Logger.LogMessage($"downloading hat: {url}/hats/{fileName}");
+            www.SetUrl($"{url}/hats/{fileName}");
             www.downloadHandler = new DownloadHandlerBuffer();
             var operation = www.SendWebRequest();
 
@@ -81,7 +145,7 @@ namespace TheSpaceRoles
 
             if (www.isNetworkError || www.isHttpError)
             {
-                TSR.Logger.LogError(www.error);
+                Logger.Error(www.error);
                 yield break;
             }
 
