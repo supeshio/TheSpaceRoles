@@ -24,6 +24,10 @@ namespace TheSpaceRoles
         {
             public static void Prefix(MeetingHud __instance)
             {
+                //__instance.meetingContents.FindChild("BackGround").material =  DestroyableSingleton<HatManager>.Instance.DefaultShader;
+                //__instance.button.material = DestroyableSingleton<HatManager>.Instance.DefaultShader;
+
+
                 var players = __instance.playerStates.ToList();
                 foreach (var player in players)
                 {
