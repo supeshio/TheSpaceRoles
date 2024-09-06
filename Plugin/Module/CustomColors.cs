@@ -49,7 +49,7 @@ namespace TheSpaceRoles
                 new("HotPink", new Color32(255,51,102,byte.MaxValue),new Color32(232,0,58,byte.MaxValue)),
                 new("Petrol", new Color32(0,99,105,byte.MaxValue),new Color32(0,61,54,byte.MaxValue)),
                 new("Lemon", new Color32(0xDB, 0xFD, 0x2F,byte.MaxValue),new Color32(0x74, 0xE5, 0x10,byte.MaxValue)),
-                new("Signal Orange", new Color32(0xF7, 0x44, 0x17,byte.MaxValue),new Color32(0x9B, 0x2E, 0x0F,byte.MaxValue)),
+                new("SignalOrange", new Color32(0xF7, 0x44, 0x17,byte.MaxValue),new Color32(0x9B, 0x2E, 0x0F,byte.MaxValue)),
                 new("Teal", new Color32(0x25, 0xB8, 0xBF,byte.MaxValue),new Color32(0x12, 0x89, 0x86,byte.MaxValue)),
                 new("Blurple", new Color32(61,44,142,byte.MaxValue),new Color32(25,14,90,byte.MaxValue)),
                 new("Sunrise", new Color32(0xFF, 0xCA, 0x19,byte.MaxValue),new Color32(0xDB, 0x44, 0x42,byte.MaxValue)),
@@ -82,10 +82,10 @@ namespace TheSpaceRoles
         [HarmonyPatch]
         public static class CustomColorPatches
         {
-            [HarmonyPatch(typeof(TranslationController), nameof(TranslationController.GetString), new[] {
+            [HarmonyPatch(typeof(TranslationController), nameof(TranslationController.GetString), [
                 typeof(StringNames),
                 typeof(Il2CppReferenceArray<Il2CppSystem.Object>)
-            })]
+            ])]
             private class ColorStringPatch
             {
                 [HarmonyPriority(Priority.Last)]
@@ -93,11 +93,11 @@ namespace TheSpaceRoles
                 {
                     if ((int)name >= 50000)
                     {
-                        string text = ColorStrings[(int)name];
+                        string text = Translation.GetString("playercolor." + ColorStrings[(int)name]);
                         if (text != null)
                         {
                             __result = text;
-                            return false;
+                            return false; 
                         }
                     }
                     return true;

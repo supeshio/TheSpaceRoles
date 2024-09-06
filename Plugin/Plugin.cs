@@ -39,8 +39,8 @@ public class TSR : BasePlugin
     }
 
     /*
-     後でやること
-     playerJoin時に部屋爆破までの時間を伝える。<- バニラにあるよ
+    - 後でやること
+    役職設定時バグ治す
      
      
      
