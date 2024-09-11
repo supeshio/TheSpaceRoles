@@ -1,6 +1,8 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace TheSpaceRoles
 {
@@ -120,7 +122,7 @@ namespace TheSpaceRoles
             AllPlayerTeams.Clear();
             AllPlayerRoles.Clear();
             AllPlayerDeathReasons.Clear();
-            //buttons.Do(x => GameObject.Destroy(x.actionButton));
+            buttons.ToArray().Do(x => { try { GameObject.Destroy(x.actionButton); } catch { } });
             buttons.Clear();
 
             ButtonsPositionSetter();
@@ -129,6 +131,12 @@ namespace TheSpaceRoles
             HudManagerGame.OnGameStarted = true;
             Logger.Info("DataBaseReseted");
 
+        }
+        public static void ResetButtons()
+        {
+
+            buttons.ToArray().Do(x => { try { GameObject.Destroy(x.actionButton.gameObject); } catch { } });
+            buttons.Clear();
         }
 
         public static Dictionary<Teams, int> GetPlayerCountInTeam()

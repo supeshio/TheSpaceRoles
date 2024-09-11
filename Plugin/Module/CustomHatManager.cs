@@ -29,7 +29,7 @@ namespace TheSpaceRoles
         internal static string CustomSkinsDirectory => Path.Combine(Path.GetDirectoryName(Application.dataPath)!, ResourcesDirectory);
         internal static string HatsDirectory => CustomSkinsDirectory;
 
-        internal static List<Tuple<CustomHat,string>> UnregisteredHats = new();
+        internal static List<Tuple<CustomHat, string>> UnregisteredHats = new();
         internal static readonly Dictionary<string, HatViewData> ViewDataCache = new();
         internal static readonly Dictionary<string, HatExtension> ExtensionCache = new();
 
@@ -138,7 +138,7 @@ namespace TheSpaceRoles
             var texture = Sprites.LoadTextureFromDisk(Path.Combine(HatsDirectory, path));
             if (texture == null)
                 //texture = Sprites.LoadTextureFromDisk();
-            if (texture == null) return null;
+                if (texture == null) return null;
             var sprite = Sprite.Create(texture,
                 new Rect(0, 0, texture.width, texture.height),
                 new Vector2(0.53f, 0.575f),
@@ -214,7 +214,7 @@ namespace TheSpaceRoles
             return hats;
         }
 
-        internal static List<Tuple<CustomHat,string>> SanitizeHats(SkinsConfigFile response,string url = "")
+        internal static List<Tuple<CustomHat, string>> SanitizeHats(SkinsConfigFile response, string url = "")
         {
             foreach (var hat in response.Hats)
             {
@@ -225,7 +225,7 @@ namespace TheSpaceRoles
                 hat.BackFlipResource = SanitizeFileName(hat.BackFlipResource);
             }
 
-            return response.Hats.Select(x=>(x,url).ToTuple()).ToList();
+            return response.Hats.Select(x => (x, url).ToTuple()).ToList();
         }
 
         private static string SanitizeFileName(string path)
@@ -251,10 +251,10 @@ namespace TheSpaceRoles
             return !resHash.Equals(hash);
         }
 
-        internal static List<Tuple<string,string>> GenerateDownloadList(List<Tuple<CustomHat,string>> hats)
+        internal static List<Tuple<string, string>> GenerateDownloadList(List<Tuple<CustomHat, string>> hats)
         {
             var algorithm = MD5.Create();
-            var toDownload = new List<Tuple<string,string>>();
+            var toDownload = new List<Tuple<string, string>>();
 
             foreach (var hat in hats)
             {
@@ -270,7 +270,7 @@ namespace TheSpaceRoles
                 {
                     if (fileName != null && ResourceRequireDownload(fileName, fileHash, algorithm))
                     {
-                        toDownload.Add((fileName,hat.Item2).ToTuple());
+                        toDownload.Add((fileName, hat.Item2).ToTuple());
                     }
                 }
             }
@@ -278,7 +278,7 @@ namespace TheSpaceRoles
             return toDownload;
         }
 
-        public static List<Tuple<CustomHat,string>> loadHorseHats(string url)
+        public static List<Tuple<CustomHat, string>> loadHorseHats(string url)
         {
             List<CustomHat> hatdatas = new();
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -316,7 +316,7 @@ namespace TheSpaceRoles
                     continue;
                 hatdatas.Add(info);
             }
-            return hatdatas.Select(x=>(x,url).ToTuple()).ToList();
+            return hatdatas.Select(x => (x, url).ToTuple()).ToList();
         }
     }
 }

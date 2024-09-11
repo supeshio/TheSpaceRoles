@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using AmongUs.GameOptions;
+using HarmonyLib;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -20,8 +21,9 @@ namespace TheSpaceRoles
         {
             DataBase.AllPlayerControls().Do(x => x.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 0f));
             DataBase.AllPlayerControls().Do(x => x.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", color));
-            int id = -1;
-            float distance = 100000000;
+            int id = -1; 
+            float distance = float.MaxValue;
+
             if (target == -1)
             {
                 target = PlayerControl.LocalPlayer.PlayerId;
@@ -37,9 +39,13 @@ namespace TheSpaceRoles
                 }
                 if (notIncludeTeamIds != null && notIncludeTeamIds.Length > 0)
                 {
-                    if (notIncludeTeamIds.Contains(DataBase.AllPlayerTeams[x.PlayerId]))
+                    foreach(var v in DataBase.AllPlayerRoles[x.PlayerId])
                     {
-                        continue;
+
+                        if (notIncludeTeamIds.Contains(v.team))
+                        {
+                            continue;
+                        }
                     }
 
                 }
@@ -53,16 +59,15 @@ namespace TheSpaceRoles
                 }
                 if (target == x.PlayerId) continue;
                 PlayerControl p = Helper.GetPlayerControlFromId(target);
-                Vector2 vec = p.transform.position;
-                Vector2 vec2 = x.transform.position;
-                vec -= vec2;
-                float dis = vec.magnitude;
-
-                if (distance > dis)
+                Vector2 truePosition = x.GetTruePosition();
+                Vector2 vector = new Vector2(p.transform.position.x, p.transform.position.y) - truePosition;
+                float magnitude = vector.magnitude;
+                if (magnitude <= distance && !PhysicsHelpers.AnyNonTriggersBetween(truePosition, vector.normalized, magnitude, Constants.ShipAndObjectsMask))
                 {
                     id = x.PlayerId;
-                    distance = dis;
+                    distance = magnitude;
                 }
+
             }
             if (targetdistance >= distance)
             {

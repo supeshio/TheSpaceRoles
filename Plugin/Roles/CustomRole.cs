@@ -2,6 +2,7 @@
 using InnerNet;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using static TheSpaceRoles.Helper;
 
@@ -216,7 +217,7 @@ namespace TheSpaceRoles
             ButtonCooldownEnabled = false;
             ButtonCooldown = 10f;
             DataBase.buttons.Clear();
-            if (DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
+            if (DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId) || AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
             {
                 //var k = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Select(x => x.Role.ToString()).ToArray();
                 //Logger.Info(string.Join(",", k));

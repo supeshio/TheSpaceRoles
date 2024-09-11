@@ -1,10 +1,10 @@
 ﻿using AmongUs.GameOptions;
 using HarmonyLib;
 using InnerNet;
-using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
-using TheSpaceRoles.Plugin;
 using UnityEngine;
 
 namespace TheSpaceRoles
@@ -34,18 +34,28 @@ namespace TheSpaceRoles
                     case "/help":
                     case "/h":
                     case "/?":
-                        string chatcommands =
-                            "チャットコマンド \n" +
-                            "/help,h,? : ヘルプを表示 \n" +
-                            "/help,h,? key,k: キーコマンドの表示 \n" +
-                            "/help,h,? chat,c : チャットコマンドの表示 \n " +
-                            "/ver,v : バージョンを表示 \n" +
-                            "/name,n {新しい名前} \n" +
-                            "/gameend,ge : 廃村にする \n" +
-                            "/fakelevel,fl {level(整数)} : レベルを変える \n" +
-                            "/lobbytimer,lt [true/false] : ロビータイマーをつける\n";
+                        string chatcommands = "";
+                        chatcommands += "<b><color=#12c2f5><size=120%>チャットコマンド</size></color></b> \n";
+                        chatcommands += "/help,h,? : ヘルプを表示 \n";
+                        chatcommands += "/help,h,? key,k: キーコマンドの表示 \n";
+                        chatcommands += "/help,h,? chat,c : チャットコマンドの表示 \n ";
+                        chatcommands += "/ver,v : バージョンを表示 \n";
+                        chatcommands += "/name,n {新しい名前} \n";
+                        chatcommands += "/gameend,ge : 廃村にする \n";
+                        chatcommands +="/fakelevel,fl {level(整数)} : レベルを変える \n";
+                        chatcommands += "/lobbytimer,lt [true/false] : ロビータイマーをつける\n";
+                        if (AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
+                        {
+
+                            chatcommands += "<color=#f5f512><size=110%>フリープレイ限定</size></color>\n";
+                            chatcommands += "/setrole : 役職ID or 役職名から役職を設定する\n";
+                            chatcommands += "/playerlist : プレイヤー名と役職名のリストを表示\n";
+                            chatcommands += "/rolelist : 役職名と役職IDのリストを表示\n";
+                        }
+
+                            ;
                         string keycommands =
-                            "キーコマンド \n" +
+                            "<b><color=#12c2f5><size=120%>キーコマンド</size></color></b> \n" +
                             "左右Shift + H : 廃村 \n" +
                             "左右Shift + S : 会議スキップ \n" +
                             " C : 試合スタートをキャンセル \n" +
@@ -175,13 +185,84 @@ namespace TheSpaceRoles
                             addchat += "killcoolを" + chats[1] + "にすることを失敗しました";
                         }
                         break;
-                    case "/lobbytimer":
-                    case "/lt":
-                        (addchat, TSR.LobbyTimer.Value) = Helper.ChatBool(chats, "LobbyTimer", TSR.LobbyTimer, ref addchat);
+                    //case "/debug":
+                    //    (addchat, TSR.DebugMode.Value) = Helper.ChatBool(chats, "DebugMode", TSR.LobbyTimer, ref addchat);
+                    //    break;
+                    case "/setrole":
+                        if (AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
+                        {
+
+                            if (int.TryParse(chats[1], out int roleId))
+                            {
+
+                                DataBase.AllPlayerRoles.Remove(PlayerControl.LocalPlayer.PlayerId);
+                                DataBase.ResetButtons();
+                                if (RoleData.GetCustomRoles[roleId].team == Teams.Impostor)
+                                {
+                                    PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Impostor, true);
+                                }
+                                else { 
+                               
+
+                                    PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate, true);
+                                }
+                                GameStarter.SendRpcSetRole(RoleData.GetCustomRoles[roleId].Role, PlayerControl.LocalPlayer.PlayerId);
+                                PlayerControl.LocalPlayer.Init();
+                                PlayerControl.LocalPlayer.ButtonResetStart();
+                                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(HudManager.Instance));
+                                addchat += $"役職を設定しました。\n Role : {RoleData.GetCustomRoles[roleId].ColoredRoleName}";
+                                break;
+                            }
+                            else
+                            {
+                                foreach (var role in RoleData.GetCustomRoles)
+                                {
+                                    if (role.RoleName == chats[1])
+                                    {
+                                        DataBase.AllPlayerRoles.Remove(PlayerControl.LocalPlayer.PlayerId);
+                                        DataBase.ResetButtons();
+                                        if (role.team ==Teams.Impostor)
+                                        {
+                                            PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Impostor, true);
+                                        }
+                                        else
+                                        {
+
+                                            PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate,true);
+                                        }
+
+                                        GameStarter.SendRpcSetRole(role.Role, PlayerControl.LocalPlayer.PlayerId);
+                                        PlayerControl.LocalPlayer.Init();
+                                        PlayerControl.LocalPlayer.ButtonResetStart();
+                                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(HudManager.Instance));
+                                        addchat += $"役職を設定しました。\n Role : {role.ColoredRoleName}";
+
+                                        break;
+                                    }
+                                }
+
+
+                            }
+                            addchat += "役職を設定できませんでした。";
+                            break;
+                        }
                         break;
-                        //case "/debug":
-                        //    (addchat, TSR.DebugMode.Value) = Helper.ChatBool(chats, "DebugMode", TSR.LobbyTimer, ref addchat);
-                        //    break;
+                    case "/rolelist":
+                        int i = 0;
+
+                        foreach (var name in RoleData.GetCustomRoles.Select(x => x.ColoredRoleName))
+                        {
+
+                            addchat += i++ + " : " + name + ("\n");
+                        }
+
+                        break;
+                    case "/playerlist":
+                        addchat +="count : "+ DataBase.AllPlayerRoles.Count +"\n";
+                        addchat += "playerlist : \n";
+                        addchat += DataBase.AllPlayerRoles.Select(x =>PlayerControl.AllPlayerControls.ToArray().First(z=>z.PlayerId==x.Key).Data.PlayerName + ":" + x.Value.Select(x=>x.ColoredRoleName).Joinsep(",")).Joinsep("\n");
+                        
+                        break;
 
 
                 }
@@ -208,13 +289,13 @@ namespace TheSpaceRoles
                             }
                             break;
                         case "//":
-                            addchat += Path.GetDirectoryName(Application.dataPath).ToString()+"\n";
+                            addchat += Path.GetDirectoryName(Application.dataPath).ToString() + "\n";
                             for (int i = 0; i < Palette.PlayerColors.Length; i++)
                             {
                                 addchat += Helper.ColoredText(Palette.PlayerColors[i], "■") + Helper.ColoredText(Palette.ShadowColors[i], "■") + Helper.ColoredText(Palette.PlayerColors[i], "<b>" + Palette.ColorNames[i] + "</b>\n");
                             }
-                            var ob =GameObject.Instantiate(FastDestroyableSingleton<NotificationPopper>.Instance.notificationMessageOrigin, FastDestroyableSingleton<NotificationPopper>.Instance.transform).GetComponent<LobbyNotificationMessage>();
-                            ob.SetUp($"<b>血液型</b> を <b>ab</b> に設定する", ob.Icon.sprite,Color.white,(Il2CppSystem.Action)(() => { }));
+                            var ob = GameObject.Instantiate(FastDestroyableSingleton<NotificationPopper>.Instance.notificationMessageOrigin, FastDestroyableSingleton<NotificationPopper>.Instance.transform).GetComponent<LobbyNotificationMessage>();
+                            ob.SetUp($"<b>血液型</b> を <b>ab</b> に設定する", ob.Icon.sprite, Color.white, (Il2CppSystem.Action)(() => { }));
                             break;
                     }
                 }

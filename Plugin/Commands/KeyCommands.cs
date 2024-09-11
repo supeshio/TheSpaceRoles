@@ -3,7 +3,7 @@ using InnerNet;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheSpaceRoles.Plugin
+namespace TheSpaceRoles
 {
     [HarmonyPatch]
     public class KeyCommands

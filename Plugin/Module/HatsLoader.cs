@@ -1,13 +1,11 @@
-﻿using Il2CppInterop.Runtime.Attributes;
-using UnityEngine.Networking;
-using UnityEngine;
+﻿using BepInEx.Unity.IL2CPP.Utils;
+using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
-using static TheSpaceRoles.CustomHatManager;
-using BepInEx.Unity.IL2CPP.Utils;
-using System.Text.Json;
 using System.IO;
-using System;
-using System.Collections.Generic;
+using System.Text.Json;
+using UnityEngine;
+using UnityEngine.Networking;
+using static TheSpaceRoles.CustomHatManager;
 
 namespace TheSpaceRoles
 {
@@ -110,8 +108,8 @@ namespace TheSpaceRoles
                     AllowTrailingCommas = true
                 });
                 www.downloadHandler.Dispose();
-                www.Dispose(); 
-                UnregisteredHats.AddRange(SanitizeHats(res,OtherRepositoryURL));
+                www.Dispose();
+                UnregisteredHats.AddRange(SanitizeHats(res, OtherRepositoryURL));
             }
 
             UnregisteredHats.AddRange(SanitizeHats(response, RepositoryUrl));
@@ -122,13 +120,13 @@ namespace TheSpaceRoles
             foreach (var fileName in toDownload)
             {
                 Logger.Message($"downloading hat: {fileName}");
-                yield return CoDownloadHatAsset(fileName.Item1,fileName.Item2);
+                yield return CoDownloadHatAsset(fileName.Item1, fileName.Item2);
             }
 
             isRunning = false;
         }
 
-        private static IEnumerator CoDownloadHatAsset(string fileName,string url)
+        private static IEnumerator CoDownloadHatAsset(string fileName, string url)
         {
             var www = new UnityWebRequest();
             www.SetMethod(UnityWebRequest.UnityWebRequestMethod.Get);

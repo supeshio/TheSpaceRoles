@@ -53,7 +53,7 @@ namespace TheSpaceRoles
         public Func<int> CanUse;
         public string buttonText = "";
         public bool atFirsttime;
-        public TextMeshPro AddtionalText;
+        public TextMeshPro AdditionalText;
 
         public Sprite sprite;
         public KeyCode keyCode;
@@ -126,16 +126,17 @@ namespace TheSpaceRoles
             var gameob = new GameObject("Text");
             gameob.transform.SetParent(actionButton.transform);
             gameob.SetActive(true);
-            AddtionalText = gameob.AddComponent<TextMeshPro>();
-            AddtionalText.color = Color.white;
-            AddtionalText.fontSizeMin = AddtionalText.fontSize = AddtionalText.fontSizeMax = 1.2f;
-            AddtionalText.alignment = TextAlignmentOptions.Center;
-            AddtionalText.outlineWidth = 0.8f;
-            AddtionalText.enableWordWrapping = false;
-            AddtionalText.autoSizeTextContainer = true;
-            AddtionalText.transform.localPosition = new Vector3(0f, 0.6f, -1f);
-            AddtionalText.gameObject.layer = HudManager.Instance.gameObject.layer;
-            AddtionalText.m_sharedMaterial = Data.textMaterial;
+            AdditionalText = gameob.AddComponent<TextMeshPro>();
+            AdditionalText.color = Color.white;
+            AdditionalText.fontSizeMin = AdditionalText.fontSize = AdditionalText.fontSizeMax = 1.2f;
+            AdditionalText.alignment = TextAlignmentOptions.Center;
+            AdditionalText.outlineWidth = 0.8f;
+            AdditionalText.enableWordWrapping = false;
+            AdditionalText.autoSizeTextContainer = true;
+            AdditionalText.transform.localPosition = new Vector3(0f, 0.6f, -1f);
+            AdditionalText.gameObject.layer = HudManager.Instance.gameObject.layer;
+            AdditionalText.m_sharedMaterial = Data.textMaterial;
+            AdditionalText.text = "";
 
 
 

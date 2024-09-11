@@ -10,18 +10,32 @@ namespace TheSpaceRoles
     [HarmonyPatch]
     public static class GameStarter
     {
-        [HarmonyPatch(typeof(RoleManager))]
-        [HarmonyPatch(nameof(RoleManager.SelectRoles)), HarmonyPrefix]
+        [HarmonyPatch(typeof(GameManager))]
+        [HarmonyPatch(nameof(GameManager.StartGame)), HarmonyPostfix]
         public static void Reset()
         {
+            if (AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
+            {
+                Logger.Info("FreePlayStart");
+                foreach (var pc in PlayerControl.AllPlayerControls)
+                {
+                    if (pc.Data.Role.TeamType == RoleTeamTypes.Impostor)
+                    {
+                        SendRpcSetRole(Roles.Impostor, pc.PlayerId);
+                    }
+                    else
+                    {
+                        SendRpcSetRole(Roles.Crewmate, pc.PlayerId);
+
+                    }
+                }
+            }
         }
         [HarmonyPatch(typeof(RoleManager))]
         [HarmonyPatch(nameof(RoleManager.SelectRoles)), HarmonyPostfix]
 
         public static void Select()
         {
-            DataBase.AllPlayerTeams = new();
-            DataBase.AllPlayerRoles = new();
             AmongUsClient.Instance.FinishRpcImmediately(Rpc.SendRpc(Rpcs.DataBaseReset));
             DataBase.ResetAndPrepare();
             foreach (int pid in DataBase.AllPlayerControls().Select(x => x.PlayerId))
@@ -37,7 +51,7 @@ namespace TheSpaceRoles
             //アサインされた役職を求める。
             foreach (var roleop in CustomOptionsHolder.RoleOptions_Count)
             {
-                if(roleop.Value.selection() != 0)
+                if (roleop.Value.selection() != 0)
                 {
                     if (!DataBase.AssignedRoles.Contains(roleop.Key))
                     {
@@ -46,13 +60,12 @@ namespace TheSpaceRoles
                 }
             }
 
-
-            //Resetするべ
-            //今回はC3 I1
-            //Sheriff 1
-            //です
-            if (PlayerControl.LocalPlayer.AmOwner)
+            if (AmongUsClient.Instance.AmHost)
             {
+                //Resetするべ
+                //今回はC3 I1
+                //Sheriff 1
+                //です
                 Logger.Info("Owner");
                 Dictionary<Teams, List<Roles>> tr = new();
 

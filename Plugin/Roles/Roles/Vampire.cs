@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using static TheSpaceRoles.Helper;
-using static TheSpaceRoles.CustomOptionsHolder;
+﻿using System.Linq;
+using UnityEngine;
 using static TheSpaceRoles.CustomOption;
-using System.Linq;
+using static TheSpaceRoles.CustomOptionsHolder;
+using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
@@ -25,17 +25,17 @@ namespace TheSpaceRoles
         public static CustomOption GarlicAreaSize;
         public override void OptionCreate()
         {
-            if(KillDelayTime != null)return;
+            if (KillDelayTime != null) return;
 
-            Logger.Info(string.Join(",",GetAreasize(5, 1, false).Select(x=>x()).ToList()),"GetAreaSize_Vampire");
-            KillDelayTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.vampire.killdelaytime", CustomOptionsHolder.GetSeconds(20,1,false),9);
+            Logger.Info(string.Join(",", GetAreasize(5, 1, false).Select(x => x()).ToList()), "GetAreaSize_Vampire");
+            KillDelayTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.vampire.killdelaytime", CustomOptionsHolder.GetSeconds(20, 1, false), 9);
             KillDistance = Create(CustomOption.OptionType.Impostor, "role.vampire.killdistance", GetKillDistances(), 4);
-            KillCoolDown = Create(CustomOption.OptionType.Impostor, "role.vampire.killcooldown", CustomOptionsHolder.GetSeconds(),12);
-            UseGarlic = Create(CustomOption.OptionType.Impostor, "role.vampire.usegarlic",true);
-            GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role.vampire.garlicareasize", GetAreasize(10,1,false), 4,Show:UseGarlic.GetBool);
+            KillCoolDown = Create(CustomOption.OptionType.Impostor, "role.vampire.killcooldown", CustomOptionsHolder.GetSeconds(), 12);
+            UseGarlic = Create(CustomOption.OptionType.Impostor, "role.vampire.usegarlic", true);
+            GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role.vampire.garlicareasize", GetAreasize(10, 1, false), 4, Show: UseGarlic.GetBool);
 
             //キル遅延時間、キルク、ニンニク内だと特殊キルができなくなりその上でさらに通常キルもできなくなるかの設定
-            Options = [KillDelayTime, KillCoolDown, GarlicAreaSize,KillDistance];
+            Options = [KillDelayTime, KillCoolDown, GarlicAreaSize, KillDistance];
         }
         public override void HudManagerStart(HudManager __instance)
         {

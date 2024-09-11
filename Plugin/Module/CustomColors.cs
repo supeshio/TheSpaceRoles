@@ -97,7 +97,7 @@ namespace TheSpaceRoles
                         if (text != null)
                         {
                             __result = text;
-                            return false; 
+                            return false;
                         }
                     }
                     return true;

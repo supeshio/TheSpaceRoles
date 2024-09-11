@@ -270,7 +270,7 @@ namespace TheSpaceRoles
         }
         public CustomOption(OptionType optionType, string nameId, Func<string>[] selections, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
         {
-            if(options.Any(x=>x.nameId== nameId))
+            if (options.Any(x => x.nameId == nameId))
             {
                 return;
             }
@@ -538,42 +538,44 @@ namespace TheSpaceRoles
                 if (AmongUsClient.Instance.AmHost)
                 {
 
-                     ShareOption();
-                     ModOption.StringOption.Value = ModOption.StringOption.oldValue =selecting; ModOption.StringOption.ValueText.text = Value();
+                    ShareOption();
+                    ModOption.StringOption.Value = ModOption.StringOption.oldValue = selecting;
+                    entry.Value = selecting;
+                    ModOption.StringOption.ValueText.text = Value();
                 }
-                entry.Value =selecting;
-                
+
+                entry.Value = selecting;
             }
         }
         public static void ShareAllOptions()
         {
             var rpc = Rpc.SendRpc(Rpcs.ShareOptions);
-            rpc.Write((uint)options.Where(x=>!x.ModOption.isHeader).Count());
+            rpc.Write((uint)options.Where(x => !x.ModOption.isHeader).Count());
             foreach (var option in options.Where(x => !x.ModOption.isHeader))
             {
 
-                    rpc.Write(option.nameId);
-                    rpc.Write((uint)option.entry.Value);
+                rpc.Write(option.nameId);
+                rpc.Write((uint)option.entry.Value);
             }
             AmongUsClient.Instance.FinishRpcImmediately(rpc);
         }
         public void ShareOption()
         {
-                if (!ModOption.isHeader)
-                {
-                    var rpc = Rpc.SendRpc(Rpcs.ShareOptions);
+            if (!ModOption.isHeader)
+            {
+                var rpc = Rpc.SendRpc(Rpcs.ShareOptions);
                 rpc.Write((uint)1);
                 rpc.Write(nameId);
                 rpc.Write((uint)selection());
-                    AmongUsClient.Instance.FinishRpcImmediately(rpc);
-                }
+                AmongUsClient.Instance.FinishRpcImmediately(rpc);
+            }
         }
         public static void RecieveOption(MessageReader reader)
         {
             uint count = reader.ReadUInt32();
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
-                string str =reader.ReadString();
+                string str = reader.ReadString();
                 uint value = reader.ReadUInt32();
                 options.FirstOrDefault(x => x.nameId == str).UpdateSelection((int)value);
             }

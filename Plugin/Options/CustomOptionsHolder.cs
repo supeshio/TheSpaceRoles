@@ -1,5 +1,4 @@
-﻿using AmongUs.GameOptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -28,7 +27,7 @@ namespace TheSpaceRoles
         {
 
             List<Func<string>> second = [];
-;
+            ;
             if (include_0) second.Add(Sec(0));
 
             for (float i = delta_sec; i <= sec; i += delta_sec)
@@ -41,7 +40,7 @@ namespace TheSpaceRoles
         {
 
             List<Func<string>> areas = [];
-            if (include_0) areas.Add(()=>Translation.GetString("option.selection.areasize",["0"]));
+            if (include_0) areas.Add(() => Translation.GetString("option.selection.areasize", ["0"]));
 
             for (float i = delta_size; i <= size; i += delta_size)
             {
@@ -57,9 +56,9 @@ namespace TheSpaceRoles
 
             List<string> strings = ["veryshort", "short", "medium", "long"];
             List<Func<string>> killarea = [];//short
-            foreach(string i in strings) 
+            foreach (string i in strings)
             {
-                killarea.Add(()=>Translation.GetString("option.selection.killdistance."+i));
+                killarea.Add(() => Translation.GetString("option.selection.killdistance." + i));
             }
             if (defaultkilldistance)
             {
@@ -130,38 +129,38 @@ namespace TheSpaceRoles
                 if ((int)team >= 6) break;
                 Logger.Info($"{team}", $"teamLogger_{team}");
 
-                    HeaderCreate(OptionType.Roles, $"team_{team}", colorcode: "#cccccc");
-                    if (RoleData.GetCustomRoles.Count > 0)
+                HeaderCreate(OptionType.Roles, $"team_{team}", colorcode: "#cccccc");
+                if (RoleData.GetCustomRoles.Count > 0)
+                {
+                    foreach (CustomRole role in RoleData.GetCustomRoles.Where(x => x.team == team))
                     {
-                        foreach (CustomRole role in RoleData.GetCustomRoles.Where(x=>x.team==team))
+                        Logger.Info($"{role}", $"roleLogger_{role.Role}");
+                        if (RoleData.GetCustomRole_NormalFromTeam(role.team).Role != role.Role)
                         {
-                            Logger.Info($"{role}", $"roleLogger_{role.Role}");
-                                if (RoleData.GetCustomRole_NormalFromTeam(role.team).Role != role.Role)
-                                {
 
-                                    RoleOptions_Count.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", GetCountList(), 0));
-                                }
+                            RoleOptions_Count.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", GetCountList(), 0));
                         }
-                        //GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
-
                     }
+                    //GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
+
+                }
 
 
 
             }
-            Logger.Fatel("what?","teamimpostors");
+            Logger.Fatel("what?", "teamimpostors");
             //HeaderCreate(OptionType.Impostor, $"team_impostor");
             //HeaderCreate(OptionType.Crewmate, $"team_crewmate");
             //HeaderCreate(OptionType.Neutral, $"team_jackal");
 
             foreach (var customrole in RoleData.GetCustomRoles)
             {
-                if (customrole==null)
+                if (customrole == null)
                 {
                     Logger.Info("what?");
                     continue;
                 }
-                    Logger.Info(customrole.Role.ToString());
+                Logger.Info(customrole.Role.ToString());
                 roleFamilarOptions.Add(customrole.Role, []);
                 switch (customrole.team)
                 {
@@ -174,7 +173,7 @@ namespace TheSpaceRoles
                         break;
                     default:
                         roleFamilarOptions[customrole.Role].Add(HeaderCreate(OptionType.Neutral, $"role_{customrole.Role}_header"));
-                        break ;
+                        break;
                 }
                 customrole.OptionCreate();
                 foreach (var option in customrole.Options)
