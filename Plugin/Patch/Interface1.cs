@@ -1,7 +1,4 @@
-﻿using HarmonyLib;
-using UnityEngine;
-
-namespace TheSpaceRoles
+﻿namespace TheSpaceRoles
 {
     //[HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]
     //public static class ShipAdditionalRole

@@ -55,7 +55,7 @@ namespace TheSpaceRoles
         }
         public static void Init(this PlayerControl p)
         {
-            DataBase.AllPlayerRoles[p.PlayerId].Do(x=>x.Init());
+            DataBase.AllPlayerRoles[p.PlayerId].Do(x => x.Init());
         }
         public static void ButtonResetStart(this PlayerControl p)
         {

@@ -121,7 +121,9 @@ namespace TheSpaceRoles
         BittenByVampire,
         SerialKillerKill,
         SerialKillerSuicide,
-        JackalKill
+        JackalKill,
+        ShotByNiceGuesser,
+        MisfiredByNiceGuesser,
     }
 
 }

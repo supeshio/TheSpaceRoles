@@ -1,5 +1,4 @@
-﻿using AmongUs.GameOptions;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -21,7 +20,7 @@ namespace TheSpaceRoles
         {
             DataBase.AllPlayerControls().Do(x => x.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 0f));
             DataBase.AllPlayerControls().Do(x => x.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", color));
-            int id = -1; 
+            int id = -1;
             float distance = float.MaxValue;
 
             if (target == -1)
@@ -39,7 +38,7 @@ namespace TheSpaceRoles
                 }
                 if (notIncludeTeamIds != null && notIncludeTeamIds.Length > 0)
                 {
-                    foreach(var v in DataBase.AllPlayerRoles[x.PlayerId])
+                    foreach (var v in DataBase.AllPlayerRoles[x.PlayerId])
                     {
 
                         if (notIncludeTeamIds.Contains(v.team))

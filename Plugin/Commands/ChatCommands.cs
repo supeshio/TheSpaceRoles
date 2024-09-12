@@ -1,7 +1,6 @@
 ﻿using AmongUs.GameOptions;
 using HarmonyLib;
 using InnerNet;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -42,7 +41,7 @@ namespace TheSpaceRoles
                         chatcommands += "/ver,v : バージョンを表示 \n";
                         chatcommands += "/name,n {新しい名前} \n";
                         chatcommands += "/gameend,ge : 廃村にする \n";
-                        chatcommands +="/fakelevel,fl {level(整数)} : レベルを変える \n";
+                        chatcommands += "/fakelevel,fl {level(整数)} : レベルを変える \n";
                         chatcommands += "/lobbytimer,lt [true/false] : ロビータイマーをつける\n";
                         if (AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
                         {
@@ -201,8 +200,9 @@ namespace TheSpaceRoles
                                 {
                                     PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Impostor, true);
                                 }
-                                else { 
-                               
+                                else
+                                {
+
 
                                     PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate, true);
                                 }
@@ -221,14 +221,14 @@ namespace TheSpaceRoles
                                     {
                                         DataBase.AllPlayerRoles.Remove(PlayerControl.LocalPlayer.PlayerId);
                                         DataBase.ResetButtons();
-                                        if (role.team ==Teams.Impostor)
+                                        if (role.team == Teams.Impostor)
                                         {
                                             PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Impostor, true);
                                         }
                                         else
                                         {
 
-                                            PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate,true);
+                                            PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate, true);
                                         }
 
                                         GameStarter.SendRpcSetRole(role.Role, PlayerControl.LocalPlayer.PlayerId);
@@ -258,10 +258,10 @@ namespace TheSpaceRoles
 
                         break;
                     case "/playerlist":
-                        addchat +="count : "+ DataBase.AllPlayerRoles.Count +"\n";
+                        addchat += "count : " + DataBase.AllPlayerRoles.Count + "\n";
                         addchat += "playerlist : \n";
-                        addchat += DataBase.AllPlayerRoles.Select(x =>PlayerControl.AllPlayerControls.ToArray().First(z=>z.PlayerId==x.Key).Data.PlayerName + ":" + x.Value.Select(x=>x.ColoredRoleName).Joinsep(",")).Joinsep("\n");
-                        
+                        addchat += DataBase.AllPlayerRoles.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.Select(x => x.ColoredRoleName).Joinsep(",")).Joinsep("\n");
+
                         break;
 
 
@@ -296,6 +296,7 @@ namespace TheSpaceRoles
                             }
                             var ob = GameObject.Instantiate(FastDestroyableSingleton<NotificationPopper>.Instance.notificationMessageOrigin, FastDestroyableSingleton<NotificationPopper>.Instance.transform).GetComponent<LobbyNotificationMessage>();
                             ob.SetUp($"<b>血液型</b> を <b>ab</b> に設定する", ob.Icon.sprite, Color.white, (Il2CppSystem.Action)(() => { }));
+                            NiceGuesser.instance.TargetReset(HudManager.Instance.MeetingPrefab);
                             break;
                     }
                 }

@@ -1,16 +1,16 @@
-﻿using HarmonyLib;
+﻿using Steamworks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore;
 
 namespace TheSpaceRoles
 {
     public class NiceGuesser : CustomRole
     {
         public List<Target> targets = [];
+        public static NiceGuesser instance;
         public NiceGuesser()
         {
             team = Teams.Crewmate;
@@ -19,16 +19,44 @@ namespace TheSpaceRoles
         }
         public override void HudManagerStart(HudManager hudManager)
         {
+            instance = this;
             targets = [];
         }
         public override void MeetingStart(MeetingHud meeting)
         {
-            targets = [];
-            foreach (var player in MeetingHud.Instance.playerStates)
+            TargetReset(meeting);
+        }
+        public void TargetReset(MeetingHud meeting,int[] untargetingplayerids = null)
+        {
+            if (targets != null | targets.Count > 0)
             {
-                if (player != null && !player.AmDead)
+                foreach (var target in targets) 
                 {
-                    targets.Add(new Target(player, meeting));
+                    GameObject.Destroy(target.renderer.gameObject);
+                }
+            }
+            targets = [];
+            if (!PlayerControl.LocalPlayer.Data.IsDead)
+            {
+
+                foreach (var player in MeetingHud.Instance.playerStates)
+                {
+                    if (player != null && !player.AmDead && player.TargetPlayerId != PlayerControl.LocalPlayer.PlayerId)
+                    {
+                        if (untargetingplayerids != null)
+                        {
+                            if (!untargetingplayerids.Contains(player.TargetPlayerId))
+                            {
+
+                                targets.Add(new Target(player, meeting));
+                            }
+                        }
+                        else
+                        {
+
+                            targets.Add(new Target(player, meeting));
+                        }
+                    }
                 }
             }
             foreach (var player in MeetingHud.Instance.playerStates)
@@ -39,87 +67,18 @@ namespace TheSpaceRoles
         public static SpriteRenderer crewmateRend;
         public static SpriteRenderer impostorRend;
         public static SpriteRenderer neutralRend;
+        public static int selected = 0;
         public static void P(MeetingHud meeting)
         {
 
+            crewmateRend = null;
+            impostorRend = null;
+            neutralRend = null;
+            selected = 0;
             SpriteRenderer background = meeting.transform.FindChild("MeetingContents").FindChild("PhoneUI").FindChild("Background").GetComponent<SpriteRenderer>();
             SpriteRenderer basecolor = meeting.transform.FindChild("MeetingContents").FindChild("PhoneUI").FindChild("baseColor").GetComponent<SpriteRenderer>();
             Logger.Info(background.tag);
             Transform parent = meeting.meetingContents.transform.FindChild("PhoneUI");
-            // PhoneUI\
-            //BackGround 0 0 7
-            //baseColor 0.012 0 8
-            meeting.ButtonParent.gameObject.SetActive(false);
-
-            crewmateRend = ButtonCreate( parent, Teams.Crewmate);
-            crewmateRend.transform.localPosition = new Vector3(-2f, 2.2f, -10);
-            crewmateRend.transform.localScale = new(1.2f, 1.2f, 1.2f);
-            crewmateRend.gameObject.GetComponent<PassiveButton>().OnMouseOut = new();
-            crewmateRend.gameObject.GetComponent<PassiveButton>().OnMouseOver = new();
-            crewmateRend.gameObject.GetComponent<PassiveButton>().OnClick = new();
-            crewmateRend.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
-            {
-                crewmateRend.color = Palette.AcceptedGreen;
-
-            }));
-            crewmateRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
-            {
-                crewmateRend.color = Color.gray;
-            }));
-            crewmateRend.gameObject.GetComponent<PassiveButton>().OnMouseOut.AddListener((System.Action)(() =>
-            {
-                crewmateRend.color = Color.white;
-            }));
-
-            impostorRend = ButtonCreate( parent, Teams.Impostor);
-            impostorRend.transform.localPosition = new Vector3(0f, 2.2f, -10);
-            impostorRend.transform.localScale = new(1.2f, 1.2f, 1.2f);
-
-            impostorRend.gameObject.GetComponent<PassiveButton>().OnMouseOut = new();
-            impostorRend.gameObject.GetComponent<PassiveButton>().OnMouseOver = new();
-            impostorRend.gameObject.GetComponent<PassiveButton>().OnClick = new();
-            impostorRend.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
-            {
-                impostorRend.color = Palette.AcceptedGreen;
-
-            }));
-            impostorRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
-            {
-                impostorRend.color = Color.gray;
-            }));
-            impostorRend.gameObject.GetComponent<PassiveButton>().OnMouseOut.AddListener((System.Action)(() =>
-            {
-                impostorRend.color = Color.white;
-            }));
-            neutralRend = ButtonCreate (parent, Teams.None);
-
-            neutralRend.transform.localPosition = new Vector3(2f, 2.2f, -10);
-            neutralRend.transform.localScale = new(1.2f, 1.2f, 1.2f);
-            neutralRend.gameObject.GetComponent<PassiveButton>().OnMouseOut = new();
-            neutralRend.gameObject.GetComponent<PassiveButton>().OnMouseOver = new();
-            neutralRend.gameObject.GetComponent<PassiveButton>().OnClick = new();
-            neutralRend.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
-            {
-                neutralRend.color = Palette.AcceptedGreen;
-
-            }));
-            neutralRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
-            {
-                neutralRend.color = Color.gray;
-            }));
-            neutralRend.gameObject.GetComponent<PassiveButton>().OnMouseOut.AddListener((System.Action)(() =>
-            {
-                neutralRend.color = Color.white;
-            }));
-
-
-
-
-
-
-
-
-
 
             var crewteam = new GameObject("CrewTeamButtons");
             crewteam.transform.localPosition = Vector3.zero;
@@ -131,40 +90,215 @@ namespace TheSpaceRoles
             neuteam.transform.localPosition = Vector3.zero;
             neuteam.transform.SetParent(parent);
 
+            // PhoneUI\
+            //BackGround 0 0 7
+            //baseColor 0.012 0 8
+            meeting.ButtonParent.gameObject.SetActive(false);
+
+            void reset()
+            {
+
+                crewteam.gameObject.SetActive(false);
+                impteam.gameObject.SetActive(false);
+                neuteam.gameObject.SetActive(false);
+
+                crewmateRend.color = Color.white;
+                impostorRend.color = Color.white;
+                neutralRend.color = Color.white;
+                switch (selected)
+                {
+                    case 0:
+                        crewteam.gameObject.SetActive(true);
+                        crewmateRend.color = Palette.AcceptedGreen;
+                        break;
+                    case 1:
+
+                        impteam.gameObject.SetActive(true);
+                        impostorRend.color = Palette.AcceptedGreen;
+                        break;
+
+                    case 2:
+
+                        neuteam.gameObject.SetActive(true);
+                        neutralRend.color = Palette.AcceptedGreen;
+                        break;
+                }
+            }
+
+
+            crewmateRend = ButtonCreate(parent, Teams.Crewmate);
+            crewmateRend.transform.localPosition = new Vector3(-2f, 2.2f, -10);
+            crewmateRend.transform.localScale = new(1.2f, 1.2f, 1.2f);
+            crewmateRend.gameObject.GetComponent<PassiveButton>().OnMouseOut = new();
+            crewmateRend.gameObject.GetComponent<PassiveButton>().OnMouseOver = new();
+            crewmateRend.gameObject.GetComponent<PassiveButton>().OnClick = new();
+            crewmateRend.gameObject.GetComponent<PassiveButton>().ClickSound = HudManager.Instance.Chat.chatButton.ClickSound;
+            crewmateRend.color = Palette.AcceptedGreen;
+            crewmateRend.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
+            {
+                selected = 0;
+                reset();
+                crewteam.gameObject.SetActive(true);
+                crewmateRend.color = Palette.AcceptedGreen;
+
+            }));
+            crewmateRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
+            {
+                if (selected == 0)
+                {
+
+                    reset();
+                }
+                else
+                {
+                    crewmateRend.color = Helper.ColorFromColorcode("#dbdbdb");
+
+                }
+            }));
+            crewmateRend.gameObject.GetComponent<PassiveButton>().OnMouseOut.AddListener((System.Action)(() =>
+            {
+                reset();
+            }));
+
+            impostorRend = ButtonCreate(parent, Teams.Impostor);
+            impostorRend.transform.localPosition = new Vector3(0f, 2.2f, -10);
+            impostorRend.transform.localScale = new(1.2f, 1.2f, 1.2f);
+
+            impostorRend.gameObject.GetComponent<PassiveButton>().OnMouseOut = new();
+            impostorRend.gameObject.GetComponent<PassiveButton>().OnMouseOver = new();
+            impostorRend.gameObject.GetComponent<PassiveButton>().OnClick = new();
+            impostorRend.gameObject.GetComponent<PassiveButton>().ClickSound = HudManager.Instance.Chat.chatButton.ClickSound;
+            impostorRend.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
+            {
+                selected = 1;
+                reset();
+                impteam.gameObject.SetActive(true);
+                impostorRend.color = Palette.AcceptedGreen;
+
+            }));
+            impostorRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
+            {
+                if (selected == 1)
+                {
+
+                    reset();
+                }
+                else
+                {
+                    impostorRend.color = Helper.ColorFromColorcode("#dbdbdb");
+
+                }
+            }));
+            impostorRend.gameObject.GetComponent<PassiveButton>().OnMouseOut.AddListener((System.Action)(() =>
+            {
+                reset();
+            }));
+            neutralRend = ButtonCreate(parent, Teams.None);
+
+            neutralRend.transform.localPosition = new Vector3(2f, 2.2f, -10);
+            neutralRend.transform.localScale = new(1.2f, 1.2f, 1.2f);
+            neutralRend.gameObject.GetComponent<PassiveButton>().OnMouseOut = new();
+            neutralRend.gameObject.GetComponent<PassiveButton>().OnMouseOver = new();
+            neutralRend.gameObject.GetComponent<PassiveButton>().OnClick = new();
+            neutralRend.gameObject.GetComponent<PassiveButton>().ClickSound = HudManager.Instance.Chat.chatButton.ClickSound;
+            neutralRend.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
+            {
+                selected = 2;
+                reset();
+                neuteam.gameObject.SetActive(true);
+                neutralRend.color = Palette.AcceptedGreen;
+
+            }));
+            neutralRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
+            {
+                if (selected == 2)
+                {
+                    reset();
+                }
+                else
+                {
+                    neutralRend.color = Helper.ColorFromColorcode("#dbdbdb");
+
+                }
+            }));
+            neutralRend.gameObject.GetComponent<PassiveButton>().OnMouseOut.AddListener((System.Action)(() =>
+            {
+                reset();
+            }));
+
+
+
+            reset();
+            crewteam.gameObject.SetActive(true);
+
+
+
+            void roleaction(Roles role)
+            {
+
+                meeting.ButtonParent.gameObject.SetActive(true);
+
+                GameObject.Destroy(crewteam.gameObject);
+                GameObject.Destroy(impteam.gameObject);
+                GameObject.Destroy(neuteam.gameObject);
+                GameObject.Destroy(crewmateRend.gameObject);
+                GameObject.Destroy(impostorRend.gameObject);
+                GameObject.Destroy(neutralRend.gameObject);
+                crewmateRend = null;
+                impostorRend = null;
+                neutralRend = null;
+                int pc = -1;
+                if (targetplayer.IsRole(role))
+                {
+                    UnCheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, targetplayer, DeathReason.ShotByNiceGuesser);
+                    pc = targetplayer.PlayerId;
+                }
+                else
+                {
+
+                    UnCheckedMurderPlayer.RpcMurder(targetplayer, PlayerControl.LocalPlayer, DeathReason.ShotByNiceGuesser);
+                    pc = PlayerControl.LocalPlayer.PlayerId;
+                }
+                NiceGuesser.instance.TargetReset(meeting, [pc]);
+            }
+
+
             int c = 0;
             int i = 0;
             int n = 0;
             if (AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
             {
 
-                foreach (var role in RoleData.GetCustomRoles.ToArray().Select(x=>x.Role))
+                foreach (var role in RoleData.GetCustomRoles.ToArray().Select(x => x.Role))
                 {
                     SpriteRenderer rend;
 
                     if (RoleData.GetCustomRoleFromRole(role).team == Teams.Crewmate)
                     {
                         rend = ButtonCreate(crewteam.transform, Teams.Crewmate);
-                        rend.transform.localPosition = new Vector3(-2.2f + 1.375f * (c % 4), 1.6f - 0.3f * Mathf.Floor(c++ / 4f), -10);
+                        rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (c % 4), 3.5f - 0.4f * Mathf.Floor(c++ / 4f), -10);
                     }
                     else
                     if (RoleData.GetCustomRoleFromRole(role).team == Teams.Impostor)
                     {
                         rend = ButtonCreate(impteam.transform, Teams.Impostor);
-                        rend.transform.localPosition = new Vector3(-2.2f + 1.375f * (i % 4), 1.6f - 0.3f * Mathf.Floor(i++ / 4f), -10);
+                        rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (i % 4), 3.5f - 0.4f * Mathf.Floor(i++ / 4f), -10);
                     }
                     else
                     {
 
                         rend = ButtonCreate(neuteam.transform, Teams.None);
-                        rend.transform.localPosition = new Vector3(-2.2f + 1.375f * (n % 4), 1.6f - 0.3f * Mathf.Floor(n++ / 4f), -10);
+                        rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (n % 4), 3.5f - 0.4f * Mathf.Floor(n++ / 4f), -10);
                     }
                     var p = rend.gameObject.GetComponent<PassiveButton>();
                     p.OnMouseOut = new();
                     p.OnMouseOver = new();
                     p.OnClick = new();
+                    p.ClickSound=HudManager.Instance.Chat.chatButton.ClickSound;
                     p.OnClick.AddListener((System.Action)(() =>
                     {
                         rend.color = Palette.AcceptedGreen;
+                        roleaction(role);
 
                     }));
                     p.OnMouseOver.AddListener((System.Action)(() =>
@@ -175,7 +309,9 @@ namespace TheSpaceRoles
                     {
                         rend.color = Color.white;
                     }));
+                    rend.gameObject.name = role.ToString();
                     rend.GetComponentInChildren<TextMeshPro>().text = RoleData.GetColoredRoleNameFromRole(role);
+                    Logger.Info(role.ToString(), "Passive");
                 }
             }
             else
@@ -184,39 +320,57 @@ namespace TheSpaceRoles
                 foreach (var role in DataBase.AssignedRoles)
                 {
 
+                    SpriteRenderer rend;
                     if (RoleData.GetCustomRoleFromRole(role).team == Teams.Crewmate)
                     {
-                        var rend = ButtonCreate(crewteam.transform, Teams.Crewmate);
-                        rend.transform.position = new Vector3(-2.2f + 1.375f * (c % 4), 1.6f - (0.3f * Mathf.Floor(c++ / 4f)), -30);
-                        rend.transform.GetComponentInChildren<TextMeshPro>().text=RoleData.GetColoredRoleNameFromRole(role);
+                        rend = ButtonCreate(crewteam.transform, Teams.Crewmate);
+                        rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (c % 4), 3.5f - 0.4f * Mathf.Floor(c++ / 4f), -10);
 
                     }
                     else
                     if (RoleData.GetCustomRoleFromRole(role).team == Teams.Impostor)
                     {
-                        var rend = ButtonCreate(impteam.transform, Teams.Impostor);
-                        rend.transform.position = new Vector3(-2.2f + 1.375f * (i % 4), 1.6f - (0.3f * Mathf.Floor(i++ / 4f)), -30);
-                        rend.transform.GetComponentInChildren<TextMeshPro>().text = RoleData.GetColoredRoleNameFromRole(role);
+                        rend = ButtonCreate(impteam.transform, Teams.Impostor);
+                        rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (i % 4), 3.5f - 0.4f * Mathf.Floor(i++ / 4f), -10);
                     }
                     else
                     {
 
-                        var rend = ButtonCreate(neuteam.transform, Teams.None);
-                        rend.transform.position = new Vector3(-1.8f + 1.2f * (n % 4), 1.6f - (0.3f * Mathf.Floor(n++ / 4f)), -30);
-                        rend.transform.GetComponentInChildren<TextMeshPro>().text = RoleData.GetColoredRoleNameFromRole(role);
+                        rend = ButtonCreate(neuteam.transform, Teams.None);
+                        rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (n % 4), 3.5f - 0.4f * Mathf.Floor(n++ / 4f), -10);
                     }
+                    var p = rend.gameObject.GetComponent<PassiveButton>();
+                    p.OnMouseOut = new();
+                    p.OnMouseOver = new();
+                    p.OnClick = new();
+                    p.OnClick.AddListener((System.Action)(() =>
+                    {
+                        rend.color = Palette.AcceptedGreen;
+                        roleaction(role);
 
+                    }));
+                    p.OnMouseOver.AddListener((System.Action)(() =>
+                    {
+                        rend.color = Color.gray;
+                    }));
+                    p.OnMouseOut.AddListener((System.Action)(() =>
+                    {
+                        rend.color = Color.white;
+                    }));
+                    rend.gameObject.name = role.ToString();
+                    rend.transform.GetComponentInChildren<TextMeshPro>().text = RoleData.GetColoredRoleNameFromRole(role);
+                    Logger.Info(role.ToString(),"Passive");
                 }
             }
         }
-        public static SpriteRenderer ButtonCreate(Transform parent,Teams teams)
+        public static SpriteRenderer ButtonCreate(Transform parent, Teams teams)
         {
             if (teams != Teams.None)
             {
                 SpriteRenderer
                 spriteRenderer = new GameObject(teams.ToString()).AddComponent<SpriteRenderer>();
                 spriteRenderer.transform.SetParent(parent);
-                spriteRenderer.sprite = Sprites.GetSpriteFromResources("ui.option.png", 380f);
+                spriteRenderer.sprite = Sprites.GetSpriteFromResources("ui.option.png", 350f);
                 spriteRenderer.transform.localPosition = new Vector3(-2f, 2.2f, -10);
                 spriteRenderer.transform.localScale = Vector3.one;
                 spriteRenderer.enabled = true;
@@ -238,8 +392,7 @@ namespace TheSpaceRoles
                 PassiveButton passiveButton = spriteRenderer.gameObject.AddComponent<PassiveButton>();
                 var box2d = passiveButton.gameObject.AddComponent<BoxCollider2D>();
                 box2d.size = spriteRenderer.bounds.size;
-                passiveButton.Colliders =new[] { box2d };
-                passiveButton = spriteRenderer.gameObject.AddComponent<PassiveButton>();
+                passiveButton.Colliders = new[] { box2d };
                 passiveButton.OnClick = new();
                 passiveButton.OnMouseOut = new();
                 passiveButton.OnMouseOver = new();
@@ -252,7 +405,7 @@ namespace TheSpaceRoles
                 SpriteRenderer
                 spriteRenderer = new GameObject(teams.ToString()).AddComponent<SpriteRenderer>();
                 spriteRenderer.transform.SetParent(parent);
-                spriteRenderer.sprite = Sprites.GetSpriteFromResources("ui.option.png", 400f);
+                spriteRenderer.sprite = Sprites.GetSpriteFromResources("ui.option.png", 350f);
                 spriteRenderer.transform.localPosition = new Vector3(-2f, 2.2f, -10);
                 spriteRenderer.transform.localScale = Vector3.one;
                 spriteRenderer.enabled = true;
@@ -276,7 +429,6 @@ namespace TheSpaceRoles
                 var box2d = passiveButton.gameObject.AddComponent<BoxCollider2D>();
                 box2d.size = spriteRenderer.bounds.size;
                 passiveButton.Colliders = new[] { box2d };
-                passiveButton = spriteRenderer.gameObject.AddComponent<PassiveButton>();
                 passiveButton.OnClick = new();
                 passiveButton.OnMouseOut = new();
                 passiveButton.OnMouseOver = new();
@@ -286,6 +438,7 @@ namespace TheSpaceRoles
             }
 
         }
+        public static PlayerControl targetplayer;
 
         public class Target
         {
@@ -308,6 +461,7 @@ namespace TheSpaceRoles
                 renderer.gameObject.layer = HudManager.Instance.gameObject.layer;
                 //renderer.material = MeetingHud.Instance.SkipVoteButton.GetComponent<SpriteRenderer>().material;
 
+                renderer.color = Helper.ColorEditHSV(Color.white, a: 0.6f);
                 var box = gameObject.AddComponent<BoxCollider2D>();
                 box.size = renderer.bounds.size;
                 passiveButton = gameObject.AddComponent<PassiveButton>();
@@ -316,11 +470,13 @@ namespace TheSpaceRoles
                 passiveButton.OnMouseOver = new();
                 passiveButton._CachedZ_k__BackingField = 0.1f;
                 passiveButton.CachedZ = 0.1f;
-                passiveButton.Colliders = new[] { gameObject.GetComponent<BoxCollider2D>() };
+                passiveButton.Colliders = new[] { box };
                 passiveButton.OnClick.AddListener((System.Action)(() =>
                 {
-                    FastDestroyableSingleton<ChatController>.Instance.AddChat(PlayerControl.LocalPlayer, $"{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName}を狙撃対象にしたよ");
+                    Logger.Info( $"{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName} is targeting");
+                    targetplayer = DataBase.AllPlayerControls().First(x=>x.PlayerId==playerVoteArea.TargetPlayerId);
                     P(meeting);
+
                 }));
                 passiveButton.OnMouseOver.AddListener((System.Action)(() =>
                 {

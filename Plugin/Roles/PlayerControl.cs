@@ -1,5 +1,4 @@
-﻿using AmongUs.GameOptions;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace TheSpaceRoles
         public static TextMeshPro RoleText;
         public static void Postfix(PlayerControl __instance)
         {
-            if (AmongUsClient.Instance.ClientId!= __instance.Data.ClientId) return;
+            if (AmongUsClient.Instance.ClientId != __instance.Data.ClientId) return;
             //if (AmongUsClient.Instance.AmHost) DataBase.AllPlayerControls().Do(x => x.RpcSetRole(RoleTypes.Crewmate));
 
             //DataBase.AllPlayerControls().First(x => x.PlayerId == i).cosmetics.nameText.text = t + $"\n <size=80%>{string.Join("×", rolemaster.Select(x => x.ColoredRoleName()))}";
