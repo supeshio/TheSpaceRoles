@@ -1,8 +1,12 @@
-# The Space Rolesへようこそ!
+# TheSpaceRolesへようこそ!
 
 ![TSRlogo](/Resources/TSRlogo.png)
-このmodはAmong Us又はInnersloth LLCとは無関係です。含まれるコンテンツはInnersloth LLCによって承認されてはいません。  
-このmodに含まれる一部の素材等はInnersloth LLCの所有物です。 © Innersloth LLC.  
+This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+
+### 日本語訳:このmodはAmong Us又はInnersloth LLCとは無関係です。含まれるコンテンツはInnersloth LLCによって承認されてはいません。  
+### このmodに含まれる一部の素材等はInnersloth LLCの所有物です。 © Innersloth LLC.  
+## Discord
+[TSR公式Discordサーバー](https://discord.gg/PUF4bJDmwx)<br>
 ## ほかの言語(README In Other Language)
 →[日本語](https://github.com/supeshio/TheSpaceRoles/blob/main/README.md)<br>
  [English](https://github.com/supeshio/TheSpaceRoles/blob/main/README-EN.md)<br>
