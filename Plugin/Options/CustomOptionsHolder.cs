@@ -9,6 +9,19 @@ namespace TheSpaceRoles
 {
     public static class CustomOptionsHolder
     {
+        public static Func<string>[] GetCounts(int sec = 15, float delta_sec = 1, bool include_0 = true)
+        {
+
+            List<Func<string>> count = [];
+            ;
+            if (include_0) count.Add(Count(0));
+
+            for (float i = delta_sec; i <= sec; i += delta_sec)
+            {
+                count.Add(Count(i));
+            }
+            return [.. count];
+        }
         public static Func<string>[] GetSecondsIncludeUnlimited(float sec = 60f, float delta_sec = 2.5f, bool include_0 = true)
         {
 
@@ -162,19 +175,21 @@ namespace TheSpaceRoles
                 }
                 Logger.Info(customrole.Role.ToString());
                 roleFamilarOptions.Add(customrole.Role, []);
+                CustomOption h;
                 switch (customrole.team)
                 {
                     case Teams.Crewmate:
-                        roleFamilarOptions[customrole.Role].Add(HeaderCreate(OptionType.Crewmate, $"role_{customrole.Role}_header"));
+                        h = HeaderCreate(OptionType.Crewmate, $"role_{customrole.Role}_header");
                         break;
                     case Teams.Impostor:
                     case Teams.Madmate:
-                        roleFamilarOptions[customrole.Role].Add(HeaderCreate(OptionType.Impostor, $"role_{customrole.Role}_header"));
+                        h = HeaderCreate(OptionType.Impostor, $"role_{customrole.Role}_header");
                         break;
                     default:
-                        roleFamilarOptions[customrole.Role].Add(HeaderCreate(OptionType.Neutral, $"role_{customrole.Role}_header"));
+                        h = HeaderCreate(OptionType.Neutral, $"role_{customrole.Role}_header");
                         break;
                 }
+                roleFamilarOptions[customrole.Role].Add(h);
                 customrole.OptionCreate();
                 foreach (var option in customrole.Options)
                 {

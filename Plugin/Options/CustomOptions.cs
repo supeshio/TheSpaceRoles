@@ -253,6 +253,11 @@ namespace TheSpaceRoles
                 var ids = nameId.Split('_');
                 return /*"<b>"*/  RoleData.GetCustomTeams.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;
             }
+            if (nameId.StartsWith("header.role_"))
+            {
+                var ids = nameId.Split('_');
+                    return /*"<b>"*/  RoleData.GetCustomRoles.First(x => x.Role.ToString().ToLower() == ids[1].ToLower()).ColoredRoleName;
+            }
             if (nameId.StartsWith("team_"))
             {
                 var ids = nameId.Split('_');
@@ -469,7 +474,7 @@ namespace TheSpaceRoles
                 return KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
             }
         }
-        public float GetSeconds(float sec = 60f, float delta_sec = 2.5f, bool include_0 = true)
+        public float GetFloats(float sec = 60f, float delta_sec = 2.5f, bool include_0 = true)
         {
 
             List<float> second = [];
@@ -477,6 +482,19 @@ namespace TheSpaceRoles
             if (include_0) second.Add(0);
 
             for (float i = delta_sec; i <= sec; i += delta_sec)
+            {
+                second.Add(i);
+            }
+            return second[selection()];
+        }
+        public int GetInts(int sec = 15, int delta_sec = 1, bool include_0 = true)
+        {
+
+            List<int> second = [];
+            ;
+            if (include_0) second.Add(0);
+
+            for (int i = delta_sec; i <= sec; i += delta_sec)
             {
                 second.Add(i);
             }
@@ -500,6 +518,7 @@ namespace TheSpaceRoles
         public static Func<string> Right() => GetOptionSelection("right");
         public static Func<string> Left() => GetOptionSelection("left");
         public static Func<string> Sec(float x) => GetOptionSelection("second", [x.ToString()]);
+        public static Func<string> Count(float x) => GetOptionSelection("count", [x.ToString()]);
         /// <summary>
         /// 1 true ,0 false
         /// </summary>
@@ -572,6 +591,7 @@ namespace TheSpaceRoles
         }
         public static void RecieveOption(MessageReader reader)
         {
+            Logger.Info("reader was recieved.","RecieveOption");
             uint count = reader.ReadUInt32();
             for (int i = 0; i < count; i++)
             {

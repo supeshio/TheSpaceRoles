@@ -8,6 +8,7 @@ option.selection.second,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{0}s,{
 option.selection.right,Right,,,,,,,,,,,右,,,,,
 option.selection.left,Left,,,,,,,,,,,左,,,,,
 option.selection.unlimited,Unlimited,,,,,,,,,,,無制限,,,,,
+option.selection.count,{0} time(s),,,,,,,,,,,{0}回,,,,,
 option.selection.killdistance.veryshort,Very Short,,,,,,,,,,,ベリーショート,,,,,
 option.selection.killdistance.short,Short,,,,,,,,,,,ショート,,,,,
 option.selection.killdistance.medium,Middle,,,,,,,,,,,ミドル,,,,,
@@ -69,7 +70,11 @@ option.moving_platform_position,Moving PlatForm Position,,,,,,,,,,,昇降機の�
 option.role.vampire.killdelaytime,,,,,,,,,,,,噛んでからキルまでの時間,,,,,
 option.role.vampire.killdistance,,,,,,,,,,,,キル可能距離,,,,,
 option.role.vampire.killcooldown,,,,,,,,,,,,キルクールダウン,,,,,
+option.role.vampire.usegarlic,,,,,,,,,,,,ニンニクを使うかどうか,,,,,
 option.role.vampire.garlicareasize,,,,,,,,,,,,ニンニクの効果範囲,,,,,
+option.role.niceguesser.guesscount,,,,,,,,,,,,推測可能回数,,,,,
+option.role.niceguesser.guesscountofmeeting,,,,,,,,,,,,会議ごとの推測可能回数,,,,,
+option.role.niceguesser.canguesscrewmate,,,,,,,,,,,,{role.crewmate.coloredname}も撃てるか,,,,,
 ,,,,,,,,,,,,,,,,,
 #PlayerColor,,,,,,,,,,,,,,,,,
 playercolor.tarmarind,Tarmarind,,,,,,,,,,,タマリンド,,,,,
@@ -191,7 +196,7 @@ role.niceguesser.name,Guesser,,,,,,,,,,,ナイスゲッサー,,,,,推測者
 role.niceguesser.intro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
 role.niceguesser.sintro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
 role.niceguesser.description,,,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.impostor.coloredname}を撃ち抜こう。,,,,,
-#evilguesser,,,,,,,,,,,,,,,,,
+#evilguesser,,,,,,,,,,,,,,,,
 role.evilguesser.name,Evil Guesser,,,,,,,,,,,イビルゲッサー,,,,,
 role.evilguesser.intro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
 role.evilguesser.sintro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
@@ -221,6 +226,7 @@ role.vampire.name,Vampire,,,,,,,,,,,ヴァンパイア,,,,,吸血鬼
 role.vampire.intro,,,,,,,,,,,,あたしヴァンパイア,,,,,あたしヴァンパイア
 role.vampire.sintro,,,,,,,,,,,,あたしヴァンパイア,,,,,あたしヴァンパイア
 role.vampire.description,,,,,,,,,,,,ヴァンパイアは遅延キルをすることが出来る。\nプレイヤーを噛むと噛まれたプレイヤーは設定秒数後に死亡する。\nしかし、全てのプレイヤーが設置することの出来るニンニクの近くでは噛む事ができずに通常のキルとなってしまう。\n遅延キルを使って情報を混乱させろ。,,,,,
+role.vampire.option.killdelaytime,,,,,,,,,,,,噛んでからキルまでの時間,,,,,あたしヴァンパイア
 ,,,,,,,,,,,,,,,,,,
 #serialkiller,,,,,,,,,,,,,,,,,
 role.serialkiller.name,,,,,,,,,,,,シリアルキラー,,,,,

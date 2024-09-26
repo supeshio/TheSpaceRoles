@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using static TheSpaceRoles.CustomOption;
+using static TheSpaceRoles.CustomOptionsHolder;
+using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
@@ -17,13 +20,30 @@ namespace TheSpaceRoles
             Role = Roles.NiceGuesser;
             Color = Helper.ColorFromColorcode("#FFCC00");
         }
+        public static CustomOption GuessCount;
+        public static CustomOption GuessCountOfMeeting;
+        public static CustomOption CanGuessCrewmate;
+        public override void OptionCreate()
+        {
+            if (GuessCount != null) return;
+
+            GuessCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscount", GetCounts(include_0:false), 2);
+            GuessCountOfMeeting = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscountofmeeting", GetCounts(include_0: false), 14);
+            CanGuessCrewmate = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.canguesscrewmate", true);
+
+            Options = [GuessCount,GuessCountOfMeeting,CanGuessCrewmate];
+        }
+        public static int remainBullet;
+        public static int remainBulletOfMeeting;
         public override void HudManagerStart(HudManager hudManager)
         {
+            remainBullet = GuessCountOfMeeting.GetInts(include_0: false);
             instance = this;
             targets = [];
         }
         public override void MeetingStart(MeetingHud meeting)
         {
+            remainBulletOfMeeting = GuessCount.GetInts(include_0:false);
             TargetReset(meeting);
         }
         public void TargetReset(MeetingHud meeting,int[] untargetingplayerids = null)
@@ -68,9 +88,8 @@ namespace TheSpaceRoles
         public static SpriteRenderer impostorRend;
         public static SpriteRenderer neutralRend;
         public static int selected = 0;
-        public static void P(MeetingHud meeting)
+        public static void ChoiceRole(MeetingHud meeting)
         {
-
             crewmateRend = null;
             impostorRend = null;
             neutralRend = null;
@@ -271,6 +290,10 @@ namespace TheSpaceRoles
 
                 foreach (var role in RoleData.GetCustomRoles.ToArray().Select(x => x.Role))
                 {
+                    if (CanGuessCrewmate.GetBool()&&role==Roles.Crewmate)
+                    {
+                        continue;
+                    }
                     SpriteRenderer rend;
 
                     if (RoleData.GetCustomRoleFromRole(role).team == Teams.Crewmate)
@@ -475,7 +498,7 @@ namespace TheSpaceRoles
                 {
                     Logger.Info( $"{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName} is targeting");
                     targetplayer = DataBase.AllPlayerControls().First(x=>x.PlayerId==playerVoteArea.TargetPlayerId);
-                    P(meeting);
+                    ChoiceRole(meeting);
 
                 }));
                 passiveButton.OnMouseOver.AddListener((System.Action)(() =>
