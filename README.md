@@ -3,7 +3,7 @@
 ![TSRlogo](/Resources/TSRlogo.png)
 This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
 
-### 日本語訳:このmodはAmong Us又はInnersloth LLCとは無関係です。含まれるコンテンツはInnersloth LLCによって承認されてはいません。  
+### 日本語訳:このmodはAmong Us及びInnersloth LLCとは無関係です。含まれるコンテンツはInnersloth LLCによって承認されていません。  
 ### このmodに含まれる一部の素材等はInnersloth LLCの所有物です。 © Innersloth LLC.  
 ## Discord
 [TSR公式Discordサーバー](https://discord.gg/PUF4bJDmwx)<br>
