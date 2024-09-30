@@ -18,7 +18,7 @@ namespace TheSpaceRoles
             Color = Palette.ImpostorRed;
             HasKillButton = false;
         }
-        public static CustomOption KillDelayTime = null;
+        public static CustomOption KillDelayTime;
         public static CustomOption KillCoolDown;
         public static CustomOption KillDistance;
         public static CustomOption UseGarlic;
@@ -44,7 +44,7 @@ namespace TheSpaceRoles
                 __instance, "VampireKillButton",
                 ButtonPos.Kill,
                 KeyCode.Q,
-                KillCoolDown.GetSeconds(),
+                KillCoolDown.GetFloats(),
                 () => KillButtons.KillButtonSetTarget(KillDistance.GetKillDistance(), Color, [Teams.Impostor]),
                 __instance.KillButton.graphic.sprite,
                 () =>

@@ -37,13 +37,14 @@ namespace TheSpaceRoles
                     GameObject gameObject = new("roletext");
                     TextMeshPro RoleText = gameObject.AddComponent<TextMeshPro>();
                     RoleText.transform.SetParent(player.NameText.transform.parent);
-                    RoleText.transform.position = vec + new Vector3(0.305f, -0.18f, -1);
+                    RoleText.transform.position = vec + new Vector3(0.305f, 0.2f, -1);
                     RoleText.alignment = TextAlignmentOptions.Center;
-                    RoleText.tag = player.NameText.tag; RoleText.fontSizeMin = 0.1f;
+                    RoleText.tag = player.NameText.tag;
+                    RoleText.fontSizeMin = 0.1f;
                     RoleText.fontSize = RoleText.fontSizeMax = 1.6f;
                     gameObject.layer = Data.UILayer;
                     RoleText.enableWordWrapping = false;
-                    RoleText.outlineWidth = 0.8f;
+                    RoleText.outlineWidth = 2f;
                     RoleText.autoSizeTextContainer = false;
                     RoleText.enableAutoSizing = true;
                     RoleText.rectTransform.pivot = new Vector2(0.5f, 0.5f);
@@ -51,7 +52,7 @@ namespace TheSpaceRoles
                     RoleText.sortingOrder = player.NameText.sortingOrder;
                     RoleText.sortingLayerID = player.NameText.sortingLayerID;
                     RoleText.text = $"{string.Join("</color>×", DataBase.AllPlayerRoles[player.TargetPlayerId].Select(x => x.ColoredRoleName)/*+"</color>"*/)}";
-                    RoleText.m_sharedMaterial = Data.textMaterial;
+                    RoleText.m_sharedMaterial = player.NameText.fontMaterial;
                     RoleText.fontStyle = FontStyles.Bold;
                     Logger.Info($"{string.Join("</color>×", DataBase.AllPlayerRoles[player.TargetPlayerId].Select(x => x.ColoredRoleName)/*+"</color>"*/)}");
                     gameObject.SetActive(true);
