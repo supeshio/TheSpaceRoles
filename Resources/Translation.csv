@@ -193,13 +193,13 @@ role.impostor.description,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
 #niceguesser,,,,,,,,,,,,,,,,,
 role.niceguesser.name,Guesser,,,,,,,,,,,ナイスゲッサー,,,,,推測者
-role.niceguesser.intro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
-role.niceguesser.sintro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
+role.niceguesser.intro,Guess and Shoot,,,,,,,,,,,推測し、撃ち抜け,,,,,
+role.niceguesser.sintro,Guess and Shoot,,,,,,,,,,,推測し、撃ち抜け,,,,,
 role.niceguesser.description,During a Meetings, you can guess someone's role.\n If it is really that one's roles, the opponent will be struck and die.,,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.impostor.coloredname}を撃ち抜こう。,,,,,
 #evilguesser,,,,,,,,,,,,,,,,
 role.evilguesser.name,Evil Guesser,,,,,,,,,,,イビルゲッサー,,,,,
-role.evilguesser.intro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
-role.evilguesser.sintro,Guesser the Role,,,,,,,,,,,推測し、撃ち抜け,,,,,
+role.evilguesser.intro,Guess and Shoot,,,,,,,,,,,推測し、撃ち抜け,,,,,
+role.evilguesser.sintro,Guess and Shoot,,,,,,,,,,,推測し、撃ち抜け,,,,,
 role.evilguesser.description,During a Meetings, you can guess someone's role.\n If it is really that one's roles, the opponent will be struck and die,,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.crewmate.coloredname}や{team.other.colorednameを撃ち抜こう。,,,,,
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
@@ -213,13 +213,13 @@ role.sheriff.description,{role.sheriff.coloredname} has a kill button and can ki
 ,,,,,,,,,,,,,,,,,
 #nicemini,,,,,,,,,,,,,,,,,
 role.nicemini.name,Nice Mini,,,,,,,,,,,ナイスミニ,,,,,小人
-role.nicemini.intro,Let's fight while protected,,,,,,,,,,,守られながらインポスターを追放せよ,,,,,守られながらインポスターを追放せよ
-role.nicemini.sintro,Let's fight while protected,,,,,,,,,,,守られながらインポスターを追放せよ,,,,,守られながらインポスターを追放せよ
+role.nicemini.intro,Fight while protected,,,,,,,,,,,守られながらインポスターを追放せよ,,,,,守られながらインポスターを追放せよ
+role.nicemini.sintro,Fight while protected,,,,,,,,,,,守られながらインポスターを追放せよ,,,,,守られながらインポスターを追放せよ
 role.nicemini.description,,,,,,,,,,,,,,,,,,
 #evilmini,,,,,,,,,,,,,,,,,
 role.evilmini.name,EvilMini,,,,,,,,,,,イビルミニ,,,,,小狼
-role.evilmini.intro,Let's fight while protected,,,,,,,,,,,守られながら村を壊滅させろ,,,,,守られながら村を壊滅させろ
-role.evilmini.sintro,Let's fight while protected,,,,,,,,,,,守られながら村を壊滅させろ,,,,,守られながら村を壊滅させろ
+role.evilmini.intro,Fight while protected,,,,,,,,,,,守られながら村を壊滅させろ,,,,,守られながら村を壊滅させろ
+role.evilmini.sintro,Fight while protected,,,,,,,,,,,守られながら村を壊滅させろ,,,,,守られながら村を壊滅させろ
 role.evilini.description,,,,,,,,,,,,,,,,,,
 #vampire,,,,,,,,,,,,,,,,,
 role.vampire.name,Vampire,,,,,,,,,,,ヴァンパイア,,,,,吸血鬼
@@ -240,13 +240,13 @@ role.serialkiller.button,SerialkillerButton,,,,,,,,,,,,,,,,
 role.madmate.name,Madmate,,,,,,,,,,,マッドメイト,,,,,
 role.madmate.intro,Fight your husband.,,,,,,,,,,,ご主人と戦おう,,,,,
 role.madmate.sintro,Fight your husband.,,,,,,,,,,,ご主人と戦おう,,,,,
-role.madmate.description,Madmate is a crewmate but is tasked with supporting the Imposter. \nYou can vent, but not move, and you cannot repair the Lights Sabotage and the Communications Sabotage. \nLead the Imposter teams to victory without the Crewmates discovering it..,,,,,,,,,,,マッドメイトはクルーメイトだが、インポスターをサポートすることが使命。\nまた、ベントに入れるが移動はできず、停電と通信サボタージュが修理できない。\nクルーにバレないようにインポスター陣営を勝利に導け。 ,,,,,
+role.madmate.description,Madmate is a Crewmates but is tasked with supporting the Imposters. \nYou can Vent, but not move, and you cannot repair the Lights Sabotage and the Communications Sabotage. \nLead the Imposter teams to victory without the Crewmates discovering it..,,,,,,,,,,,マッドメイトはクルーメイトだが、インポスターをサポートすることが使命。\nまた、ベントに入れるが移動はできず、停電と通信サボタージュが修理できない。\nクルーにバレないようにインポスター陣営を勝利に導け。 ,,,,,
 ,,,,,,,,,,,,,,,,,,
 #jackal,,,,,,,,,,,,,,,,,
 role.jackal.name,Jackal,,,,,,,,,,,ジャッカル,,,,,
 role.jackal.intro,,,,,,,,,,,,*,,,,,
 role.jackal.sintro,,,,,,,,,,,,*,,,,,
-role.jackal.description,Jackal is a Neutral, neither Crewmates nor Imposters. Like the Imposters, it can Kill and Vent, but cannot cause Sabotage. It wins by killing non-Jackal teams and by having an equal number of Crewmates and Jackal teams. A Sidekick may be nominated only once during the match, and the Sidekick is promoted to Jackal when the Jackal is killed. Also, if the Jackal remains on the board where the ImposterS could originally win, the match continues. Appoint the Sidekick well and destroy the ship.,,,,,,,,,,,ジャッカルはクルーでもインポスターでもないニュートラル。\nインポスターと同様キルやベントができるが、サボタージュは起こせない。\nジャッカル陣営以外を殺害し、クルーとジャッカル陣営が同数になることによって勝利します。\n試合中に1度だけサイドキックを指名することができ、ジャッカルが死亡した際にサイドキックはジャッカルへと昇格します。\nまた、本来インポスターが勝利できる盤面でもジャッカルが残っている際は試合が続行します。\nサイドキックを上手く任命して、船を壊滅させろ。,,,,,
+role.jackal.description,Jackal is a Neutrals, neither Crewmates nor Imposters. Like the Imposters, it can Kill and Vent, but cannot cause Sabotage. It wins by killing non-Jackal teams and by having an equal number of Crewmates and Jackal teams. A Sidekick may be nominated only once during the match, and the Sidekick is promoted to Jackal when the Jackal is killed. Also, if the Jackal remains on the board where the ImposterS could originally win, the match continues. Appoint the Sidekick well and destroy the ship.,,,,,,,,,,,ジャッカルはクルーでもインポスターでもないニュートラル。\nインポスターと同様キルやベントができるが、サボタージュは起こせない。\nジャッカル陣営以外を殺害し、クルーとジャッカル陣営が同数になることによって勝利します。\n試合中に1度だけサイドキックを指名することができ、ジャッカルが死亡した際にサイドキックはジャッカルへと昇格します。\nまた、本来インポスターが勝利できる盤面でもジャッカルが残っている際は試合が続行します。\nサイドキックを上手く任命して、船を壊滅させろ。,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
