@@ -170,7 +170,7 @@ namespace TheSpaceRoles
             {
                 if (customrole == null)
                 {
-                    Logger.Info("what?");
+                    //Logger.Info("what?");
                     continue;
                 }
                 Logger.Info(customrole.Role.ToString());

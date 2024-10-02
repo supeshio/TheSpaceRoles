@@ -151,7 +151,7 @@ namespace TheSpaceRoles
 
                 CustomOption.optionTypeCounter.Add(item, 1.5f);
             }
-            Logger.Info("opt");
+            //Logger.Info("opt");
             foreach (var option in CustomOption.options)
             {
                 option.OptionCloneSet();
@@ -256,7 +256,7 @@ namespace TheSpaceRoles
             if (nameId.StartsWith("header.role_"))
             {
                 var ids = nameId.Split('_');
-                    return /*"<b>"*/  RoleData.GetCustomRoles.First(x => x.Role.ToString().ToLower() == ids[1].ToLower()).ColoredRoleName;
+                return /*"<b>"*/  RoleData.GetCustomRoles.First(x => x.Role.ToString().ToLower() == ids[1].ToLower()).ColoredRoleName;
             }
             if (nameId.StartsWith("team_"))
             {
@@ -591,7 +591,7 @@ namespace TheSpaceRoles
         }
         public static void RecieveOption(MessageReader reader)
         {
-            Logger.Info("reader was recieved.","RecieveOption");
+            //Logger.Info("reader was recieved.","RecieveOption");
             uint count = reader.ReadUInt32();
             for (int i = 0; i < count; i++)
             {
