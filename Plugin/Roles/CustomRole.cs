@@ -43,7 +43,7 @@ namespace TheSpaceRoles
             HasTask = HasTask == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).HasTask : HasTask;
 
         }
-        public void ResetStart()
+        public void ButtonReset()
         {
             ActionBool(FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton, (bool)CanUseVent);
             ActionBool(FastDestroyableSingleton<HudManager>.Instance.KillButton, (bool)HasKillButton);
@@ -164,13 +164,36 @@ namespace TheSpaceRoles
         {
             static void Postfix(ActionButton __instance)
             {
-                if (AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started)
+                //if (AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started)
+                //{
+
+                //    if (DataBase.AllPlayerRoles != null && DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
+                //    {
+                //        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].ButtonReset();
+                //    }
+                //}
+                //else
+                //{
+                //}
+                if (PlayerControl.LocalPlayer != null)
                 {
 
                     if (DataBase.AllPlayerRoles != null && DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
                     {
-                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.ResetStart());
+                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].ButtonReset();
                     }
+                }
+                else
+                {
+
+                    ActionButton button = DestroyableSingleton<KillButton>.Instance;
+                    button.canInteract = false;
+                    button.enabled = false;
+                    button.Hide();
+                    button = DestroyableSingleton<VentButton>.Instance;
+                    button.canInteract = false;
+                    button.enabled = false;
+                    button.Hide();
                 }
 
             }
@@ -185,7 +208,7 @@ namespace TheSpaceRoles
                 DataBase.AllPlayerRoles[__instance.PlayerId].Do(x => x.Exiled = true);
             }
         }
-
+        
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Die))]
         private static class PlayerControlDiePatch
         {
@@ -222,7 +245,7 @@ namespace TheSpaceRoles
                 //Logger.Info(string.Join(",", k));
 
                 DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(__instance));
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.ResetStart());
+                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.ButtonReset());
                 DataBase.ButtonsPositionSetter();
             }
         }

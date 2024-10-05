@@ -152,8 +152,7 @@ namespace TheSpaceRoles
             AllPlayerTeams.Clear();
             AllPlayerRoles.Clear();
             AllPlayerDeathReasons.Clear();
-            buttons.ToArray().Do(x => { try { GameObject.Destroy(x.actionButton); } catch { } });
-            buttons.Clear();
+            ResetButtons();
 
             ButtonsPositionSetter();
             HudManagerGame.IsGameStarting = false;

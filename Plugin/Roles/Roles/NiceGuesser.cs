@@ -98,14 +98,14 @@ namespace TheSpaceRoles
             Transform parent = meeting.meetingContents.transform.FindChild("PhoneUI");
 
             var crewteam = new GameObject("CrewTeamButtons");
-            crewteam.transform.localPosition = Vector3.zero;
             crewteam.transform.SetParent(parent);
+            crewteam.transform.localPosition = Vector3.zero;
             var impteam = new GameObject("ImpostorTeamButtons");
-            impteam.transform.localPosition = Vector3.zero;
             impteam.transform.SetParent(parent);
+            impteam.transform.localPosition = Vector3.zero;
             var neuteam = new GameObject("NeutralTeamButtons");
-            neuteam.transform.localPosition = Vector3.zero;
             neuteam.transform.SetParent(parent);
+            neuteam.transform.localPosition = Vector3.zero;
 
             // PhoneUI\
             //BackGround 0 0 7
@@ -141,8 +141,50 @@ namespace TheSpaceRoles
                         break;
                 }
             }
+            //back button
+            SpriteRenderer
+            BackRend = new GameObject("BackButton").AddComponent<SpriteRenderer>();
+            BackRend.transform.SetParent(parent);
+            BackRend.sprite = Sprites.GetSpriteFromResources("ui.double_left.png",50f);
+            BackRend.transform.localPosition = new Vector3(-4f, 0f, -10);
+            BackRend.transform.localScale = Vector3.one;
+            BackRend.enabled = true;
+            BackRend.gameObject.layer = Data.UILayer;
+            BackRend.gameObject.SetActive(true);
+            PassiveButton BackButton = BackRend.gameObject.AddComponent<PassiveButton>();
+            var box2d = BackButton.gameObject.AddComponent<BoxCollider2D>();
+            box2d.size = BackRend.bounds.size;
+            BackButton.Colliders = new[] { box2d };
+            BackButton.OnClick = new();
+            BackButton.OnMouseOut = new();
+            BackButton.OnMouseOver = new();
+            BackButton._CachedZ_k__BackingField = 0.1f;
+            BackButton.CachedZ = 0.1f;
+            BackRend.gameObject.GetComponent<PassiveButton>().ClickSound = HudManager.Instance.Chat.chatButton.ClickSound;
+            BackRend.gameObject.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
+            {
+                BackRend.color = Palette.EnabledColor;
+                reset();
+                BackRend.gameObject.SetActive(true);
+                roleaction(Roles.None);
+
+            }));
+            BackRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
+            {
+                BackRend.color = Color.white;
+                reset();
+                
+            }));
+            BackRend.gameObject.GetComponent<PassiveButton>().OnMouseOut.AddListener((System.Action)(() =>
+            {
+                BackRend.color = Color.gray;
+                reset();
+            }));
 
 
+
+
+            //crew
             crewmateRend = ButtonCreate(parent, Teams.Crewmate);
             crewmateRend.transform.localPosition = new Vector3(-2f, 2.2f, -10);
             crewmateRend.transform.localScale = new(1.2f, 1.2f, 1.2f);
@@ -261,10 +303,16 @@ namespace TheSpaceRoles
                 GameObject.Destroy(crewmateRend.gameObject);
                 GameObject.Destroy(impostorRend.gameObject);
                 GameObject.Destroy(neutralRend.gameObject);
+                GameObject.Destroy(BackRend.gameObject);
                 crewmateRend = null;
                 impostorRend = null;
                 neutralRend = null;
                 int pc = -1;
+                if (role == Roles.None)
+                {
+                    NiceGuesser.instance.TargetReset(meeting);
+                    return;
+                }
                 if (targetplayer.IsRole(role))
                 {
                     UnCheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, targetplayer, DeathReason.ShotByNiceGuesser);
@@ -296,19 +344,20 @@ namespace TheSpaceRoles
                 if (RoleData.GetCustomRoleFromRole(role).team == Teams.Crewmate)
                 {
                     rend = ButtonCreate(crewteam.transform, Teams.Crewmate);
-                    rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (c % 4), 3.5f - 0.4f * Mathf.Floor(c++ / 4f), -10);
+                    rend.transform.localPosition = new Vector3(-2.7f + 1.8f * (c % 4), 1.6f - 0.4f * Mathf.Floor(c++ / 4f), -10);
+                    //-2.7f, 1.6f, -10
                 }
                 else
                 if (RoleData.GetCustomRoleFromRole(role).team == Teams.Impostor)
                 {
                     rend = ButtonCreate(impteam.transform, Teams.Impostor);
-                    rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (i % 4), 3.5f - 0.4f * Mathf.Floor(i++ / 4f), -10);
+                    rend.transform.localPosition = new Vector3(-2.7f + 1.8f * (i % 4), 1.6f - 0.4f * Mathf.Floor(i++ / 4f), -10);
                 }
                 else
                 {
 
                     rend = ButtonCreate(neuteam.transform, Teams.None);
-                    rend.transform.localPosition = new Vector3(-3.15f + 1.8f * (n % 4), 3.5f - 0.4f * Mathf.Floor(n++ / 4f), -10);
+                    rend.transform.localPosition = new Vector3(-2.7f + 1.8f * (n % 4), 1.6f - 0.4f * Mathf.Floor(n++ / 4f), -10);
                 }
                 var p = rend.gameObject.GetComponent<PassiveButton>();
                 p.OnMouseOut = new();
@@ -343,7 +392,7 @@ namespace TheSpaceRoles
                 spriteRenderer = new GameObject(teams.ToString()).AddComponent<SpriteRenderer>();
                 spriteRenderer.transform.SetParent(parent);
                 spriteRenderer.sprite = Sprites.GetSpriteFromResources("ui.option.png", 350f);
-                spriteRenderer.transform.localPosition = new Vector3(-2f, 2.2f, -10);
+                spriteRenderer.transform.localPosition = new Vector3(-2.7f, 1.6f, -10);
                 spriteRenderer.transform.localScale = Vector3.one;
                 spriteRenderer.enabled = true;
                 spriteRenderer.gameObject.layer = Data.UILayer;
@@ -378,7 +427,7 @@ namespace TheSpaceRoles
                 spriteRenderer = new GameObject(teams.ToString()).AddComponent<SpriteRenderer>();
                 spriteRenderer.transform.SetParent(parent);
                 spriteRenderer.sprite = Sprites.GetSpriteFromResources("ui.option.png", 350f);
-                spriteRenderer.transform.localPosition = new Vector3(-2f, 2.2f, -10);
+                spriteRenderer.transform.localPosition = new Vector3(-2.7f, 1.6f, -10);
                 spriteRenderer.transform.localScale = Vector3.one;
                 spriteRenderer.enabled = true;
                 spriteRenderer.gameObject.layer = Data.UILayer;

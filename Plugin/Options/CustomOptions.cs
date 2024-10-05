@@ -151,7 +151,6 @@ namespace TheSpaceRoles
 
                 CustomOption.optionTypeCounter.Add(item, 1.5f);
             }
-            //Logger.Info("opt");
             foreach (var option in CustomOption.options)
             {
                 option.OptionCloneSet();
@@ -591,12 +590,12 @@ namespace TheSpaceRoles
         }
         public static void RecieveOption(MessageReader reader)
         {
-            //Logger.Info("reader was recieved.","RecieveOption");
             uint count = reader.ReadUInt32();
             for (int i = 0; i < count; i++)
             {
                 string str = reader.ReadString();
                 uint value = reader.ReadUInt32();
+                Logger.Message(str+":"+options.FirstOrDefault(x => x.nameId == str).selection().ToString() + "->" + value, "RecieveOption");
                 options.FirstOrDefault(x => x.nameId == str).UpdateSelection((int)value);
             }
         }
