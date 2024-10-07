@@ -145,7 +145,7 @@ namespace TheSpaceRoles
             SpriteRenderer
             BackRend = new GameObject("BackButton").AddComponent<SpriteRenderer>();
             BackRend.transform.SetParent(parent);
-            BackRend.sprite = Sprites.GetSpriteFromResources("ui.double_left.png",50f);
+            BackRend.sprite = Sprites.GetSpriteFromResources("ui.Cancel.png",560f);
             BackRend.transform.localPosition = new Vector3(-4f, 0f, -10);
             BackRend.transform.localScale = Vector3.one;
             BackRend.enabled = true;
