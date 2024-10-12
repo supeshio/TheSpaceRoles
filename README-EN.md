@@ -17,13 +17,13 @@ AmongUs Version **2024.03.05**<br>
 ## Roles
 
 ## Credit
-- [The Other Roles](https://github.com/TheOtherRolesAU/TheOtherRoles)<br>
+- [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles)<br>
   Reference source for many factors, including position.<br>
   Thank you TheOtherRoles developers!<br>
-- [Super New Roles](https://github.com/SuperNewRoles/SuperNewRoles)<br>
+- [SuperNewRoles](https://github.com/SuperNewRoles/SuperNewRoles)<br>
   Reference source for functions, etc.<br>
   Thank you Yo-King & all the other SNR developers!<br>
-- [Town Of Plus](https://github.com/tugaru1975/TownOfPlus)<br>
+- [TownOfPlus](https://github.com/tugaru1975/TownOfPlus)<br>
   Functional one reference dollar.<br>
   Thank you tugaru1975!<br>
 - [Among-Us-Sheriff-Mod](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod)<br>
