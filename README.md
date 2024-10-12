@@ -1,9 +1,13 @@
-# The Space Rolesへようこそ!
+# TheSpaceRolesへようこそ!
 
-![TSRlogo](/Resources/TSRlogo.png)
-このmodはAmong Us又はInnersloth LLCとは無関係です。含まれるコンテンツはInnersloth LLCによって承認されてはいません。  
-このmodに含まれる一部の素材等はInnersloth LLCの所有物です。 © Innersloth LLC.  
-## ほかの言語(README In Other Language)
+![TSRlogo](Resources/TSRlogo.png)
+This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+
+### 日本語訳:このmodはAmong Us及びInnersloth LLCとは無関係です。含まれるコンテンツはInnersloth LLCによって承認されていません。  
+### このmodに含まれる一部の素材等はInnersloth LLCの所有物です。 © Innersloth LLC.  
+## Discord
+[TSR公式Discordサーバー](https://discord.gg/PUF4bJDmwx)<br>
+## 他の言語(README In Other Language)
 →[日本語](https://github.com/supeshio/TheSpaceRoles/blob/main/README.md)<br>
  [English](https://github.com/supeshio/TheSpaceRoles/blob/main/README-EN.md)<br>
  
@@ -18,20 +22,20 @@
 
 
 ## クレジット
-- [The Other Roles](https://github.com/TheOtherRolesAU/TheOtherRoles)<br>
+- [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles)<br>
   役職など多くの要素の参考元<br>
-  TheOtherRolesのディベロッパーの皆様ありがとうございます!<br>
+  TheOtherRolesのデベロッパーの皆様ありがとうございます!<br>
   非常にリスペクトしています<br>
   
-- [Super New Roles](https://github.com/SuperNewRoles/SuperNewRoles)<br>
+- [SuperNewRoles](https://github.com/SuperNewRoles/SuperNewRoles)<br>
   機能などの参考元<br>
   
-  よっキングさん&その他SNRディベロッパーの皆様ありがとうございます!<br>
-- [Town Of Plus](https://github.com/tugaru1975/TownOfPlus)<br>
+  よっキングさん&その他SNRデベロッパーの皆様ありがとうございます!<br>
+- [TownOfPlus](https://github.com/tugaru1975/TownOfPlus)<br>
   機能一部参考元<br>
   
   tugaru1975さんありがとうございます!<br>
 - [Among-Us-Sheriff-Mod](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod)<br>
 
   シェリフの参考元<br>
-  Among-Us-Sheriff-Modのディベロッパーの皆様ありがとうございます!<br>
+  Among-Us-Sheriff-Modのデベロッパーの皆様ありがとうございます!<br>
