@@ -35,13 +35,13 @@ namespace TheSpaceRoles
         public static int remainBulletOfMeeting;
         public override void HudManagerStart(HudManager hudManager)
         {
-            remainBullet = GuessCountOfMeeting.GetInts(include_0: false);
+            remainBullet = (int)GuessCountOfMeeting.GetPlayerCountOption();
             instance = this;
             targets = [];
         }
         public override void MeetingStart(MeetingHud meeting)
         {
-            remainBulletOfMeeting = GuessCount.GetInts(include_0: false);
+            remainBulletOfMeeting = (int)GuessCount.GetPlayerCountOption();
             TargetReset(meeting);
         }
         public void TargetReset(MeetingHud meeting, int[] untargetingplayerids = null)
@@ -145,7 +145,7 @@ namespace TheSpaceRoles
             SpriteRenderer
             BackRend = new GameObject("BackButton").AddComponent<SpriteRenderer>();
             BackRend.transform.SetParent(parent);
-            BackRend.sprite = Sprites.GetSpriteFromResources("ui.Cancel.png",560f);
+            BackRend.sprite = Sprites.GetSpriteFromResources("ui.Cancel.png", 560f);
             BackRend.transform.localPosition = new Vector3(-4f, 0f, -10);
             BackRend.transform.localScale = Vector3.one;
             BackRend.enabled = true;
@@ -173,7 +173,7 @@ namespace TheSpaceRoles
             {
                 BackRend.color = Color.white;
                 reset();
-                
+
             }));
             BackRend.gameObject.GetComponent<PassiveButton>().OnMouseOut.AddListener((System.Action)(() =>
             {

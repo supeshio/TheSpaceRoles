@@ -107,6 +107,7 @@ namespace TheSpaceRoles
             new EvilGuesser(),
             new EvilMini(),
             new Jester(),
+            new Mayor(),
         ];
 
         public static List<CustomRole> GetCustomRoles_Normal =>

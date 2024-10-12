@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using InnerNet;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -89,7 +89,8 @@ namespace TheSpaceRoles
         public virtual void MeetingUpdate(MeetingHud meeting) { }
         public virtual void BeforeMeetingStart(MeetingHud meeting) { }
         public virtual void MeetingStart(MeetingHud meeting) { }
-        public virtual void MeetingEnd(MeetingHud meeting) { }
+        public virtual void CheckForEndVoting(MeetingHud meeting, ref Dictionary<byte, int> dictionary) { }
+        public virtual void VotingResult(MeetingHud meeting, ref Il2CppStructArray<MeetingHud.VoterState> states) { }
         public virtual void Killed() { }
         public virtual void WasKilled() { }
         public virtual void Die() { }
@@ -101,21 +102,11 @@ namespace TheSpaceRoles
         public string ColoredIntro => ColoredText(Color, Translation.GetString("intro.cosmetic", [Translation.GetString("role." + Role.ToString() + ".intro")]));
         public string RoleDescription()
         {
-            string r = "";
-            string f = "<b>" + RoleData.GetCustomTeamFromTeam(team).ColoredTeamName + "</b>";
-
-
-
-
-
-            r += $"{Translation.GetString("canvisibleteam", [f])}\n";
-            r += Description();
-
-            return r;
+            return $"{Translation.GetString("canvisibleteam", ["<b>" + RoleData.GetCustomTeamFromTeam(team).ColoredTeamName + "</b>"])}\n{Description()}";
         }
         public string Description()
         {
-            return $"{Translation.GetString($"role.{Role}.description")}\n ";
+            return $"{Translation.GetString($"role.{Role}.description")}\n";
         }
 
 
@@ -130,34 +121,6 @@ namespace TheSpaceRoles
             PlayerName = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).name.Replace("<color=.*>", string.Empty).Replace("</color>", string.Empty); ;
             CustomTeam = RoleData.GetCustomTeamFromTeam(team);
             Init();
-        }
-        [HarmonyPatch(typeof(MeetingHud))]
-        private static class MeetingHudVote
-        {
-            [HarmonyPatch(nameof(MeetingHud.CheckForEndVoting)), HarmonyPostfix]
-            private static void CheckForVoting(MeetingHud __instance)
-            {
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.MeetingEnd(__instance));
-
-            }
-            [HarmonyPatch(nameof(MeetingHud.Start)), HarmonyPostfix]
-            private static void Start(MeetingHud __instance)
-            {
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.MeetingStart(__instance));
-
-            }
-            [HarmonyPatch(nameof(MeetingHud.Update)), HarmonyPostfix]
-            private static void Update(MeetingHud __instance)
-            {
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.MeetingUpdate(__instance));
-
-            }
-            [HarmonyPatch(nameof(MeetingHud.CoStartCutscene)), HarmonyPostfix]
-            private static void CustScene(MeetingHud __instance)
-            {
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.BeforeMeetingStart(__instance));
-
-            }
         }
         [HarmonyPatch(typeof(ActionButton), nameof(ActionButton.SetEnabled))]
         private static class MeetingEndPlayerStart
@@ -208,7 +171,7 @@ namespace TheSpaceRoles
                 DataBase.AllPlayerRoles[__instance.PlayerId].Do(x => x.Exiled = true);
             }
         }
-        
+
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Die))]
         private static class PlayerControlDiePatch
         {

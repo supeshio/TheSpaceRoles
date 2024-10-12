@@ -73,6 +73,10 @@ namespace TheSpaceRoles
         {
             return DataBase.AllPlayerRoles[p.PlayerId].ToList();
         }
+        public static PlayerControl GetPlayerById(int id)
+        {
+            return PlayerControl.AllPlayerControls.ToArray().First(x => x.PlayerId == id);
+        }
         public static bool IsRole(this PlayerControl p, Roles role)
         {
             return DataBase.AllPlayerRoles[p.PlayerId].Any(x => x.Role == role);
@@ -81,6 +85,25 @@ namespace TheSpaceRoles
         {
             return DataBase.AllPlayerRoles[p.PlayerId].Any(x => x.CustomTeam.Team == team);
         }
+        public static KeyValuePair<byte, int> MaxPair(this Dictionary<byte, int> self, out bool tie)
+        {
+            tie = true;
+            KeyValuePair<byte, int> result = new KeyValuePair<byte, int>(byte.MaxValue, int.MinValue);
+            foreach (KeyValuePair<byte, int> keyValuePair in self)
+            {
+                if (keyValuePair.Value > result.Value)
+                {
+                    result = keyValuePair;
+                    tie = false;
+                }
+                else if (keyValuePair.Value == result.Value)
+                {
+                    tie = true;
+                }
+            }
+            return result;
+        }
+
         public static bool InArea(Vector3 Position, Vector3 startPos, Vector3 endPos)
         {
             if (startPos.x > endPos.x)

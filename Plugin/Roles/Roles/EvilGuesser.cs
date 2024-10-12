@@ -35,13 +35,13 @@ namespace TheSpaceRoles
         public static int remainBulletOfMeeting;
         public override void HudManagerStart(HudManager hudManager)
         {
-            remainBullet = GuessCountOfMeeting.GetInts(include_0: false);
+            remainBullet = (int)GuessCountOfMeeting.GetPlayerCountOption();
             instance = this;
             targets = [];
         }
         public override void MeetingStart(MeetingHud meeting)
         {
-            remainBulletOfMeeting = GuessCount.GetInts(include_0: false);
+            remainBulletOfMeeting = (int)GuessCount.GetPlayerCountOption();
             TargetReset(meeting);
         }
         public void TargetReset(MeetingHud meeting, int[] untargetingplayerids = null)

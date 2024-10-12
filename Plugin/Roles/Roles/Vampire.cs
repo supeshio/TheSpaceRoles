@@ -44,7 +44,7 @@ namespace TheSpaceRoles
                 __instance, "VampireKillButton",
                 ButtonPos.Kill,
                 KeyCode.Q,
-                KillCoolDown.GetFloats(),
+                KillCoolDown.GetKillCoolDownOption(),
                 () => KillButtons.KillButtonSetTarget(KillDistance.GetKillDistance(), Color, [Teams.Impostor]),
                 __instance.KillButton.graphic.sprite,
                 () =>

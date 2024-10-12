@@ -3,8 +3,6 @@ using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking.Types;
-using UnityEngine.UI;
 
 namespace TheSpaceRoles
 {
@@ -47,7 +45,7 @@ namespace TheSpaceRoles
 
             }
             var usableDistance = __instance.UsableDistance;
-            bool roleCouldUse = DataBase.AllPlayerRoles[pc.PlayerId][0].CanUseVent?? DataBase.AllPlayerRoles[pc.PlayerId][0].CustomTeam.CanUseVent;
+            bool roleCouldUse = DataBase.AllPlayerRoles[pc.PlayerId][0].CanUseVent ?? DataBase.AllPlayerRoles[pc.PlayerId][0].CustomTeam.CanUseVent;
             couldUse = (@object.inVent || roleCouldUse) && !pc.Data.IsDead && (@object.CanMove || @object.inVent);
             canUse = couldUse;
             if (canUse)

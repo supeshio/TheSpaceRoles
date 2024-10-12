@@ -473,32 +473,19 @@ namespace TheSpaceRoles
                 return KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
             }
         }
-        public float GetFloats(float sec = 60f, float delta_sec = 2.5f, bool include_0 = true)
+        public float GetFloater(float first = 0, float delta_sec = 1f, float last = 15)
         {
 
             List<float> second = [];
-            ;
-            if (include_0) second.Add(0);
 
-            for (float i = delta_sec; i <= sec; i += delta_sec)
+            for (float i = first; i <= last; i += delta_sec)
             {
                 second.Add(i);
             }
             return second[selection()];
         }
-        public int GetInts(int sec = 15, int delta_sec = 1, bool include_0 = true)
-        {
-
-            List<int> second = [];
-            ;
-            if (include_0) second.Add(0);
-
-            for (int i = delta_sec; i <= sec; i += delta_sec)
-            {
-                second.Add(i);
-            }
-            return second[selection()];
-        }
+        public float GetKillCoolDownOption() => GetFloater(2.5f, 2.5f, 60f);
+        public float GetPlayerCountOption() => GetFloater(1, 1, 20);
 
         public static CustomOption GetOption(string nameId)
         {
@@ -595,7 +582,7 @@ namespace TheSpaceRoles
             {
                 string str = reader.ReadString();
                 uint value = reader.ReadUInt32();
-                Logger.Message(str+":"+options.FirstOrDefault(x => x.nameId == str).selection().ToString() + "->" + value, "RecieveOption");
+                Logger.Message(str + ":" + options.FirstOrDefault(x => x.nameId == str).selection().ToString() + "->" + value, "RecieveOption");
                 options.FirstOrDefault(x => x.nameId == str).UpdateSelection((int)value);
             }
         }
@@ -637,4 +624,7 @@ namespace TheSpaceRoles
             //}
         }
     }
+
+
+
 }

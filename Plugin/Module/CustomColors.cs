@@ -7,28 +7,23 @@ using UnityEngine;
 namespace TheSpaceRoles
 {
     [HarmonyPatch]
-    public class CustomColor
+    public class CustomColor(string colorName, Color mainColor, Color shadowColor)
     {
-        public static readonly List<int> ORDER = new List<int>() { 7, 37, 14, 5, 33, 41, 25,
-                                                                    4, 30, 0, 35, 3, 27, 17,
-                                                                    13, 23, 8, 32, 38, 1, 21,
-                                                                    40, 31, 10, 34, 22, 28, 36,
-                                                                    2, 11, 26, 29, 20, 19, 18,
-                                                                    12, 9, 24, 16, 15, 6, 39,
-                                                                    };
+        public static readonly List<int> ORDER = [ 7, 37, 14, 5, 33, 41, 25,
+                                                    4, 30, 0, 35, 3, 27, 17,
+                                                    13, 23, 8, 32, 38, 1, 21,
+                                                    40, 31, 10, 34, 22, 28, 36,
+                                                    2, 11, 26, 29, 20, 19, 18,
+                                                    12, 9, 24, 16, 15, 6, 39,
+                                                    ];
         public static uint pickableColors = (uint)Palette.ColorNames.Length;
         public static List<CustomColor> customColors = new();
-        public static Dictionary<int, string> ColorStrings = new Dictionary<int, string>();
+        public static Dictionary<int, string> ColorStrings = new();
 
-        public string colorName;
-        public Color32 mainColor;
-        public Color32 shadowColor;
-        public CustomColor(string colorName, Color mainColor, Color shadowColor)
-        {
-            this.colorName = colorName;
-            this.mainColor = mainColor;
-            this.shadowColor = shadowColor;
-        }
+        public string colorName = colorName;
+        public Color32 mainColor = mainColor;
+        public Color32 shadowColor = shadowColor;
+
         public static void Load()
         {
             List<StringNames> longList = [.. Palette.ColorNames];
