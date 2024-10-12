@@ -7,7 +7,7 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 ### このmodに含まれる一部の素材等はInnersloth LLCの所有物です。 © Innersloth LLC.  
 ## Discord
 [TSR公式Discordサーバー](https://discord.gg/PUF4bJDmwx)<br>
-## ほかの言語(README In Other Language)
+## 他の言語(README In Other Language)
 →[日本語](https://github.com/supeshio/TheSpaceRoles/blob/main/README.md)<br>
  [English](https://github.com/supeshio/TheSpaceRoles/blob/main/README-EN.md)<br>
  
