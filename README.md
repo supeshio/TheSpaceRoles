@@ -22,20 +22,20 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 
 
 ## クレジット
-- [The Other Roles](https://github.com/TheOtherRolesAU/TheOtherRoles)<br>
+- [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles)<br>
   役職など多くの要素の参考元<br>
-  TheOtherRolesのディベロッパーの皆様ありがとうございます!<br>
+  TheOtherRolesのデベロッパーの皆様ありがとうございます!<br>
   非常にリスペクトしています<br>
   
-- [Super New Roles](https://github.com/SuperNewRoles/SuperNewRoles)<br>
+- [SuperNewRoles](https://github.com/SuperNewRoles/SuperNewRoles)<br>
   機能などの参考元<br>
   
-  よっキングさん&その他SNRディベロッパーの皆様ありがとうございます!<br>
-- [Town Of Plus](https://github.com/tugaru1975/TownOfPlus)<br>
+  よっキングさん&その他SNRデベロッパーの皆様ありがとうございます!<br>
+- [TownOfPlus](https://github.com/tugaru1975/TownOfPlus)<br>
   機能一部参考元<br>
   
   tugaru1975さんありがとうございます!<br>
 - [Among-Us-Sheriff-Mod](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod)<br>
 
   シェリフの参考元<br>
-  Among-Us-Sheriff-Modのディベロッパーの皆様ありがとうございます!<br>
+  Among-Us-Sheriff-Modのデベロッパーの皆様ありがとうございます!<br>
