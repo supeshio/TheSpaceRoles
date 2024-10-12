@@ -16,6 +16,7 @@ namespace TheSpaceRoles
         {
             if (AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
             {
+                DataBase.ResetAndPrepare();
                 Logger.Info("FreePlayStart");
                 foreach (var pc in PlayerControl.AllPlayerControls)
                 {
@@ -48,17 +49,7 @@ namespace TheSpaceRoles
 
 
             }
-            //アサインされた役職を求める。
-            foreach (var roleop in CustomOptionsHolder.RoleOptions_Count)
-            {
-                if (roleop.Value.selection() != 0)
-                {
-                    if (!DataBase.AssignedRoles.Contains(roleop.Key))
-                    {
-                        DataBase.AssignedRoles.Add(roleop.Key);
-                    }
-                }
-            }
+
 
             if (AmongUsClient.Instance.AmHost)
             {
@@ -208,118 +199,6 @@ namespace TheSpaceRoles
 
                     }
                 }
-
-
-
-
-
-
-
-                //    foreach (Teams team in Enum.GetValues(typeof(Teams)))
-                //    {
-                //        teams.Add(team, 0);
-                //    }
-
-                //    Dictionary<Teams, Dictionary<Roles, int>> roles = [];
-
-                //    foreach (Roles role in Enum.GetValues(typeof(Roles)))
-                //    {
-                //        if (GetLink.CustomRoleLink.Any(x => x.Role == role))
-                //        {
-                //            var team = GetLink.GetCustomRole(role).teamsSupported;
-                //                string s = team + "_" + role + "_" + "spawncount";
-                //                var value = TSR.Instance.Config.Bind($"Preset", s, 0).Value;
-                //                //var value = TSR.Instance.Config.Bind($"Preset{CustomOption.preset}", s, 0).Value;
-                //                if (value > 0)
-                //                {
-                //                    if (!roles.ContainsKey(team))
-                //                    {
-                //                        roles.Add(team, []);
-                //                    }
-                //                    roles[team].Add(role, value);
-                //                    //Logger.Info($"{team}_{role}:{value}");
-                //                    teams[team] += value;
-                //                }
-                //            string s_ = "-1_" + role + "_" + "spawncount";
-                //            //var value_ = TSR.Instance.Config.Bind($"Preset{CustomOption.preset}", s_, 0).Value;
-                //            var value_ = TSR.Instance.Config.Bind($"Preset", s_, 0).Value;
-                //            if (value_ > 0)
-                //            {
-
-                //                if (!roles.ContainsKey((Teams)(-1)))
-                //                {
-                //                    roles.Add((Teams)(-1), []);
-                //                }
-                //                roles[(Teams)(-1)].Add(role, value_);
-                //                Logger.Info($"Additional_{role}:{value_}");
-                //            }
-                //        }
-                //    }
-                //    //SetTeam
-                //    SendRpcSetTeam(teams);
-
-                //    //SetRoles
-                //    foreach (var team in roles)
-                //    {
-                //        if ((int)team.Key == -1)
-                //        {
-
-                //            foreach (var role in team.Value)
-                //            {
-                //                Logger.Info($"Additional_{role.Key}:{role.Value}");
-                //                for (int i = 0; i < role.Value; i++)
-                //                {
-                //                    SendRpcSetRole(role.Key, DataBase.AllPlayerTeams.Select(x => x.Key).ToArray());
-
-                //                }
-                //            }
-                //        }
-                //        else
-                //        {
-                //            foreach (var role in team.Value)
-                //            {
-                //                Logger.Info($"{team.Key}_{role.Key}:{role.Value}");
-                //                for (int i = 0; i < role.Value; i++)
-                //                {
-                //                    Logger.Info($"{team.Key}_{role.Key}({i})");
-                //                    if (players.Any(x => DataBase.AllPlayerTeams[x] == team.Key))
-                //                    {
-
-                //                        int[] teamplayers = players.Where(x => DataBase.AllPlayerTeams[x] == team.Key).ToArray();
-                //                        var v = SendRpcSetRole(role.Key, teamplayers);
-                //                        players.ToList().RemoveAll(x => x == v);
-                //                    }
-                //                }
-                //            }
-
-                //        }
-                //    }
-                //    /*
-
-                //    SendRpcSetRole(Roles.Sheriff, DataBase.AllPlayerTeams.Where(x => new Sheriff().teamsSupported.Contains(x.Value)).Select(x => x.Key).ToArray());
-                //    //SendRpcSetRole(Roles.Vampire, DataBase.AllPlayerTeams.Where(x => new Vampire().teamsSupported.Contains(x.Value)).Select(x => x.Key).ToArray());
-                //    SendRpcSetRole(Roles.SerialKiller, DataBase.AllPlayerTeams.Where(x => new SerialKiller().teamsSupported.Contains(x.Value)).Select(x => x.Key).ToArray());
-                //    */
-
-                //    RemainingPlayerSetRoles();
-                //    SendRpcSetRole(Roles.NiceMini, DataBase.AllPlayerTeams.Where(x => new NiceMini().teamsSupported==x.Value).Select(x => x.Key).ToArray());
-
-                //RemainingPlayerSetRoles();
-
-
-
-
-
-                //    foreach (var item in DataBase.AllPlayerRoles)
-                //    {
-                //        Logger.Info(item.Key + " : " + string.Join(",", item.Value.Select(x => x.Role)));
-                //    }
-
-
-                //}
-
-
-                //いったんシェリフだけ自動的に一人に割り振ろうと思う
             }
         }
         public static void RemainingPlayerSetRoles()
@@ -358,43 +237,29 @@ namespace TheSpaceRoles
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             return playerId;
         }
-        //public static void SendRpcSetTeam(ref int[] playerIds)
-        //{
-        //    //設定作ってないけどここでほんとは分岐
-        //    //ここではmainとして扱う
-        //    SetRole(playerIds, (int)role);
-
-        //    //Rpc
-        //    var writer = Rpc.SendRpc(Rpcs.SetRole);
-        //    writer.Write(playerIds);
-        //    writer.Write((int)role);
-        //    AmongUsClient.Instance.FinishRpcImmediately(writer);
-        //    return playerId;
-        //}
-
         public static void SetRole(int playerId, int roleId)
         {
 
             Logger.Info($"Player:{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).cosmetics.nameText.text}({playerId}) -> Role:{(Roles)roleId}");
 
 
-            if (DataBase.AllPlayerRoles.ContainsKey(playerId))
-            {
-                var list = DataBase.AllPlayerRoles[playerId].ToList();
-                var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
-                p.ReSet(playerId);
-                p.CustomTeam.Role = p;
-                list.Add(p);
-                DataBase.AllPlayerRoles[playerId] = [.. list];
-            }
-            else
-            {
-                var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
-                p.ReSet(playerId);
-                p.CustomTeam.Role = p;
-                DataBase.AllPlayerRoles.Add(playerId, [p]);
+            //if (DataBase.AllPlayerRoles.ContainsKey(playerId))
+            //{
+            //    var list = DataBase.AllPlayerRoles[playerId].ToList();
+            //    var pl = RoleData.GetCustomRoleFromRole((Roles)roleId);
+            //    pl.ReSet(playerId);
+            //    pl.CustomTeam.Role = pl;
+            //    list.Add(pl);
+            //    DataBase.AllPlayerRoles[playerId] = [.. list];
+            //}
+            //else
+            //{
+            var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
+            p.ReSet(playerId);
+            p.CustomTeam.Role = p;
+            DataBase.AllPlayerRoles.Add(playerId, [p]);
 
-            }
+            //}
             if (DataBase.AllPlayerTeams.ContainsKey(playerId))
             {
 

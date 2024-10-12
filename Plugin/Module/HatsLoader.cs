@@ -87,7 +87,7 @@ namespace TheSpaceRoles
                 www = new UnityWebRequest();
                 www.SetMethod(UnityWebRequest.UnityWebRequestMethod.Get);//$"https://raw.githubusercontent.com/{owner}/{repository}/main"
                 string OtherRepositoryURL = "https://raw.githubusercontent.com/" + repo.Repository;
-                Logger.Message($"Download manifest at: {OtherRepositoryURL}/{ManifestFileName}");
+                //Logger.Message($"Download manifest at: {OtherRepositoryURL}/{ManifestFileName}");
                 www.SetUrl($"{OtherRepositoryURL}/{ManifestFileName}");
                 www.downloadHandler = new DownloadHandlerBuffer();
                 var op = www.SendWebRequest();
@@ -115,11 +115,11 @@ namespace TheSpaceRoles
             UnregisteredHats.AddRange(SanitizeHats(response, RepositoryUrl));
             var toDownload = GenerateDownloadList(UnregisteredHats);
 
-            Logger.Message($"I'll download {toDownload.Count} hat files");
+            //Logger.Message($"I'll download {toDownload.Count} hat files");
 
             foreach (var fileName in toDownload)
             {
-                Logger.Message($"downloading hat: {fileName}");
+                //Logger.Message($"downloading hat: {fileName}");
                 yield return CoDownloadHatAsset(fileName.Item1, fileName.Item2);
             }
 
@@ -131,7 +131,7 @@ namespace TheSpaceRoles
             var www = new UnityWebRequest();
             www.SetMethod(UnityWebRequest.UnityWebRequestMethod.Get);
             fileName = fileName.Replace(" ", "%20");
-            TSR.Logger.LogMessage($"downloading hat: {url}/hats/{fileName}");
+            //TSR.Logger.LogMessage($"downloading hat: {url}/hats/{fileName}");
             www.SetUrl($"{url}/hats/{fileName}");
             www.downloadHandler = new DownloadHandlerBuffer();
             var operation = www.SendWebRequest();

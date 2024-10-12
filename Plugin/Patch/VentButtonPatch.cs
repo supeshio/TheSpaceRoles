@@ -3,6 +3,8 @@ using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking.Types;
+using UnityEngine.UI;
 
 namespace TheSpaceRoles
 {
@@ -23,21 +25,53 @@ namespace TheSpaceRoles
     {
         public static bool Prefix(Vent __instance, ref float __result, [HarmonyArgument(0)] NetworkedPlayerInfo pinf, [HarmonyArgument(1)] out bool canUse, [HarmonyArgument(2)] out bool couldUse)
         {
+            float num = float.MaxValue;
             PlayerControl pc = pinf.Object;
-            couldUse = DataBase.AllPlayerRoles[pc.PlayerId].Any(x => x.CanUseVent == true);
-            Vent.currentVent = VentPatch.SetTargetVent();
-            canUse = (couldUse && !pinf.IsDead && Vent.currentVent) || pc.inVent;
+            couldUse = DataBase.AllPlayerRoles[pc.PlayerId][0].CanUseVent == true;
+            PlayerControl @object = pc;
+
+            if (@object == null)
+            {
+                __result = 0f;
+                canUse = couldUse = true;
+                return true;
+            }
+            if (@object.inVent && Vent.currentVent != null && __instance != null)
+            {
+                if (Vent.currentVent.Id == __instance.Id)
+                {
+                    __result = 0f;
+                    canUse = couldUse = true;
+                    return false;
+                }
+
+            }
+            var usableDistance = __instance.UsableDistance;
+            bool roleCouldUse = DataBase.AllPlayerRoles[pc.PlayerId][0].CanUseVent?? DataBase.AllPlayerRoles[pc.PlayerId][0].CustomTeam.CanUseVent;
+            couldUse = (@object.inVent || roleCouldUse) && !pc.Data.IsDead && (@object.CanMove || @object.inVent);
+            canUse = couldUse;
+            if (canUse)
+            {
+                Vector2 truePosition = @object.GetTruePosition();
+                Vector3 position = __instance.transform.position;
+                num = Vector2.Distance(truePosition, position);
+
+                canUse &= num <= usableDistance && !PhysicsHelpers.AnythingBetween(truePosition, position, Constants.ShipOnlyMask, false);
+            }
+            __result = num;
             //Vent.currentVent = VentPatch.SetTargetVent();
             return false;
         }
     }
-    [HarmonyPatch(typeof(Vent), nameof(Vent.Use))]
+    [HarmonyPatch]
     public static class VentUsePatch
     {
-        public static bool Prefix(Vent __instance)
+        [HarmonyPatch(typeof(Vent), nameof(Vent.Use))]
+        [HarmonyPrefix]
+        public static bool VentUse(Vent __instance)
         {
             __instance.CanUse(PlayerControl.LocalPlayer.Data, out bool canUse, out bool couldUse);
-            bool canMoveInVents = PlayerControl.LocalPlayer.GetCustomRoles().All(x => x.CanUseVentMoving == true);
+            bool canMoveInVents = !PlayerControl.LocalPlayer.IsRole(Roles.MadMate);
             if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
 
             bool isEnter = !PlayerControl.LocalPlayer.inVent;
@@ -53,6 +87,7 @@ namespace TheSpaceRoles
             __instance.SetButtons(isEnter && canMoveInVents);
 
             return false;
+
         }
     }
     public static class VentPatch
@@ -61,7 +96,6 @@ namespace TheSpaceRoles
         {
             Vent result = null;
             float num = GameOptionsData.KillDistances[Mathf.Clamp(GameManager.Instance.LogicOptions.currentGameOptions.GetInt(Int32OptionNames.KillDistance), 0, 2)];
-            if (ShipStatus.Instance == null) return result;
             if (targetingPlayer == null) targetingPlayer = PlayerControl.LocalPlayer;
             if (targetingPlayer.Data.IsDead || targetingPlayer.inVent) return result;
 
@@ -72,7 +106,6 @@ namespace TheSpaceRoles
 
             Vector2 truePosition = targetingPlayer.GetTruePosition();
             var allPlayers = ShipStatus.Instance.AllVents;
-            //Logger.Info(num.ToString() + $"((({targetingPlayer.Data.IsDead || targetingPlayer.inVent} {allPlayers.Count}");
             for (int i = 0; i < allPlayers.Count; i++)
             {
                 Vent ventInfo = allPlayers[i];
@@ -83,8 +116,7 @@ namespace TheSpaceRoles
                 if (ventInfo)
                 {
                     Vector2 vector = new Vector2(ventInfo.transform.position.x, ventInfo.transform.position.y) - truePosition;
-                    float magnitude = vector.magnitude;
-                    //Logger.Info(allPlayers[i].name + $"({ventInfo.Id})" + ":" + $"{magnitude <= num}");
+                    float magnitude = Vector2.Distance(ventInfo.transform.position, truePosition);
                     if (magnitude <= num && !PhysicsHelpers.AnyNonTriggersBetween(truePosition, vector.normalized, magnitude, Constants.ShipAndObjectsMask))
                     {
                         result = ventInfo;
@@ -92,7 +124,6 @@ namespace TheSpaceRoles
                     }
                 }
             }
-            //if (result == null) Logger.Info("null");
             return result;
         }
     }

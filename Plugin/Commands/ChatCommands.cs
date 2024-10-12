@@ -257,11 +257,21 @@ namespace TheSpaceRoles
                         }
 
                         break;
-                    case "/playerlist":
+                    case "/":
+                        if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
                         addchat += "count : " + DataBase.AllPlayerRoles.Count + "\n";
                         addchat += "playerlist : \n";
                         addchat += DataBase.AllPlayerRoles.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.Select(x => x.ColoredRoleName).Joinsep(",")).Joinsep("\n");
+                        addchat += "assignedRole:" + DataBase.AssignedRoles().Select(x => x.ToString()).Joinsep("\n");
+                        break;
+                    case "/vent":
+                        if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
+                        PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(int.Parse(chats[1]));
 
+                        break;
+                    case "/vvent":
+                        if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
+                        PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(int.Parse(chats[1]));
                         break;
 
 

@@ -124,6 +124,8 @@ namespace TheSpaceRoles
         JackalKill,
         ShotByNiceGuesser,
         MisfiredByNiceGuesser,
+        ShotByEvilGuesser,
+        MisfiredByEvilGuesser,
     }
 
 }
