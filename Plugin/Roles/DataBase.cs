@@ -27,7 +27,7 @@ namespace TheSpaceRoles
             //アサインされた役職を求める。
             foreach (var roleop in CustomOptionsHolder.RoleOptions_Count)
             {
-                if (roleop.Value.selection() != 0)
+                if (roleop.Value.Selection() != 0)
                 {
                     if (!list.Contains(roleop.Key))
                     {
@@ -37,7 +37,7 @@ namespace TheSpaceRoles
             }
             foreach (var teamop in CustomOptionsHolder.TeamOptions_Count)
             {
-                if (teamop.Value.selection() != 0)
+                if (teamop.Value.Selection() != 0)
                 {
                     list.Add(RoleData.GetCustomRole_NormalFromTeam(teamop.Key).Role);
                 }

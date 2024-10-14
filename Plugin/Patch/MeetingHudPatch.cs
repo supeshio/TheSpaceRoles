@@ -1,7 +1,10 @@
 ﻿using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Rewired.Internal;
+using Steamworks;
 using System.Collections.Generic;
 using System.Linq;
+using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
@@ -13,50 +16,53 @@ namespace TheSpaceRoles
         {
             if (__instance.playerStates.All((PlayerVoteArea ps) => ps.AmDead || ps.DidVote))
             {
-                Dictionary<byte, int> dictionary = new Dictionary<byte, int>();
-                foreach (var player in __instance.playerStates)
-                {
-
-                    byte votedFor = player.VotedFor;
-                    if (votedFor != 252 && votedFor != 255 && votedFor != 254)
-                    {
-                        PlayerControl pc = Helper.GetPlayerById(((byte)player.TargetPlayerId));
-                        if (pc == null || pc.Data == null || pc.Data.IsDead || pc.Data.Disconnected) continue;
-                        int currentVotes;
-                        if (dictionary.TryGetValue(votedFor, out currentVotes))
-                            dictionary[votedFor] = currentVotes + 1;
-                        else
-                            dictionary[votedFor] = 1;
-                    }
-                    Logger.Message($"Player:{player.TargetPlayerId} : {votedFor} ", player.NameText.text);
-                }
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.CheckForEndVoting(__instance, ref dictionary));
-                bool tie;
-                KeyValuePair<byte, int> max = dictionary.MaxPair(out tie);
-                NetworkedPlayerInfo exiled = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(v => !tie && v.PlayerId == max.Key && !v.IsDead);
-
-                MeetingHud.VoterState[] array = new MeetingHud.VoterState[__instance.playerStates.Length];
+                //List<MeetingHud.VoterState> dictionary = [];
+                //DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.CheckForEndVoting(__instance, ref dictionary));
+                List<MeetingHud.VoterState> list = [];
                 for (int i = 0; i < __instance.playerStates.Length; i++)
                 {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];
-                    array[i] = new MeetingHud.VoterState
+                    byte votedFor = playerVoteArea.VotedFor;
+                    //if (votedFor != 252 && votedFor != 255 && votedFor != 254)
+                    //{
+                    //    dictionary.Add(new MeetingHud.VoterState
+                    //    {
+                    //        VoterId = playerVoteArea.TargetPlayerId,
+                    //        VotedForId = playerVoteArea.VotedFor
+                    //    });
+                    //}
+                    list.Add( new MeetingHud.VoterState
                     {
                         VoterId = playerVoteArea.TargetPlayerId,
                         VotedForId = playerVoteArea.VotedFor
-                    };
+                    });
                 }
+                List<MeetingHud.VoterState> voterStates = [];
 
-                __instance.RpcVotingComplete(array, exiled, tie);
+                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => voterStates.AddRange(x.VotingResultChange(__instance, ref list)));
 
+                list.AddRange([.. voterStates]);
+                list = [.. list.OrderBy(x => x.VoterId)];
+
+
+                byte frequentry = list.Where(x=>x.VotedForId!=252&&x.VotedForId!=254&&x.VotedForId!=255).Select(x=>x.VotedForId).ToList().MaxFrequency(out bool tie);
+                NetworkedPlayerInfo exiled = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(v => !tie && v.PlayerId == list.First(x=>x.VoterId==frequentry).VoterId && !v.IsDead);
+                Helper.AddChat($"VoterList:\n{list.Join(x=>$"Voter:{x.VoterId},VotedFor:{x.VotedForId}",",\n")}\n,Exiled:{exiled?.PlayerName},Tie:{tie}");
+                Helper.AddChat($"Dictionary:\n{list.Where(x => x.VotedForId != 252 && x.VotedForId != 254 && x.VotedForId != 255).Join(x => $"{x.VotedForId}", ",")}");
+                __instance.RpcVotingComplete(list.ToArray(), exiled, tie);
+                foreach (var item in list)
+                {
+                    Logger.Message($"Player:{item.VoterId} : {item.VotedForId} ","Voter");
+                }
             }
             return false;
 
         }
-        [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.PopulateResults))]
+        //[HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.VotingComplete))]
         class MeetingHudPopulateVotesPatch
         {
 
-            static bool Prefix(MeetingHud __instance, Il2CppStructArray<MeetingHud.VoterState> states)
+            static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)]ref Il2CppStructArray<MeetingHud.VoterState> states)
             {
                 // Swapper swap
                 //PlayerVoteArea swapped1 = null;
@@ -75,57 +81,58 @@ namespace TheSpaceRoles
 
                 //    Swapper.numSwaps--;
                 //}
-                foreach (var item in PlayerControl.AllPlayerControls)
-                {
-                    DataBase.AllPlayerRoles[item.PlayerId][0].VotingResult(__instance, ref states);
-                }
+                //foreach (var item in PlayerControl.AllPlayerControls)
+                //{
+                //    DataBase.AllPlayerRoles[item.PlayerId][0].VotingResult(__instance, ref states);
+                //}
 
 
-                __instance.TitleText.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.MeetingVotingResults, new Il2CppReferenceArray<Il2CppSystem.Object>(0));
-                int num = 0;
-                for (int i = 0; i < __instance.playerStates.Length; i++)
-                {
-                    PlayerVoteArea playerVoteArea = __instance.playerStates[i];
-                    byte targetPlayerId = playerVoteArea.TargetPlayerId;
-                    // Swapper change playerVoteArea that gets the votes
+                //__instance.TitleText.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.MeetingVotingResults, new Il2CppReferenceArray<Il2CppSystem.Object>(0));
+                //int num = 0;
+                //for (int i = 0; i < __instance.playerStates.Length; i++)
+                //{
+                //    PlayerVoteArea playerVoteArea = __instance.playerStates[i];
+                //    byte targetPlayerId = playerVoteArea.TargetPlayerId;
+                //    // Swapper change playerVoteArea that gets the votes
 
-                    playerVoteArea.ClearForResults();
-                    int num2 = 0;
+                //    playerVoteArea.ClearForResults();
+                //    int num2 = 0;
 
 
 
-                    //bool mayorFirstVoteDisplayed = false;
-                    Dictionary<int, int> votesApplied = new Dictionary<int, int>();
-                    for (int j = 0; j < states.Length; j++)
-                    {
-                        MeetingHud.VoterState voterState = states[j];
-                        PlayerControl voter = Helper.GetPlayerById(voterState.VoterId);
-                        if (voter == null) continue;
+                //    //bool mayorFirstVoteDisplayed = false;
+                //    Dictionary<int, int> votesApplied = new Dictionary<int, int>();
+                //    for (int j = 0; j < states.Length; j++)
+                //    {
+                //        MeetingHud.VoterState voterState = states[j];
+                //        PlayerControl voter = Helper.GetPlayerById(voterState.VoterId);
+                //        if (voter == null) continue;
 
-                        NetworkedPlayerInfo playerById = GameData.Instance.GetPlayerById(voterState.VoterId);
-                        if (playerById == null)
-                        {
-                            Logger.Error($"Couldn't find player info for voter: {voterState.VoterId}");
-                        }
-                        else if (i == 0 && voterState.SkippedVote && !playerById.IsDead)
-                        {
-                            __instance.BloopAVoteIcon(playerById, num, __instance.SkippedVoting.transform);
-                            num++;
-                        }
-                        else if (voterState.VotedForId == targetPlayerId && !playerById.IsDead)
-                        {
-                            __instance.BloopAVoteIcon(playerById, num2, playerVoteArea.transform);
-                            num2++;
-                        }
+                //        NetworkedPlayerInfo playerById = GameData.Instance.GetPlayerById(voterState.VoterId);
+                //        if (playerById == null)
+                //        {
+                //            Logger.Error($"Couldn't find player info for voter: {voterState.VoterId}");
+                //        }
+                //        else if (i == 0 && voterState.SkippedVote && !playerById.IsDead)
+                //        {
+                //            __instance.BloopAVoteIcon(playerById, num, __instance.SkippedVoting.transform);
+                //            num++;
+                //        }
+                //        else if (voterState.VotedForId == targetPlayerId && !playerById.IsDead)
+                //        {
+                //            __instance.BloopAVoteIcon(playerById, num2, playerVoteArea.transform);
+                //            num2++;
+                //        }
 
-                        if (!votesApplied.ContainsKey(voter.PlayerId))
-                            votesApplied[voter.PlayerId] = 0;
+                //        if (!votesApplied.ContainsKey(voter.PlayerId))
+                //            votesApplied[voter.PlayerId] = 0;
 
-                        votesApplied[voter.PlayerId]++;
+                //        votesApplied[voter.PlayerId]++;
 
-                        // Major vote, redo this iteration to place a second vote
-                    }
-                }
+                //        // Major vote, redo this iteration to place a second vote
+                //    }
+                //}
+
                 return false;
             }
         }

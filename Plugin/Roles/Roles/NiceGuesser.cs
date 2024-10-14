@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using static TheSpaceRoles.CustomOption;
 using static TheSpaceRoles.CustomOptionsHolder;
+using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
@@ -25,9 +26,9 @@ namespace TheSpaceRoles
         {
             if (GuessCount != null) return;
 
-            GuessCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscount", GetCounts(include_0: false), 2);
-            GuessCountOfMeeting = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscountofmeeting", GetCounts(include_0: false), 14);
-            CanGuessCrewmate = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.canguesscrewmate", true);
+            GuessCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscount",new CustomIntRange(1,15,1), 2);
+            GuessCountOfMeeting = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscountofmeeting", new CustomIntRange(1, 15, 1), 14);
+            CanGuessCrewmate = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.canguesscrewmate",true);
 
             Options = [GuessCount, GuessCountOfMeeting, CanGuessCrewmate];
         }
@@ -35,13 +36,13 @@ namespace TheSpaceRoles
         public static int remainBulletOfMeeting;
         public override void HudManagerStart(HudManager hudManager)
         {
-            remainBullet = (int)GuessCountOfMeeting.GetPlayerCountOption();
+            remainBullet = (int)GuessCountOfMeeting.GetIntValue();
             instance = this;
             targets = [];
         }
         public override void MeetingStart(MeetingHud meeting)
         {
-            remainBulletOfMeeting = (int)GuessCount.GetPlayerCountOption();
+            remainBulletOfMeeting = (int)GuessCount.GetIntValue();
             TargetReset(meeting);
         }
         public void TargetReset(MeetingHud meeting, int[] untargetingplayerids = null)
@@ -335,7 +336,7 @@ namespace TheSpaceRoles
             foreach (var role in DataBase.AssignedRoles())
             {
 
-                if (CanGuessCrewmate.GetBool() && role == Roles.Crewmate)
+                if (CanGuessCrewmate.GetBoolValue() && role == Roles.Crewmate)
                 {
                     continue;
                 }

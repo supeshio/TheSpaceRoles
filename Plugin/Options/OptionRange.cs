@@ -2,7 +2,10 @@
 
 namespace TheSpaceRoles
 {
-    public enum OptionSelectionAdditionalSelector
+    /// <summary>
+    /// OptionSelectionAdvancedSelector
+    /// </summary>
+    public enum OSAS
     {
         unlimted,
         right,
@@ -21,16 +24,30 @@ namespace TheSpaceRoles
         size,
         killdistance
     }
-    public static class Range
+    public static class Ranges
     {
-        public static string GetStringFromSelector(this OptionSelectionAdditionalSelector selector) =>
+        public static string GetValueFromSelector(this OSAS selector) =>
             selector switch
             {
-                OptionSelectionAdditionalSelector.killdistance_veryshort or
-                OptionSelectionAdditionalSelector.killdistance_short or
-                OptionSelectionAdditionalSelector.killdistance_medium or
-                OptionSelectionAdditionalSelector.killdistance_long or
-                OptionSelectionAdditionalSelector.killdistance_default
+                OSAS.killdistance_veryshort or
+                OSAS.killdistance_short or
+                OSAS.killdistance_medium or
+                OSAS.killdistance_long or
+                OSAS.killdistance_default
+                => selector.ToString()[13..],
+                OSAS.on=>true.ToString(),
+                OSAS.off => false.ToString(),
+                _ =>selector.ToString().ToLower(),
+            };
+
+        public static string GetStringFromSelector(this OSAS selector) =>
+            selector switch
+            {
+                OSAS.killdistance_veryshort or
+                OSAS.killdistance_short or
+                OSAS.killdistance_medium or
+                OSAS.killdistance_long or
+                OSAS.killdistance_default
                 => Translation.GetString($"option.selection.killdistance.{selector.ToString()[13..]}"),
                 _ => Translation.GetString($"option.selection.{selector.ToString().ToLower()}"),
             };
@@ -38,18 +55,24 @@ namespace TheSpaceRoles
 
         public static List<float> KillDistances = new() { 0.5f, 1f, 1.8f, 2.5f };
         public static List<string> KIllDistanceNames = ["veryshort", "short", "medium", "long"];
-        public class RangeBase
+        public class CustomRange
         {
+            public virtual string GetValue(int i)
+            {
+                var list = GetValues();
+                return list[i];
+            }
+
             public virtual string GetRange(int i)
             {
                 var list = GetSelectors();
                 return list[i];
             }
-
             public virtual string[] GetSelectors() => [];
+            public virtual string[] GetValues() => [];
         }
-
-        public class FloatRange : RangeBase
+        public static CustomRange KillDistanceRange()=>new CustomSelectionRange([OSAS.killdistance_default,OSAS.killdistance_veryshort,OSAS.killdistance_short,OSAS.killdistance_medium,OSAS.killdistance_long]);
+        public class CustomFloatRange : CustomRange
         {
             public override string[] GetSelectors()
             {
@@ -62,15 +85,28 @@ namespace TheSpaceRoles
                 {
                     list.Add(item.GetStringFromSelector());
                 }
-                return list.ToArray();
+                return [.. list];
+            }
+            public override string[] GetValues()
+            {
+                List<string> list = [];
+                for (float i = min; i <= max; i += step)
+                {
+                    list.Add(i.ToString());
+                }
+                foreach (var item in addtional)
+                {
+                    list.Add(item.GetValueFromSelector());
+                }
+                return [.. list];
             }
 
 
             float max;
             float min;
             float step;
-            List<OptionSelectionAdditionalSelector> addtional;
-            public FloatRange(float min, float max, float step, List<OptionSelectionAdditionalSelector> selectors = null)
+            List<OSAS> addtional;
+            public CustomFloatRange(float min, float max, float step, List<OSAS> selectors = null)
             {
                 this.min = min;
                 this.max = max;
@@ -88,7 +124,59 @@ namespace TheSpaceRoles
                 }
             }
         }
-        public class SelectorRange : RangeBase
+        public class CustomIntRange : CustomRange
+        {
+            public override string[] GetSelectors()
+            {
+                List<string> list = [];
+                for (float i = min; i <= max; i += step)
+                {
+                    list.Add(i.ToString());
+                }
+                foreach (var item in addtional)
+                {
+                    list.Add(item.GetStringFromSelector());
+                }
+                return list.ToArray();
+            }
+            public override string[] GetValues()
+            {
+                List<string> list = [];
+                for (float i = min; i <= max; i += step)
+                {
+                    list.Add(i.ToString());
+                }
+                foreach (var item in addtional)
+                {
+                    list.Add(item.GetValueFromSelector());
+                }
+                return list.ToArray();
+            }
+
+
+            int max;
+            int min;
+            int step;
+            List<OSAS> addtional;
+            public CustomIntRange(int min, int max, int step=1, List<OSAS> selectors = null)
+            {
+                this.min = min;
+                this.max = max;
+                this.step = step;
+                if (selectors != null)
+                {
+                    this.addtional = selectors;
+                    addtional.Sort();
+
+                }
+                else
+                {
+
+                    this.addtional = [];
+                }
+            }
+        }
+        public class CustomSelectionRange : CustomRange
         {
             public override string[] GetSelectors()
             {
@@ -99,16 +187,52 @@ namespace TheSpaceRoles
                 }
                 return [.. list];
             }
+            public override string[] GetValues()
+            {
+                List<string> list = [];
+                foreach (var item in addtional)
+                {
+                    list.Add(item.GetValueFromSelector());
+                }
+                return [.. list];
+            }
 
 
-            List<OptionSelectionAdditionalSelector> addtional;
-            public SelectorRange(List<OptionSelectionAdditionalSelector> selectors)
+            List<OSAS> addtional;
+            public CustomSelectionRange(List<OSAS> selectors)
             {
                 this.addtional = selectors;
                 addtional.Sort();
             }
         }
+        public class CustomBoolRange : CustomRange
+        {
+            public override string[] GetSelectors()
+            {
+                List<string> list = [];
+                foreach (var item in addtional)
+                {
+                    list.Add(item.GetStringFromSelector());
+                }
+                return [.. list];
+            }
+            public override string[] GetValues()
+            {
+                List<string> list = [];
+                foreach (var item in addtional)
+                {
+                    list.Add(item.GetValueFromSelector());
+                }
+                return [.. list];
+            }
 
+
+            List<OSAS> addtional = [OSAS.on, OSAS.off];
+            public CustomBoolRange()
+            {
+                addtional.Sort();
+            }
+        }
 
 
 

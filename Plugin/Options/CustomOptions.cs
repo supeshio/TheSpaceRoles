@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using static TheSpaceRoles.CustomOption;
+using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
@@ -220,9 +221,9 @@ namespace TheSpaceRoles
         }
         public Color color = Color.white;
         public string nameId;
-        public Func<string>[] selections;
+        public CustomRange Range;
         public ModOption ModOption;
-        public int selection() => entry.Value;
+        public int Selection() => entry.Value;
         public int defaultSelection;
         public ConfigEntry<int> entry;
         public Action onChange;
@@ -239,11 +240,25 @@ namespace TheSpaceRoles
             }
             return k.ToArray();
         }
+        public string ValueText()
+        {
+
+            return /*"<b>"*/  Range.GetRange(Selection());
+        }
         public string Value()
         {
 
-            return /*"<b>"*/  Translation.GetString(selections[selection()]());
+            return /*"<b>"*/  Range.GetValue(Selection());
         }
+
+        public int GetIntValue()=> int.Parse( Value());
+
+        public float GetFloatValue() => float.Parse(Value());
+        public bool GetBoolValue() => bool.Parse(Value());
+
+
+
+
         public string Title()
         {
 
@@ -272,7 +287,7 @@ namespace TheSpaceRoles
             }
             return /*"<b>"*/  Translation.GetString($"option.{nameId}");
         }
-        public CustomOption(OptionType optionType, string nameId, Func<string>[] selections, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
+        public CustomOption(OptionType optionType, string nameId, CustomRange range, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
         {
             if (options.Any(x => x.nameId == nameId))
             {
@@ -282,7 +297,7 @@ namespace TheSpaceRoles
             this.nameId = nameId;
             this.defaultSelection = defaultSelection;
             this.onChange = onChange;
-            this.selections = selections;
+            this.Range = range;
             this.optionType = optionType;
             this.Show = Show ?? (() => true);
             ModOption = new ModOption();
@@ -390,7 +405,7 @@ namespace TheSpaceRoles
                 Logger.Info(stringOption.name, nameId);
                 ModOption.StringOption = stringOption;
                 ModOption.StringOption.Values = new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppStructArray<StringNames>(100);
-                ModOption.StringOption.Value = selection();
+                ModOption.StringOption.Value = Selection();
                 //ModOption.StringOption.LabelBackground.sprite = Sprites.GetSpriteFromResources("ui.option_background.png");
                 ModOption.StringOption.LabelBackground.color = color;
                 ModOption.TitleText = ModOption.StringOption.TitleText;
@@ -446,94 +461,53 @@ namespace TheSpaceRoles
 
                 stringOption.OnValueChanged = new Action<OptionBehaviour>((o) => { });
                 stringOption.transform.localPosition = new Vector3(0.952f, optionTypeCounter[optionType], -2);
-                UpdateSelection(selection());
+                UpdateSelection(Selection());
                 GameSettingMenu.Instance.StartCoroutine(Effects.Lerp(0f, new Action<float>((p) =>
                             {
                                 ModOption.StringOption.TitleText.text = Title();
-                                ModOption.StringOption.ValueText.text = Value();
+                                ModOption.StringOption.ValueText.text = ValueText();
                             })));
-                ModOption.StringOption.Value = ModOption.StringOption.oldValue = selection();
+                ModOption.StringOption.Value = ModOption.StringOption.oldValue = Selection();
                 OptionTypeCounterCountup(optionType, -0.45f);
 
             }
 
         }
-
-
-        public static List<float> KillDistances = new() { 0.5f, 1f, 1.8f, 2.5f };
-
-        public float GetKillDistance()
-        {
-            if (selections.Length < 4)
-            {
-                return KillDistances[selection()];
-            }
-            else
-            {
-                return KillDistances[GameOptionsManager.Instance.currentNormalGameOptions.KillDistance];
-            }
-        }
-        public float GetFloater(float first = 0, float delta_sec = 1f, float last = 15)
-        {
-
-            List<float> second = [];
-
-            for (float i = first; i <= last; i += delta_sec)
-            {
-                second.Add(i);
-            }
-            return second[selection()];
-        }
-        public float GetKillCoolDownOption() => GetFloater(2.5f, 2.5f, 60f);
-        public float GetPlayerCountOption() => GetFloater(1, 1, 20);
-
         public static CustomOption GetOption(string nameId)
         {
             return options.First(x => x.nameId == nameId);
         }
 
-
-        public static Func<string> GetOptionSelection(string str, string[] strs = null)
+        public static CustomOption Create(OptionType optionType, string name, CustomRange range,float DefaultValue = 0, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return () => Translation.GetString("option.selection." + str, strs);
+            return new CustomOption(optionType, name, range, range.GetSelectors().ToList().IndexOf(DefaultValue.ToString()), Show, onChange, colorcode: colorcode);
         }
-        public bool GetBool() => selection() == 0;
-        public static Func<string> On() => GetOptionSelection("on");
-        public static Func<string> Off() => GetOptionSelection("off");
-        public static Func<string> Unlimited() => GetOptionSelection("unlimited");
-        public static Func<string> Right() => GetOptionSelection("right");
-        public static Func<string> Left() => GetOptionSelection("left");
-        public static Func<string> Sec(float x) => GetOptionSelection("second", [x.ToString()]);
-        public static Func<string> Count(float x) => GetOptionSelection("count", [x.ToString()]);
-        /// <summary>
-        /// 1 true ,0 false
-        /// </summary>
-        public static Func<int, bool> funcOn = x => x != 0;
-        public static Func<int, bool> funcOff = x => x == 0;
-
-
-        public static CustomOption Create(OptionType optionType, string name, bool DefaultValue = false, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
+        public static CustomOption Create(OptionType optionType, string name, CustomRange range,OSAS selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, [Off(), On()], DefaultValue ? 1 : 0, Show, onChange, colorcode: colorcode);
+            return new CustomOption(optionType, name, range, range.GetSelectors().ToList().IndexOf(selector.GetStringFromSelector()), Show, onChange, colorcode: colorcode);
         }
-        public static CustomOption Create(OptionType optionType, string name, Func<string>[] selections, int selection, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
+        public static CustomOption Create(OptionType optionType, string name, CustomRange range, int selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, selections, selection, Show, onChange, colorcode: colorcode);
+            return new CustomOption(optionType, name, range, selector, Show, onChange, colorcode: colorcode);
         }
 
+        public static CustomOption Create(OptionType optionType, string name, bool selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
+        {
+            return new CustomOption(optionType, name, new CustomBoolRange(), selector switch {true=>0,false=>1}, Show, onChange, colorcode: colorcode);
+        }
         public static CustomOption HeaderCreate(OptionType optionType, string nameId, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, nameId, [], 0, isHeader: true, colorcode: colorcode);
+            return new CustomOption(optionType, nameId,null, 0, isHeader: true, colorcode: colorcode);
         }
-
+        public string[] selections=> Range.GetSelectors();
         public void UpdateSelection(int selecting)
         {
             selecting = Mathf.Clamp((selecting + selections.Length) % selections.Length, 0, selections.Length - 1);
             if (!ModOption.isHeader)
             {
 
-                Logger.Info($"{nameId}:{selection()} -> {selecting}");
-                if (selecting != selection())
+                Logger.Info($"{nameId}:{Selection()} -> {selecting}");
+                if (selecting != Selection())
                 {
                     if (onChange != null) onChange.Invoke();
                     //var ob = GameObject.Instantiate(FastDestroyableSingleton<NotificationPopper>.Instance.notificationMessageOrigin, FastDestroyableSingleton<NotificationPopper>.Instance.transform).GetComponent<LobbyNotificationMessage>();
@@ -546,7 +520,7 @@ namespace TheSpaceRoles
                     ShareOption();
                     ModOption.StringOption.Value = ModOption.StringOption.oldValue = selecting;
                     entry.Value = selecting;
-                    ModOption.StringOption.ValueText.text = Value();
+                    ModOption.StringOption.ValueText.text = ValueText();
                 }
 
                 entry.Value = selecting;
@@ -571,7 +545,7 @@ namespace TheSpaceRoles
                 var rpc = Rpc.SendRpc(Rpcs.ShareOptions);
                 rpc.Write((uint)1);
                 rpc.Write(nameId);
-                rpc.Write((uint)selection());
+                rpc.Write((uint)Selection());
                 AmongUsClient.Instance.FinishRpcImmediately(rpc);
             }
         }
@@ -582,7 +556,7 @@ namespace TheSpaceRoles
             {
                 string str = reader.ReadString();
                 uint value = reader.ReadUInt32();
-                Logger.Message(str + ":" + options.FirstOrDefault(x => x.nameId == str).selection().ToString() + "->" + value, "RecieveOption");
+                Logger.Message(str + ":" + options.FirstOrDefault(x => x.nameId == str).Selection().ToString() + "->" + value, "RecieveOption");
                 options.FirstOrDefault(x => x.nameId == str).UpdateSelection((int)value);
             }
         }
@@ -594,7 +568,7 @@ namespace TheSpaceRoles
             {
                 CustomOption option = CustomOption.options.First(x => x.ModOption.StringOption == __instance);
                 if (option == null) return true;
-                option.UpdateSelection(option.selection() + 1);
+                option.UpdateSelection(option.Selection() + 1);
                 //option.ModOption.Increase();
                 return false;
             }
@@ -603,7 +577,7 @@ namespace TheSpaceRoles
             {
                 CustomOption option = CustomOption.options.First(x => x.ModOption.StringOption == __instance);
                 if (option == null) return true;
-                option.UpdateSelection(option.selection() - 1);
+                option.UpdateSelection(option.Selection() - 1);
                 //option.ModOption.Decrease();
                 return false;
             }

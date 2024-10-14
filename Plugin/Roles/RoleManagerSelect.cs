@@ -67,7 +67,7 @@ namespace TheSpaceRoles
                 foreach (var keyValuePair in CustomOptionsHolder.RoleOptions_Count)
                 {
                     var role = keyValuePair.Key;
-                    var customOption = keyValuePair.Value.selection();
+                    var customOption = keyValuePair.Value.Selection();
                     Logger.Info(role + $" is {customOption}");
 
                     for (int i = 0; i < customOption; i++)
@@ -88,18 +88,18 @@ namespace TheSpaceRoles
 
 
                 }
-                if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() > CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].selection())
+                if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() > CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection())
                 {
-                    for (int i = 0; i < DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() - CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].selection(); i++)
+                    for (int i = 0; i < DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() - CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection(); i++)
                     {
 
                         var k = DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).ToList();
                         k[RandomNext(k.Count())].RpcSetRole(AmongUs.GameOptions.RoleTypes.Crewmate);
                     }
                 }
-                else if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].selection())
+                else if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection())
                 {
-                    for (int i = 0; i < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].selection() - DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count(); i++)
+                    for (int i = 0; i < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection() - DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count(); i++)
                     {
 
                         var k = DataBase.AllPlayerControls().Where(x => x.Data.RoleType != AmongUs.GameOptions.RoleTypes.Impostor).ToList();
@@ -109,7 +109,7 @@ namespace TheSpaceRoles
 
                 List<int> p = DataBase.AllPlayerControls().Where(x => x.Data.RoleType == RoleTypes.Impostor).Select(x => (int)x.PlayerId).ToList();
                 var team = Teams.Impostor;
-                var teammembers = CustomOptionsHolder.TeamOptions_Count[team].selection();
+                var teammembers = CustomOptionsHolder.TeamOptions_Count[team].Selection();
                 var v = tr[team];
                 for (int i = 0; i < teammembers; i++)
                 {
@@ -145,7 +145,7 @@ namespace TheSpaceRoles
                     team = item.Key;
                     if (team == Teams.Crewmate) continue;
                     if (team == Teams.Impostor) continue;
-                    teammembers = CustomOptionsHolder.TeamOptions_Count[team].selection();
+                    teammembers = CustomOptionsHolder.TeamOptions_Count[team].Selection();
                     v = item.Value;
                     for (int i = 0; i < teammembers; i++)
                     {
