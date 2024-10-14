@@ -57,8 +57,8 @@ namespace TheSpaceRoles
 
             Logger.Info("mainmenu");
             var spriteredrer = new GameObject("TSRlogo").AddComponent<SpriteRenderer>();
-            spriteredrer.sprite = Sprites.GetSpriteFromResources("TSRLogo.png", 200f);
-            spriteredrer.transform.position = new Vector3(2f, 0.6f, 0);
+            spriteredrer.sprite = Sprites.GetSpriteFromResources("TSRLogo.png", 125f);
+            spriteredrer.transform.position = new Vector3(2f, 0f, 0);
             spriteredrer.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
             spriteredrer.enabled = true;
             spriteredrer.gameObject.SetActive(true);

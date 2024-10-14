@@ -85,24 +85,97 @@ namespace TheSpaceRoles
         {
             return DataBase.AllPlayerRoles[p.PlayerId].Any(x => x.CustomTeam.Team == team);
         }
-        public static KeyValuePair<byte, int> MaxPair(this Dictionary<byte, int> self, out bool tie)
+        public static byte MaxFrequency(this List<byte> self, out bool tie)
         {
-            tie = true;
-            KeyValuePair<byte, int> result = new KeyValuePair<byte, int>(byte.MaxValue, int.MinValue);
-            foreach (KeyValuePair<byte, int> keyValuePair in self)
+            if (self == null || self.Count == 0)
             {
-                if (keyValuePair.Value > result.Value)
+                throw new ArgumentException("List is null or empty");
+            }
+
+            // Dictionary to count occurrences of each byte
+            Dictionary<byte, int> frequency = new Dictionary<byte, int>();
+
+            // Count occurrences of each byte
+            foreach (var num in self)
+            {
+                if (frequency.ContainsKey(num))
                 {
-                    result = keyValuePair;
-                    tie = false;
+                    frequency[num]++;
                 }
-                else if (keyValuePair.Value == result.Value)
+                else
                 {
-                    tie = true;
+                    frequency[num] = 1;
                 }
             }
-            return result;
+
+            // Find the most frequent byte and check for ties
+            int maxFrequency = 0;
+            byte mostFrequentNumber = 0;
+            tie = false;
+
+            foreach (var pair in frequency)
+            {
+                if (pair.Value > maxFrequency)
+                {
+                    maxFrequency = pair.Value;
+                    mostFrequentNumber = pair.Key;
+                    tie = false; // Reset tie if a new max frequency is found
+                }
+                else if (pair.Value == maxFrequency)
+                {
+                    tie = true; // Set tie if another byte has the same max frequency
+                }
+            }
+
+            return mostFrequentNumber;
         }
+
+        public static int MaxFrequency(this List<int> self, out bool tie)
+        {
+            if (self == null || self.Count == 0)
+            {
+                throw new ArgumentException("List is null or empty");
+            }
+
+            // Dictionary to count occurrences of each number
+            Dictionary<int, int> frequency = new Dictionary<int, int>();
+
+            // Count occurrences of each number
+            foreach (var num in self)
+            {
+                if (frequency.ContainsKey(num))
+                {
+                    frequency[num]++;
+                }
+                else
+                {
+                    frequency[num] = 1;
+                }
+            }
+
+            // Find the most frequent number and check for ties
+            int maxFrequency = 0;
+            int mostFrequentNumber = 0;
+            tie = false;
+
+            foreach (var pair in frequency)
+            {
+                if (pair.Value > maxFrequency)
+                {
+                    maxFrequency = pair.Value;
+                    mostFrequentNumber = pair.Key;
+                    tie = false; // Reset tie if a new max frequency is found
+                }
+                else if (pair.Value == maxFrequency)
+                {
+                    tie = true; // Set tie if another number has the same max frequency
+                }
+            }
+
+            return mostFrequentNumber;
+        }
+
+
 
         public static bool InArea(Vector3 Position, Vector3 startPos, Vector3 endPos)
         {
@@ -196,7 +269,7 @@ namespace TheSpaceRoles
         {
             return r.Next(b);
         }
-        public static void AllAddChat(string Chat, ChatController __instance, string chpname = null)
+        public static void AllAddChat(string Chat, string chpname = null)
         {
             string name = (PlayerControl.LocalPlayer).name;
             Logger.Info("show chat", "", "AllAddChat");
@@ -210,14 +283,14 @@ namespace TheSpaceRoles
             }
             PlayerControl.LocalPlayer.RpcSendChat("\n<size=90%>" + Chat);
             PlayerControl.LocalPlayer.RpcSetName(name);
-            __instance.freeChatField.Clear();
+            DestroyableSingleton<ChatController>.Instance.freeChatField.Clear();
         }
 
-        public static void AddChat(string Chat, ChatController __instance)
+        public static void AddChat(string Chat)
         {
             string name = (PlayerControl.LocalPlayer).name;
             PlayerControl.LocalPlayer.SetName($"<size=180%>{TSR.cs_name_v}");
-            __instance.AddChat(PlayerControl.LocalPlayer, "\n<size=90%>" + Chat, true);
+            DestroyableSingleton<ChatController>.Instance.AddChat(PlayerControl.LocalPlayer, "\n<size=90%>" + Chat, true);
             PlayerControl.LocalPlayer.SetName(name);
         }
 

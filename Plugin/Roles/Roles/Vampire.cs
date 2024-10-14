@@ -3,6 +3,7 @@ using UnityEngine;
 using static TheSpaceRoles.CustomOption;
 using static TheSpaceRoles.CustomOptionsHolder;
 using static TheSpaceRoles.Helper;
+using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
@@ -27,12 +28,11 @@ namespace TheSpaceRoles
         {
             if (KillDelayTime != null) return;
 
-            Logger.Info(string.Join(",", GetAreasize(5, 1, false).Select(x => x()).ToList()), "GetAreaSize_Vampire");
-            KillDelayTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.vampire.killdelaytime", CustomOptionsHolder.GetSeconds(20, 1, false), 9);
-            KillDistance = Create(CustomOption.OptionType.Impostor, "role.vampire.killdistance", GetKillDistances(), 4);
-            KillCoolDown = Create(CustomOption.OptionType.Impostor, "role.vampire.killcooldown", CustomOptionsHolder.GetSeconds(), 12);
+            KillDelayTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.vampire.killdelaytime", new CustomFloatRange(1, 20, 1), 9);
+            KillDistance = Create(CustomOption.OptionType.Impostor, "role.vampire.killdistance", KillDistanceRange(), 4);
+            KillCoolDown = Create(CustomOption.OptionType.Impostor, "role.vampire.killcooldown", new CustomFloatRange(2.5f, 60, 2.5f), 12);
             UseGarlic = Create(CustomOption.OptionType.Impostor, "role.vampire.usegarlic", true);
-            GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role.vampire.garlicareasize", GetAreasize(10, 1, false), 4, Show: UseGarlic.GetBool);
+            GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role.vampire.garlicareasize", new CustomFloatRange(1,10,1), 4, Show: UseGarlic.GetBoolValue);
 
             //キル遅延時間、キルク、ニンニク内だと特殊キルができなくなりその上でさらに通常キルもできなくなるかの設定
             Options = [KillDelayTime, KillCoolDown, GarlicAreaSize, KillDistance];
@@ -44,12 +44,12 @@ namespace TheSpaceRoles
                 __instance, "VampireKillButton",
                 ButtonPos.Kill,
                 KeyCode.Q,
-                KillCoolDown.GetKillCoolDownOption(),
-                () => KillButtons.KillButtonSetTarget(KillDistance.GetKillDistance(), Color, [Teams.Impostor]),
+                float.Parse(KillCoolDown.ValueText()),
+                () => KillButtons.KillButtonSetTarget(float.Parse(KillDistance.ValueText()), Color, [Teams.Impostor]),
                 __instance.KillButton.graphic.sprite,
                 () =>
                 {
-                    BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(KillDistance.GetKillDistance(), Color, [Teams.Impostor]));
+                    BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(float.Parse(KillDistance.ValueText()), Color, [Teams.Impostor]));
                 },
                 () => VampireBitebutton.Timer = VampireBitebutton.maxTimer,
                 "Kill",

@@ -306,17 +306,24 @@ namespace TheSpaceRoles
                             }
                             var ob = GameObject.Instantiate(FastDestroyableSingleton<NotificationPopper>.Instance.notificationMessageOrigin, FastDestroyableSingleton<NotificationPopper>.Instance.transform).GetComponent<LobbyNotificationMessage>();
                             ob.SetUp($"<b>血液型</b> を <b>ab</b> に設定する", ob.Icon.sprite, Color.white, (Il2CppSystem.Action)(() => { }));
-                            NiceGuesser.instance.TargetReset(HudManager.Instance.MeetingPrefab);
+                            //NiceGuesser.instance.TargetReset(HudManager.Instance.MeetingPrefab);
+                            break;
+                        case "/ms":
+                        case "/meetingskip":
+                            MeetingHud.Instance.discussionTimer = 0;
+                            MeetingHud.Instance.resultsStartedAt = 0;
+                            MeetingHud.Instance.lastSecond = 0;
+                            addchat += "meetingskip" + "\n";
                             break;
                     }
                 }
                 if (addchat != "")
                 {
-                    Helper.AddChat(addchat, __instance);
+                    Helper.AddChat(addchat);
                 }
                 if (rpcaddchat != "")
                 {
-                    Helper.AllAddChat(addchat, __instance);
+                    Helper.AllAddChat(addchat);
                 }
                 __instance.freeChatField.Clear();
                 return false;

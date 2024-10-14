@@ -90,7 +90,7 @@ namespace TheSpaceRoles
         public virtual void BeforeMeetingStart(MeetingHud meeting) { }
         public virtual void MeetingStart(MeetingHud meeting) { }
         public virtual void CheckForEndVoting(MeetingHud meeting, ref Dictionary<byte, int> dictionary) { }
-        public virtual void VotingResult(MeetingHud meeting, ref Il2CppStructArray<MeetingHud.VoterState> states) { }
+        public virtual MeetingHud.VoterState[] VotingResultChange(MeetingHud meeting, ref List<MeetingHud.VoterState> states) { return []; }
         public virtual void Killed() { }
         public virtual void WasKilled() { }
         public virtual void Die() { }

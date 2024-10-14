@@ -122,7 +122,7 @@ namespace TheSpaceRoles
                 {
                     if (Input.GetKey((KeyCode)304))
                     {
-                        Helper.AllAddChat(GUIUtility.systemCopyBuffer, __instance);
+                        Helper.AllAddChat(GUIUtility.systemCopyBuffer);
                     }
                     else
                     {
