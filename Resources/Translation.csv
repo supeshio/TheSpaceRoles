@@ -78,6 +78,7 @@ option.role.niceguesser.canguesscrewmate,Can Guess {role.crewmate.coloredname},,
 option.role.evilguesser.guesscount,Maximum number of Guesses,,,,,,,,,,,推測可能回数,,,,,
 option.role.evilguesser.guesscountofmeeting,Number of Guesses possible per Meeting,,,,,,,,,,,会議ごとの推測可能回数,,,,,
 option.role.evilguesser.canguesscrewmate,Can Guess {role.crewmate.coloredname},,,,,,,,,,,{role.crewmate.coloredname}も撃てるか,,,,,
+option.role.niceswapper.swapcount,*,,,,,,,,,,,投票入れ替え可能回数,,,,,
 ,,,,,,,,,,,,,,,,,
 #PlayerColor,,,,,,,,,,,,,,,,,
 playercolor.tarmarind,Tarmarind,,,,,,,,,,,タマリンド,,,,,
@@ -134,40 +135,40 @@ team.crewmate.name,Crewmates,,,,,,,,,,,クルー,,,,,村人陣営
 team.crewmate.sname,(C),,,,,,,,,,,,,,,,
 team.crewmate.intro,,,,,,,,,,,,,,,,,,
 team.crewmate.sintro,,,,,,,,,,,,,,,,,,
-team.crewmate.description,Complete all assigned tasks. Or Eject the {team.impostor.coloredname} hiding in your teams. Identify the Impostors by making good use of Admins, Cameras, and Vitals as you progress through the tasks. There may be more than just {team.impostor.coloredname} among us who are out to kill us all...,,,,,,,,,,,与えられたタスクをすべて完了させろ。あるいは仲間の中に潜んでいる{team.impostor.coloredname}を追放しろ。タスクを進めながらアドミン、カメラ、バイタルを上手く活用し、インポスターを特定しろ。,{team.impostor.coloredname}以外にも我々の中に皆殺しを目的としている者がいるかもしれない...",,,,,
-team.crewmate.wincondition,Completion of tasks, ejection of positions that can be killed, such as {team.impostor.coloredname}, {team.other.coloredname}, etc.,,,,,,,,,,,タスクの完了、{team.impostor.coloredname}や{team.other.coloredname}などのキルできる役職の追放,,,,,
+team.crewmate.description,"Complete all assigned tasks. Or Eject the {team.impostor.coloredname} hiding in your teams. Identify the Impostors by making good use of Admins, Cameras, and Vitals as you progress through the tasks. There may be more than just {team.impostor.coloredname} among us who are out to kill us all...",,,,,,,,,,,与えられたタスクをすべて完了させろ。あるいは仲間の中に潜んでいる{team.impostor.coloredname}を追放しろ。タスクを進めながらアドミン、カメラ、バイタルを上手く活用し、インポスターを特定しろ。{team.impostor.coloredname}以外にも我々の中に皆殺しを目的としている者がいるかもしれない...,,,,,
+team.crewmate.wincondition,"Completion of tasks, ejection of positions that can be killed, such as {team.impostor.coloredname}, {team.other.coloredname}, etc.",,,,,,,,,,,タスクの完了、{team.impostor.coloredname}や{team.other.coloredname}などのキルできる役職の追放,,,,,
 ,,,,,,,,,,,,,,,,,
 #impostor,,,,,,,,,,,,,,,,,
 team.impostor.name,Impostors,,,,,,,,,,,インポスター,,,,,人狼陣営
 team.impostor.sname,(I),,,,,,,,,,,,,,,,
 team.impostor.intro,Wipe out {team.crewmate.coloredname},,,,,,,,,,,{team.crewmate.coloredname}を全滅させろ,,,,,
 team.impostor.sintro,Wipe out {team.crewmate.coloredname},,,,,,,,,,,{team.crewmate.coloredname}を全滅させろ,,,,,
-team.impostor.description,Make good use of Vents and Sabotage to kill all {team.crewmate.coloredname}. Sometimes it is important to make {team.crewmate.coloredname} think you are one of them by pretending to be doing a task or calling an Emergency Meeting.,,,,,,,,,,,ベントやサボタージュを上手く活用し、{team.crewmate.coloredname}を皆殺しにしてやろう。時にはタスクをしているフリをしたり、緊急会議を招集することで{team.crewmate.coloredname}から仲間だと思わせるのも大切だ。,,,,,
+team.impostor.description,"Make good use of Vents and Sabotage to kill all {team.crewmate.coloredname}. Sometimes it is important to make {team.crewmate.coloredname} think you are one of them by pretending to be doing a task or calling an Emergency Meeting.",,,,,,,,,,,ベントやサボタージュを上手く活用し、{team.crewmate.coloredname}を皆殺しにしてやろう。時にはタスクをしているフリをしたり、緊急会議を招集することで{team.crewmate.coloredname}から仲間だと思わせるのも大切だ。,,,,,
 team.impostor.wincodition,To destroy this Ship by Killing {team.crewmate.coloredname} and all other Teams or Sabotage.,,,,,,,,,,,{team.crewmate.coloredname}とその他の陣営を全員殺害するかサボタージュでこの船を破壊すること,,,,,
 ,,,,,,,,,,,,,,,,,,
 #madmate,,,,,,,,,,,,,,,,,,
 team.madmate.name,Madmates,,,,,,,,,,,マッドメイト,,,,,狂人陣営,
-team.madmate.sname,(M),,,,,,,,,,,,,,,,,
-team.madmate.intro,,,,,,,,,,,,,,,,,,
-team.madmate.sintro,,,,,,,,,,,,,,,,,
-team.madmate.description,,,,,,,,,,,,,,,,,
+team.madmate.sname,(M),,,,,,,,,,,,,,,,
+team.madmate.intro,,,,,,,,,,,,,,,,,*
+team.madmate.sintro,,,,,,,,,,,,,,,,,*
+team.madmate.description,*,,,,,,,,,,,,,,,,*
 team.madmate.wincodition,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 #jester,,,,,,,,,,,,,,,,,,
 team.jester.name,Jester,,,,,,,,,,,ジェスター,,,,,てるてる陣営
 team.jester.sname,(Je),,,,,,,,,,,,,,,,
-team.jester.intro,,,,,,,,,,,,,,,,,,
-team.jester.sintro,,,,,,,,,,,,,,,,,,
-team.jester.description,,,,,,,,,,,,,,,,,,
-team.jester.wincodition,,,,,,,,,,,,,,,,,,
+team.jester.intro,*,,,,,,,,,,,,,,,,*
+team.jester.sintro,*,,,,,,,,,,,,,,,,*
+team.jester.description,,,,,,,,,,,,,,,,,*
+team.jester.wincodition,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 #jackal,,,,,,,,,,,,,,,,,,
-team.jackal.name,Guesser,,,,,,,,,,,ジャッカル,,,,,
+team.jackal.name,Guesser,,,,,,,,,,,ジャッカル,,,,,ジャッカル陣営
 team.jackal.sname,(Jk),,,,,,,,,,,,,,,,
-team.jackal.intro,,,,,,,,,,,,,,,,,,
-team.jackal.sintro,,,,,,,,,,,,,,,,,,
-team.jackal.description,,,,,,,,,,,,,,,,,,
+team.jackal.intro,*,,,,,,,,,,,,,,,,,*
+team.jackal.sintro,*,,,,,,,,,,,,,,,,,*
+team.jackal.description,*,,,,,,,,,,,,,,,,*
 team.jackal.wincodition,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
@@ -186,24 +187,24 @@ role.template.description,,,,,,,,,,,,_,,,,,
 role.crewmate.name,Crewmate,,,,,,,,,,,クルーメイト,,,,,市民
 role.crewmate.intro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、インポスターを追放しろ,,,,,仕事をこなし、人狼を処刑せよ
 role.crewmate.sintro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、インポスターを追放しろ,,,,,仕事をこなし、人狼を処刑せよ
-role.crewmate.description,,,,,,,,,,,,,,,,,
+role.crewmate.description,*,,,,,,,,,,,,,,,,*
 ,,,,,,,,,,,,,,,,,,
 #impostor,,,,,,,,,,,,,,,,,
 role.impostor.name,Impostor,,,,,,,,,,,インポスター,,,,,人狼
 role.impostor.intro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,クルーメイトを全滅させろ,,,,,村を壊滅させろ
 role.impostor.sintro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,クルーメイトを全滅させろ,,,,,村を壊滅させろ
-role.impostor.description,,,,,,,,,,,,,,,,,,
+role.impostor.description,*,,,,,,,,,,,,,,,,*
 ,,,,,,,,,,,,,,,,,
 #niceguesser,,,,,,,,,,,,,,,,,
 role.niceguesser.name,Guesser,,,,,,,,,,,ナイスゲッサー,,,,,推測者
 role.niceguesser.intro,Guess and Shoot,,,,,,,,,,,推測し、撃ち抜け,,,,,
 role.niceguesser.sintro,Guess and Shoot,,,,,,,,,,,推測し、撃ち抜け,,,,,
-role.niceguesser.description,During a Meetings, you can guess someone's role.\n If it is really that one's roles, the opponent will be struck and die.,,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.impostor.coloredname}を撃ち抜こう。,,,,,
+role.niceguesser.description,"During a Meetings, you can guess someone's role.\n If it is really that one's roles, the opponent will be struck and die.",,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.impostor.coloredname}を撃ち抜こう。,,,,,
 #evilguesser,,,,,,,,,,,,,,,,
 role.evilguesser.name,Evil Guesser,,,,,,,,,,,イビルゲッサー,,,,,
 role.evilguesser.intro,Guess and Shoot,,,,,,,,,,,推測し、撃ち抜け,,,,,
 role.evilguesser.sintro,Guess and Shoot,,,,,,,,,,,推測し、撃ち抜け,,,,,
-role.evilguesser.description,During a Meetings, you can guess someone's role.\n If it is really that one's roles, the opponent will be struck and die,,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.crewmate.coloredname}や{team.other.colorednameを撃ち抜こう。,,,,,
+role.evilguesser.description,"During a Meetings, you can guess someone's role.\n If it is really that one's roles, the opponent will be struck and die",,,,,,,,,,,議論のとき、誰かの役職を予測し、打つことができる\n本当にその役職ならば、相手が打たれて死ぬ。\nその役職でないならば、自分が死ぬ。相手を観察し役職を推測しよう。{team.crewmate.coloredname}や{team.other.colorednameを撃ち抜こう。,,,,,
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
@@ -211,7 +212,7 @@ role.evilguesser.description,During a Meetings, you can guess someone's role.\n 
 role.sheriff.name,Sheriff,,,,,,,,,,,シェリフ,,,,,執行官
 role.sheriff.intro,Let justice be done,,,,,,,,,,,正義の鉄槌を,,,,,正義の鉄槌を
 role.sheriff.sintro,Let justice be done,,,,,,,,,,,正義の鉄槌を,,,,,正義の鉄槌を
-role.sheriff.description,{role.sheriff.coloredname} has a kill button and can kill the {team.impostor.coloredname} teams or {team.other.coloredname} teams. However, if you accidentally try to kill {team.crewmate.coloredname}, it will self-destruct. Let's kill the doubtful person and lead {team.crewmate.coloredname} to victory.,,,,,,,,,,,{role.sheriff.coloredname}はキルボタンを持ち、{team.impostor.coloredname}や{team.other.coloredname}の陣営をキルすることができる。\nしかし誤って{team.crewmate.coloredname}をキルしようとしてしまうと自爆してしまう。\n怪しい人をキルして{team.crewmate.coloredname}を勝利に導こう。,,,,,怪しい人をキルしてクルーメイト陣営を勝利に導こう。
+role.sheriff.description,"{role.sheriff.coloredname} has a kill button and can kill the {team.impostor.coloredname} teams or {team.other.coloredname} teams. However, if you accidentally try to kill {team.crewmate.coloredname}, it will self-destruct. Let's kill the doubtful person and lead {team.crewmate.coloredname} to victory.",,,,,,,,,,,{role.sheriff.coloredname}はキルボタンを持ち、{team.impostor.coloredname}や{team.other.coloredname}の陣営をキルすることができる。\nしかし誤って{team.crewmate.coloredname}をキルしようとしてしまうと自爆してしまう。\n怪しい人をキルして{team.crewmate.coloredname}を勝利に導こう。,,,,,怪しい人をキルしてクルーメイト陣営を勝利に導こう。
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
 #nicemini,,,,,,,,,,,,,,,,,
@@ -228,14 +229,14 @@ role.evilini.description,,,,,,,,,,,,,,,,,,
 role.vampire.name,Vampire,,,,,,,,,,,ヴァンパイア,,,,,吸血鬼
 role.vampire.intro,I'm a Vampire.,,,,,,,,,,,あたしヴァンパイア,,,,,あたしヴァンパイア
 role.vampire.sintro,I'm a Vampire.,,,,,,,,,,,あたしヴァンパイア,,,,,あたしヴァンパイア
-role.vampire.description,Vampires can make delayed kills. \nIf they bite a player, the bitten player dies after a set number of seconds. However, if the player is near garlic, which all players can set up, they cannot be bitten and it is a normal kill. \nUse delayed kills to confuse the information.,,,,,,,,,,,ヴァンパイアは遅延キルをすることが出来る。\nプレイヤーを噛むと噛まれたプレイヤーは設定秒数後に死亡する。\nしかし、全てのプレイヤーが設置することの出来るニンニクの近くでは噛む事ができずに通常のキルとなってしまう。\n遅延キルを使って情報を混乱させろ。,,,,,
+role.vampire.description,"Vampires can make delayed kills. \nIf they bite a player, the bitten player dies after a set number of seconds. However, if the player is near garlic, which all players can set up, they cannot be bitten and it is a normal kill. \nUse delayed kills to confuse the information.",,,,,,,,,,,ヴァンパイアは遅延キルをすることが出来る。\nプレイヤーを噛むと噛まれたプレイヤーは設定秒数後に死亡する。\nしかし、全てのプレイヤーが設置することの出来るニンニクの近くでは噛む事ができずに通常のキルとなってしまう。\n遅延キルを使って情報を混乱させろ。,,,,,
 role.vampire.option.killdelaytime,Delay Time from Bite to Kill,,,,,,,,,,,噛んでからキルまでの時間,,,,,あたしヴァンパイア
 ,,,,,,,,,,,,,,,,,,
 #serialkiller,,,,,,,,,,,,,,,,,
 role.serialkiller.name,Serial Killer,,,,,,,,,,,シリアルキラー,,,,,
 role.serialkiller.intro,Uncontrollable urge to kill.,,,,,,,,,,,殺人衝動が抑えられない,,,,,殺人衝動が抑えられない
 role.serialkiller.sintro,Uncontrollable urge to kill.,,,,,,,,,,,殺人衝動が抑えられない,,,,,殺人衝動が抑えられない
-role.serialkiller.description, {role.serialkiller.coloredname} has a very short kill cooldown, but if he does not make a kill for a certain amount of time, he will kill himself because he cannot control the urge to kill.... Once you make a kill, you start a timer until you kill yourself, and the suicide timer is reset by a kill or the start of a meeting. Just keep on killing. There is no time to waste.,,,,,,,,,,,{role.serialkiller.coloredname}はキルクールダウンがとても短い代わりに一定時間キルをしないと殺人衝動が抑えられずに自らを殺害してしまう...\n一度キルをすると自殺までのタイマーが始まり、自殺タイマーはキルをするか会議が始まるによってリセットされる。とにかく殺害しまくれ。もたもたしている暇は無いのだ。,,,,,
+role.serialkiller.description, "{role.serialkiller.coloredname} has a very short kill cooldown, but if he does not make a kill for a certain amount of time, he will kill himself because he cannot control the urge to kill.... Once you make a kill, you start a timer until you kill yourself, and the suicide timer is reset by a kill or the start of a meeting. Just keep on killing. There is no time to waste.,,,,,,,,,,,{role.serialkiller.coloredname}はキルクールダウンがとても短い代わりに一定時間キルをしないと殺人衝動が抑えられずに自らを殺害してしまう...\n一度キルをすると自殺までのタイマーが始まり、自殺タイマーはキルをするか会議が始まるによってリセットされる。とにかく殺害しまくれ。もたもたしている暇は無いのだ。",,,,,
 role.serialkiller.timer_remain,Remain:{0}s,,,,,,,,,,,残り{0}秒,,,,,
 role.serialkiller.button,SerialkillerButton,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
@@ -243,13 +244,26 @@ role.serialkiller.button,SerialkillerButton,,,,,,,,,,,,,,,,
 role.madmate.name,Madmate,,,,,,,,,,,マッドメイト,,,,,
 role.madmate.intro,Fight your husband.,,,,,,,,,,,ご主人と戦おう,,,,,
 role.madmate.sintro,Fight your husband.,,,,,,,,,,,ご主人と戦おう,,,,,
-role.madmate.description,Madmate is a Crewmates but is tasked with supporting the Imposters. \nYou can Vent, but not move, and you cannot repair the Lights Sabotage and the Communications Sabotage. \nLead the Imposter teams to victory without the Crewmates discovering it..,,,,,,,,,,,マッドメイトはクルーメイトだが、インポスターをサポートすることが使命。\nまた、ベントに入れるが移動はできず、停電と通信サボタージュが修理できない。\nクルーにバレないようにインポスター陣営を勝利に導け。 ,,,,,
+role.madmate.description,"Madmate is a Crewmates but is tasked with supporting the Imposters. \nYou can Vent, but not move, and you cannot repair the Lights Sabotage and the Communications Sabotage. \nLead the Imposter teams to victory without the Crewmates discovering it.",,,,,,,,,,,マッドメイトはクルーメイトだが、インポスターをサポートすることが使命。\nまた、ベントに入れるが移動はできず、停電と通信サボタージュが修理できない。\nクルーにバレないようにインポスター陣営を勝利に導け。 ,,,,,
 ,,,,,,,,,,,,,,,,,,
 #jackal,,,,,,,,,,,,,,,,,
-role.jackal.name,Jackal,,,,,,,,,,,ジャッカル,,,,,
-role.jackal.intro,,,,,,,,,,,,*,,,,,
-role.jackal.sintro,,,,,,,,,,,,*,,,,,
-role.jackal.description,Jackal is a Neutrals, neither Crewmates nor Imposters. Like the Imposters, it can Kill and Vent, but cannot cause Sabotage. It wins by killing non-Jackal teams and by having an equal number of Crewmates and Jackal teams. A Sidekick may be nominated only once during the match, and the Sidekick is promoted to Jackal when the Jackal is killed. Also, if the Jackal remains on the board where the ImposterS could originally win, the match continues. Appoint the Sidekick well and destroy the ship.,,,,,,,,,,,ジャッカルはクルーでもインポスターでもないニュートラル。\nインポスターと同様キルやベントができるが、サボタージュは起こせない。\nジャッカル陣営以外を殺害し、クルーとジャッカル陣営が同数になることによって勝利します。\n試合中に1度だけサイドキックを指名することができ、ジャッカルが死亡した際にサイドキックはジャッカルへと昇格します。\nまた、本来インポスターが勝利できる盤面でもジャッカルが残っている際は試合が続行します。\nサイドキックを上手く任命して、船を壊滅させろ。,,,,,
+role.jackal.name,Jackal,,,,,,,,,,,ジャッカル,,,,,*
+role.jackal.intro,*,,,,,,,,,,,*,,,,,*
+role.jackal.sintro,*,,,,,,,,,,,*,,,,,*
+role.jackal.description,"Jackal is a Neutrals, neither Crewmates nor Imposters. Like the Imposters, it can Kill and Vent, but cannot cause Sabotage. It wins by killing non-Jackal teams and by having an equal number of Crewmates and Jackal teams. A Sidekick may be nominated only once during the match, and the Sidekick is promoted to Jackal when the Jackal is killed. Also, if the Jackal remains on the board where the ImposterS could originally win, the match continues. Appoint the Sidekick well and destroy the ship.",,,,,,,,,,,ジャッカルはクルーでもインポスターでもないニュートラル。\nインポスターと同様キルやベントができるが、サボタージュは起こせない。\nジャッカル陣営以外を殺害し、クルーとジャッカル陣営が同数になることによって勝利します。\n試合中に1度だけサイドキックを指名することができ、ジャッカルが死亡した際にサイドキックはジャッカルへと昇格します。\nまた、本来インポスターが勝利できる盤面でもジャッカルが残っている際は試合が続行します。\nサイドキックを上手く任命して、船を壊滅させろ。,,,,,
+,,,,,,,,,,,,,,,,,,
+#mayor,,,,,,,,,,,,,,,,,
+role.mayor.name,Mayor,,,,,,,,,,,メイヤー,,,,,村長
+role.mayor.intro,,,,,,,,,,,,船員を先導せよ,,,,,
+role.mayor.sintro,Let justice be done,,,,,,,,,,,船員を先導せよ,,,,,
+role.mayor.description,*,,,,,,,,,,,*,,,,,*
+,,,,,,,,,,,,,,,,,,
+#niceswapper,,,,,,,,,,,,,,,,,
+role.niceswapper.name,NiceSwapper,,,,,,,,,,,ナイススワッパー,,,,,*
+role.niceswapper.intro,*,,,,,,,,,,,*,,,,,
+role.niceswapper.sintro,*,,,,,,,,,,,*,,,,,
+role.niceswapper.description,*,,,,,,,,,,,*,,,,,*
+,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,

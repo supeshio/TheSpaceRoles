@@ -34,32 +34,15 @@ namespace TheSpaceRoles
             Options = [VoteCount];
 
         }
-        //public override void CheckForEndVoting(MeetingHud meeting, ref Dictionary<byte, int> dictionary)
-        //{
-        //    var p =
-        //    meeting.playerStates.First(x => x.TargetPlayerId == PlayerControl.LocalPlayer.PlayerId);
-
-        //    byte votedFor = p.VotedFor;
-        //    if (votedFor != 252 && votedFor != 255 && votedFor != 254)
-        //    {
-        //        PlayerControl pc = Helper.GetPlayerById(PlayerControl.LocalPlayer.PlayerId);
-        //        if (pc == null || pc.Data == null || pc.Data.IsDead || pc.Data.Disconnected)
-        //        {
-
-        //        }
-        //        else
-        //        {
-        //            dictionary[votedFor] += VoteCount.GetIntValue()-1;
-
-        //        }
-
-        //    }
-        //}
-        public override MeetingHud.VoterState[] VotingResultChange(MeetingHud meeting, ref List<MeetingHud.VoterState> states)
+        public override void VotingResultChange(MeetingHud meeting,ref List<MeetingHud.VoterState> states)
         {
             var v = states.First(x => x.VoterId == PlayerId);
             Logger.Message(v.VoterId.ToString(),"MayorVote");
-            return [new MeetingHud.VoterState() { VoterId = v.VoterId, VotedForId = v.VotedForId }];
+            for (int i = 0; i < VoteCount.GetIntValue(); i++)
+            {
+            states.Add(v);
+                
+            }
         }
     }
 

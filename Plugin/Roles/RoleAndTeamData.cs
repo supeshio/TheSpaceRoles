@@ -36,18 +36,19 @@ namespace TheSpaceRoles
         Vampire,//ヴァンパイア
         SerialKiller,//シリアルキラー
 
+        Mayor,
 
-
-        //all or other(ここから　
-        Mayor,//all
-        Engineer,//c
+        NiceSwapper,//all
+        EvilSwapper,//all
         Sheriff,//c 
+        //all or other(ここから　
+        //all
+        Engineer,//c
         Deputy,//c,m?
         Lighter,//all
         Detective,//all
         TimeMaster,//all, iとかいらねえだろ
         Medic,//all,cだけだろこれぇ 
-        Swapper,//all
         Seer,//all
         Hacker,//all
         Tracker,//all
@@ -108,6 +109,7 @@ namespace TheSpaceRoles
             new EvilMini(),
             new Jester(),
             new Mayor(),
+            new NiceSwapper(),
         ];
 
         public static List<CustomRole> GetCustomRoles_Normal =>
