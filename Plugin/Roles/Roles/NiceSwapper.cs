@@ -15,8 +15,8 @@ namespace TheSpaceRoles
     {
         public static List<Target> targets = [];
         public static NiceSwapper instance;
-        public static PlayerControl SwapPC1;
-        public static PlayerControl SwapPC2;
+        public PlayerControl SwapPC1;
+        public PlayerControl SwapPC2;
         public NiceSwapper()
         {
             team = Teams.Crewmate;
@@ -87,13 +87,13 @@ namespace TheSpaceRoles
                             if (!untargetingplayerids.Contains(player.TargetPlayerId))
                             {
 
-                                targets.Add(new Target(player, meeting));
+                                targets.Add(new Target(player, meeting,this));
                             }
                         }
                         else
                         {
 
-                            targets.Add(new Target(player, meeting));
+                            targets.Add(new Target(player, meeting,this));
                         }
                     }
                 }
@@ -103,8 +103,7 @@ namespace TheSpaceRoles
                 Logger.Message($"player:{player.NameText.text},Dead:{player.AmDead},null{player == null}");
             }
         }
-        public static bool PrepareSwapping=false;
-        public static void PrepareTargetPlayerSwap()
+        public void PrepareTargetPlayerSwap()
         {
             if (SwapPC1 == null)
             {
@@ -116,9 +115,21 @@ namespace TheSpaceRoles
             {
                 Logger.Info($"SwapPC2={targetplayer.Data.PlayerName}");
                 SwapPC2 = targetplayer;
-                PrepareSwapping = true;
                 targets.Do(x=>x.gameObject.SetActive(false));
+                var m = Rpc.SendRpcUsebility(Roles.NiceSwapper,PlayerControl.LocalPlayer.PlayerId,0);
+                m.Write(SwapPC1.PlayerId);
+                m.Write(SwapPC2.PlayerId);
             }
+        }
+        public static void RpcSwap(int playerid, int id1,int id2)
+        {
+            DataBase.AllPlayerRoles[playerid].Do(x =>
+            {
+               var swap = (NiceSwapper)x;
+                swap.SwapPC1 = Helper.GetPlayerById(id1);
+                swap.SwapPC2 = Helper.GetPlayerById(id2);
+
+            });
         }
         public static PlayerControl targetplayer;
 
@@ -129,7 +140,7 @@ namespace TheSpaceRoles
             public int playerId;
             public PassiveButton passiveButton;
             public SpriteRenderer renderer;
-            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting)
+            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting,NiceSwapper swapper)
             {
                 this.voteArea = playerVoteArea;
                 this.playerId = playerVoteArea.TargetPlayerId;
@@ -157,7 +168,7 @@ namespace TheSpaceRoles
                 {
                     Logger.Info($"{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName} is targeting");
                     targetplayer = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId);
-                    PrepareTargetPlayerSwap();
+                    swapper.PrepareTargetPlayerSwap();
 
                 }));
                 passiveButton.OnMouseOver.AddListener((System.Action)(() =>

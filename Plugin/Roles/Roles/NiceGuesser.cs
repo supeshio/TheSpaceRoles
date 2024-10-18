@@ -12,7 +12,6 @@ namespace TheSpaceRoles
     public class NiceGuesser : CustomRole
     {
         public List<Target> targets = [];
-        public static NiceGuesser instance;
         public NiceGuesser()
         {
             team = Teams.Crewmate;
@@ -37,7 +36,6 @@ namespace TheSpaceRoles
         public override void HudManagerStart(HudManager hudManager)
         {
             remainBullet = (int)GuessCountOfMeeting.GetIntValue();
-            instance = this;
             targets = [];
         }
         public override void MeetingStart(MeetingHud meeting)
@@ -67,13 +65,13 @@ namespace TheSpaceRoles
                             if (!untargetingplayerids.Contains(player.TargetPlayerId))
                             {
 
-                                targets.Add(new Target(player, meeting));
+                                targets.Add(new Target(player, meeting,this));
                             }
                         }
                         else
                         {
 
-                            targets.Add(new Target(player, meeting));
+                            targets.Add(new Target(player, meeting,this));
                         }
                     }
                 }
@@ -86,8 +84,8 @@ namespace TheSpaceRoles
         public static SpriteRenderer crewmateRend;
         public static SpriteRenderer impostorRend;
         public static SpriteRenderer neutralRend;
-        public static int selected = 0;
-        public static void ChoiceRole(MeetingHud meeting)
+        public int selected = 0;
+        public void ChoiceRole(MeetingHud meeting)
         {
             crewmateRend = null;
             impostorRend = null;
@@ -167,7 +165,7 @@ namespace TheSpaceRoles
                 BackRend.color = Palette.EnabledColor;
                 reset();
                 BackRend.gameObject.SetActive(true);
-                roleaction(Roles.None);
+                roleaction(Roles.None,this);
 
             }));
             BackRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
@@ -293,7 +291,7 @@ namespace TheSpaceRoles
 
 
 
-            void roleaction(Roles role)
+            void roleaction(Roles role,NiceGuesser guesser)
             {
 
                 meeting.ButtonParent.gameObject.SetActive(true);
@@ -311,7 +309,7 @@ namespace TheSpaceRoles
                 int pc = -1;
                 if (role == Roles.None)
                 {
-                    NiceGuesser.instance.TargetReset(meeting);
+                    guesser.TargetReset(meeting);
                     return;
                 }
                 if (targetplayer.IsRole(role))
@@ -325,7 +323,7 @@ namespace TheSpaceRoles
                     UnCheckedMurderPlayer.RpcMurder(targetplayer, PlayerControl.LocalPlayer, DeathReason.MisfiredByNiceGuesser);
                     pc = PlayerControl.LocalPlayer.PlayerId;
                 }
-                NiceGuesser.instance.TargetReset(meeting, [pc]);
+                guesser.TargetReset(meeting, [pc]);
             }
 
 
@@ -368,7 +366,7 @@ namespace TheSpaceRoles
                 p.OnClick.AddListener((System.Action)(() =>
                 {
                     rend.color = Palette.AcceptedGreen;
-                    roleaction(role);
+                    roleaction(role,this);
 
                 }));
                 p.OnMouseOver.AddListener((System.Action)(() =>
@@ -469,7 +467,7 @@ namespace TheSpaceRoles
             public int playerId;
             public PassiveButton passiveButton;
             public SpriteRenderer renderer;
-            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting)
+            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting,NiceGuesser guesser)
             {
                 this.voteArea = playerVoteArea;
                 this.playerId = playerVoteArea.TargetPlayerId;
@@ -497,7 +495,7 @@ namespace TheSpaceRoles
                 {
                     Logger.Info($"{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName} is targeting");
                     targetplayer = DataBase.AllPlayerControls().First(x => x.PlayerId == playerVoteArea.TargetPlayerId);
-                    ChoiceRole(meeting);
+                    guesser.ChoiceRole(meeting);
 
                 }));
                 passiveButton.OnMouseOver.AddListener((System.Action)(() =>

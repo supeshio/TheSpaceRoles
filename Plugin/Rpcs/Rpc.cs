@@ -70,6 +70,9 @@ namespace TheSpaceRoles
                             case Roles.EvilMini:
                                 EvilMini.SetAge(useAbilityPlayerId, reader.ReadInt32());
                                 break;
+                            case Roles.NiceSwapper:
+                                NiceSwapper.RpcSwap(useAbilityPlayerId, reader.ReadInt32(), reader.ReadInt32());
+                                break;
                         }
 
                         break;
@@ -84,10 +87,10 @@ namespace TheSpaceRoles
             return writer;
 
         }
-        public static MessageWriter SendRpcUsebility(Rpcs rpc, Roles roleId, int playerId, int id)
+        public static MessageWriter SendRpcUsebility(Roles roleId, int playerId, int id)
         {
 
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)rpc, SendOption.Reliable);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)Rpcs.UseAbility, SendOption.Reliable);
             writer.Write(playerId);
             writer.Write((int)roleId);
             writer.Write(id);
