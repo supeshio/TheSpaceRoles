@@ -27,9 +27,8 @@ namespace TheSpaceRoles
         {
             private static void Prefix()
             {
-                DataBase.buttons.Clear();
-                HudManagerGame.
-                IsGameStarting = false;
+                DataBase.ResetAndPrepare();
+                DataBase.EndGame();
                 Logger.Info($"EndGame!!,DeathReasons:\n{string.Join(",\n", DataBase.AllPlayerDeathReasons.ToArray().Select(x => $"{DataBase.AllPlayerControls().First(y => y.PlayerId == x.Key).Data.PlayerName}  ({x.Key}):{x.Value}"))}");
 
                 if (DataBase.buttons.Count != 0)

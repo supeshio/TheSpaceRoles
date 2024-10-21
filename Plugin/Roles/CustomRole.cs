@@ -186,23 +186,21 @@ namespace TheSpaceRoles
             }
         }
     }
-
-    [HarmonyPatch(typeof(HudManager))]
+    [HarmonyPatch]
     public static class HudManagerGame
     {
-        public static bool OnGameStarted = false;
         public static bool IsGameStarting = false;
+        [HarmonyPatch(typeof(HudManager))]
         [HarmonyPatch(nameof(HudManager.OnGameStart)), HarmonyPostfix]
         private static void ButtonCreate(HudManager __instance)
         {
 
-            if (!OnGameStarted) return;
-            IsGameStarting = true;
-            OnGameStarted = false;
+            //IsGameStarting = true;
 
             ButtonCooldownEnabled = false;
             ButtonCooldown = 10f;
             DataBase.buttons.Clear();
+            if (PlayerControl.LocalPlayer?.PlayerId == null) return;
             if (DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId) || AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
             {
                 //var k = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Select(x => x.Role.ToString()).ToArray();
@@ -215,19 +213,25 @@ namespace TheSpaceRoles
         }
         public static float ButtonCooldown;
         public static bool ButtonCooldownEnabled;
+        [HarmonyPatch(typeof(HudManager))]
         [HarmonyPatch(nameof(HudManager.Update)), HarmonyPostfix]
         private static void Update()
         {
+            //Logger.Message($"{IsGameStarting}");
             if (!IsGameStarting) return;
-            if (DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
-            {
+            if (PlayerControl.LocalPlayer?.PlayerId == null) return;
 
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.Update());
-                DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.APUpdate()));
-                DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.VentUpdate()));
-            }
+            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Update();
+            DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.APUpdate()));
+            DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.VentUpdate()));
         }
+        [HarmonyPatch(typeof(ShipStatus),nameof(ShipStatus.Start)), HarmonyPostfix]
+        private static void StartGame()
+        {
+            IsGameStarting = true;
+            Logger.Message("shipstatus", "start");
 
+        }
     }
 
 }

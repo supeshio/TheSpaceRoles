@@ -155,10 +155,12 @@ namespace TheSpaceRoles
             ResetButtons();
 
             ButtonsPositionSetter();
-            HudManagerGame.IsGameStarting = false;
-
-            HudManagerGame.OnGameStarted = true;
             Logger.Info("DataBaseReseted");
+
+        }
+        public static void EndGame()
+        {
+            HudManagerGame.IsGameStarting = false;
 
         }
         public static void ResetButtons()

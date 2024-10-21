@@ -150,7 +150,7 @@ namespace TheSpaceRoles
                 gameObject.transform.SetParent(playerVoteArea.transform);
                 gameObject.transform.localPosition = new(-0.9f, 0, -1);
                 this.renderer = gameObject.AddComponent<SpriteRenderer>();
-                renderer.sprite = Sprites.GetSpriteFromResources("ui.target.png", 800f);
+                renderer.sprite = Sprites.GetSpriteFromResources("ui.swap.png", 800f);
                 renderer.gameObject.layer = HudManager.Instance.gameObject.layer;
                 //renderer.material = MeetingHud.Instance.SkipVoteButton.GetComponent<SpriteRenderer>().material;
 

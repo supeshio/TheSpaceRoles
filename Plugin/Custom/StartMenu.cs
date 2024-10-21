@@ -34,7 +34,7 @@ namespace TheSpaceRoles
         {
 
             __instance.text.text += $"\n{TSR.c_name_v}";
-            __instance.text.alignment = TextAlignmentOptions.Top;
+            __instance.text.alignment = TextAlignmentOptions.Bottom;
         }
     }
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Start))]
@@ -47,6 +47,39 @@ namespace TheSpaceRoles
             {
                 CustomOptionsHolder.CreateCustomOptions();
             }
+            //var spriteredrer = new GameObject("TSRlogo").AddComponent<SpriteRenderer>();
+            //spriteredrer.sprite = Sprites.GetSpriteFromResources("TSRLogo.png", 400f);
+            //spriteredrer.transform.SetParent(__instance.transform);
+            //spriteredrer.transform.position = new Vector3(1.6f, 2.4f, 0);
+            //spriteredrer.transform.localScale = Vector3.one;
+            //spriteredrer.enabled = true;
+            //spriteredrer.gameObject.SetActive(true);
+            //spriteredrer.gameObject.layer = 5;
+            //var sp = new GameObject("TSRlogoBack").AddComponent<SpriteRenderer>();
+            //sp.sprite = Sprites.GetSpriteFromResources("ui.Logo_Back.png", 340f);
+            //sp.color = Helper.ColorFromColorcode("#ffffff22");
+            //sp.transform.SetParent(spriteredrer.transform);
+            //sp.transform.localPosition = new(0,0,1);
+            //spriteredrer.transform.localScale = Vector3.one;
+            //sp.enabled = true;
+            //sp.gameObject.SetActive(true);
+            //sp.gameObject.layer = 5;
+
+            TextMeshPro TSRText = new GameObject("text").AddComponent<TextMeshPro>();
+            TSRText.text = TSR.c_name_v;
+            TSRText.fontSize = 2;
+            TSRText.alignment = TextAlignmentOptions.Midline;
+            TSRText.enableWordWrapping = false;
+            TSRText.transform.SetParent(__instance.transform);
+            TSRText.transform.position = new Vector3(1.6f, 2.6f, 0);
+            TSRText.transform.localScale = Vector3.one;
+            TSRText.gameObject.layer = 5;
+            TSRText.enabled = true;
+            TSRText.gameObject.active = true;
+            TSRText.material = DestroyableSingleton<PingTracker>.Instance.text.material;
+            TSRText.font= DestroyableSingleton<PingTracker>.Instance.text.font;
+            TSRText.outlineColor= Color.black;
+            TSRText.outlineWidth= 0.1f;
         }
     }
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
@@ -55,11 +88,11 @@ namespace TheSpaceRoles
         public static void Prefix()
         {
 
-            Logger.Info("mainmenu");
+            Logger.Info("Opening MainMenu...");
             var spriteredrer = new GameObject("TSRlogo").AddComponent<SpriteRenderer>();
-            spriteredrer.sprite = Sprites.GetSpriteFromResources("TSRLogo.png", 125f);
+            spriteredrer.sprite = Sprites.GetSpriteFromResources("TSRLogo.png", 180f);
             spriteredrer.transform.position = new Vector3(2f, 0f, 0);
-            spriteredrer.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+            spriteredrer.transform.localScale = Vector3.one;
             spriteredrer.enabled = true;
             spriteredrer.gameObject.SetActive(true);
         }

@@ -48,13 +48,19 @@ namespace TheSpaceRoles
         }
         public override void Update()
         {
+            Logger.Message("Update",Roles.SerialKiller.ToString());
             if (TimerStarted)
             {
 
                 Timer -= Time.deltaTime;
                 if (Timer <= 0)
                 {
-                    UnCheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer, DeathReason.SerialKillerSuicide);
+                    if (Dead == false)
+                    {
+
+                        UnCheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer, DeathReason.SerialKillerSuicide);
+                    }
+                    Dead = true;
                 }
 
             }

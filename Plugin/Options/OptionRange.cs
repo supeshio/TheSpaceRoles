@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TheSpaceRoles
 {
     /// <summary>
     /// OptionSelectionAdvancedSelector
     /// </summary>
-    public enum OSAS
+    public enum OSAS:int
     {
-        unlimted,
+        unlimted = int.MinValue,
         right,
         left,
         on,
@@ -26,18 +27,18 @@ namespace TheSpaceRoles
     }
     public static class Ranges
     {
-        public static string GetValueFromSelector(this OSAS selector) =>
+        public static float GetValueFromSelector(this OSAS selector) =>
             selector switch
             {
                 OSAS.killdistance_veryshort or
                 OSAS.killdistance_short or
                 OSAS.killdistance_medium or
-                OSAS.killdistance_long or
-                OSAS.killdistance_default
-                => selector.ToString()[13..],
-                OSAS.on=>true.ToString(),
-                OSAS.off => false.ToString(),
-                _ =>selector.ToString().ToLower(),
+                OSAS.killdistance_long //or
+                //OSAS.killdistance_default
+                =>KillDistances[KillDistanceNames.IndexOf(selector.ToString()[13..])],
+                OSAS.on=>-1,
+                OSAS.off => -2,
+                _ =>(int)selector,
             };
 
         public static string GetStringFromSelector(this OSAS selector) =>
@@ -54,10 +55,10 @@ namespace TheSpaceRoles
 
 
         public static List<float> KillDistances = new() { 0.5f, 1f, 1.8f, 2.5f };
-        public static List<string> KIllDistanceNames = ["veryshort", "short", "medium", "long"];
+        public static List<string> KillDistanceNames = ["veryshort", "short", "medium", "long","default"];
         public class CustomRange
         {
-            public virtual string GetValue(int i)
+            public virtual float GetValue(int i)
             {
                 var list = GetValues();
                 return list[i];
@@ -69,7 +70,7 @@ namespace TheSpaceRoles
                 return list[i];
             }
             public virtual string[] GetSelectors() => [];
-            public virtual string[] GetValues() => [];
+            public virtual float[] GetValues() => [];
         }
         public static CustomRange KillDistanceRange()=>new CustomSelectionRange([OSAS.killdistance_default,OSAS.killdistance_veryshort,OSAS.killdistance_short,OSAS.killdistance_medium,OSAS.killdistance_long]);
         public class CustomFloatRange : CustomRange
@@ -87,12 +88,12 @@ namespace TheSpaceRoles
                 }
                 return [.. list];
             }
-            public override string[] GetValues()
+            public override float[] GetValues()
             {
-                List<string> list = [];
+                List<float> list = [];
                 for (float i = min; i <= max; i += step)
                 {
-                    list.Add(i.ToString());
+                    list.Add(i);
                 }
                 foreach (var item in addtional)
                 {
@@ -139,12 +140,12 @@ namespace TheSpaceRoles
                 }
                 return list.ToArray();
             }
-            public override string[] GetValues()
+            public override float[] GetValues()
             {
-                List<string> list = [];
+                List<float> list = [];
                 for (float i = min; i <= max; i += step)
                 {
-                    list.Add(i.ToString());
+                    list.Add(i);
                 }
                 foreach (var item in addtional)
                 {
@@ -187,9 +188,9 @@ namespace TheSpaceRoles
                 }
                 return [.. list];
             }
-            public override string[] GetValues()
+            public override float[] GetValues()
             {
-                List<string> list = [];
+                List<float> list = [];
                 foreach (var item in addtional)
                 {
                     list.Add(item.GetValueFromSelector());
@@ -216,9 +217,9 @@ namespace TheSpaceRoles
                 }
                 return [.. list];
             }
-            public override string[] GetValues()
+            public override float[] GetValues()
             {
-                List<string> list = [];
+                List<float> list = [];
                 foreach (var item in addtional)
                 {
                     list.Add(item.GetValueFromSelector());

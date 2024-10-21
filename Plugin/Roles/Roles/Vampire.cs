@@ -9,7 +9,6 @@ namespace TheSpaceRoles
 {
     public class Vampire : CustomRole
     {
-        public static CustomButton VampireBitebutton;
         public PlayerControl BittenPlayerControl;
         public Vampire()
         {
@@ -19,6 +18,7 @@ namespace TheSpaceRoles
             Color = Palette.ImpostorRed;
             HasKillButton = false;
         }
+        public static CustomButton VampireBitebutton;
         public static CustomOption KillDelayTime;
         public static CustomOption KillCoolDown;
         public static CustomOption KillDistance;
@@ -39,24 +39,25 @@ namespace TheSpaceRoles
         }
         public override void HudManagerStart(HudManager __instance)
         {
+            Logger.Warning($"{KillCoolDown.GetValue()},{KillDistance.GetValue()}");
             DataBase.AllPlayerRoles.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r);
             VampireBitebutton = new CustomButton(
                 __instance, "VampireKillButton",
                 ButtonPos.Kill,
                 KeyCode.Q,
-                float.Parse(KillCoolDown.ValueText()),
-                () => KillButtons.KillButtonSetTarget(float.Parse(KillDistance.ValueText()), Color, [Teams.Impostor]),
+                KillCoolDown.GetFloatValue(),
+                () => KillButtons.KillButtonSetTarget(KillDistance.GetFloatValue(), Color, [Teams.Impostor]),
                 __instance.KillButton.graphic.sprite,
                 () =>
                 {
-                    BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(float.Parse(KillDistance.ValueText()), Color, [Teams.Impostor]));
+                    BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(KillDistance.GetValue(), Color, [Teams.Impostor]));
                 },
                 () => VampireBitebutton.Timer = VampireBitebutton.maxTimer,
                 "Kill",
                 true, false, 10f, OnEffectEnd: () =>
                 {
                     UnCheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, BittenPlayerControl, DeathReason.BittenByVampire, false);
-                });
+                }); 
 
         }
     }

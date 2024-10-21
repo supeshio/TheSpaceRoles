@@ -245,16 +245,16 @@ namespace TheSpaceRoles
 
             return /*"<b>"*/  Range.GetRange(Selection());
         }
-        public string Value()
+        public float GetValue()
         {
 
             return /*"<b>"*/  Range.GetValue(Selection());
         }
 
-        public int GetIntValue()=> int.Parse( Value());
+        public int GetIntValue()=> (int)GetValue();
 
-        public float GetFloatValue() => float.Parse(Value());
-        public bool GetBoolValue() => bool.Parse(Value());
+        public float GetFloatValue() => GetValue();
+        public bool GetBoolValue() => GetValue()==OSAS.on.GetValueFromSelector();
 
 
 
