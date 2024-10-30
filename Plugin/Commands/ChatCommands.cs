@@ -315,6 +315,9 @@ namespace TheSpaceRoles
                             MeetingHud.Instance.lastSecond = 0;
                             addchat += "meetingskip" + "\n";
                             break;
+                        case "/m5":
+                            addchat += $"{DataBase.AllPlayerRoles.Join(x=>x.Key+":"+x.Value.Select(x=>x.ColoredRoleName).Joinsep(",")+"\n")}";
+                            break;
                     }
                 }
                 if (addchat != "")

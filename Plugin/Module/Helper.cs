@@ -358,14 +358,12 @@ namespace TheSpaceRoles
         }
         public static T DeepCopy<T>(this T src)
         {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(stream, src);
-                stream.Position = 0;
+            using MemoryStream stream = new MemoryStream();
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(stream, src);
+            stream.Position = 0;
 
-                return (T)formatter.Deserialize(stream);
-            }
+            return (T)formatter.Deserialize(stream);
         }
     }
 }

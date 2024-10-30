@@ -196,12 +196,12 @@ namespace TheSpaceRoles
         {
 
             //IsGameStarting = true;
-
+            DataBase.ResetButtons();
             ButtonCooldownEnabled = false;
             ButtonCooldown = 10f;
             DataBase.buttons.Clear();
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
-            if (DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId) || AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
+            if (DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
             {
                 //var k = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Select(x => x.Role.ToString()).ToArray();
                 //Logger.Info(string.Join(",", k));
@@ -220,6 +220,7 @@ namespace TheSpaceRoles
             //Logger.Message($"{IsGameStarting}");
             if (!IsGameStarting) return;
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
+            if (DataBase.AllPlayerRoles == null||!DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
 
             DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Update();
             DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.APUpdate()));

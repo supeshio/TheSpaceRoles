@@ -21,19 +21,19 @@ namespace TheSpaceRoles
         public static int undocount = 1;
 
         public static List<string> chattexts = new();
-        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
-        [HarmonyPostfix]
-        public static void PlayerPostfix()
-        {
+        //[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
+        //[HarmonyPostfix]
+        //public static void PlayerPostfix()
+        //{
 
-            //Debug
-            if (TSR.DebugMode.Value && Input.GetKeyDown(KeyCode.N))
-            {
-                Logger.Info("N");
-                KillAnimationPatch.AnimCancel = true;
-                HudManager.Instance.KillOverlay.ShowKillAnimation(PlayerControl.AllPlayerControls[Helper.Random(0, PlayerControl.AllPlayerControls.Count - 1)].Data, PlayerControl.LocalPlayer.Data);
-            }
-        }
+        //    //Debug
+        //    //if (TSR.DebugMode.Value && Input.GetKeyDown(KeyCode.N))
+        //    //{
+        //    //    Logger.Info("N");
+        //    //    KillAnimationPatch.AnimCancel = true;
+        //    //    HudManager.Instance.KillOverlay.ShowKillAnimation(PlayerControl.AllPlayerControls[Helper.Random(0, PlayerControl.AllPlayerControls.Count - 1)].Data, PlayerControl.LocalPlayer.Data);
+        //    //}
+        //}
 
 
 

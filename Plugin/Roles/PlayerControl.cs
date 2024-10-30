@@ -12,6 +12,9 @@ namespace TheSpaceRoles
         public static TextMeshPro RoleText;
         public static void Postfix(PlayerControl __instance)
         {
+
+            if (PlayerControl.LocalPlayer?.PlayerId == null) return;
+            if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
             if (AmongUsClient.Instance.ClientId != __instance.Data.ClientId) return;
             //if (AmongUsClient.Instance.AmHost) DataBase.AllPlayerControls().Do(x => x.RpcSetRole(RoleTypes.Crewmate));
 

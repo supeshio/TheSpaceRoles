@@ -88,29 +88,34 @@ namespace TheSpaceRoles
 
 
                 }
-                if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() > CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection())
+                if (GameOptionsManager.Instance.currentGameOptions.NumImpostors > CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection())
                 {
                     for (int i = 0; i < DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() - CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection(); i++)
                     {
 
                         var k = DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).ToList();
-                        k[RandomNext(k.Count())].RpcSetRole(AmongUs.GameOptions.RoleTypes.Crewmate);
+                        k[RandomNext(k.Count)].RpcSetRole(AmongUs.GameOptions.RoleTypes.Crewmate);
                     }
                 }
-                else if (DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count() < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection())
+                else if (GameOptionsManager.Instance.currentGameOptions.NumImpostors < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection())
                 {
                     for (int i = 0; i < CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].Selection() - DataBase.AllPlayerControls().Where(x => x.Data.RoleType == AmongUs.GameOptions.RoleTypes.Impostor).Count(); i++)
                     {
 
                         var k = DataBase.AllPlayerControls().Where(x => x.Data.RoleType != AmongUs.GameOptions.RoleTypes.Impostor).ToList();
-                        k[RandomNext(k.Count())].RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor);
+                        k[RandomNext(k.Count)].RpcSetRole(AmongUs.GameOptions.RoleTypes.Impostor);
                     }
                 }
+                Logger.Fatel(tr.Join(x => x.Key.ToString()));
 
                 List<int> p = DataBase.AllPlayerControls().Where(x => x.Data.RoleType == RoleTypes.Impostor).Select(x => (int)x.PlayerId).ToList();
                 var team = Teams.Impostor;
                 var teammembers = CustomOptionsHolder.TeamOptions_Count[team].Selection();
-                var v = tr[team];
+                List<Roles> v = [];
+                if (tr.ContainsKey(team)){
+
+                    v = tr[team];
+                }
                 for (int i = 0; i < teammembers; i++)
                 {
                     if (p.Count == 0) continue;
