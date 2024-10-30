@@ -60,19 +60,16 @@ namespace TheSpaceRoles
                     {
                         if (PlayerControl.LocalPlayer.PlayerId == player.TargetPlayerId)
                         {
-                            player.NameText.color = DataBase.AllPlayerRoles[player.TargetPlayerId][0].Color;
                             gameObject.SetActive(true);
                         }
                         else
                         {
-                            player.NameText.color = Color.white;
                             gameObject.SetActive(false);
                         }
                     }
                     else
                     {
 
-                        player.NameText.color = DataBase.AllPlayerRoles[player.TargetPlayerId][0].Color;
                         gameObject.SetActive(true);
                     }
                 }

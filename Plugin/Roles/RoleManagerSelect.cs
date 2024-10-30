@@ -39,16 +39,6 @@ namespace TheSpaceRoles
         {
             AmongUsClient.Instance.FinishRpcImmediately(Rpc.SendRpc(Rpcs.DataBaseReset));
             DataBase.ResetAndPrepare();
-            foreach (int pid in DataBase.AllPlayerControls().Select(x => x.PlayerId))
-            {
-                var name = DataBase.AllPlayerControls().First(x => x.PlayerId == pid).cosmetics.nameText.text;
-
-                name = Regex.Replace(name, "<color[^>]*?>", string.Empty);
-                name = Regex.Replace(name, "<\\color[^>]*?>", string.Empty);
-                DataBase.AllPlayerControls().First(x => x.PlayerId == pid).cosmetics.nameText.color = new();
-
-
-            }
 
 
             if (AmongUsClient.Instance.AmHost)

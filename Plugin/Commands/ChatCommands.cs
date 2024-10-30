@@ -131,7 +131,7 @@ namespace TheSpaceRoles
                                 color = "#" + color;
                             }
                             var c = Helper.ColorFromColorcode(color);
-                            PlayerControl.LocalPlayer.cosmetics.nameText.color = c;
+                            //PlayerControl.LocalPlayer.cosmetics.nameText.color = c;
 
                             break;
                         }
