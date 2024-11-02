@@ -110,6 +110,7 @@ namespace TheSpaceRoles
             new Jester(),
             new Mayor(),
             new NiceSwapper(),
+            new EvilSwapper(),
         ];
 
         public static List<CustomRole> GetCustomRoles_Normal =>

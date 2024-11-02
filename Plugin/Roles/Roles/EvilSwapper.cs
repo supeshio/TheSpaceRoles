@@ -11,16 +11,15 @@ using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
-    public class NiceSwapper : CustomRole
+    public class EvilSwapper : CustomRole
     {
         public static List<Target> targets = [];
-        public static NiceSwapper instance;
         public PlayerControl SwapPC1;
         public PlayerControl SwapPC2;
-        public NiceSwapper()
+        public EvilSwapper()
         {
-            team = Teams.Crewmate;
-            Role = Roles.NiceSwapper;
+            team = Teams.Impostor;
+            Role = Roles.EvilSwapper;
             Color = Helper.ColorFromColorcode("#863756");
         }
         public static CustomOption SwapCount;
@@ -28,13 +27,12 @@ namespace TheSpaceRoles
         {
             if (SwapCount != null) return;
 
-            SwapCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.niceswapper.swapcount", new CustomIntRange(1, 15, 1), 2);
+            SwapCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.evilswapper.swapcount", new CustomIntRange(1, 15, 1), 2);
 
             Options = [SwapCount];
         }
         public override void HudManagerStart(HudManager hudManager)
         {
-            instance = this;
             targets = [];
         }
         public override void MeetingStart(MeetingHud meeting)
@@ -115,7 +113,7 @@ namespace TheSpaceRoles
                 Logger.Info($"SwapPC2={targetplayer.Data.PlayerName}");
                 SwapPC2 = targetplayer;
                 targets.Do(x=>x.gameObject.SetActive(false));
-                var m = Rpc.SendRpcUsebility(Roles.NiceSwapper,PlayerControl.LocalPlayer.PlayerId,0);
+                var m = Rpc.SendRpcUsebility(Roles.EvilSwapper,PlayerControl.LocalPlayer.PlayerId,0);
                 m.Write(SwapPC1.PlayerId);
                 m.Write(SwapPC2.PlayerId);
             }
@@ -124,7 +122,7 @@ namespace TheSpaceRoles
         {
             DataBase.AllPlayerRoles[playerid].Do(x =>
             {
-               var swap = (NiceSwapper)x;
+               var swap = (EvilSwapper)x;
                 swap.SwapPC1 = Helper.GetPlayerById(id1);
                 swap.SwapPC2 = Helper.GetPlayerById(id2);
 
@@ -139,7 +137,7 @@ namespace TheSpaceRoles
             public int playerId;
             public PassiveButton passiveButton;
             public SpriteRenderer renderer;
-            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting,NiceSwapper swapper)
+            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting,EvilSwapper swapper)
             {
                 this.voteArea = playerVoteArea;
                 this.playerId = playerVoteArea.TargetPlayerId;

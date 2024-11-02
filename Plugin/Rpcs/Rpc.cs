@@ -73,6 +73,9 @@ namespace TheSpaceRoles
                             case Roles.NiceSwapper:
                                 NiceSwapper.RpcSwap(useAbilityPlayerId, reader.ReadInt32(), reader.ReadInt32());
                                 break;
+                            case Roles.EvilSwapper:
+                                EvilSwapper.RpcSwap(useAbilityPlayerId, reader.ReadInt32(), reader.ReadInt32());
+                                break;
                         }
 
                         break;

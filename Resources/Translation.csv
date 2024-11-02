@@ -79,6 +79,7 @@ option.role.evilguesser.guesscount,Maximum number of Guesses,,,,,,,,,,,推測可
 option.role.evilguesser.guesscountofmeeting,Number of Guesses possible per Meeting,,,,,,,,,,,会議ごとの推測可能回数,,,,,
 option.role.evilguesser.canguesscrewmate,Can Guess {role.crewmate.coloredname},,,,,,,,,,,{role.crewmate.coloredname}も撃てるか,,,,,
 option.role.niceswapper.swapcount,*,,,,,,,,,,,投票入れ替え可能回数,,,,,
+option.role.evilwapper.swapcount,*,,,,,,,,,,,投票入れ替え可能回数,,,,,
 ,,,,,,,,,,,,,,,,,
 #PlayerColor,,,,,,,,,,,,,,,,,
 playercolor.tarmarind,Tarmarind,,,,,,,,,,,タマリンド,,,,,
@@ -157,10 +158,10 @@ team.madmate.wincodition,,,,,,,,,,,,,,,,,
 #jester,,,,,,,,,,,,,,,,,,
 team.jester.name,Jester,,,,,,,,,,,ジェスター,,,,,てるてる陣営
 team.jester.sname,(Je),,,,,,,,,,,,,,,,
-team.jester.intro,*,,,,,,,,,,,,,,,,*
-team.jester.sintro,*,,,,,,,,,,,,,,,,*
-team.jester.description,,,,,,,,,,,,,,,,,*
-team.jester.wincodition,,,,,,,,,,,,,,,,,
+team.jester.intro,*,,,,,,,,,,,皆を欺き追放されよう,,,,,*
+team.jester.sintro,*,,,,,,,,,,,皆を欺き追放されよう,,,,,*
+team.jester.description,,,,,,,,,,,,ジェスターはクルーでもインポスターでもない孤高の陣営です。\n追放されることで単独勝利となります。,,,,,
+team.jester.wincodition,,,,,,,,,,,,投票により追放されること,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 #jackal,,,,,,,,,,,,,,,,,,
@@ -187,13 +188,13 @@ role.template.description,,,,,,,,,,,,_,,,,,
 role.crewmate.name,Crewmate,,,,,,,,,,,クルーメイト,,,,,市民
 role.crewmate.intro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、インポスターを追放しろ,,,,,仕事をこなし、人狼を処刑せよ
 role.crewmate.sintro,Do the task and eject the {team.impostor.coloredname},,,,,,,,,,,タスクを行い、インポスターを追放しろ,,,,,仕事をこなし、人狼を処刑せよ
-role.crewmate.description,*,,,,,,,,,,,,,,,,*
+role.crewmate.description,*,,,,,,,,,,,特に能力のない通常の{role.crewmate.coloredname}です。\nタスクをこなして時には疑い、{role.impostor.coloredname}を特定しましょう!\n{role.crewmate.coloredname}だって立派な役職です。タスクや推理等で{role.crewmate.coloredname}の勝利に貢献しましょう! ,,,,,*
 ,,,,,,,,,,,,,,,,,,
 #impostor,,,,,,,,,,,,,,,,,
 role.impostor.name,Impostor,,,,,,,,,,,インポスター,,,,,人狼
 role.impostor.intro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,クルーメイトを全滅させろ,,,,,村を壊滅させろ
 role.impostor.sintro,Kill the all the {team.crewmate.coloredname},,,,,,,,,,,クルーメイトを全滅させろ,,,,,村を壊滅させろ
-role.impostor.description,*,,,,,,,,,,,,,,,,*
+role.impostor.description,*,,,,,,,,,,,キル、ベント、サボタージュが出来る。\n{role.crewmate.coloredname}を殺害することさえ出来れば特別な能力なんて必要ないだろう？,,,,,
 ,,,,,,,,,,,,,,,,,
 #niceguesser,,,,,,,,,,,,,,,,,
 role.niceguesser.name,Guesser,,,,,,,,,,,ナイスゲッサー,,,,,推測者
@@ -248,22 +249,27 @@ role.madmate.description,"Madmate is a Crewmates but is tasked with supporting t
 ,,,,,,,,,,,,,,,,,,
 #jackal,,,,,,,,,,,,,,,,,
 role.jackal.name,Jackal,,,,,,,,,,,ジャッカル,,,,,*
-role.jackal.intro,*,,,,,,,,,,,*,,,,,*
-role.jackal.sintro,*,,,,,,,,,,,*,,,,,*
+role.jackal.intro,*,,,,,,,,,,,目に映る邪魔な物は全て排除してくれよう,,,,,
+role.jackal.sintro,,,,,,,,,,,,,,,,,
 role.jackal.description,"Jackal is a Neutrals, neither Crewmates nor Imposters. Like the Imposters, it can Kill and Vent, but cannot cause Sabotage. It wins by killing non-Jackal teams and by having an equal number of Crewmates and Jackal teams. A Sidekick may be nominated only once during the match, and the Sidekick is promoted to Jackal when the Jackal is killed. Also, if the Jackal remains on the board where the ImposterS could originally win, the match continues. Appoint the Sidekick well and destroy the ship.",,,,,,,,,,,ジャッカルはクルーでもインポスターでもないニュートラル。\nインポスターと同様キルやベントができるが、サボタージュは起こせない。\nジャッカル陣営以外を殺害し、クルーとジャッカル陣営が同数になることによって勝利します。\n試合中に1度だけサイドキックを指名することができ、ジャッカルが死亡した際にサイドキックはジャッカルへと昇格します。\nまた、本来インポスターが勝利できる盤面でもジャッカルが残っている際は試合が続行します。\nサイドキックを上手く任命して、船を壊滅させろ。,,,,,
 ,,,,,,,,,,,,,,,,,,
 #mayor,,,,,,,,,,,,,,,,,
 role.mayor.name,Mayor,,,,,,,,,,,メイヤー,,,,,村長
 role.mayor.intro,,,,,,,,,,,,船員を先導せよ,,,,,
 role.mayor.sintro,Let justice be done,,,,,,,,,,,船員を先導せよ,,,,,
-role.mayor.description,*,,,,,,,,,,,*,,,,,*
+role.mayor.description,*,,,,,,,,,,,メイヤーは投票した際に､票数が増えます。あなたの票は他の人より多い｡慎重に投票先を決めよう｡,,,,,*
 ,,,,,,,,,,,,,,,,,,
 #niceswapper,,,,,,,,,,,,,,,,,
-role.niceswapper.name,NiceSwapper,,,,,,,,,,,ナイススワッパー,,,,,*
-role.niceswapper.intro,*,,,,,,,,,,,*,,,,,
-role.niceswapper.sintro,*,,,,,,,,,,,*,,,,,
-role.niceswapper.description,*,,,,,,,,,,,*,,,,,*
+role.niceswapper.name,NiceSwapper,,,,,,,,,,,ナイススワッパー,,,,,
+role.niceswapper.intro,*,,,,,,,,,,,命運を握りし者,,,,,
+role.niceswapper.sintro,,,,,,,,,,,,,,,,,
+role.niceswapper.description,*,,,,,,,,,,,会議中、スワップを任意の二人に使用することでその二人の投票を交換できます。\nスワップを利用し、{team.crewmate.coloredname}を{team.impostor.coloredname}の魔の手から守り抜きましょう!,,,,,
 ,,,,,,,,,,,,,,,,,,
+#evilswapper,,,,,,,,,,,,,,,,,
+role.evilswapper.name,EvilSwapper,,,,,,,,,,,イビルスワッパー,,,,,
+role.evilswapper.intro,*,,,,,,,,,,,命運を握りし者,,,,,
+role.evilswapper.sintro,,,,,,,,,,,,,,,,,
+role.evilswapper.description,*,,,,,,,,,,,会議中、スワップを任意の二人に使用し、その二人の投票を交換できる。\nスワップを利用し共に乗組員を絶望の淵に突き落とそうじゃないか。,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
