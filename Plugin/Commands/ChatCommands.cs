@@ -206,7 +206,7 @@ namespace TheSpaceRoles
 
                                     PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate, true);
                                 }
-                                GameStarter.SendRpcSetRole(RoleData.GetCustomRoles[roleId].Role, PlayerControl.LocalPlayer.PlayerId);
+                                RoleSelect.SendRpcSetRole(RoleData.GetCustomRoles[roleId].Role, PlayerControl.LocalPlayer.PlayerId);
                                 PlayerControl.LocalPlayer.Init();
                                 PlayerControl.LocalPlayer.ButtonResetStart();
                                 DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(HudManager.Instance));
@@ -231,7 +231,7 @@ namespace TheSpaceRoles
                                             PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate, true);
                                         }
 
-                                        GameStarter.SendRpcSetRole(role.Role, PlayerControl.LocalPlayer.PlayerId);
+                                        RoleSelect.SendRpcSetRole(role.Role, PlayerControl.LocalPlayer.PlayerId);
                                         PlayerControl.LocalPlayer.Init();
                                         PlayerControl.LocalPlayer.ButtonResetStart();
                                         DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(HudManager.Instance));
@@ -257,23 +257,6 @@ namespace TheSpaceRoles
                         }
 
                         break;
-                    case "/":
-                        if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
-                        addchat += "count : " + DataBase.AllPlayerRoles.Count + "\n";
-                        addchat += "playerlist : \n";
-                        addchat += DataBase.AllPlayerRoles.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.Select(x => x.ColoredRoleName).Joinsep(",")).Joinsep("\n");
-                        addchat += "assignedRole:" + DataBase.AssignedRoles().Select(x => x.ToString()).Joinsep("\n");
-                        break;
-                    case "/vent":
-                        if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
-                        PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(int.Parse(chats[1]));
-
-                        break;
-                    case "/vvent":
-                        if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
-                        PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(int.Parse(chats[1]));
-                        break;
-
 
                 }
                 if (TSR.DebugMode.Value)
@@ -316,8 +299,47 @@ namespace TheSpaceRoles
                             addchat += "meetingskip" + "\n";
                             break;
                         case "/m5":
-                            addchat += $"{DataBase.AllPlayerRoles.Join(x=>x.Key+":"+x.Value.Select(x=>x.ColoredRoleName).Joinsep(",")+"\n")}";
+                            addchat += $"{DataBase.AllPlayerRoles.Join(x => x.Key + ":" + x.Value.Select(x => x.ColoredRoleName).Joinsep(",") + "\n")}";
                             break;
+                        case "/":
+                            if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
+                            addchat += "count : " + DataBase.AllPlayerRoles.Count + "\n";
+                            addchat += "playerlist : \n";
+                            addchat += DataBase.AllPlayerRoles.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.Select(x => x.ColoredRoleName).Joinsep(",")).Joinsep("\n");
+                            addchat += "assignedRole:" + DataBase.AssignedRoles().Select(x => x.ToString()).Joinsep("\n");
+                            break;
+                        case "/vent":
+                            if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
+                            PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(int.Parse(chats[1]));
+
+                            break;
+                        case "/vvent":
+                            if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
+                            PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(int.Parse(chats[1]));
+                            break;
+                        case "/map":
+                            switch (chats[1])
+                            {
+                                case "s":
+                                case "sabo":
+                                case "sab":
+                                    HudManager.Instance.InitMap();
+                                    MapBehaviour.Instance.ShowSabotageMap();
+                                    break;
+                                case "ad":
+                                case "a":
+                                    HudManager.Instance.InitMap();
+                                    MapBehaviour.Instance.ShowCountOverlay(true,true,true);
+                                    break;
+                                default:
+
+                                    HudManager.Instance.InitMap();
+                                    MapBehaviour.Instance.ShowNormalMap();
+                                    break;
+
+                            }
+                            break;
+
                     }
                 }
                 if (addchat != "")

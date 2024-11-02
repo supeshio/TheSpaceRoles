@@ -48,7 +48,7 @@ namespace TheSpaceRoles
         }
         public override void Update()
         {
-            Logger.Message("Update",Roles.SerialKiller.ToString());
+            Logger.Message("Update", Roles.SerialKiller.ToString());
             if (TimerStarted)
             {
 

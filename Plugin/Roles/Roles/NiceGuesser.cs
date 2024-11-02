@@ -4,7 +4,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using static TheSpaceRoles.CustomOption;
-using static TheSpaceRoles.CustomOptionsHolder;
 using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
@@ -25,9 +24,9 @@ namespace TheSpaceRoles
         {
             if (GuessCount != null) return;
 
-            GuessCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscount",new CustomIntRange(1,15,1), 2);
+            GuessCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscount", new CustomIntRange(1, 15, 1), 2);
             GuessCountOfMeeting = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.guesscountofmeeting", new CustomIntRange(1, 15, 1), 14);
-            CanGuessCrewmate = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.canguesscrewmate",true);
+            CanGuessCrewmate = Create(CustomOption.OptionType.Crewmate, "role.niceguesser.canguesscrewmate", true);
 
             Options = [GuessCount, GuessCountOfMeeting, CanGuessCrewmate];
         }
@@ -65,13 +64,13 @@ namespace TheSpaceRoles
                             if (!untargetingplayerids.Contains(player.TargetPlayerId))
                             {
 
-                                targets.Add(new Target(player, meeting,this));
+                                targets.Add(new Target(player, meeting, this));
                             }
                         }
                         else
                         {
 
-                            targets.Add(new Target(player, meeting,this));
+                            targets.Add(new Target(player, meeting, this));
                         }
                     }
                 }
@@ -165,7 +164,7 @@ namespace TheSpaceRoles
                 BackRend.color = Palette.EnabledColor;
                 reset();
                 BackRend.gameObject.SetActive(true);
-                roleaction(Roles.None,this);
+                roleaction(Roles.None, this);
 
             }));
             BackRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
@@ -291,7 +290,7 @@ namespace TheSpaceRoles
 
 
 
-            void roleaction(Roles role,NiceGuesser guesser)
+            void roleaction(Roles role, NiceGuesser guesser)
             {
 
                 meeting.ButtonParent.gameObject.SetActive(true);
@@ -366,7 +365,7 @@ namespace TheSpaceRoles
                 p.OnClick.AddListener((System.Action)(() =>
                 {
                     rend.color = Palette.AcceptedGreen;
-                    roleaction(role,this);
+                    roleaction(role, this);
 
                 }));
                 p.OnMouseOver.AddListener((System.Action)(() =>
@@ -467,7 +466,7 @@ namespace TheSpaceRoles
             public int playerId;
             public PassiveButton passiveButton;
             public SpriteRenderer renderer;
-            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting,NiceGuesser guesser)
+            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting, NiceGuesser guesser)
             {
                 this.voteArea = playerVoteArea;
                 this.playerId = playerVoteArea.TargetPlayerId;

@@ -41,6 +41,7 @@ namespace TheSpaceRoles
         NiceSwapper,//all
         EvilSwapper,//all
         Sheriff,//c 
+        EvilHacker,
         //all or other(ここから　
         //all
         Engineer,//c
@@ -111,6 +112,7 @@ namespace TheSpaceRoles
             new Mayor(),
             new NiceSwapper(),
             new EvilSwapper(),
+            new EvilHacker(),
         ];
 
         public static List<CustomRole> GetCustomRoles_Normal =>

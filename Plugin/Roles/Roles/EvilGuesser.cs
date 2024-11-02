@@ -4,7 +4,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using static TheSpaceRoles.CustomOption;
-using static TheSpaceRoles.CustomOptionsHolder;
 using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles

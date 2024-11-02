@@ -19,7 +19,7 @@ namespace TheSpaceRoles
         {
             var pc = PlayerControl.LocalPlayer;
             SetPlayerScale(pc, 0.4f);
-            var writer = Rpc.SendRpcUsebility(Role, PlayerId, 0);
+            var writer = CustomRPC.SendRpcUsebility(Role, PlayerId, 0);
             writer.Write(0);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             Timer = MaxTimer;
@@ -36,7 +36,7 @@ namespace TheSpaceRoles
                 if (MaxTimer - Timer > (age + 1) * MaxTimer / 20)
                 {
                     age += 1;
-                    var writer = Rpc.SendRpcUsebility(Role, PlayerId, 0);
+                    var writer = CustomRPC.SendRpcUsebility(Role, PlayerId, 0);
                     writer.Write(age);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     SetAge(PlayerId, age);

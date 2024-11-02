@@ -15,6 +15,10 @@
             CanUseVent = true;
             CanUseVital = true;
             HasTask = false;
+            ShowingAdminIncludeDeadBodies = true;
+            ShowingMapAllowedToMove = true;
+            ImpostorMap = true;
+            AdminMap = false;
         }
         public override bool WinCheck()
         {

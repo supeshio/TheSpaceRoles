@@ -6,7 +6,8 @@ using UnityEngine;
 namespace TheSpaceRoles
 {
 
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.OnGameStart))]
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Start))]
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.OnEnable))]
     public static class RoleTextManager
     {
         public static TextMeshPro RoleText;
@@ -14,16 +15,16 @@ namespace TheSpaceRoles
         {
 
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
-            if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
-            if (AmongUsClient.Instance.ClientId != __instance.Data.ClientId) return;
+            //if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
+            if (RoleText?.text != null) return; 
             //if (AmongUsClient.Instance.AmHost) DataBase.AllPlayerControls().Do(x => x.RpcSetRole(RoleTypes.Crewmate));
 
             //DataBase.AllPlayerControls().First(x => x.PlayerId == i).cosmetics.nameText.text = t + $"\n <size=80%>{string.Join("×", rolemaster.Select(x => x.ColoredRoleName()))}";
-            var d = __instance.cosmetics.nameText;
+            var d = PlayerControl.LocalPlayer.cosmetics.nameText;
             GameObject gameObject = new("roletext");
             RoleText = gameObject.AddComponent<TextMeshPro>();
-            RoleText.transform.SetParent(d.transform.parent);
-            RoleText.transform.localPosition = new Vector3(d.transform.localPosition.x, d.transform.localPosition.y + 0.25f, d.transform.localPosition.z);
+            RoleText.transform.SetParent(PlayerControl.LocalPlayer.transform);
+            RoleText.transform.localPosition = new Vector3(0, 1.25f, 0);
             RoleText.alignment = TextAlignmentOptions.Center;
             RoleText.tag = d.tag;
             RoleText.fontSize = d.fontSize;
@@ -32,8 +33,9 @@ namespace TheSpaceRoles
             RoleText.transform.localScale = Vector3.one;
             RoleText.m_sharedMaterial = d.m_sharedMaterial;
             RoleText.fontStyle = d.fontStyle;
+            RoleText.fontSizeMin=RoleText.fontSizeMax = RoleText.fontSize = 2f;
 
-            TheSpaceRoles.RoleTextManager.RoleText.text = $"<size=85%>{string.Join("</color>×", DataBase.AllPlayerRoles[__instance.PlayerId].Select(x => x.ColoredRoleName)/*+"</color>"*/)}";
+            //RoleText.text = DataBase.AllPlayerRoles[__instance.PlayerId][0].ColoredRoleName;
 
 
             foreach ((int i, CustomRole[] rolemaster) in DataBase.AllPlayerRoles)
@@ -56,9 +58,8 @@ namespace TheSpaceRoles
             if (TheSpaceRoles.RoleTextManager.RoleText != null)
             {
 
-                if (AmongUsClient.Instance.ClientId != __instance.Data.ClientId) return;
-                TheSpaceRoles.RoleTextManager.RoleText.text = $"<size=85%>{string.Join("</color>×", DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Select(x => x.ColoredRoleName)/*+"</color>"*/)}";
-
+                if (PlayerControl.LocalPlayer.PlayerId!=__instance.PlayerId) return;
+                TheSpaceRoles.RoleTextManager.RoleText.text = DataBase.AllPlayerRoles[__instance.PlayerId][0].ColoredRoleName;
             }
         }
     }

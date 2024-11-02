@@ -77,9 +77,9 @@ namespace TheSpaceRoles
             TSRText.enabled = true;
             TSRText.gameObject.active = true;
             TSRText.material = DestroyableSingleton<PingTracker>.Instance.text.material;
-            TSRText.font= DestroyableSingleton<PingTracker>.Instance.text.font;
-            TSRText.outlineColor= Color.black;
-            TSRText.outlineWidth= 0.1f;
+            TSRText.font = DestroyableSingleton<PingTracker>.Instance.text.font;
+            TSRText.outlineColor = Color.black;
+            TSRText.outlineWidth = 0.1f;
         }
     }
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]

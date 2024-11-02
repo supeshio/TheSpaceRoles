@@ -8,6 +8,7 @@ namespace TheSpaceRoles
         public CustomRole Role;
         public Teams Team;
         public Color Color = new(0, 0, 0);
+        public Color MapBackColor;
         public bool HasKillButton = false;
         public bool CanUseVent = true;
         public bool CanUseAdmin = true;
@@ -18,6 +19,10 @@ namespace TheSpaceRoles
         public bool CanRepairSabotage = true;
         public bool CanUseVentMoving = true;
         public bool HasTask = true;
+        public bool ImpostorMap = false;
+        public bool AdminMap = false;
+        public bool ShowingMapAllowedToMove = true;
+        public bool ShowingAdminIncludeDeadBodies = true;
         public string ColoredTeamName => ColoredText(Color, Translation.GetString("team." + Team.ToString() + ".name"));
         public string RoleName => Translation.GetString("team." + Team.ToString() + ".name");
         public string ShortRoleName => Translation.GetString("team." + Team.ToString() + ".sname");

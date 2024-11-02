@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using static TheSpaceRoles.CustomOption;
-using static TheSpaceRoles.CustomOptionsHolder;
 using static TheSpaceRoles.Helper;
 using static TheSpaceRoles.Ranges;
 
@@ -32,7 +30,7 @@ namespace TheSpaceRoles
             KillDistance = Create(CustomOption.OptionType.Impostor, "role.vampire.killdistance", KillDistanceRange(), 4);
             KillCoolDown = Create(CustomOption.OptionType.Impostor, "role.vampire.killcooldown", new CustomFloatRange(2.5f, 60, 2.5f), 12);
             UseGarlic = Create(CustomOption.OptionType.Impostor, "role.vampire.usegarlic", true);
-            GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role.vampire.garlicareasize", new CustomFloatRange(1,10,1), 4, Show: UseGarlic.GetBoolValue);
+            GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role.vampire.garlicareasize", new CustomFloatRange(1, 10, 1), 4, Show: UseGarlic.GetBoolValue);
 
             //キル遅延時間、キルク、ニンニク内だと特殊キルができなくなりその上でさらに通常キルもできなくなるかの設定
             Options = [KillDelayTime, KillCoolDown, GarlicAreaSize, KillDistance];
@@ -57,7 +55,7 @@ namespace TheSpaceRoles
                 true, false, 10f, OnEffectEnd: () =>
                 {
                     UnCheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, BittenPlayerControl, DeathReason.BittenByVampire, false);
-                }); 
+                });
 
         }
     }

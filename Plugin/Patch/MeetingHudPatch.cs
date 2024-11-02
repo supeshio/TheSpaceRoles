@@ -1,16 +1,13 @@
 ﻿using HarmonyLib;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using Rewired.Internal;
-using Steamworks;
 using System.Collections.Generic;
 using System.Linq;
-using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
     [HarmonyPatch(typeof(MeetingHud))]
     public static class MeetingHudVote
     {
+        public static bool IsMeeting = false;
         [HarmonyPatch(nameof(MeetingHud.CheckForEndVoting)), HarmonyPrefix]
         private static bool CheckForVoting(MeetingHud __instance)
         {
@@ -31,7 +28,7 @@ namespace TheSpaceRoles
                     //        VotedForId = playerVoteArea.VotedFor
                     //    });
                     //}
-                    list.Add( new MeetingHud.VoterState
+                    list.Add(new MeetingHud.VoterState
                     {
                         VoterId = playerVoteArea.TargetPlayerId,
                         VotedForId = playerVoteArea.VotedFor
@@ -49,8 +46,8 @@ namespace TheSpaceRoles
                 list = [.. list.OrderBy(x => x.VoterId)];
 
 
-                byte frequentry = list.Where(x=>x.VotedForId!=252&&x.VotedForId!=254&&x.VotedForId!=255).Select(x=>x.VotedForId).ToList().MaxFrequency(out bool tie);
-                NetworkedPlayerInfo exiled = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(v => !tie && v.PlayerId == list.First(x=>x.VoterId==frequentry).VoterId && !v.IsDead);
+                byte frequentry = list.Where(x => x.VotedForId != 252 && x.VotedForId != 254 && x.VotedForId != 255).Select(x => x.VotedForId).ToList().MaxFrequency(out bool tie);
+                NetworkedPlayerInfo exiled = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(v => !tie && v.PlayerId == list.First(x => x.VoterId == frequentry).VoterId && !v.IsDead);
                 //Helper.AddChat($"VoterList:\n{list.Join(x=>$"Voter:{x.VoterId},VotedFor:{x.VotedForId}",",\n")}\n,Exiled:{exiled?.PlayerName},Tie:{tie}");
                 //Helper.AddChat($"Dictionary:\n{list.Where(x => x.VotedForId != 252 && x.VotedForId != 254 && x.VotedForId != 255).Join(x => $"{x.VotedForId}", ",")}");
                 __instance.RpcVotingComplete(list.ToArray(), exiled, tie);
@@ -62,9 +59,20 @@ namespace TheSpaceRoles
             return false;
 
         }
+        [HarmonyPatch(typeof(ExileController))]
+        [HarmonyPatch(nameof(ExileController.ReEnableGameplay)),HarmonyPostfix]
+
+        private static void End(MeetingHud __instance)
+        {
+            IsMeeting = false;
+            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.MeetingStart(__instance));
+
+        }
+
         [HarmonyPatch(nameof(MeetingHud.Start)), HarmonyPostfix]
         private static void Start(MeetingHud __instance)
         {
+            IsMeeting =true;
             DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.MeetingStart(__instance));
 
         }

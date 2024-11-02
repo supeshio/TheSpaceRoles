@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace TheSpaceRoles
 {
     /// <summary>
     /// OptionSelectionAdvancedSelector
     /// </summary>
-    public enum OSAS:int
+    public enum OSAS : int
     {
         unlimted = int.MinValue,
         right,
@@ -35,10 +34,10 @@ namespace TheSpaceRoles
                 OSAS.killdistance_medium or
                 OSAS.killdistance_long //or
                 //OSAS.killdistance_default
-                =>KillDistances[KillDistanceNames.IndexOf(selector.ToString()[13..])],
-                OSAS.on=>-1,
+                => KillDistances[KillDistanceNames.IndexOf(selector.ToString()[13..])],
+                OSAS.on => -1,
                 OSAS.off => -2,
-                _ =>(int)selector,
+                _ => (int)selector,
             };
 
         public static string GetStringFromSelector(this OSAS selector) =>
@@ -55,7 +54,7 @@ namespace TheSpaceRoles
 
 
         public static List<float> KillDistances = new() { 0.5f, 1f, 1.8f, 2.5f };
-        public static List<string> KillDistanceNames = ["veryshort", "short", "medium", "long","default"];
+        public static List<string> KillDistanceNames = ["veryshort", "short", "medium", "long", "default"];
         public class CustomRange
         {
             public virtual float GetValue(int i)
@@ -72,7 +71,7 @@ namespace TheSpaceRoles
             public virtual string[] GetSelectors() => [];
             public virtual float[] GetValues() => [];
         }
-        public static CustomRange KillDistanceRange()=>new CustomSelectionRange([OSAS.killdistance_default,OSAS.killdistance_veryshort,OSAS.killdistance_short,OSAS.killdistance_medium,OSAS.killdistance_long]);
+        public static CustomRange KillDistanceRange() => new CustomSelectionRange([OSAS.killdistance_default, OSAS.killdistance_veryshort, OSAS.killdistance_short, OSAS.killdistance_medium, OSAS.killdistance_long]);
         public class CustomFloatRange : CustomRange
         {
             public override string[] GetSelectors()
@@ -112,7 +111,7 @@ namespace TheSpaceRoles
                 this.min = min;
                 this.max = max;
                 this.step = step;
-                if(selectors != null)
+                if (selectors != null)
                 {
                     this.addtional = selectors;
                     addtional.Sort();
@@ -159,7 +158,7 @@ namespace TheSpaceRoles
             int min;
             int step;
             List<OSAS> addtional;
-            public CustomIntRange(int min, int max, int step=1, List<OSAS> selectors = null)
+            public CustomIntRange(int min, int max, int step = 1, List<OSAS> selectors = null)
             {
                 this.min = min;
                 this.max = max;

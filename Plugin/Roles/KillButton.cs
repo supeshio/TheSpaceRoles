@@ -54,7 +54,7 @@ namespace TheSpaceRoles
 
             }
 
-            return PlayerControlButtonControls.SetTarget(targetdistance, color, notIncludeTeamIds, [.. nIids], target, canBeTargetInVentPlayer);
+            return CustomButton.SetTarget(targetdistance, color, notIncludeTeamIds, [.. nIids], target, canBeTargetInVentPlayer);
         }/*
         [HarmonyPatch(nameof(KillButton.CheckClick)), HarmonyPostfix]
         public static void Click(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)

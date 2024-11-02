@@ -1,12 +1,8 @@
 ﻿using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
-using static TheSpaceRoles.CustomOption;
-using static TheSpaceRoles.CustomOptionsHolder;
 using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
@@ -20,7 +16,7 @@ namespace TheSpaceRoles
         {
             team = Teams.Impostor;
             Role = Roles.EvilSwapper;
-            Color = Helper.ColorFromColorcode("#863756");
+            Color = Palette.ImpostorRed;
         }
         public static CustomOption SwapCount;
         public override void OptionCreate()
@@ -45,13 +41,13 @@ namespace TheSpaceRoles
             Logger.Info("Swap");
             if (SwapPC1 != null && SwapPC2 != null)
             {
-                Logger.Info($"{SwapPC1.Data.PlayerName}({SwapPC1.PlayerId})<>{SwapPC2.Data.PlayerName}({SwapPC2})");
+                Logger.Info($"{SwapPC1.Data.PlayerName}({SwapPC1.PlayerId})<=>{SwapPC2.Data.PlayerName}({SwapPC2})");
                 for (int i = 0; i < states.Count; i++)
                 {
                     var state = states[i];
-                    if (state.VotedForId ==SwapPC1.PlayerId)
+                    if (state.VotedForId == SwapPC1.PlayerId)
                     {
-                        state.VotedForId =  SwapPC2.PlayerId;
+                        state.VotedForId = SwapPC2.PlayerId;
                     }
                     else
                         if (state.VotedForId == SwapPC2.PlayerId)
@@ -84,13 +80,13 @@ namespace TheSpaceRoles
                             if (!untargetingplayerids.Contains(player.TargetPlayerId))
                             {
 
-                                targets.Add(new Target(player, meeting,this));
+                                targets.Add(new Target(player, meeting, this));
                             }
                         }
                         else
                         {
 
-                            targets.Add(new Target(player, meeting,this));
+                            targets.Add(new Target(player, meeting, this));
                         }
                     }
                 }
@@ -106,23 +102,23 @@ namespace TheSpaceRoles
             {
                 Logger.Info($"SwapPC1={targetplayer.Data.PlayerName}");
                 SwapPC1 = targetplayer;
-                targets.DoIf(x => x.playerId==targetplayer.PlayerId,x=>x.gameObject.SetActive(false));
+                targets.DoIf(x => x.playerId == targetplayer.PlayerId, x => x.gameObject.SetActive(false));
             }
             else if (SwapPC2 == null)
             {
                 Logger.Info($"SwapPC2={targetplayer.Data.PlayerName}");
                 SwapPC2 = targetplayer;
-                targets.Do(x=>x.gameObject.SetActive(false));
-                var m = Rpc.SendRpcUsebility(Roles.EvilSwapper,PlayerControl.LocalPlayer.PlayerId,0);
+                targets.Do(x => x.gameObject.SetActive(false));
+                var m = CustomRPC.SendRpcUsebility(Roles.EvilSwapper, PlayerControl.LocalPlayer.PlayerId, 0);
                 m.Write(SwapPC1.PlayerId);
                 m.Write(SwapPC2.PlayerId);
             }
         }
-        public static void RpcSwap(int playerid, int id1,int id2)
+        public static void RpcSwap(int playerid, int id1, int id2)
         {
             DataBase.AllPlayerRoles[playerid].Do(x =>
             {
-               var swap = (EvilSwapper)x;
+                var swap = (EvilSwapper)x;
                 swap.SwapPC1 = Helper.GetPlayerById(id1);
                 swap.SwapPC2 = Helper.GetPlayerById(id2);
 
@@ -137,7 +133,7 @@ namespace TheSpaceRoles
             public int playerId;
             public PassiveButton passiveButton;
             public SpriteRenderer renderer;
-            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting,EvilSwapper swapper)
+            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting, EvilSwapper swapper)
             {
                 this.voteArea = playerVoteArea;
                 this.playerId = playerVoteArea.TargetPlayerId;

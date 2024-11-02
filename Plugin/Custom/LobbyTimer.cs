@@ -114,7 +114,7 @@ public class LobbyTimer
 
             if (AmongUsClient.Instance.NetworkMode == NetworkModes.LocalGame) return;
             if (!AmongUsClient.Instance.AmHost) return;
-            MessageWriter writer = Rpc.SendRpc(Rpcs.SendRoomTimer);
+            MessageWriter writer = CustomRPC.SendRpc(Rpcs.SendRoomTimer);
             writer.Write(timer);
             writer.Write(Time.time);
             AmongUsClient.Instance.FinishRpcImmediately(writer);

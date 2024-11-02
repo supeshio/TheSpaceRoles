@@ -2,13 +2,12 @@
 using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
     [HarmonyPatch]
-    public static class GameStarter
+    public static class RoleSelect
     {
         [HarmonyPatch(typeof(GameManager))]
         [HarmonyPatch(nameof(GameManager.StartGame)), HarmonyPostfix]
@@ -37,7 +36,7 @@ namespace TheSpaceRoles
 
         public static void Select()
         {
-            AmongUsClient.Instance.FinishRpcImmediately(Rpc.SendRpc(Rpcs.DataBaseReset));
+            AmongUsClient.Instance.FinishRpcImmediately(CustomRPC.SendRpc(Rpcs.DataBaseReset));
             DataBase.ResetAndPrepare();
 
 
@@ -102,7 +101,8 @@ namespace TheSpaceRoles
                 var team = Teams.Impostor;
                 var teammembers = CustomOptionsHolder.TeamOptions_Count[team].Selection();
                 List<Roles> v = [];
-                if (tr.ContainsKey(team)){
+                if (tr.ContainsKey(team))
+                {
 
                     v = tr[team];
                 }
@@ -211,7 +211,7 @@ namespace TheSpaceRoles
                     SetRole(item, (int)roles);
 
                     //Rpc
-                    var writer = Rpc.SendRpc(Rpcs.SetRole);
+                    var writer = CustomRPC.SendRpc(Rpcs.SetRole);
                     writer.Write((int)item);
                     writer.Write((int)roles);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -226,7 +226,7 @@ namespace TheSpaceRoles
             SetRole(playerId, (int)role);
 
             //Rpc
-            var writer = Rpc.SendRpc(Rpcs.SetRole);
+            var writer = CustomRPC.SendRpc(Rpcs.SetRole);
             writer.Write(playerId);
             writer.Write((int)role);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -251,21 +251,19 @@ namespace TheSpaceRoles
             //{
             var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
             p.ReSet(playerId);
-            p.CustomTeam.Role = p;
             DataBase.AllPlayerRoles.Add(playerId, [p]);
 
             //}
-            if (DataBase.AllPlayerTeams.ContainsKey(playerId))
-            {
 
-                DataBase.AllPlayerTeams[playerId] = RoleData.GetCustomRoleFromRole((Roles)roleId).team;
-            }
-            else
-            {
+        }
+        public static void ChangeMainRole(int playerId, int roleId)
+        {
 
-                DataBase.AllPlayerTeams.Add(playerId, RoleData.GetCustomRoleFromRole((Roles)roleId).team);
-            }
-
+            Logger.Info($"Player:{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName}({playerId}) -> Role:{(Roles)roleId}","ChangeRole");
+            var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
+            p.ReSet(playerId);
+            DataBase.AllPlayerRoles.Remove(playerId);
+            DataBase.AllPlayerRoles.Add(playerId, [p]);
         }
 
         public static void GameStartAndPrepare()

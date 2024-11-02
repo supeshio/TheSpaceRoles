@@ -38,7 +38,7 @@ namespace TheSpaceRoles
 
 
             Murder(source.PlayerId, target.PlayerId, reason);
-            MessageWriter writer = Rpc.SendRpc(Rpcs.CheckedMurderPlayer);
+            MessageWriter writer = CustomRPC.SendRpc(Rpcs.CheckedMurderPlayer);
             writer.Write((int)source.PlayerId);
             writer.Write((int)target.PlayerId);
             writer.Write((int)reason);
@@ -66,7 +66,7 @@ namespace TheSpaceRoles
 
 
             Murder(source.PlayerId, target.PlayerId, reason);
-            MessageWriter writer = Rpc.SendRpc(Rpcs.UnCheckedMurderPlayer);
+            MessageWriter writer = CustomRPC.SendRpc(Rpcs.UnCheckedMurderPlayer);
             writer.Write((int)source.PlayerId);
             writer.Write((int)target.PlayerId);
             writer.Write((int)reason);

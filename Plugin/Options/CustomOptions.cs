@@ -251,10 +251,10 @@ namespace TheSpaceRoles
             return /*"<b>"*/  Range.GetValue(Selection());
         }
 
-        public int GetIntValue()=> (int)GetValue();
+        public int GetIntValue() => (int)GetValue();
 
         public float GetFloatValue() => GetValue();
-        public bool GetBoolValue() => GetValue()==OSAS.on.GetValueFromSelector();
+        public bool GetBoolValue() => GetValue() == OSAS.on.GetValueFromSelector();
 
 
 
@@ -478,11 +478,11 @@ namespace TheSpaceRoles
             return options.First(x => x.nameId == nameId);
         }
 
-        public static CustomOption Create(OptionType optionType, string name, CustomRange range,float DefaultValue = 0, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
+        public static CustomOption Create(OptionType optionType, string name, CustomRange range, float DefaultValue = 0, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
             return new CustomOption(optionType, name, range, range.GetSelectors().ToList().IndexOf(DefaultValue.ToString()), Show, onChange, colorcode: colorcode);
         }
-        public static CustomOption Create(OptionType optionType, string name, CustomRange range,OSAS selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
+        public static CustomOption Create(OptionType optionType, string name, CustomRange range, OSAS selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
             return new CustomOption(optionType, name, range, range.GetSelectors().ToList().IndexOf(selector.GetStringFromSelector()), Show, onChange, colorcode: colorcode);
         }
@@ -493,13 +493,13 @@ namespace TheSpaceRoles
 
         public static CustomOption Create(OptionType optionType, string name, bool selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, new CustomBoolRange(), selector switch {true=>0,false=>1}, Show, onChange, colorcode: colorcode);
+            return new CustomOption(optionType, name, new CustomBoolRange(), selector switch { true => 0, false => 1 }, Show, onChange, colorcode: colorcode);
         }
         public static CustomOption HeaderCreate(OptionType optionType, string nameId, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, nameId,null, 0, isHeader: true, colorcode: colorcode);
+            return new CustomOption(optionType, nameId, null, 0, isHeader: true, colorcode: colorcode);
         }
-        public string[] selections=> Range.GetSelectors();
+        public string[] selections => Range.GetSelectors();
         public void UpdateSelection(int selecting)
         {
             selecting = Mathf.Clamp((selecting + selections.Length) % selections.Length, 0, selections.Length - 1);
@@ -528,7 +528,7 @@ namespace TheSpaceRoles
         }
         public static void ShareAllOptions()
         {
-            var rpc = Rpc.SendRpc(Rpcs.ShareOptions);
+            var rpc = CustomRPC.SendRpc(Rpcs.ShareOptions);
             rpc.Write((uint)options.Where(x => !x.ModOption.isHeader).Count());
             foreach (var option in options.Where(x => !x.ModOption.isHeader))
             {
@@ -542,7 +542,7 @@ namespace TheSpaceRoles
         {
             if (!ModOption.isHeader)
             {
-                var rpc = Rpc.SendRpc(Rpcs.ShareOptions);
+                var rpc = CustomRPC.SendRpc(Rpcs.ShareOptions);
                 rpc.Write((uint)1);
                 rpc.Write(nameId);
                 rpc.Write((uint)Selection());

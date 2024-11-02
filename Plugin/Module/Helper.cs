@@ -37,6 +37,7 @@ namespace TheSpaceRoles
     }
     public static class Helper
     {
+        public static Color invisible = ColorFromColorcode("#00000000");
         public static string Joinsep(this IEnumerable<object> list, string separator)
         {
             return string.Join(separator, list);

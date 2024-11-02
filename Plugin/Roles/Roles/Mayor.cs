@@ -1,10 +1,7 @@
 ﻿using HarmonyLib;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using Rewired.Dev;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.ProBuilder;
 using static TheSpaceRoles.CustomOption;
 using static TheSpaceRoles.Ranges;
 
@@ -30,18 +27,18 @@ namespace TheSpaceRoles
         public static CustomOption VoteCount;
         public override void OptionCreate()
         {
-            VoteCount = Create(OptionType.Crewmate, "role.mayor.VotingCount", new CustomIntRange(2,15,1), 1);
+            VoteCount = Create(OptionType.Crewmate, "role.mayor.VotingCount", new CustomIntRange(2, 15, 1), 1);
             Options = [VoteCount];
 
         }
-        public override void VotingResultChange(MeetingHud meeting,ref List<MeetingHud.VoterState> states)
+        public override void VotingResultChange(MeetingHud meeting, ref List<MeetingHud.VoterState> states)
         {
             var v = states.First(x => x.VoterId == PlayerId);
-            Logger.Message(v.VoterId.ToString(),"MayorVote");
+            Logger.Message(v.VoterId.ToString(), "MayorVote");
             for (int i = 0; i < VoteCount.GetIntValue(); i++)
             {
-            states.Add(v);
-                
+                states.Add(v);
+
             }
         }
     }

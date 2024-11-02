@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,7 +16,8 @@ namespace TheSpaceRoles
         public CustomTeam CustomTeam;
         public Roles Role;
         public Color Color = new(0, 0, 0);
-        public bool HasKillButton = false;
+        public Color? MapBackColor = null;
+        public bool? HasKillButton = null;
         public bool HasAbilityButton = false;
         public int[] AbilityButtonType = [];
         public bool? CanUseVent = null;
@@ -29,9 +29,14 @@ namespace TheSpaceRoles
         public bool? CanRepairSabotage = null;
         public bool? CanUseVentMoving = null;
         public bool? HasTask = null;
-        public List<CustomOption> Options = new List<CustomOption>();
+        public bool? ImpostorMap = null;
+        public bool? AdminMap = null;
+        public bool? ShowingMapAllowedToMove = null;
+        public bool? ShowingAdminIncludeDeadBodies = null;
+        public List<CustomOption> Options = [];
         public void Init()
         {
+            HasKillButton = HasKillButton == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).HasKillButton : HasKillButton;
             CanUseVent = CanUseVent == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseVent : CanUseVent;
             CanUseAdmin = CanUseAdmin == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseAdmin : CanUseAdmin;
             CanUseBinoculars = CanUseBinoculars == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseBinoculars : CanUseBinoculars;
@@ -41,6 +46,10 @@ namespace TheSpaceRoles
             CanRepairSabotage = CanRepairSabotage == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseBinoculars : CanRepairSabotage;
             CanUseVentMoving = CanUseVentMoving == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseVentMoving : CanUseVentMoving;
             HasTask = HasTask == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).HasTask : HasTask;
+            ImpostorMap = ImpostorMap == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).ImpostorMap : ImpostorMap;
+            AdminMap = AdminMap == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).AdminMap : AdminMap;
+            ShowingMapAllowedToMove = ShowingMapAllowedToMove == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).ShowingMapAllowedToMove : ShowingMapAllowedToMove;
+            ShowingAdminIncludeDeadBodies = ShowingAdminIncludeDeadBodies == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).ShowingAdminIncludeDeadBodies : ShowingAdminIncludeDeadBodies;
 
         }
         public void ButtonReset()
@@ -50,7 +59,7 @@ namespace TheSpaceRoles
         }
         protected void ActionBool(ActionButton button, bool show_hide)
         {
-            if (show_hide || DataBase.AllPlayerRoles[PlayerId].Any(x => x.HasKillButton))
+            if (show_hide || DataBase.AllPlayerRoles[PlayerId].Any(x => (bool)x.HasKillButton))
             {
                 //button.enabled = true;
                 //button.gameObject.SetActive(true);
@@ -85,13 +94,13 @@ namespace TheSpaceRoles
 
         public virtual void OptionCreate() { }
         public virtual void HudManagerStart(HudManager hudManager) { }
-
+        public virtual void ShowMap(ref MapBehaviour mapBehaviour) { }
         public virtual void MeetingUpdate(MeetingHud meeting) { }
         public virtual void BeforeMeetingStart(MeetingHud meeting) { }
         public virtual void MeetingStart(MeetingHud meeting) { }
         public virtual void CheckForEndVoting(MeetingHud meeting, ref Dictionary<byte, int> dictionary) { }
-        public virtual void VotingResultChange(MeetingHud meeting,ref List<MeetingHud.VoterState> states) { return; }
-        public virtual void VotingResultChangePost(MeetingHud meeting, ref List<MeetingHud.VoterState> states) { return ; }
+        public virtual void VotingResultChange(MeetingHud meeting, ref List<MeetingHud.VoterState> states) { return; }
+        public virtual void VotingResultChangePost(MeetingHud meeting, ref List<MeetingHud.VoterState> states) { return; }
         public virtual void Killed() { }
         public virtual void WasKilled() { }
         public virtual void Die() { }
@@ -220,18 +229,95 @@ namespace TheSpaceRoles
             //Logger.Message($"{IsGameStarting}");
             if (!IsGameStarting) return;
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
-            if (DataBase.AllPlayerRoles == null||!DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
+            if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
 
             DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Update();
             DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.APUpdate()));
             DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.VentUpdate()));
         }
-        [HarmonyPatch(typeof(ShipStatus),nameof(ShipStatus.Start)), HarmonyPostfix]
+        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start)), HarmonyPostfix]
         private static void StartGame()
         {
             IsGameStarting = true;
             Logger.Message("shipstatus", "start");
 
+        }
+        [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.Show))]
+        private static class MapShow
+        {
+            static bool Prefix(MapBehaviour __instance, [HarmonyArgument(0)] MapOptions mapOptions)
+            {
+                var map = __instance;
+                bool re = false;
+                var f = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0];
+                
+
+                f.ShowMap(ref map);
+                if (mapOptions.Mode == MapOptions.Modes.Normal)
+                {
+                    return true;
+                }
+
+
+                if(mapOptions.Mode == MapOptions.Modes.CountOverlay)
+                {
+                    //re = true;
+                    //map.ShowCountOverlay(false, true, true);
+                    return false;
+                }
+
+
+
+                if ((bool)f.ImpostorMap)
+                {
+                    map.ShowSabotageMap();
+                    re = true;
+                    if ((bool)f.AdminMap)
+                    {
+
+                        map.countOverlay.enabled = true;
+                        map.countOverlay.gameObject.SetActive(true);
+                        map.countOverlay.SetOptions((bool)f.ShowingMapAllowedToMove, (bool)f.ShowingAdminIncludeDeadBodies);
+                        map.countOverlayAllowsMovement = true;
+                        map.taskOverlay.Hide();
+                        map.countOverlay.showLivePlayerPosition = true;
+                        map.countOverlay.transform.SetLocalZ(-10f);
+                        //map.infectedOverlay.allButtons.Do(x => x.transform.localPosition += new Vector3(0, -0.1f, 0));
+                        map.infectedOverlay.allButtons.Do(x => x.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f));
+                        map.ColorControl.baseColor = Palette.ImpostorRed;
+                        map.countOverlay.BackgroundColor.baseColor = Palette.ImpostorRed;
+                    }
+                }
+                else
+                {
+                    map.ShowNormalMap();
+                    re = true;
+                    if ((bool)f.AdminMap)
+                    {
+                        map.countOverlay.BackgroundColor.baseColor = invisible;
+                        map.countOverlay.enabled = true;
+                        map.countOverlayAllowsMovement = (bool)f.ShowingMapAllowedToMove;
+                        map.countOverlay.includeDeadBodies = true;
+                        map.countOverlay.showLivePlayerPosition = true;
+                    }
+                }
+                if (f.MapBackColor != null)
+                {
+                    map.ColorControl.baseColor = (Color)f.MapBackColor;
+                    map.countOverlay.BackgroundColor.baseColor = (Color)f.MapBackColor;
+                }
+                //if ((bool)f.AdminMap)
+                //{
+                //    map.ShowCountOverlay((bool)f.ShowingMapAllowedToMove, true, (bool)f.ShowingMapAllowedToMove);
+                //    map.countOverlay.enabled = true;
+                //    map.countOverlayAllowsMovement = (bool)f.ShowingMapAllowedToMove;
+                //    map.countOverlay.includeDeadBodies = true;
+                //    map.countOverlay.showLivePlayerPosition = true;
+
+                //}
+                return !re;
+
+            }
         }
     }
 
