@@ -38,15 +38,6 @@ namespace TheSpaceRoles
             //RoleText.text = DataBase.AllPlayerRoles[__instance.PlayerId][0].ColoredRoleName;
 
 
-            foreach ((int i, CustomRole[] rolemaster) in DataBase.AllPlayerRoles)
-            {
-                //var t = DataBase.AllPlayerControls().First(x => x.PlayerId == i).cosmetics.nameText.text;
-
-                if (i == PlayerControl.LocalPlayer.PlayerId)
-                {
-
-                }
-            }
 
         }
     }
@@ -59,7 +50,7 @@ namespace TheSpaceRoles
             {
 
                 if (PlayerControl.LocalPlayer.PlayerId!=__instance.PlayerId) return;
-                TheSpaceRoles.RoleTextManager.RoleText.text = DataBase.AllPlayerRoles[__instance.PlayerId][0].ColoredRoleName;
+                TheSpaceRoles.RoleTextManager.RoleText.text = DataBase.AllPlayerRoles[__instance.PlayerId].ColoredRoleName;
             }
         }
     }

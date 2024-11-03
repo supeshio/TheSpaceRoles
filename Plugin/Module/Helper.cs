@@ -52,39 +52,31 @@ namespace TheSpaceRoles
         }
         public static Roles GetRole(this PlayerControl p)
         {
-            return DataBase.AllPlayerRoles[p.PlayerId][0].Role;
+            return DataBase.AllPlayerRoles[p.PlayerId].Role;
         }
         public static void Init(this PlayerControl p)
         {
-            DataBase.AllPlayerRoles[p.PlayerId].Do(x => x.Init());
+            DataBase.AllPlayerRoles[p.PlayerId].Init();
         }
         public static void ButtonResetStart(this PlayerControl p)
         {
-            DataBase.AllPlayerRoles[p.PlayerId].Do(x => x.ButtonReset());
-        }
-        public static List<Roles> GetRoles(this PlayerControl p)
-        {
-            return DataBase.AllPlayerRoles[p.PlayerId].Select(x => x.Role).ToList();
-        }
-        public static CustomRole GetCustomRole(this PlayerControl p)
-        {
-            return DataBase.AllPlayerRoles[p.PlayerId][0];
-        }
-        public static List<CustomRole> GetCustomRoles(this PlayerControl p)
-        {
-            return DataBase.AllPlayerRoles[p.PlayerId].ToList();
+            DataBase.AllPlayerRoles[p.PlayerId].ButtonReset();
         }
         public static PlayerControl GetPlayerById(int id)
         {
             return PlayerControl.AllPlayerControls.ToArray().First(x => x.PlayerId == id);
         }
+        public static CustomRole GetCustomRole(this PlayerControl p)
+        {
+            return DataBase.AllPlayerRoles[p.PlayerId];
+        }
         public static bool IsRole(this PlayerControl p, Roles role)
         {
-            return DataBase.AllPlayerRoles[p.PlayerId].Any(x => x.Role == role);
+            return DataBase.AllPlayerRoles[p.PlayerId].Role == role;
         }
         public static bool IsTeam(this PlayerControl p, Teams team)
         {
-            return DataBase.AllPlayerRoles[p.PlayerId].Any(x => x.CustomTeam.Team == team);
+            return DataBase.AllPlayerRoles[p.PlayerId].team == team;
         }
         public static byte MaxFrequency(this List<byte> self, out bool tie)
         {

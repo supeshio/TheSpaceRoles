@@ -51,10 +51,10 @@ namespace TheSpaceRoles
                     RoleText.rectTransform.sizeDelta = new Vector2(1.5f, 1f);
                     RoleText.sortingOrder = player.NameText.sortingOrder;
                     RoleText.sortingLayerID = player.NameText.sortingLayerID;
-                    RoleText.text = $"{string.Join("</color>×", DataBase.AllPlayerRoles[player.TargetPlayerId].Select(x => x.ColoredRoleName)/*+"</color>"*/)}";
+                    RoleText.text = $"{string.Join("</color>×", DataBase.AllPlayerRoles[player.TargetPlayerId].ColoredRoleName/*+"</color>"*/)}";
                     RoleText.m_sharedMaterial = player.NameText.fontMaterial;
                     RoleText.fontStyle = FontStyles.Bold;
-                    Logger.Info($"{string.Join("</color>×", DataBase.AllPlayerRoles[player.TargetPlayerId].Select(x => x.ColoredRoleName)/*+"</color>"*/)}");
+                    Logger.Info($"{DataBase.AllPlayerRoles[player.TargetPlayerId].ColoredRoleName}");
                     gameObject.SetActive(true);
                     if (!PlayerControl.LocalPlayer.Data.IsDead)
                     {

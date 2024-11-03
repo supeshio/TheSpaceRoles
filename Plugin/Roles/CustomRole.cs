@@ -59,7 +59,7 @@ namespace TheSpaceRoles
         }
         protected void ActionBool(ActionButton button, bool show_hide)
         {
-            if (show_hide || DataBase.AllPlayerRoles[PlayerId].Any(x => (bool)x.HasKillButton))
+            if (show_hide || (bool)DataBase.AllPlayerRoles[PlayerId].HasKillButton)
             {
                 //button.enabled = true;
                 //button.gameObject.SetActive(true);
@@ -153,7 +153,7 @@ namespace TheSpaceRoles
 
                     if (DataBase.AllPlayerRoles != null && DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
                     {
-                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].ButtonReset();
+                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].ButtonReset();
                     }
                 }
                 else
@@ -177,8 +177,8 @@ namespace TheSpaceRoles
             static void Postfix(PlayerControl __instance)
             {
 
-                DataBase.AllPlayerRoles[__instance.PlayerId].Do(x => x.CustomTeam.WasExiled());
-                DataBase.AllPlayerRoles[__instance.PlayerId].Do(x => x.Exiled = true);
+                DataBase.AllPlayerRoles[__instance.PlayerId].CustomTeam.WasExiled();
+                DataBase.AllPlayerRoles[__instance.PlayerId].Exiled = true;
             }
         }
 
@@ -188,9 +188,9 @@ namespace TheSpaceRoles
             static void Postfix(PlayerControl __instance)
             {
 
-                DataBase.AllPlayerRoles[__instance.PlayerId].Do(x => x.Die());
-                DataBase.AllPlayerRoles[__instance.PlayerId].Do(x => x.Dead = true);
-                DataBase.AllPlayerRoles[__instance.PlayerId].Do(x => Logger.Info(x.PlayerId.ToString()));
+                DataBase.AllPlayerRoles[__instance.PlayerId].Die();
+                DataBase.AllPlayerRoles[__instance.PlayerId].Dead = true;
+                DataBase.AllPlayerRoles[__instance.PlayerId].PlayerId.ToString();
                 Logger.Info(__instance.PlayerId + "_" + __instance.Data.PlayerName);
             }
         }
@@ -215,8 +215,8 @@ namespace TheSpaceRoles
                 //var k = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Select(x => x.Role.ToString()).ToArray();
                 //Logger.Info(string.Join(",", k));
 
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(__instance));
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.ButtonReset());
+                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].HudManagerStart(__instance);
+                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].ButtonReset();
                 DataBase.ButtonsPositionSetter();
             }
         }
@@ -231,9 +231,9 @@ namespace TheSpaceRoles
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
             if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
 
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0].Update();
-            DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.APUpdate()));
-            DataBase.AllPlayerRoles.Do(y => y.Value.Do(x => x.VentUpdate()));
+            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Update();
+            DataBase.AllPlayerRoles.Do(y => y.Value.APUpdate());
+            DataBase.AllPlayerRoles.Do(y => y.Value.VentUpdate());
         }
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start)), HarmonyPostfix]
         private static void StartGame()
@@ -249,7 +249,7 @@ namespace TheSpaceRoles
             {
                 var map = __instance;
                 bool re = false;
-                var f = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId][0];
+                var f = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId];
                 
 
                 f.ShowMap(ref map);

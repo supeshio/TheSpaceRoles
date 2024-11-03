@@ -251,7 +251,7 @@ namespace TheSpaceRoles
             //{
             var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
             p.ReSet(playerId);
-            DataBase.AllPlayerRoles.Add(playerId, [p]);
+            DataBase.AllPlayerRoles.Add(playerId, p);
 
             //}
 
@@ -263,7 +263,7 @@ namespace TheSpaceRoles
             var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
             p.ReSet(playerId);
             DataBase.AllPlayerRoles.Remove(playerId);
-            DataBase.AllPlayerRoles.Add(playerId, [p]);
+            DataBase.AllPlayerRoles.Add(playerId, p);
         }
 
         public static void GameStartAndPrepare()

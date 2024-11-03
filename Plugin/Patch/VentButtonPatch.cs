@@ -12,10 +12,14 @@ namespace TheSpaceRoles
         static void Postfix(Vent __instance)
         {
             // Vent outline set role color
-            var color = PlayerControl.LocalPlayer.GetCustomRoles().First(x => x.CanUseVent == true).Color;
-            string[] outlines = new[] { "_OutlineColor", "_AddColor" };
-            foreach (var name in outlines)
-                __instance.myRend.material.SetColor(name, color);
+            if ((bool)PlayerControl.LocalPlayer.GetCustomRole().CanUseVent)
+            {
+
+                var color = PlayerControl.LocalPlayer.GetCustomRole().Color;
+                string[] outlines = new[] { "_OutlineColor", "_AddColor" };
+                foreach (var name in outlines)
+                    __instance.myRend.material.SetColor(name, color);
+            }
         }
     }
     [HarmonyPatch(typeof(Vent), nameof(Vent.CanUse))]
@@ -25,7 +29,7 @@ namespace TheSpaceRoles
         {
             float num = float.MaxValue;
             PlayerControl pc = pinf.Object;
-            couldUse = DataBase.AllPlayerRoles[pc.PlayerId][0].CanUseVent == true;
+            couldUse = DataBase.AllPlayerRoles[pc.PlayerId].CanUseVent == true;
             PlayerControl @object = pc;
 
             if (@object == null)
@@ -45,7 +49,7 @@ namespace TheSpaceRoles
 
             }
             var usableDistance = __instance.UsableDistance;
-            bool roleCouldUse = DataBase.AllPlayerRoles[pc.PlayerId][0].CanUseVent ?? DataBase.AllPlayerRoles[pc.PlayerId][0].CustomTeam.CanUseVent;
+            bool roleCouldUse = DataBase.AllPlayerRoles[pc.PlayerId].CanUseVent ?? DataBase.AllPlayerRoles[pc.PlayerId].CustomTeam.CanUseVent;
             couldUse = (@object.inVent || roleCouldUse) && !pc.Data.IsDead && (@object.CanMove || @object.inVent);
             canUse = couldUse;
             if (canUse)

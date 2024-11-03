@@ -34,14 +34,8 @@ namespace TheSpaceRoles
                         VotedForId = playerVoteArea.VotedFor
                     });
                 }
-                foreach (var item in DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId])
-                {
-                    item.VotingResultChange(__instance, ref list);
-                }
-                foreach (var item in DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId])
-                {
-                    item.VotingResultChangePost(__instance, ref list);
-                }
+                    DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].VotingResultChange(__instance, ref list);
+                    DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].VotingResultChangePost(__instance, ref list);
 
                 list = [.. list.OrderBy(x => x.VoterId)];
 
@@ -65,7 +59,7 @@ namespace TheSpaceRoles
         private static void End(MeetingHud __instance)
         {
             IsMeeting = false;
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.MeetingStart(__instance));
+            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].MeetingStart(__instance);
 
         }
 
@@ -73,19 +67,19 @@ namespace TheSpaceRoles
         private static void Start(MeetingHud __instance)
         {
             IsMeeting =true;
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.MeetingStart(__instance));
+            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].MeetingStart(__instance);
 
         }
         [HarmonyPatch(nameof(MeetingHud.Update)), HarmonyPostfix]
         private static void Update(MeetingHud __instance)
         {
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.MeetingUpdate(__instance));
+            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].MeetingUpdate(__instance);
 
         }
         [HarmonyPatch(nameof(MeetingHud.CoStartCutscene)), HarmonyPostfix]
         private static void CustScene(MeetingHud __instance)
         {
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.BeforeMeetingStart(__instance));
+            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].BeforeMeetingStart(__instance);
 
         }
     }

@@ -45,6 +45,7 @@ namespace TheSpaceRoles
         public ButtonPos ButtonPosition;
         public float maxTimer;
         public float Timer;
+        public int count;
 
         public bool isEffectActive = false;
 
@@ -83,7 +84,8 @@ namespace TheSpaceRoles
             float EffectDuration = 0,
             Action OnEffectStart = null,
             Action OnEffectUpdate = null,
-            Action OnEffectEnd = null
+            Action OnEffectEnd = null,
+            int count = -1
             )
         {
             this.Name = name;
@@ -104,12 +106,22 @@ namespace TheSpaceRoles
             this.OnEffectStart = OnEffectStart;
             this.OnEffectUpdate = OnEffectUpdate;
             this.OnEffectEnd = OnEffectEnd;
-            actionButton = Instantiate(hudManager.KillButton, hudManager.KillButton.transform.parent);
+            this.count = count;
+            actionButton = Instantiate(hudManager.AbilityButton, hudManager.KillButton.transform.parent);
+            if (count > 0) 
+            {
+
+                actionButton.SetUsesRemaining(count);
+            }
+            else
+            {
+                actionButton.SetInfiniteUses();
+            }
             actionButton.buttonLabelText.text = buttonText;
             actionButton.graphic.sprite = sprite;
             actionButton.cooldownTimerText.text = ((int)Timer).ToString();
             actionButton.gameObject.name = name;
-            this.actionButton.transform.SetSiblingIndex((int)ButtonPosition);
+            actionButton.transform.SetSiblingIndex((int)ButtonPosition);
             PassiveButton passiveButton = actionButton.GetComponent<PassiveButton>();
             passiveButton.enabled = true;
 
@@ -154,9 +166,9 @@ namespace TheSpaceRoles
 
             PlayerControl local = PlayerControl.LocalPlayer;
 
-            if (Timer >= 0)
+            if (Timer > 0&count != 0)
             {
-                if (this.hasEffect && this.isEffectActive)
+                    if (this.hasEffect && this.isEffectActive)
                 {
                     Timer -= Time.deltaTime;
                 }
@@ -165,8 +177,7 @@ namespace TheSpaceRoles
                     Timer -= Time.deltaTime;
 
                 }
-            }
-            if (Timer <= 0)
+            }else
             {
                 atFirsttime = true;
                 Timer = 0;
@@ -204,16 +215,25 @@ namespace TheSpaceRoles
                 this.OnEffectUpdate?.Invoke();
             }
 
-
-            if (atFirsttime == false)
+            if (count>0)
             {
-                actionButton.SetCoolDown(Timer, (hasEffect && isEffectActive) ? maxEffectTimer : maxTimer);
-
+                count --;
+                actionButton.SetUsesRemaining(count);
             }
-            else
-            {
-                actionButton.SetCoolDown(Timer, 10f);
 
+            if (count != 0)
+            {
+
+                if (atFirsttime == false)
+                {
+                    actionButton.SetCoolDown(Timer, (hasEffect && isEffectActive) ? maxEffectTimer : maxTimer);
+
+                }
+                else
+                {
+                    actionButton.SetCoolDown(Timer, 10f);
+
+                }
             }
 
         }
@@ -238,25 +258,28 @@ namespace TheSpaceRoles
         public void Click()
         {
 
-            if (Timer <= 0 && !isEffectActive)
+            if (count != 0)
             {
-                if (hasEffect)
+                if (Timer <= 0 && !isEffectActive)
                 {
+                    if (hasEffect)
+                    {
 
-                    if (CanUse() == -1) return;
-                    isEffectActive = true;
-                    Timer = maxEffectTimer;
-                    OnClick();
-                    actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.AcceptedGreen;
-                    actionButton.cooldownTimerText.color = Palette.AcceptedGreen;
-                    actionButton.graphic.material.SetFloat(Desat, 0f);
-                }
-                else
-                {
+                        if (CanUse() == -1) return;
+                        isEffectActive = true;
+                        Timer = maxEffectTimer;
+                        OnClick();
+                        actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.AcceptedGreen;
+                        actionButton.cooldownTimerText.color = Palette.AcceptedGreen;
+                        actionButton.graphic.material.SetFloat(Desat, 0f);
+                    }
+                    else
+                    {
 
-                    if (CanUse() == -1) return;
-                    OnClick();
-                    Timer = maxTimer;
+                        if (CanUse() == -1) return;
+                        OnClick();
+                        Timer = maxTimer;
+                    }
                 }
             }
 
@@ -311,14 +334,10 @@ namespace TheSpaceRoles
                 }
                 if (notIncludeTeamIds != null && notIncludeTeamIds.Length > 0)
                 {
-                    foreach (var v in DataBase.AllPlayerRoles[x.PlayerId])
-                    {
-
-                        if (notIncludeTeamIds.Contains(v.team))
+                        if (notIncludeTeamIds.Contains(DataBase.AllPlayerRoles[x.PlayerId].team))
                         {
                             continue;
                         }
-                    }
 
                 }
                 if (x.inVent)

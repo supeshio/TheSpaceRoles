@@ -11,7 +11,7 @@ namespace TheSpaceRoles
         /// <summary>
         /// playerId,RoleMaster型で役職の型を入れれる
         /// </summary>
-        public static Dictionary<int, CustomRole[]> AllPlayerRoles = [];//playerId,roles
+        public static Dictionary<int, CustomRole> AllPlayerRoles = [];//playerId,roles
 
 
 
@@ -181,9 +181,9 @@ namespace TheSpaceRoles
             }
             foreach (var p in AllPlayerRoles)
             {
-                if (p.Value.Any(x => !x.Dead))
+                if (!p.Value.Dead)
                 {
-                    result[p.Value[0].CustomTeam.Team]++;
+                    result[p.Value.CustomTeam.Team]++;
                 }
             }
             //Logger.Info($"Impostor :{result[Teams.Impostor]},Crewmate :{GetAsCrewmatePlayerCount()}");
@@ -199,7 +199,7 @@ namespace TheSpaceRoles
             foreach (var p in AllPlayerRoles)
             {
                 //Logger.Info(p.Value[0].Role.ToString());
-                if (p.Value.Any(x => !x.Dead) && p.Value[0].team != Teams.Impostor && p.Value[0].team != Teams.Jackal)
+                if (!p.Value.Dead && p.Value.team != Teams.Impostor && p.Value.team != Teams.Jackal)
                 {
                     i++;
                 }

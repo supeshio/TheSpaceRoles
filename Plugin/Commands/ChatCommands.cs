@@ -209,7 +209,7 @@ namespace TheSpaceRoles
                                 RoleSelect.SendRpcSetRole(RoleData.GetCustomRoles[roleId].Role, PlayerControl.LocalPlayer.PlayerId);
                                 PlayerControl.LocalPlayer.Init();
                                 PlayerControl.LocalPlayer.ButtonResetStart();
-                                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(HudManager.Instance));
+                                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].HudManagerStart(HudManager.Instance);
                                 addchat += $"役職を設定しました。\n Role : {RoleData.GetCustomRoles[roleId].ColoredRoleName}";
                                 break;
                             }
@@ -234,7 +234,7 @@ namespace TheSpaceRoles
                                         RoleSelect.SendRpcSetRole(role.Role, PlayerControl.LocalPlayer.PlayerId);
                                         PlayerControl.LocalPlayer.Init();
                                         PlayerControl.LocalPlayer.ButtonResetStart();
-                                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.HudManagerStart(HudManager.Instance));
+                                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].HudManagerStart(HudManager.Instance);
                                         addchat += $"役職を設定しました。\n Role : {role.ColoredRoleName}";
 
                                         break;
@@ -299,13 +299,13 @@ namespace TheSpaceRoles
                             addchat += "meetingskip" + "\n";
                             break;
                         case "/m5":
-                            addchat += $"{DataBase.AllPlayerRoles.Join(x => x.Key + ":" + x.Value.Select(x => x.ColoredRoleName).Joinsep(",") + "\n")}";
+                            addchat += $"{DataBase.AllPlayerRoles.Join(x => x.Key + ":" + x.Value.ColoredRoleName + "\n")}";
                             break;
                         case "/":
                             if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
                             addchat += "count : " + DataBase.AllPlayerRoles.Count + "\n";
                             addchat += "playerlist : \n";
-                            addchat += DataBase.AllPlayerRoles.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.Select(x => x.ColoredRoleName).Joinsep(",")).Joinsep("\n");
+                            addchat += DataBase.AllPlayerRoles.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.ColoredRoleName).Joinsep("\n");
                             addchat += "assignedRole:" + DataBase.AssignedRoles().Select(x => x.ToString()).Joinsep("\n");
                             break;
                         case "/vent":

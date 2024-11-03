@@ -116,13 +116,10 @@ namespace TheSpaceRoles
         }
         public static void RpcSwap(int playerid, int id1, int id2)
         {
-            DataBase.AllPlayerRoles[playerid].Do(x =>
-            {
-                var swap = (EvilSwapper)x;
+                var swap = (EvilSwapper)DataBase.AllPlayerRoles[playerid];
                 swap.SwapPC1 = Helper.GetPlayerById(id1);
                 swap.SwapPC2 = Helper.GetPlayerById(id2);
 
-            });
         }
         public static PlayerControl targetplayer;
 

@@ -10,11 +10,11 @@ namespace TheSpaceRoles
 
             if (source == PlayerControl.LocalPlayer.PlayerId)
             {
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.Killed());
+                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Killed();
             }
             if (target == PlayerControl.LocalPlayer.PlayerId)
             {
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Do(x => x.WasKilled());
+                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].WasKilled();
                 DataBase.buttons.Do(x => x.actionButton.Hide());
             }
         }
