@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AmongUs.GameOptions;
+using System.Collections.Generic;
 
 namespace TheSpaceRoles
 {
@@ -17,6 +18,7 @@ namespace TheSpaceRoles
         killdistance_medium,
         killdistance_long,
         killdistance_default,
+        killcool_default,
     }
     public enum OptionSelectionCountType
     {
@@ -35,8 +37,10 @@ namespace TheSpaceRoles
                 OSAS.killdistance_long //or
                 //OSAS.killdistance_default
                 => KillDistances[KillDistanceNames.IndexOf(selector.ToString()[13..])],
+                OSAS.killdistance_default => GameOptionsManager.Instance.currentNormalGameOptions.KillDistance,
                 OSAS.on => -1,
                 OSAS.off => -2,
+                OSAS.killcool_default => GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown,
                 _ => (int)selector,
             };
 
@@ -49,6 +53,7 @@ namespace TheSpaceRoles
                 OSAS.killdistance_long or
                 OSAS.killdistance_default
                 => Translation.GetString($"option.selection.killdistance.{selector.ToString()[13..]}"),
+                OSAS.killcool_default=> Translation.GetString($"option.selection.killdistance.default"),
                 _ => Translation.GetString($"option.selection.{selector.ToString().ToLower()}"),
             };
 
@@ -77,26 +82,26 @@ namespace TheSpaceRoles
             public override string[] GetSelectors()
             {
                 List<string> list = [];
-                for (float i = min; i <= max; i += step)
-                {
-                    list.Add(i.ToString());
-                }
                 foreach (var item in addtional)
                 {
                     list.Add(item.GetStringFromSelector());
+                }
+                for (float i = min; i <= max; i += step)
+                {
+                    list.Add(i.ToString());
                 }
                 return [.. list];
             }
             public override float[] GetValues()
             {
                 List<float> list = [];
-                for (float i = min; i <= max; i += step)
-                {
-                    list.Add(i);
-                }
                 foreach (var item in addtional)
                 {
                     list.Add(item.GetValueFromSelector());
+                }
+                for (float i = min; i <= max; i += step)
+                {
+                    list.Add(i);
                 }
                 return [.. list];
             }
@@ -233,7 +238,22 @@ namespace TheSpaceRoles
                 addtional.Sort();
             }
         }
+        /// <summary>
+        /// killcooldownのrange｡
+        /// 12=(30s)
+        /// </summary>
+        /// <param name="selectors"></param>
+        /// <returns></returns>
+            public static CustomFloatRange CustomCoolDownRangefloat(List<OSAS> selectors = null)
+            {
 
+                float min = 2.5f;
+                float max = 180f;
+                float step = 2.5f;
+                List<OSAS> s = selectors ?? [];
+                s.Add(OSAS.killcool_default);
+                return new CustomFloatRange(min, max, step, s);
+            }
 
 
     }

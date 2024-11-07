@@ -12,7 +12,7 @@ namespace TheSpaceRoles
         public SerialKiller()
         {
 
-            team = Teams.Impostor;
+            Team = Teams.Impostor;
             Role = Roles.SerialKiller;
             Color = Palette.ImpostorRed;
             HasKillButton = false;

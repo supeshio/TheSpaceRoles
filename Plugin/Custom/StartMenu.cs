@@ -43,10 +43,7 @@ namespace TheSpaceRoles
         public static void Postfix(HudManager __instance)
         {
             Data.textMaterial = __instance.Chat.quickChatMenu.timer.text.fontMaterial;
-            if (CustomOption.options.Count == 0)
-            {
                 CustomOptionsHolder.CreateCustomOptions();
-            }
             //var spriteredrer = new GameObject("TSRlogo").AddComponent<SpriteRenderer>();
             //spriteredrer.sprite = Sprites.GetSpriteFromResources("TSRLogo.png", 400f);
             //spriteredrer.transform.SetParent(__instance.transform);
@@ -65,7 +62,7 @@ namespace TheSpaceRoles
             //sp.gameObject.SetActive(true);
             //sp.gameObject.layer = 5;
 
-            TextMeshPro TSRText = new GameObject("text").AddComponent<TextMeshPro>();
+            TextMeshPro TSRText = new GameObject("TSR").AddComponent<TextMeshPro>();
             TSRText.text = TSR.c_name_v;
             TSRText.fontSize = 2;
             TSRText.alignment = TextAlignmentOptions.Midline;

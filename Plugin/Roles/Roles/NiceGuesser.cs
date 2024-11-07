@@ -13,7 +13,7 @@ namespace TheSpaceRoles
         public List<Target> targets = [];
         public NiceGuesser()
         {
-            team = Teams.Crewmate;
+            Team = Teams.Crewmate;
             Role = Roles.NiceGuesser;
             Color = Helper.ColorFromColorcode("#FFCC00");
         }
@@ -339,14 +339,14 @@ namespace TheSpaceRoles
                 }
                 SpriteRenderer rend;
 
-                if (RoleData.GetCustomRoleFromRole(role).team == Teams.Crewmate)
+                if (RoleData.GetCustomRoleFromRole(role).Team == Teams.Crewmate)
                 {
                     rend = ButtonCreate(crewteam.transform, Teams.Crewmate);
                     rend.transform.localPosition = new Vector3(-2.7f + 1.8f * (c % 4), 1.6f - 0.4f * Mathf.Floor(c++ / 4f), -10);
                     //-2.7f, 1.6f, -10
                 }
                 else
-                if (RoleData.GetCustomRoleFromRole(role).team == Teams.Impostor)
+                if (RoleData.GetCustomRoleFromRole(role).Team == Teams.Impostor)
                 {
                     rend = ButtonCreate(impteam.transform, Teams.Impostor);
                     rend.transform.localPosition = new Vector3(-2.7f + 1.8f * (i % 4), 1.6f - 0.4f * Mathf.Floor(i++ / 4f), -10);

@@ -12,7 +12,7 @@ namespace TheSpaceRoles
         public int PlayerId;
         public string PlayerName;
         public PlayerControl PlayerControl;
-        public Teams team = Teams.None;
+        public Teams Team = Teams.None;
         public CustomTeam CustomTeam;
         public Roles Role;
         public Color Color = new(0, 0, 0);
@@ -33,9 +33,11 @@ namespace TheSpaceRoles
         public bool? AdminMap = null;
         public bool? ShowingMapAllowedToMove = null;
         public bool? ShowingAdminIncludeDeadBodies = null;
+        public bool canAssign = true;
         public List<CustomOption> Options = [];
         public void Init()
         {
+            OptionCreate();
             HasKillButton = HasKillButton == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).HasKillButton : HasKillButton;
             CanUseVent = CanUseVent == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseVent : CanUseVent;
             CanUseAdmin = CanUseAdmin == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).CanUseAdmin : CanUseAdmin;
@@ -56,6 +58,7 @@ namespace TheSpaceRoles
         {
             ActionBool(FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton, (bool)CanUseVent);
             ActionBool(FastDestroyableSingleton<HudManager>.Instance.KillButton, (bool)HasKillButton);
+            FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton.transform.SetSiblingIndex(HudManager.Instance.AbilityButton.transform.GetSiblingIndex());
         }
         protected void ActionBool(ActionButton button, bool show_hide)
         {
@@ -104,6 +107,7 @@ namespace TheSpaceRoles
         public virtual void Killed() { }
         public virtual void WasKilled() { }
         public virtual void Die() { }
+        public virtual void APDie(PlayerControl pc) { }
         public virtual void Update() { }
         public virtual void APUpdate() { }
         public string ColoredRoleName => ColoredText(Color, Translation.GetString("role." + Role.ToString() + ".name"));
@@ -112,7 +116,7 @@ namespace TheSpaceRoles
         public string ColoredIntro => ColoredText(Color, Translation.GetString("intro.cosmetic", [Translation.GetString("role." + Role.ToString() + ".intro")]));
         public string RoleDescription()
         {
-            return $"{Translation.GetString("canvisibleteam", ["<b>" + RoleData.GetCustomTeamFromTeam(team).ColoredTeamName + "</b>"])}\n{Description()}";
+            return $"{Translation.GetString("canvisibleteam", ["<b>" + RoleData.GetCustomTeamFromTeam(Team).ColoredTeamName + "</b>"])}\n{Description()}";
         }
         public string Description()
         {
@@ -129,7 +133,7 @@ namespace TheSpaceRoles
             PlayerId = playerId;
             PlayerControl = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId);
             PlayerName = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).name.Replace("<color=.*>", string.Empty).Replace("</color>", string.Empty); ;
-            CustomTeam = RoleData.GetCustomTeamFromTeam(team);
+            CustomTeam = RoleData.GetCustomTeamFromTeam(Team);
             Init();
         }
         [HarmonyPatch(typeof(ActionButton), nameof(ActionButton.SetEnabled))]
@@ -189,6 +193,7 @@ namespace TheSpaceRoles
             {
 
                 DataBase.AllPlayerRoles[__instance.PlayerId].Die();
+                DataBase.AllPlayerRoles.Do(x=>x.Value.APDie(__instance));
                 DataBase.AllPlayerRoles[__instance.PlayerId].Dead = true;
                 DataBase.AllPlayerRoles[__instance.PlayerId].PlayerId.ToString();
                 Logger.Info(__instance.PlayerId + "_" + __instance.Data.PlayerName);
@@ -238,6 +243,7 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start)), HarmonyPostfix]
         private static void StartGame()
         {
+            CustomOptionsHolder.CreateCustomOptions();
             IsGameStarting = true;
             Logger.Message("shipstatus", "start");
 

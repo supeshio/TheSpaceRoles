@@ -11,7 +11,7 @@ namespace TheSpaceRoles
         public float MaxTimer = 400;
         public NiceMini()
         {
-            team = Teams.Crewmate;
+            Team = Teams.Crewmate;
             Role = Roles.NiceMini;
             Color = ColorFromColorcode("#ffeb57");
         }

@@ -15,7 +15,7 @@ namespace TheSpaceRoles
         public PlayerControl SwapPC2;
         public NiceSwapper()
         {
-            team = Teams.Crewmate;
+            Team = Teams.Crewmate;
             Role = Roles.NiceSwapper;
             Color = Helper.ColorFromColorcode("#863756");
         }

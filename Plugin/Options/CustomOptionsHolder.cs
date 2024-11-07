@@ -59,10 +59,10 @@ namespace TheSpaceRoles
                 HeaderCreate(OptionType.Roles, $"team_{team}", colorcode: "#cccccc");
                 if (RoleData.GetCustomRoles.Count > 0)
                 {
-                    foreach (CustomRole role in RoleData.GetCustomRoles.Where(x => x.team == team))
+                    foreach (CustomRole role in RoleData.GetCustomRoles.Where(x => x.Team == team))
                     {
                         Logger.Info($"{role}", $"roleLogger_{role.Role}");
-                        if (RoleData.GetCustomRole_NormalFromTeam(role.team).Role != role.Role)
+                        if (RoleData.GetCustomRole_NormalFromTeam(role.Team).Role != role.Role)
                         {
 
                             RoleOptions_Count.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", new CustomIntRange(0, 15, 1), 0));
@@ -75,7 +75,7 @@ namespace TheSpaceRoles
 
 
             }
-            Logger.Fatel("what?", "teamimpostors");
+            Logger.Info("OptionCreating...");
             //HeaderCreate(OptionType.Impostor, $"team_impostor");
             //HeaderCreate(OptionType.Crewmate, $"team_crewmate");
             //HeaderCreate(OptionType.Neutral, $"team_jackal");
@@ -90,7 +90,7 @@ namespace TheSpaceRoles
                 Logger.Info(customrole.Role.ToString());
                 roleFamilarOptions.Add(customrole.Role, []);
                 CustomOption h;
-                switch (customrole.team)
+                switch (customrole.Team)
                 {
                     case Teams.Crewmate:
                         h = HeaderCreate(OptionType.Crewmate, $"role_{customrole.Role}_header");
@@ -109,6 +109,8 @@ namespace TheSpaceRoles
                 {
                     roleFamilarOptions[customrole.Role].Add(option);
                 }
+                Logger.Info($"{customrole.RoleName} OptionCreating...", "");
+
             }
         }
     }

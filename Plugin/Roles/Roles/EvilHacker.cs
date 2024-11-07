@@ -7,11 +7,11 @@ namespace TheSpaceRoles
     public class EvilHacker : CustomRole
     {
         public CustomButton HackButton;
-        public CustomButton HackAdminButton;
+        //public CustomButton HackAdminButton;
         public EvilHacker()
         {
             
-            team = Teams.Impostor;
+            Team = Teams.Impostor;
             Role = Roles.EvilHacker;
             Color = Palette.ImpostorRed;
             HasKillButton = true;
@@ -27,7 +27,7 @@ namespace TheSpaceRoles
                 KeyCode.F,
                 30,
                 () => CustomButton.SetTarget(),
-                __instance.KillButton.graphic.sprite,
+                Sprites.GetSpriteFromResources("ui.button.evilhacker_hack.png",100f),
                 () =>
                 {
                     var pc = GetPlayerControlFromId(CustomButton.SetTarget());

@@ -70,13 +70,17 @@ namespace TheSpaceRoles
         {
             return DataBase.AllPlayerRoles[p.PlayerId];
         }
+        public static CustomRole GetCustomRole(this Roles role)
+        {
+            return RoleData.GetCustomRoles.First(x=>x.Role==role);
+        }
         public static bool IsRole(this PlayerControl p, Roles role)
         {
             return DataBase.AllPlayerRoles[p.PlayerId].Role == role;
         }
         public static bool IsTeam(this PlayerControl p, Teams team)
         {
-            return DataBase.AllPlayerRoles[p.PlayerId].team == team;
+            return DataBase.AllPlayerRoles[p.PlayerId].Team == team;
         }
         public static byte MaxFrequency(this List<byte> self, out bool tie)
         {

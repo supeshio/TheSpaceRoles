@@ -287,12 +287,16 @@ namespace TheSpaceRoles
             }
             return /*"<b>"*/  Translation.GetString($"option.{nameId}");
         }
-        public CustomOption(OptionType optionType, string nameId, CustomRange range, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
+        public static CustomOption CreateOption(OptionType optionType, string nameId, CustomRange range, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
         {
             if (options.Any(x => x.nameId == nameId))
             {
-                return;
+                return options.First(x => x.nameId == nameId);
             }
+            return new CustomOption(optionType,nameId,range,defaultSelection,Show,onChange,isHeader,colorcode);
+        }
+        public CustomOption(OptionType optionType, string nameId, CustomRange range, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
+        {
             this.color = Helper.ColorFromColorcode(colorcode);
             this.nameId = nameId;
             this.defaultSelection = defaultSelection;
@@ -310,7 +314,7 @@ namespace TheSpaceRoles
             else
             {
 
-                this.entry = TSR.Instance.Config.Bind($"CustomOption", nameId, defaultSelection);
+                entry = TSR.Instance.Config.Bind($"CustomOption", nameId, defaultSelection);
             }
             options.Add(this);
         }
@@ -480,24 +484,24 @@ namespace TheSpaceRoles
 
         public static CustomOption Create(OptionType optionType, string name, CustomRange range, float DefaultValue = 0, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, range, range.GetSelectors().ToList().IndexOf(DefaultValue.ToString()), Show, onChange, colorcode: colorcode);
+            return CreateOption(optionType, name, range, range.GetSelectors().ToList().IndexOf(DefaultValue.ToString()), Show, onChange, colorcode: colorcode);
         }
         public static CustomOption Create(OptionType optionType, string name, CustomRange range, OSAS selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, range, range.GetSelectors().ToList().IndexOf(selector.GetStringFromSelector()), Show, onChange, colorcode: colorcode);
+            return CreateOption(optionType, name, range, range.GetSelectors().ToList().IndexOf(selector.GetStringFromSelector()), Show, onChange, colorcode: colorcode);
         }
         public static CustomOption Create(OptionType optionType, string name, CustomRange range, int selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, range, selector, Show, onChange, colorcode: colorcode);
+            return CreateOption(optionType, name, range, selector, Show, onChange, colorcode: colorcode);
         }
 
         public static CustomOption Create(OptionType optionType, string name, bool selector, Func<bool> Show = null, Action onChange = null, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, name, new CustomBoolRange(), selector switch { true => 0, false => 1 }, Show, onChange, colorcode: colorcode);
+            return CreateOption(optionType, name, new CustomBoolRange(), selector switch { true => 0, false => 1 }, Show, onChange, colorcode: colorcode);
         }
         public static CustomOption HeaderCreate(OptionType optionType, string nameId, string colorcode = "#4f4f4f")
         {
-            return new CustomOption(optionType, nameId, null, 0, isHeader: true, colorcode: colorcode);
+            return CreateOption(optionType, nameId, null, 0, isHeader: true, colorcode: colorcode);
         }
         public string[] selections => Range.GetSelectors();
         public void UpdateSelection(int selecting)

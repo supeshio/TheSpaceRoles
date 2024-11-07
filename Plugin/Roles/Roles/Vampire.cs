@@ -11,7 +11,7 @@ namespace TheSpaceRoles
         public Vampire()
         {
 
-            team = Teams.Impostor;
+            Team = Teams.Impostor;
             Role = Roles.Vampire;
             Color = Palette.ImpostorRed;
             HasKillButton = false;
@@ -28,7 +28,7 @@ namespace TheSpaceRoles
 
             KillDelayTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.vampire.killdelaytime", new CustomFloatRange(1, 20, 1), 9);
             KillDistance = Create(CustomOption.OptionType.Impostor, "role.vampire.killdistance", KillDistanceRange(), 4);
-            KillCoolDown = Create(CustomOption.OptionType.Impostor, "role.vampire.killcooldown", new CustomFloatRange(2.5f, 60, 2.5f), 12);
+            KillCoolDown = Create(CustomOption.OptionType.Impostor, "role.vampire.killcooldown", CustomCoolDownRangefloat(), 12);
             UseGarlic = Create(CustomOption.OptionType.Impostor, "role.vampire.usegarlic", true);
             GarlicAreaSize = Create(CustomOption.OptionType.Impostor, "role.vampire.garlicareasize", new CustomFloatRange(1, 10, 1), 4, Show: UseGarlic.GetBoolValue);
 
@@ -40,18 +40,18 @@ namespace TheSpaceRoles
             Logger.Warning($"{KillCoolDown.GetValue()},{KillDistance.GetValue()}");
             DataBase.AllPlayerRoles.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r);
             VampireBitebutton = new CustomButton(
-                __instance, "VampireKillButton",
+                __instance, "VampireBiteButton",
                 ButtonPos.Kill,
                 KeyCode.Q,
                 KillCoolDown.GetFloatValue(),
                 () => KillButtons.KillButtonSetTarget(KillDistance.GetFloatValue(), Color, [Teams.Impostor]),
-                __instance.KillButton.graphic.sprite,
+                Sprites.GetSpriteFromResources("ui.button.vampire_bite.png",100),
                 () =>
                 {
                     BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(KillDistance.GetValue(), Color, [Teams.Impostor]));
                 },
                 () => VampireBitebutton.Timer = VampireBitebutton.maxTimer,
-                "Kill",
+                "BITE",
                 true, false, 10f, OnEffectEnd: () =>
                 {
                     UnCheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, BittenPlayerControl, DeathReason.BittenByVampire, false);

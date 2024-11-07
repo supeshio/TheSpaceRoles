@@ -5,7 +5,7 @@
         public Jester()
         {
 
-            team = Teams.Jester;
+            Team = Teams.Jester;
             Role = Roles.Jester;
             Color = new JesterTeam().Color;
         }

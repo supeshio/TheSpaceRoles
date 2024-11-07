@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
@@ -199,7 +200,7 @@ namespace TheSpaceRoles
             foreach (var p in AllPlayerRoles)
             {
                 //Logger.Info(p.Value[0].Role.ToString());
-                if (!p.Value.Dead && p.Value.team != Teams.Impostor && p.Value.team != Teams.Jackal)
+                if (!p.Value.Dead && p.Value.Team != Teams.Impostor && p.Value.Team != Teams.Jackal)
                 {
                     i++;
                 }

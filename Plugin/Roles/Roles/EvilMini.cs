@@ -11,7 +11,7 @@ namespace TheSpaceRoles
         public float MaxTimer = 400;
         public EvilMini()
         {
-            team = Teams.Impostor;
+            Team = Teams.Impostor;
             Role = Roles.EvilMini;
             Color = RoleData.GetColorFromTeams(Teams.Impostor);
             HasKillButton = true;

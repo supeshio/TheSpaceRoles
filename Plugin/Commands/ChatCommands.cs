@@ -196,7 +196,7 @@ namespace TheSpaceRoles
 
                                 DataBase.AllPlayerRoles.Remove(PlayerControl.LocalPlayer.PlayerId);
                                 DataBase.ResetButtons();
-                                if (RoleData.GetCustomRoles[roleId].team == Teams.Impostor)
+                                if (RoleData.GetCustomRoles[roleId].Team == Teams.Impostor)
                                 {
                                     PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Impostor, true);
                                 }
@@ -221,7 +221,7 @@ namespace TheSpaceRoles
                                     {
                                         DataBase.AllPlayerRoles.Remove(PlayerControl.LocalPlayer.PlayerId);
                                         DataBase.ResetButtons();
-                                        if (role.team == Teams.Impostor)
+                                        if (role.Team == Teams.Impostor)
                                         {
                                             PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Impostor, true);
                                         }

@@ -25,7 +25,7 @@ namespace TheSpaceRoles
         /// CustomButtonを入れる
         /// </summary>
         public static List<CustomButton> buttons = new() { };
-
+        public static Dictionary<ButtonPos, ActionButton> pos = [];
 
         public static Vector2 SelectButtonPos(int c) => c switch
         {
@@ -85,7 +85,7 @@ namespace TheSpaceRoles
             Action OnEffectStart = null,
             Action OnEffectUpdate = null,
             Action OnEffectEnd = null,
-            int count = -1
+            int remainUses = -1
             )
         {
             this.Name = name;
@@ -106,12 +106,12 @@ namespace TheSpaceRoles
             this.OnEffectStart = OnEffectStart;
             this.OnEffectUpdate = OnEffectUpdate;
             this.OnEffectEnd = OnEffectEnd;
-            this.count = count;
+            this.count = remainUses;
             actionButton = Instantiate(hudManager.AbilityButton, hudManager.KillButton.transform.parent);
-            if (count > 0) 
+            if (remainUses > 0) 
             {
 
-                actionButton.SetUsesRemaining(count);
+                actionButton.SetUsesRemaining(remainUses );
             }
             else
             {
@@ -119,9 +119,19 @@ namespace TheSpaceRoles
             }
             actionButton.buttonLabelText.text = buttonText;
             actionButton.graphic.sprite = sprite;
+            actionButton.transform.SetAsLastSibling();
+            pos = [];
+            pos.TryAdd(ButtonPos.Use,(ActionButton)HudManager.Instance.PetButton ?? HudManager.Instance.UseButton);
+            pos.TryAdd(ButtonPos.Report, (ActionButton)HudManager.Instance.ReportButton);
+            pos.TryAdd(ButtonPos.Sabotage, (ActionButton)HudManager.Instance.SabotageButton);
+            pos.TryAdd(ButtonPos.Kill, (ActionButton)HudManager.Instance.KillButton);
+            pos.TryAdd(ButtonPos.Vent, (ActionButton)HudManager.Instance.ImpostorVentButton);
+            pos.TryAdd(ButtonPos.Custom, (ActionButton)HudManager.Instance.AbilityButton);
+            
+            actionButton.transform.SetSiblingIndex(pos[buttonPos].transform.GetSiblingIndex()+1);
             actionButton.cooldownTimerText.text = ((int)Timer).ToString();
+
             actionButton.gameObject.name = name;
-            actionButton.transform.SetSiblingIndex((int)ButtonPosition);
             PassiveButton passiveButton = actionButton.GetComponent<PassiveButton>();
             passiveButton.enabled = true;
 
@@ -198,8 +208,18 @@ namespace TheSpaceRoles
 
                 if (canuse != -1)
                 {
-                    actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.EnabledColor;
-                    actionButton.graphic.material.SetFloat(Desat, 0f);
+                    if (count != 0)
+                    {
+                        actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.EnabledColor;
+                        actionButton.graphic.material.SetFloat(Desat, 0f);
+
+                    }
+                    else
+                    {
+
+                        actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.DisabledClear;
+                        actionButton.graphic.material.SetFloat(Desat, 1f);
+                    }
                 }
                 else
                 {
@@ -215,26 +235,17 @@ namespace TheSpaceRoles
                 this.OnEffectUpdate?.Invoke();
             }
 
-            if (count>0)
+            if (atFirsttime == false)
             {
-                count --;
-                actionButton.SetUsesRemaining(count);
+                actionButton.SetCoolDown(Timer, (hasEffect && isEffectActive) ? maxEffectTimer : maxTimer);
+
+            }
+            else
+            {
+                actionButton.SetCoolDown(Timer, 10f);
+
             }
 
-            if (count != 0)
-            {
-
-                if (atFirsttime == false)
-                {
-                    actionButton.SetCoolDown(Timer, (hasEffect && isEffectActive) ? maxEffectTimer : maxTimer);
-
-                }
-                else
-                {
-                    actionButton.SetCoolDown(Timer, 10f);
-
-                }
-            }
 
         }
         public void SetActive(bool isActive)
@@ -280,6 +291,11 @@ namespace TheSpaceRoles
                         OnClick();
                         Timer = maxTimer;
                     }
+                }
+                if (count > 0)
+                {
+                    count--;
+                    actionButton.SetUsesRemaining(count);
                 }
             }
 
@@ -334,7 +350,7 @@ namespace TheSpaceRoles
                 }
                 if (notIncludeTeamIds != null && notIncludeTeamIds.Length > 0)
                 {
-                        if (notIncludeTeamIds.Contains(DataBase.AllPlayerRoles[x.PlayerId].team))
+                        if (notIncludeTeamIds.Contains(DataBase.AllPlayerRoles[x.PlayerId].Team))
                         {
                             continue;
                         }

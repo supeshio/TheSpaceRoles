@@ -4,7 +4,7 @@
     {
         public Crewmate()
         {
-            team = Teams.Crewmate;
+            Team = Teams.Crewmate;
             Role = Roles.Crewmate;
             Color = Palette.CrewmateBlue;
         }

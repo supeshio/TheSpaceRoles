@@ -7,7 +7,7 @@
         public Madmate()
         {
 
-            team = Teams.Madmate;
+            Team = Teams.Madmate;
             Role = Roles.MadMate;
             Color = new MadmateTeam().Color;
             HasKillButton = false;

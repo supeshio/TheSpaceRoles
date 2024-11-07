@@ -65,7 +65,7 @@ namespace TheSpaceRoles
         EvilMini,
         NiceGuesser,
         EvilGuesser,
-
+        Sidekick,
     }
     public enum Teams : int
     {
@@ -98,21 +98,22 @@ namespace TheSpaceRoles
         [
 
             new Crewmate(),
-            new Impostor(),
-            new Sheriff(),
             new NiceMini(),
+            new Sheriff(),
+            new Mayor(),
+            new NiceGuesser(),
+            new NiceSwapper(),
+            new Madmate(),
+            new Impostor(),
             new Vampire(),
             new SerialKiller(),
-            new Madmate(),
-            new Jackal(),
-            new NiceGuesser(),
-            new EvilGuesser(),
             new EvilMini(),
-            new Jester(),
-            new Mayor(),
-            new NiceSwapper(),
+            new EvilGuesser(),
             new EvilSwapper(),
             new EvilHacker(),
+            new Jester(),
+            new Jackal(),
+            new Sidekick(),
         ];
 
         public static List<CustomRole> GetCustomRoles_Normal =>
@@ -206,9 +207,9 @@ namespace TheSpaceRoles
         }
         public static CustomRole GetCustomRole_NormalFromTeam(Teams teams)
         {
-            if (!GetCustomRoles_Normal.Any(x => x.team == teams)) { Logger.Error($"{teams} is not contained in RoleMasterNoramlLink"); return null; }
+            if (!GetCustomRoles_Normal.Any(x => x.Team == teams)) { Logger.Error($"{teams} is not contained in RoleMasterNoramlLink"); return null; }
 
-            return GetCustomRoles_Normal.First(x => x.team == teams);
+            return GetCustomRoles_Normal.First(x => x.Team == teams);
         }
         public static Teams[] GetAllTeams()
         {

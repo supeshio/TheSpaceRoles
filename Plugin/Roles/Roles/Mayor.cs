@@ -11,7 +11,7 @@ namespace TheSpaceRoles
     {
         public Mayor()
         {
-            team = Teams.Crewmate;
+            Team = Teams.Crewmate;
             Role = Roles.Mayor;
             Color = Helper.ColorFromColorcode("#7f921a");
         }

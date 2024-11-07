@@ -47,7 +47,7 @@ namespace TheSpaceRoles
                 //Sheriff 1
                 //です
                 Logger.Info("Owner");
-                Dictionary<Teams, List<Roles>> tr = new();
+                Dictionary<Teams, List<Roles>> tr = [];
 
 
                 List<int> players = DataBase.AllPlayerControls().Select(x => (int)x.PlayerId).ToList();
@@ -59,17 +59,20 @@ namespace TheSpaceRoles
                     var customOption = keyValuePair.Value.Selection();
                     Logger.Info(role + $" is {customOption}");
 
+                    if (!role.GetCustomRole().canAssign) continue;
+
+
                     for (int i = 0; i < customOption; i++)
 
                     {
-                        if (tr.ContainsKey(RoleData.GetCustomRoleFromRole(role).team))
+                        if (tr.ContainsKey(RoleData.GetCustomRoleFromRole(role).Team))
                         {
 
-                            tr[RoleData.GetCustomRoleFromRole(role).team].Add(RoleData.GetCustomRoleFromRole(role).Role);
+                            tr[RoleData.GetCustomRoleFromRole(role).Team].Add(RoleData.GetCustomRoleFromRole(role).Role);
                         }
                         else
                         {
-                            tr.Add(RoleData.GetCustomRoleFromRole(role).team, [RoleData.GetCustomRoleFromRole(role).Role]);
+                            tr.Add(RoleData.GetCustomRoleFromRole(role).Team, [RoleData.GetCustomRoleFromRole(role).Role]);
 
                         }
                         Logger.Info($"{customOption}");

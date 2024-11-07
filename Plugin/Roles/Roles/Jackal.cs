@@ -1,18 +1,29 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using static TheSpaceRoles.Helper;
+using static TheSpaceRoles.Ranges;
 namespace TheSpaceRoles
 {
     public class Jackal : CustomRole
     {
         CustomButton JackalKillButton;
+        CustomButton JackalSidekickButton;
         public Jackal()
         {
 
-            team = Teams.Jackal;
+            Team = Teams.Jackal;
             Role = Roles.Jackal;
             Color = ColorFromColorcode("#00b4eb");
             CanUseVent = true;
             //HasKillButton = true;
+        }
+        CustomOption KillCoolDown;
+        CustomOption SidekickCoolDown;
+        public override void OptionCreate()
+        {
+            KillCoolDown = CustomOption.Create(CustomOption.OptionType.Neutral, "role.jackal.killcooldown",CustomCoolDownRangefloat(), 12);
+            SidekickCoolDown = CustomOption.Create(CustomOption.OptionType.Neutral, "role.jackal.sidekickcooldown", CustomCoolDownRangefloat(), 12);
+            Options = [KillCoolDown,SidekickCoolDown];
         }
         public override void HudManagerStart(HudManager __instance)
         {
@@ -20,16 +31,18 @@ namespace TheSpaceRoles
             {
 
             }
+            KillCoolDown = CustomOptionsHolder.roleFamilarOptions[Roles.Jackal].First(x => x.nameId == "role.jackal.killcooldown");
+            Logger.Info(KillCoolDown.GetHashCode().ToString());
             JackalKillButton = new CustomButton(
                 __instance, "JackalKillButton",
                 ButtonPos.Kill,
                 KeyCode.Q,
-                30,
-                () => KillButtons.KillButtonSetTarget(2.5f, Color, notIncludeTeamIds: [Teams.Jackal]),
+                KillCoolDown.GetFloatValue(),
+                () => KillButtons.KillButtonSetTarget(OSAS.killdistance_short.GetValueFromSelector(), Color, notIncludeTeamIds: [Teams.Jackal]),
                 __instance.KillButton.graphic.sprite,
                 () =>
                 {
-                    var pc = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(2.5f, Color, notIncludeTeamIds: [Teams.Jackal]));
+                    var pc = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(OSAS.killdistance_short.GetValueFromSelector(), Color, notIncludeTeamIds: [Teams.Jackal]));
                     CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, pc, DeathReason.SheriffKill);
 
                 },
@@ -37,7 +50,35 @@ namespace TheSpaceRoles
                 "Kill",
                 false);
 
+            JackalSidekickButton = new CustomButton(
+                __instance, "JackalSidekickButton"
+                ,
+                ButtonPos.Custom,
+                KeyCode.F,
+                SidekickCoolDown.GetFloatValue(),
+                () => CustomButton.SetTarget(),
+                __instance.KillButton.graphic.sprite,
+                () =>
+                {
+                    var pc = GetPlayerControlFromId(CustomButton.SetTarget());
+                    var writer = CustomRPC.SendRpcUsebility(Role, PlayerControl.PlayerId, 0);
+                    writer.Write(pc);
+                    writer.EndRpc();
+                    SidekickPlayer(PlayerId, pc.PlayerId);
+                },
+                () =>
+                {
+                    JackalSidekickButton.Timer = JackalSidekickButton.maxTimer;
+                },
+                "Sidekick",
+                false,remainUses:1);
+
+        }
+        public static void SidekickPlayer(int sourceId,int targetId)
+        {
+            RoleSelect.ChangeMainRole(targetId, (int)Roles.Sidekick);
         }
     }
+    
 }
 

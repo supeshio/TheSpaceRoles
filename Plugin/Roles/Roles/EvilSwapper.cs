@@ -14,7 +14,7 @@ namespace TheSpaceRoles
         public PlayerControl SwapPC2;
         public EvilSwapper()
         {
-            team = Teams.Impostor;
+            Team = Teams.Impostor;
             Role = Roles.EvilSwapper;
             Color = Palette.ImpostorRed;
         }
