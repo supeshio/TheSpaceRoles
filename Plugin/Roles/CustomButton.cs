@@ -108,10 +108,10 @@ namespace TheSpaceRoles
             this.OnEffectEnd = OnEffectEnd;
             this.count = remainUses;
             actionButton = Instantiate(hudManager.AbilityButton, hudManager.KillButton.transform.parent);
-            if (remainUses > 0) 
+            if (remainUses > 0)
             {
 
-                actionButton.SetUsesRemaining(remainUses );
+                actionButton.SetUsesRemaining(remainUses);
             }
             else
             {
@@ -121,14 +121,14 @@ namespace TheSpaceRoles
             actionButton.graphic.sprite = sprite;
             actionButton.transform.SetAsLastSibling();
             pos = [];
-            pos.TryAdd(ButtonPos.Use,(ActionButton)HudManager.Instance.PetButton ?? HudManager.Instance.UseButton);
+            pos.TryAdd(ButtonPos.Use, (ActionButton)HudManager.Instance.PetButton ?? HudManager.Instance.UseButton);
             pos.TryAdd(ButtonPos.Report, (ActionButton)HudManager.Instance.ReportButton);
             pos.TryAdd(ButtonPos.Sabotage, (ActionButton)HudManager.Instance.SabotageButton);
             pos.TryAdd(ButtonPos.Kill, (ActionButton)HudManager.Instance.KillButton);
             pos.TryAdd(ButtonPos.Vent, (ActionButton)HudManager.Instance.ImpostorVentButton);
             pos.TryAdd(ButtonPos.Custom, (ActionButton)HudManager.Instance.AbilityButton);
-            
-            actionButton.transform.SetSiblingIndex(pos[buttonPos].transform.GetSiblingIndex()+1);
+
+            actionButton.transform.SetSiblingIndex(pos[buttonPos].transform.GetSiblingIndex() + 1);
             actionButton.cooldownTimerText.text = ((int)Timer).ToString();
 
             actionButton.gameObject.name = name;
@@ -176,9 +176,9 @@ namespace TheSpaceRoles
 
             PlayerControl local = PlayerControl.LocalPlayer;
 
-            if (Timer > 0&count != 0)
+            if (Timer > 0 & count != 0)
             {
-                    if (this.hasEffect && this.isEffectActive)
+                if (this.hasEffect && this.isEffectActive)
                 {
                     Timer -= Time.deltaTime;
                 }
@@ -187,7 +187,8 @@ namespace TheSpaceRoles
                     Timer -= Time.deltaTime;
 
                 }
-            }else
+            }
+            else
             {
                 atFirsttime = true;
                 Timer = 0;
@@ -350,10 +351,10 @@ namespace TheSpaceRoles
                 }
                 if (notIncludeTeamIds != null && notIncludeTeamIds.Length > 0)
                 {
-                        if (notIncludeTeamIds.Contains(DataBase.AllPlayerRoles[x.PlayerId].Team))
-                        {
-                            continue;
-                        }
+                    if (notIncludeTeamIds.Contains(DataBase.AllPlayerRoles[x.PlayerId].Team))
+                    {
+                        continue;
+                    }
 
                 }
                 if (x.inVent)

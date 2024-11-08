@@ -1,5 +1,4 @@
 ﻿using BepInEx.Configuration;
-using HarmonyLib;
 using Il2CppInterop.Runtime;
 using System;
 using System.Collections.Generic;
@@ -72,7 +71,7 @@ namespace TheSpaceRoles
         }
         public static CustomRole GetCustomRole(this Roles role)
         {
-            return RoleData.GetCustomRoles.First(x=>x.Role==role);
+            return RoleData.GetCustomRoles.First(x => x.Role == role);
         }
         public static bool IsRole(this PlayerControl p, Roles role)
         {

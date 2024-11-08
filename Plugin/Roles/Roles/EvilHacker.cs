@@ -1,5 +1,4 @@
-﻿using AmongUs.GameOptions;
-using UnityEngine;
+﻿using UnityEngine;
 using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
@@ -10,7 +9,7 @@ namespace TheSpaceRoles
         //public CustomButton HackAdminButton;
         public EvilHacker()
         {
-            
+
             Team = Teams.Impostor;
             Role = Roles.EvilHacker;
             Color = Palette.ImpostorRed;
@@ -27,13 +26,13 @@ namespace TheSpaceRoles
                 KeyCode.F,
                 30,
                 () => CustomButton.SetTarget(),
-                Sprites.GetSpriteFromResources("ui.button.evilhacker_hack.png",100f),
+                Sprites.GetSpriteFromResources("ui.button.evilhacker_hack.png", 100f),
                 () =>
                 {
                     var pc = GetPlayerControlFromId(CustomButton.SetTarget());
                     var writer = CustomRPC.SendRpcUsebility(Role, PlayerControl.PlayerId, 0);
                     writer.Write(pc);
-                    writer.EndRpc(); 
+                    writer.EndRpc();
                     HackPlayer(PlayerId, pc.PlayerId);
                 },
                 () =>
@@ -48,13 +47,13 @@ namespace TheSpaceRoles
         public override void Update()
         {
         }
-        public static void HackPlayer(int sourceId,int targetId)
+        public static void HackPlayer(int sourceId, int targetId)
         {
             RoleSelect.ChangeMainRole(targetId, (int)Roles.MadMate);
         }
         public override void ShowMap(ref MapBehaviour mapBehaviour)
         {
-            if(PlayerControl.LocalPlayer.PlayerId == PlayerId)
+            if (PlayerControl.LocalPlayer.PlayerId == PlayerId)
             {
                 //mapBehaviour.ShowSabotageMap();
                 //mapBehaviour.countOverlayAllowsMovement = false;

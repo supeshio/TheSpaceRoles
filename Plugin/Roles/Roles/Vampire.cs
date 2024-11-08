@@ -45,7 +45,7 @@ namespace TheSpaceRoles
                 KeyCode.Q,
                 KillCoolDown.GetFloatValue(),
                 () => KillButtons.KillButtonSetTarget(KillDistance.GetFloatValue(), Color, [Teams.Impostor]),
-                Sprites.GetSpriteFromResources("ui.button.vampire_bite.png",100),
+                Sprites.GetSpriteFromResources("ui.button.vampire_bite.png", 100),
                 () =>
                 {
                     BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(KillDistance.GetValue(), Color, [Teams.Impostor]));

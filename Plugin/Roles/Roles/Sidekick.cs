@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using static TheSpaceRoles.Helper;
+﻿using static TheSpaceRoles.Helper;
 namespace TheSpaceRoles
 {
     public class Sidekick : CustomRole
@@ -13,14 +12,14 @@ namespace TheSpaceRoles
         }
         public override void APDie(PlayerControl pc)
         {
-            if(DataBase.AllPlayerRoles[pc.PlayerId].Team == Teams.Jackal) 
+            if (DataBase.AllPlayerRoles[pc.PlayerId].Team == Teams.Jackal)
             {
                 if (DataBase.AllPlayerRoles[pc.PlayerId].Role != Roles.Sidekick)
                 {
                     RoleSelect.ChangeMainRole(PlayerId, (int)Roles.Jackal);
                 }
             }
-            
+
         }
     }
 }

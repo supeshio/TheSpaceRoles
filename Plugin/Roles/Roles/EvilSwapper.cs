@@ -23,7 +23,7 @@ namespace TheSpaceRoles
         {
             if (SwapCount != null) return;
 
-            SwapCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.evilswapper.swapcount", new CustomIntRange(1, 15, 1), 2);
+            SwapCount = CustomOption.Create(CustomOption.OptionType.Impostor,"role.evilswapper.swapcount", new CustomIntRange(1, 15, 1), 2);
 
             Options = [SwapCount];
         }
@@ -116,9 +116,9 @@ namespace TheSpaceRoles
         }
         public static void RpcSwap(int playerid, int id1, int id2)
         {
-                var swap = (EvilSwapper)DataBase.AllPlayerRoles[playerid];
-                swap.SwapPC1 = Helper.GetPlayerById(id1);
-                swap.SwapPC2 = Helper.GetPlayerById(id2);
+            var swap = (EvilSwapper)DataBase.AllPlayerRoles[playerid];
+            swap.SwapPC1 = Helper.GetPlayerById(id1);
+            swap.SwapPC2 = Helper.GetPlayerById(id2);
 
         }
         public static PlayerControl targetplayer;

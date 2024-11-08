@@ -8,86 +8,161 @@ using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
-    public class EvilGuesser : CustomRole
+    /*https://discord.com/channels/1213452258847490048/1273959213961445487/1273959228511490080*/
+    /***[役職名/Name]**
+
+    - トリビア/Trivia
+
+    **[イントロ/Introduction]**
+
+    -  知識こそが村を導く
+
+    **[陣営/Team]**
+
+    - クルーメイト陣営
+
+    **[役職の色]**
+
+    - #00B5FF
+
+    **[説明/Description]**
+
+    - 選択した役職の生存人数を確認できる役職です
+    会議中で確認したい役職を選択すると、チャットにその役職の人が何人生存してるかが見れます
+
+    **[ボタン/Buttons]**
+
+    - **[知識]**
+    - 発動条件:残りの発動可能回数が1以上のときに会議に入っていること
+    - 効果: 会議中に発動できます
+         ゲッサーの画面のように役職一覧が出せてそこで役職を選択すると、
+         チャットに選択した役職を持ってる人の残りの生存人数を見ることができます
+         発動回数には制限があります
+         陣営の人数が確認できるように設定すれば、候補がインポスター、ニュートラル、クルーメイト
+         のみになり、細かな役ではなく陣営の大まかな人数が把握できます
+         設定次第でクルー役、クルーメイトのみ確認できなくなります
+         クルー役が確認できないかは、陣営で確認するかがオフにしているときにのみ設定できます
+         陣営で確認するか、クルーメイトが確認できないかの両方をオンにしていれば、
+         クルー陣営(クルー役とクルーメイト)が確認できなくなります
+         全役職が一度に確認できる設定だと、選択画面を開かずに生きている役のみを見れます
+         陣営で確認するか、全役職を一度に確認できるかの両方を
+         オンにしていると、どの陣営が何人生きてるかを一度に見れます
+
+    **[役職設定/Settings]**
+
+    - 発動可能回数
+    - 初期値 : 1 , 最小値 1,最大値 5
+
+    - クルーメイトが確認できないか
+    - 初期値 : off
+
+    - 陣営で確認するか
+    - 初期値 : off
+
+    - クルー役職が確認できないか
+    - 初期値 : off
+
+    - 全役職の生存人数を一度に確認できるか
+    - 初期値 : off
+
+    **[その他/others]**
+    - 主な使い方は、盤面把握です
+    例:ローラーしたときに能力を使い、キル役の候補役職が減っていたらロラストなど
+    またクルー役が見れる設定のとき
+    役騙りをしているかなども確認することができるため、協力な役職だと言えます*/
+    public class Trivia : CustomRole
     {
-        public List<Target> targets = [];
-        public static EvilGuesser instance;
-        public EvilGuesser()
+        public Trivia()
         {
-            Team = Teams.Impostor;
-            Role = Roles.EvilGuesser;
-            Color = Palette.ImpostorRed;
+            Team = Teams.Crewmate;
+            Role = Roles.Trivia;
+            Color = Helper.ColorFromColorcode("#00B5FF");
         }
-        public static CustomOption GuessCount;
-        public static CustomOption GuessCountOfMeeting;
-        public static CustomOption CanGuessCrewmate;
+        public static CustomOption IdeaCount;
+        public static CustomOption IdeaOfMeeting;
+        public static CustomOption CanIdeaCrewmateTeam;
         public override void OptionCreate()
         {
-            if (GuessCount != null) return;
+            if (IdeaCount != null) return;
 
-            GuessCount = CustomOption.Create(CustomOption.OptionType.Impostor, "role.evilguesser.guesscount", new CustomIntRange(1, 15, 1), 2);
-            GuessCountOfMeeting = Create(CustomOption.OptionType.Impostor, "role.evilguesser.guesscountofmeeting", new CustomIntRange(1, 15, 1), 14);
-            CanGuessCrewmate = Create(CustomOption.OptionType.Impostor, "role.evilguesser.canguesscrewmate", true);
+            IdeaCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.trivia.ideacount", new CustomIntRange(1, 15, 1), 1);
+            IdeaOfMeeting = Create(CustomOption.OptionType.Crewmate, "role.trivia.idecountaofmeeting", new CustomIntRange(1, 15, 1), 1);
+            CanIdeaCrewmateTeam = Create(CustomOption.OptionType.Crewmate, "role.trivia.canideacrewmate", true);
 
-            Options = [GuessCount, GuessCountOfMeeting, CanGuessCrewmate];
+            Options = [IdeaCount, IdeaOfMeeting, CanIdeaCrewmateTeam];
         }
-        public static int remainBullet;
-        public static int remainBulletOfMeeting;
+        public static int remainIdea;
+        public static int remainIdeaOfMeeting;
         public override void HudManagerStart(HudManager hudManager)
         {
-            remainBullet = (int)GuessCountOfMeeting.GetIntValue();
-            instance = this;
-            targets = [];
+            remainIdea = (int)IdeaOfMeeting.GetIntValue();
         }
         public override void MeetingStart(MeetingHud meeting)
         {
-            remainBulletOfMeeting = (int)GuessCount.GetIntValue();
-            TargetReset(meeting);
+            remainIdeaOfMeeting = (int)IdeaCount.GetIntValue();
+            Button(meeting);
         }
-        public void TargetReset(MeetingHud meeting, int[] untargetingplayerids = null)
+        public void UsedIdea()
         {
-            if (targets != null | targets.Count > 0)
-            {
-                foreach (var target in targets)
-                {
-                    GameObject.Destroy(target.renderer.gameObject);
-                }
-            }
-            targets = [];
-            if (!PlayerControl.LocalPlayer.Data.IsDead)
-            {
-
-                foreach (var player in MeetingHud.Instance.playerStates)
-                {
-                    if (player != null && !player.AmDead && player.TargetPlayerId != PlayerControl.LocalPlayer.PlayerId)
-                    {
-                        if (untargetingplayerids != null)
-                        {
-                            if (!untargetingplayerids.Contains(player.TargetPlayerId))
-                            {
-
-                                targets.Add(new Target(player, meeting));
-                            }
-                        }
-                        else
-                        {
-
-                            targets.Add(new Target(player, meeting));
-                        }
-                    }
-                }
-            }
-            foreach (var player in MeetingHud.Instance.playerStates)
-            {
-                Logger.Message($"player:{player.NameText.text},Dead:{player.AmDead},null{player == null}");
-            }
+            remainIdea--;
+            remainIdeaOfMeeting--;
+            Button(MeetingHud.Instance);
         }
+        public GameObject gameObject;
+        public PlayerVoteArea voteArea;
+        public PassiveButton passiveButton;
+        public SpriteRenderer renderer;
+        public void Button(MeetingHud meeting)
+        {
+            if (remainIdea <= 0 || remainIdeaOfMeeting <= 0) return;
+        this.gameObject = new();
+        gameObject.name = "TargetButton";
+        gameObject.transform.SetParent(meeting.meetingContents.transform);
+        gameObject.transform.localPosition = new(0f, -1.8f, -10);
+        this.renderer = gameObject.AddComponent<SpriteRenderer>();
+        renderer.sprite = Sprites.GetSpriteFromResources("ui.target.png", 800f);
+        renderer.gameObject.layer = HudManager.Instance.gameObject.layer;
+
+        renderer.color = Helper.ColorEditHSV(Color.gray);
+        var box = gameObject.AddComponent<BoxCollider2D>();
+        box.size = renderer.bounds.size;
+        passiveButton = gameObject.AddComponent<PassiveButton>();
+        passiveButton.OnClick = new();
+        passiveButton.OnMouseOut = new();
+        passiveButton.OnMouseOver = new();
+        passiveButton._CachedZ_k__BackingField = 0.1f;
+        passiveButton.CachedZ = 0.1f;
+        passiveButton.Colliders = new[] { box };
+        passiveButton.OnClick.AddListener((System.Action)(() =>
+        {
+            ShowRoles(meeting);
+            GameObject.Destroy(gameObject);
+            try
+            {
+
+                passiveButton.OnClick = new();
+                UnityEngine.Object.Destroy(passiveButton);
+            }
+            catch { }
+
+        }));
+        passiveButton.OnMouseOver.AddListener((System.Action)(() =>
+        {
+            renderer.color = Color.white;
+        }));
+        passiveButton.OnMouseOut.AddListener((System.Action)(() =>
+        {
+
+            renderer.color = Helper.ColorEditHSV(Color.gray);
+        }));
+    }
         public static SpriteRenderer crewmateRend;
         public static SpriteRenderer impostorRend;
         public static SpriteRenderer neutralRend;
-        public static int selected = 0;
-        public static void ChoiceRole(MeetingHud meeting)
+        public int selected = 0;
+        public void ShowRoles(MeetingHud meeting)
         {
+            GameObject.Destroy(gameObject);
             crewmateRend = null;
             impostorRend = null;
             neutralRend = null;
@@ -284,47 +359,62 @@ namespace TheSpaceRoles
             {
                 reset();
             }));
+            if (!CanIdeaCrewmateTeam.GetBoolValue())
+            {
 
+                selected = 1;
+                reset();
+                impteam.gameObject.SetActive(true);
+                impostorRend.color = Palette.AcceptedGreen;
+                crewmateRend.gameObject.SetActive(false);
+            }
 
 
             reset();
             crewteam.gameObject.SetActive(true);
 
 
-
             void roleaction(Roles role)
             {
 
                 meeting.ButtonParent.gameObject.SetActive(true);
+                try
+                {
+                    GameObject.Destroy(crewteam.gameObject);
+                    GameObject.Destroy(impteam.gameObject);
+                    GameObject.Destroy(neuteam.gameObject);
+                    GameObject.Destroy(crewmateRend.gameObject);
+                    GameObject.Destroy(impostorRend.gameObject);
+                    GameObject.Destroy(neutralRend.gameObject);
+                    GameObject.Destroy(BackRend.gameObject);
+                    crewmateRend = null;
+                    impostorRend = null;
+                    neutralRend = null;
+                }
+                catch
+                {
 
-                GameObject.Destroy(crewteam.gameObject);
-                GameObject.Destroy(impteam.gameObject);
-                GameObject.Destroy(neuteam.gameObject);
-                GameObject.Destroy(crewmateRend.gameObject);
-                GameObject.Destroy(impostorRend.gameObject);
-                GameObject.Destroy(neutralRend.gameObject);
-                GameObject.Destroy(BackRend.gameObject);
-                crewmateRend = null;
-                impostorRend = null;
-                neutralRend = null;
-                int pc = -1;
+                }
                 if (role == Roles.None)
                 {
-                    EvilGuesser.instance.TargetReset(meeting);
                     return;
                 }
-                if (targetplayer.IsRole(role))
+                int rolec = 0;
+                foreach (var pr in DataBase.AllPlayerRoles)
                 {
-                    UnCheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, targetplayer, DeathReason.ShotByEvilGuesser);
-                    pc = targetplayer.PlayerId;
-                }
-                else
-                {
+                    if (pr.Value.Role == role)
+                    {
+                        int p = pr.Key;
+                        if (!Helper.GetPlayerById(p).Data.IsDead)
+                        {
+                            rolec++;
+                        }
 
-                    UnCheckedMurderPlayer.RpcMurder(targetplayer, PlayerControl.LocalPlayer, DeathReason.MisfiredByEvilGuesser);
-                    pc = PlayerControl.LocalPlayer.PlayerId;
+                    }
                 }
-                EvilGuesser.instance.TargetReset(meeting, [pc]);
+                Helper.AddChat($"Role:{Helper.GetCustomRole(role).ColoredRoleName}の生存数 : {rolec}");
+                UsedIdea();
+                //Button(meeting);
             }
 
 
@@ -335,10 +425,6 @@ namespace TheSpaceRoles
             foreach (var role in DataBase.AssignedRoles())
             {
 
-                if (CanGuessCrewmate.GetBoolValue() && role == Roles.Crewmate)
-                {
-                    continue;
-                }
                 SpriteRenderer rend;
 
                 if (RoleData.GetCustomRoleFromRole(role).Team == Teams.Crewmate)
@@ -388,8 +474,7 @@ namespace TheSpaceRoles
         {
             if (teams != Teams.None)
             {
-                SpriteRenderer
-                spriteRenderer = new GameObject(teams.ToString()).AddComponent<SpriteRenderer>();
+                SpriteRenderer spriteRenderer = new GameObject(teams.ToString()).AddComponent<SpriteRenderer>();
                 spriteRenderer.transform.SetParent(parent);
                 spriteRenderer.sprite = Sprites.GetSpriteFromResources("ui.option.png", 350f);
                 spriteRenderer.transform.localPosition = new Vector3(-2.7f, 1.6f, -10);
@@ -458,57 +543,6 @@ namespace TheSpaceRoles
                 return spriteRenderer;
             }
 
-        }
-        public static PlayerControl targetplayer;
-
-        public class Target
-        {
-            public GameObject gameObject;
-            public PlayerVoteArea voteArea;
-            public int playerId;
-            public PassiveButton passiveButton;
-            public SpriteRenderer renderer;
-            public Target(PlayerVoteArea playerVoteArea, MeetingHud meeting)
-            {
-                this.voteArea = playerVoteArea;
-                this.playerId = playerVoteArea.TargetPlayerId;
-                this.passiveButton = new PassiveButton();
-                this.gameObject = new();
-                gameObject.name = "TargetButton";
-                gameObject.transform.SetParent(playerVoteArea.transform);
-                gameObject.transform.localPosition = new(-0.9f, 0, -1);
-                this.renderer = gameObject.AddComponent<SpriteRenderer>();
-                renderer.sprite = Sprites.GetSpriteFromResources("ui.target.png", 800f);
-                renderer.gameObject.layer = HudManager.Instance.gameObject.layer;
-                //renderer.material = MeetingHud.Instance.SkipVoteButton.GetComponent<SpriteRenderer>().material;
-
-                renderer.color = Helper.ColorEditHSV(Color.white, a: 0.6f);
-                var box = gameObject.AddComponent<BoxCollider2D>();
-                box.size = renderer.bounds.size;
-                passiveButton = gameObject.AddComponent<PassiveButton>();
-                passiveButton.OnClick = new();
-                passiveButton.OnMouseOut = new();
-                passiveButton.OnMouseOver = new();
-                passiveButton._CachedZ_k__BackingField = 0.1f;
-                passiveButton.CachedZ = 0.1f;
-                passiveButton.Colliders = new[] { box };
-                passiveButton.OnClick.AddListener((System.Action)(() =>
-                {
-                    Logger.Info($"{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName} is targeting");
-                    targetplayer = DataBase.AllPlayerControls().First(x => x.PlayerId == playerVoteArea.TargetPlayerId);
-                    ChoiceRole(meeting);
-
-                }));
-                passiveButton.OnMouseOver.AddListener((System.Action)(() =>
-                {
-                    renderer.color = Color.red;
-                }));
-                passiveButton.OnMouseOut.AddListener((System.Action)(() =>
-                {
-
-                    renderer.color = Helper.ColorEditHSV(Color.white, a: 0.6f);
-                }));
-            }
         }
     }
 }

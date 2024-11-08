@@ -193,7 +193,7 @@ namespace TheSpaceRoles
             {
 
                 DataBase.AllPlayerRoles[__instance.PlayerId].Die();
-                DataBase.AllPlayerRoles.Do(x=>x.Value.APDie(__instance));
+                DataBase.AllPlayerRoles.Do(x => x.Value.APDie(__instance));
                 DataBase.AllPlayerRoles[__instance.PlayerId].Dead = true;
                 DataBase.AllPlayerRoles[__instance.PlayerId].PlayerId.ToString();
                 Logger.Info(__instance.PlayerId + "_" + __instance.Data.PlayerName);
@@ -256,7 +256,7 @@ namespace TheSpaceRoles
                 var map = __instance;
                 bool re = false;
                 var f = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId];
-                
+
 
                 f.ShowMap(ref map);
                 if (mapOptions.Mode == MapOptions.Modes.Normal)
@@ -265,7 +265,7 @@ namespace TheSpaceRoles
                 }
 
 
-                if(mapOptions.Mode == MapOptions.Modes.CountOverlay)
+                if (mapOptions.Mode == MapOptions.Modes.CountOverlay)
                 {
                     //re = true;
                     //map.ShowCountOverlay(false, true, true);

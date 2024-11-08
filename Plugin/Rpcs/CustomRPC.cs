@@ -77,7 +77,7 @@ namespace TheSpaceRoles
                                 EvilSwapper.RpcSwap(useAbilityPlayerId, reader.ReadInt32(), reader.ReadInt32());
                                 break;
                             case Roles.EvilHacker:
-                                EvilHacker.HackPlayer(useAbilityPlayerId,reader.ReadInt32());
+                                EvilHacker.HackPlayer(useAbilityPlayerId, reader.ReadInt32());
                                 break;
                             case Roles.Jackal:
                                 Jackal.SidekickPlayer(useAbilityPlayerId, reader.ReadInt32());

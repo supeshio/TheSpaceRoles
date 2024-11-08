@@ -329,7 +329,7 @@ namespace TheSpaceRoles
                                 case "ad":
                                 case "a":
                                     HudManager.Instance.InitMap();
-                                    MapBehaviour.Instance.ShowCountOverlay(true,true,true);
+                                    MapBehaviour.Instance.ShowCountOverlay(true, true, true);
                                     break;
                                 default:
 

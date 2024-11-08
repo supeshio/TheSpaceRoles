@@ -262,7 +262,7 @@ namespace TheSpaceRoles
         public static void ChangeMainRole(int playerId, int roleId)
         {
 
-            Logger.Info($"Player:{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName}({playerId}) -> Role:{(Roles)roleId}","ChangeRole");
+            Logger.Info($"Player:{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName}({playerId}) -> Role:{(Roles)roleId}", "ChangeRole");
             var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
             p.ReSet(playerId);
             DataBase.AllPlayerRoles.Remove(playerId);

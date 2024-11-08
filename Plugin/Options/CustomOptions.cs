@@ -293,7 +293,7 @@ namespace TheSpaceRoles
             {
                 return options.First(x => x.nameId == nameId);
             }
-            return new CustomOption(optionType,nameId,range,defaultSelection,Show,onChange,isHeader,colorcode);
+            return new CustomOption(optionType, nameId, range, defaultSelection, Show, onChange, isHeader, colorcode);
         }
         public CustomOption(OptionType optionType, string nameId, CustomRange range, int defaultSelection, Func<bool> Show = null, Action onChange = null, bool isHeader = false, string colorcode = "#ffffff")
         {

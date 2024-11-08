@@ -1,5 +1,4 @@
-﻿using AmongUs.GameOptions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TheSpaceRoles
 {
@@ -53,7 +52,7 @@ namespace TheSpaceRoles
                 OSAS.killdistance_long or
                 OSAS.killdistance_default
                 => Translation.GetString($"option.selection.killdistance.{selector.ToString()[13..]}"),
-                OSAS.killcool_default=> Translation.GetString($"option.selection.killdistance.default"),
+                OSAS.killcool_default => Translation.GetString($"option.selection.killdistance.default"),
                 _ => Translation.GetString($"option.selection.{selector.ToString().ToLower()}"),
             };
 
@@ -244,16 +243,16 @@ namespace TheSpaceRoles
         /// </summary>
         /// <param name="selectors"></param>
         /// <returns></returns>
-            public static CustomFloatRange CustomCoolDownRangefloat(List<OSAS> selectors = null)
-            {
+        public static CustomFloatRange CustomCoolDownRangefloat(List<OSAS> selectors = null)
+        {
 
-                float min = 2.5f;
-                float max = 180f;
-                float step = 2.5f;
-                List<OSAS> s = selectors ?? [];
-                s.Add(OSAS.killcool_default);
-                return new CustomFloatRange(min, max, step, s);
-            }
+            float min = 2.5f;
+            float max = 180f;
+            float step = 2.5f;
+            List<OSAS> s = selectors ?? [];
+            s.Add(OSAS.killcool_default);
+            return new CustomFloatRange(min, max, step, s);
+        }
 
 
     }

@@ -17,7 +17,7 @@ namespace TheSpaceRoles
                 var player = KillButtonSetTarget(
                     GameOptionsManager.Instance.currentNormalGameOptions.KillDistance,
                     RoleData.GetColorFromTeams(Teams.Impostor), notIncludeTeamIds: [Teams.Impostor]);
-                if (!__instance.isCoolingDown&&__instance.gameObject.active)
+                if (!__instance.isCoolingDown && __instance.gameObject.active)
                 {
                     CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, Helper.GetPlayerById(player), DeathReason.ImpostorKill);
                     __instance.ResetCoolDown();
@@ -30,7 +30,7 @@ namespace TheSpaceRoles
         private static readonly int Desat = Shader.PropertyToID("_Desat");
         [HarmonyPatch(typeof(KillButton))]
         [HarmonyPatch(nameof(KillButton.SetTarget)), HarmonyPostfix]
-        public static void SetTargetPlayer(KillButton __instance, [HarmonyArgument(0)]ref PlayerControl target)
+        public static void SetTargetPlayer(KillButton __instance, [HarmonyArgument(0)] ref PlayerControl target)
         {
             if (__instance == null) { return; }
             if (__instance.gameObject.active == false) return;

@@ -34,8 +34,8 @@ namespace TheSpaceRoles
                         VotedForId = playerVoteArea.VotedFor
                     });
                 }
-                    DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].VotingResultChange(__instance, ref list);
-                    DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].VotingResultChangePost(__instance, ref list);
+                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].VotingResultChange(__instance, ref list);
+                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].VotingResultChangePost(__instance, ref list);
 
                 list = [.. list.OrderBy(x => x.VoterId)];
 
@@ -54,7 +54,7 @@ namespace TheSpaceRoles
 
         }
         [HarmonyPatch(typeof(ExileController))]
-        [HarmonyPatch(nameof(ExileController.ReEnableGameplay)),HarmonyPostfix]
+        [HarmonyPatch(nameof(ExileController.ReEnableGameplay)), HarmonyPostfix]
 
         private static void End(MeetingHud __instance)
         {
@@ -66,7 +66,7 @@ namespace TheSpaceRoles
         [HarmonyPatch(nameof(MeetingHud.Start)), HarmonyPostfix]
         private static void Start(MeetingHud __instance)
         {
-            IsMeeting =true;
+            IsMeeting = true;
             DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].MeetingStart(__instance);
 
         }

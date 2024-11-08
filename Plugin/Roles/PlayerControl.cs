@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -16,7 +15,7 @@ namespace TheSpaceRoles
 
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
             //if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
-            if (RoleText?.text != null) return; 
+            if (RoleText?.text != null) return;
             //if (AmongUsClient.Instance.AmHost) DataBase.AllPlayerControls().Do(x => x.RpcSetRole(RoleTypes.Crewmate));
 
             //DataBase.AllPlayerControls().First(x => x.PlayerId == i).cosmetics.nameText.text = t + $"\n <size=80%>{string.Join("×", rolemaster.Select(x => x.ColoredRoleName()))}";
@@ -33,7 +32,7 @@ namespace TheSpaceRoles
             RoleText.transform.localScale = Vector3.one;
             RoleText.m_sharedMaterial = d.m_sharedMaterial;
             RoleText.fontStyle = d.fontStyle;
-            RoleText.fontSizeMin=RoleText.fontSizeMax = RoleText.fontSize = 2f;
+            RoleText.fontSizeMin = RoleText.fontSizeMax = RoleText.fontSize = 2f;
 
             //RoleText.text = DataBase.AllPlayerRoles[__instance.PlayerId][0].ColoredRoleName;
 
@@ -49,7 +48,7 @@ namespace TheSpaceRoles
             if (TheSpaceRoles.RoleTextManager.RoleText != null)
             {
 
-                if (PlayerControl.LocalPlayer.PlayerId!=__instance.PlayerId) return;
+                if (PlayerControl.LocalPlayer.PlayerId != __instance.PlayerId) return;
                 TheSpaceRoles.RoleTextManager.RoleText.text = DataBase.AllPlayerRoles[__instance.PlayerId].ColoredRoleName;
             }
         }

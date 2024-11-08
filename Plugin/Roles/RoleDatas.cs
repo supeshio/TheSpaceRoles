@@ -66,6 +66,9 @@ namespace TheSpaceRoles
         NiceGuesser,
         EvilGuesser,
         Sidekick,
+        Trivia,
+
+
     }
     public enum Teams : int
     {
@@ -103,6 +106,7 @@ namespace TheSpaceRoles
             new Mayor(),
             new NiceGuesser(),
             new NiceSwapper(),
+            new Trivia(),
             new Madmate(),
             new Impostor(),
             new Vampire(),

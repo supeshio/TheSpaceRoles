@@ -21,9 +21,9 @@ namespace TheSpaceRoles
         CustomOption SidekickCoolDown;
         public override void OptionCreate()
         {
-            KillCoolDown = CustomOption.Create(CustomOption.OptionType.Neutral, "role.jackal.killcooldown",CustomCoolDownRangefloat(), 12);
+            KillCoolDown = CustomOption.Create(CustomOption.OptionType.Neutral, "role.jackal.killcooldown", CustomCoolDownRangefloat(), 12);
             SidekickCoolDown = CustomOption.Create(CustomOption.OptionType.Neutral, "role.jackal.sidekickcooldown", CustomCoolDownRangefloat(), 12);
-            Options = [KillCoolDown,SidekickCoolDown];
+            Options = [KillCoolDown, SidekickCoolDown];
         }
         public override void HudManagerStart(HudManager __instance)
         {
@@ -71,14 +71,14 @@ namespace TheSpaceRoles
                     JackalSidekickButton.Timer = JackalSidekickButton.maxTimer;
                 },
                 "Sidekick",
-                false,remainUses:1);
+                false, remainUses: 1);
 
         }
-        public static void SidekickPlayer(int sourceId,int targetId)
+        public static void SidekickPlayer(int sourceId, int targetId)
         {
             RoleSelect.ChangeMainRole(targetId, (int)Roles.Sidekick);
         }
     }
-    
+
 }
 
