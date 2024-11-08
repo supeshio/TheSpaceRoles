@@ -57,7 +57,7 @@ namespace TheSpaceRoles
                 KeyCode.F,
                 SidekickCoolDown.GetFloatValue(),
                 () => CustomButton.SetTarget(),
-                __instance.KillButton.graphic.sprite,
+                Sprites.GetSpriteFromResources("ui.button.jackal_sidekick.png", 100),
                 () =>
                 {
                     var pc = GetPlayerControlFromId(CustomButton.SetTarget());
