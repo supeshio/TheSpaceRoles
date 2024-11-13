@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using TMPro;
 using UnityEngine;
 using static TheSpaceRoles.CustomOption;
@@ -114,6 +112,7 @@ namespace TheSpaceRoles
         public SpriteRenderer renderer;
         public void Button(MeetingHud meeting)
         {
+            if (meeting?.meetingContents == null) return;
             if (remainIdea <= 0 || remainIdeaOfMeeting <= 0) return;
         this.gameObject = new();
         gameObject.name = "TargetButton";
@@ -242,6 +241,7 @@ namespace TheSpaceRoles
                 reset();
                 BackRend.gameObject.SetActive(true);
                 roleaction(Roles.None);
+                Button(MeetingHud.Instance);
 
             }));
             BackRend.gameObject.GetComponent<PassiveButton>().OnMouseOver.AddListener((System.Action)(() =>
