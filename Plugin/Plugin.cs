@@ -16,7 +16,7 @@ public class TSR : BasePlugin
     public const string c_name = $"<color=#87cefa>{name}";
     public const string cs_name_v = $"<color=#87cefa>{s_name} <color=#5ccbff><size=100%>v{version}";
     public const string c_name_v = $"<color=#87cefa>{name} <color=#5ccbff><size=100%>v{version}";
-    public const string version = "0.4.2-beta";
+    public const string version = "0.4.3-beta";
     internal static BepInEx.Logging.ManualLogSource Logger;
     public Harmony Harmony = new(Id);
     public static TSR Instance;
@@ -32,7 +32,7 @@ public class TSR : BasePlugin
         Harmony.PatchAll();
         // Plugin startup logic
         TheSpaceRoles.Logger.Info($"Plugin {Id} is loaded!");
-        LobbyTimer = Config.Bind("Lobby", "LobbyTimer", true, "ロビータイマーを使うか");
+        //LobbyTimer = Config.Bind("Lobby", "LobbyTimer", true, "ロビータイマーを使うか");
         DebugMode = Config.Bind("Debug", "DebugMode", false, "デバッグモードを使うか");
         CustomHatManager.LoadHats();
         Instance = new TSR();

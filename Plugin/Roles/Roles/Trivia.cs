@@ -74,20 +74,20 @@ namespace TheSpaceRoles
         {
             Team = Teams.Crewmate;
             Role = Roles.Trivia;
-            Color = Helper.ColorFromColorcode("#00B5FF");
+            Color = Helper.ColorFromColorcode("#005BFF");
         }
         public static CustomOption IdeaCount;
         public static CustomOption IdeaOfMeeting;
-        public static CustomOption CanIdeaCrewmateTeam;
+        //public static CustomOption CanIdeaCrewmateTeam;
         public override void OptionCreate()
         {
             if (IdeaCount != null) return;
 
             IdeaCount = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.trivia.ideacount", new CustomIntRange(1, 15, 1), 1);
-            IdeaOfMeeting = Create(CustomOption.OptionType.Crewmate, "role.trivia.idecountaofmeeting", new CustomIntRange(1, 15, 1), 1);
-            CanIdeaCrewmateTeam = Create(CustomOption.OptionType.Crewmate, "role.trivia.canideacrewmate", true);
+            IdeaOfMeeting = Create(CustomOption.OptionType.Crewmate, "role.trivia.ideacountofmeeting", new CustomIntRange(1, 15, 1), 1);
+            //CanIdeaCrewmateTeam = Create(CustomOption.OptionType.Crewmate, "role.trivia.canideacrewmate", true);
 
-            Options = [IdeaCount, IdeaOfMeeting, CanIdeaCrewmateTeam];
+            Options = [IdeaCount, IdeaOfMeeting];
         }
         public static int remainIdea;
         public static int remainIdeaOfMeeting;
@@ -359,15 +359,15 @@ namespace TheSpaceRoles
             {
                 reset();
             }));
-            if (!CanIdeaCrewmateTeam.GetBoolValue())
-            {
+            //if (!CanIdeaCrewmateTeam.GetBoolValue())
+            //{
 
-                selected = 1;
-                reset();
-                impteam.gameObject.SetActive(true);
-                impostorRend.color = Palette.AcceptedGreen;
-                crewmateRend.gameObject.SetActive(false);
-            }
+            //    selected = 1;
+            //    reset();
+            //    impteam.gameObject.SetActive(true);
+            //    impostorRend.color = Palette.AcceptedGreen;
+            //    crewmateRend.gameObject.SetActive(false);
+            //}
 
 
             reset();
