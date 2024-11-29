@@ -81,7 +81,6 @@ namespace TheSpaceRoles
 
             //if (false/*イベント処理はいるらしい*/) UnregisteredHats.AddRange(CustomHatManager.loadHorseHats());
 
-            UnregisteredHats.AddRange(SanitizeHats(response));
             foreach (var repo in response2.Hats)
             {
                 www = new UnityWebRequest();
