@@ -9,6 +9,7 @@ namespace TheSpaceRoles
         public static void Postfix(ModManager __instance)
         {
             __instance.ShowModStamp();
+            LateTask.Update();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using Epic.OnlineServices.Lobby;
+using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -110,6 +111,7 @@ namespace TheSpaceRoles
         public virtual void APDie(PlayerControl pc) { }
         public virtual void Update() { }
         public virtual void APUpdate() { }
+        public virtual void Murder(PlayerControl pc,PlayerControl target) { }
         public string ColoredRoleName => ColoredText(Color, Translation.GetString("role." + Role.ToString() + ".name"));
         public string RoleName => Translation.GetString("role." + Role.ToString() + ".name");
 
@@ -197,6 +199,15 @@ namespace TheSpaceRoles
                 DataBase.AllPlayerRoles[__instance.PlayerId].Dead = true;
                 DataBase.AllPlayerRoles[__instance.PlayerId].PlayerId.ToString();
                 Logger.Info(__instance.PlayerId + "_" + __instance.Data.PlayerName);
+            }
+        }
+        [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.MurderPlayer))]
+        private static class MurderPlayerPatch
+        {
+            static void Postfix(PlayerControl __instance,[HarmonyArgument(0)]PlayerControl target)
+            {
+                Logger.Info($"{__instance.Data.PlayerName} - {target.Data.PlayerName}","Murder");
+                DataBase.AllPlayerRoles.Do(x=>x.Value.Murder(__instance, target));
             }
         }
     }

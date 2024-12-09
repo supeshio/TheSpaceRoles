@@ -21,6 +21,8 @@ namespace TheSpaceRoles
         public static void Murder(int id1, int id2, DeathReason reason)
         {
 
+            Logger.Message($"{id1} -> {id2}", "Murder");
+            DataBase.AllPlayerRoles.Do(x => x.Value.Murder(Helper.GetPlayerById(id1), Helper.GetPlayerById(id2)));
             Helper.GetPlayerControlFromId(id1).MurderPlayer(Helper.GetPlayerControlFromId(id2), MurderResultFlags.Succeeded);
             /*
 

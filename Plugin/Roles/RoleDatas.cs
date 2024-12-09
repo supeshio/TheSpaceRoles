@@ -67,6 +67,7 @@ namespace TheSpaceRoles
         EvilGuesser,
         Sidekick,
         Trivia,
+        Bait,
 
 
     }
@@ -107,6 +108,7 @@ namespace TheSpaceRoles
             new NiceGuesser(),
             new NiceSwapper(),
             new Trivia(),
+            new Bait(),
             new Madmate(),
             new Impostor(),
             new Vampire(),

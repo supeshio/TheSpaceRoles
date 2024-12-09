@@ -1,10 +1,12 @@
 ﻿using AmongUs.GameOptions;
 using HarmonyLib;
 using InnerNet;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
@@ -317,6 +319,18 @@ namespace TheSpaceRoles
                             if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
                             PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(int.Parse(chats[1]));
                             break;
+                        case "/alert":
+                            DestroyableSingleton<AlertFlash>.Instance.Flash();
+                            break;
+                        case "/alertc":
+                            FlashPatch.ShowFlash(Helper.ColorFromColorcode(chats[1]));
+                            break;
+                        case "/alert2":
+                            FlashPatch.ShowV2Flash(Helper.ColorFromColorcode(chats[1]));
+                            break;
+                        case "/alert0":
+                            FlashPatch.Show0Flash(Helper.ColorFromColorcode(chats[1]));
+                            break;
                         case "/map":
                             switch (chats[1])
                             {
@@ -338,6 +352,77 @@ namespace TheSpaceRoles
                                     break;
 
                             }
+                            break;
+                        case "/kill":
+
+                            var ph = (string player) =>
+                            {
+                                if(player == ":me:")
+                                {
+                                    return PlayerControl.LocalPlayer;
+                                }else if(Int32.TryParse(player, out int k))
+                                {
+                                    return Helper.GetPlayerById(k);
+                                }else
+                                {
+                                    return DataBase.AllPlayerControls().FirstOrDefault(x=>x.Data.PlayerName==player);
+                                }
+                            };
+                            if (chats[2] != null)
+                            {
+
+                                string p1 = chats[1];
+                                string p2 = chats[2];
+                                PlayerControl c1 = ph(p1);
+                                PlayerControl c2 = ph(p2);
+                                CheckedMurderPlayer.RpcMurder(c1, c2, DeathReason.KillByCommand);
+
+                            }
+                            else
+                            {
+
+                                string p2 = chats[1];
+                                PlayerControl c2 = ph(p2);
+                                CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, c2, DeathReason.KillByCommand);
+                            }
+                            break;
+                        case "/report":
+
+                            var ph3 = (string player) =>
+                            {
+                                if (player == ":me:")
+                                {
+                                    return PlayerControl.LocalPlayer;
+                                }
+                                else if (Int32.TryParse(player, out int k))
+                                {
+                                    return Helper.GetPlayerById(k);
+                                }
+                                else
+                                {
+                                    return DataBase.AllPlayerControls().FirstOrDefault(x => x.Data.PlayerName == player);
+                                }
+                            };
+                            if (chats[2] != null)
+                            {
+
+                                string p1 = chats[1];
+                                string p2 = chats[2];
+                                PlayerControl c1 = ph3(p1);
+                                PlayerControl c2 = ph3(p2);
+                                c1.CmdReportDeadBody(c2.Data);
+
+                            }
+                            else
+                            {
+
+                                string p2 = chats[1];
+                                PlayerControl c2 = ph3(p2);
+                                PlayerControl.LocalPlayer.CmdReportDeadBody(c2.Data);
+                            }
+                            break;
+                        case "/sec":
+                            LateTask.AddTask(Int32.Parse(chats[1]),() => Helper.AddChat(chats[1] + "秒後にメッセージ"));
                             break;
 
                     }

@@ -131,6 +131,7 @@ namespace TheSpaceRoles
     }
     public enum DeathReason : int
     {
+        KillByCommand,
         Disconnected,
         VotedOut,
         ImpostorKill,
