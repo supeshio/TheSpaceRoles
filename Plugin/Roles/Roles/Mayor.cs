@@ -13,7 +13,7 @@ namespace TheSpaceRoles
         {
             Team = Teams.Crewmate;
             Role = Roles.Mayor;
-            Color = Helper.ColorFromColorcode("#7f921a");
+            Color = Helper.ColorFromColorcode("#204d42");
         }
         public Func<string>[] Count()
         {

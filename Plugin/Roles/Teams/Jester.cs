@@ -5,7 +5,7 @@
         public JesterTeam()
         {
             Team = Teams.Jester;
-            Color = Helper.ColorFromColorcode("#ea618e");
+            Color = Helper.ColorFromColorcode("#ec62a5");
             HasKillButton = false;
             CanRepairSabotage = true;
             CanUseAdmin = true;

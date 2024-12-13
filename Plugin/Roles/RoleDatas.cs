@@ -109,6 +109,7 @@ namespace TheSpaceRoles
             new NiceSwapper(),
             new Trivia(),
             new Bait(),
+            new Seer(),
             new Madmate(),
             new Impostor(),
             new Vampire(),

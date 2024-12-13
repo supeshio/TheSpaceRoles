@@ -15,7 +15,7 @@ namespace TheSpaceRoles
         {
             Team = Teams.Crewmate;
             Role = Roles.NiceGuesser;
-            Color = Helper.ColorFromColorcode("#FFCC00");
+            Color = Helper.ColorFromColorcode("#FFFF00");
         }
         public static CustomOption GuessCount;
         public static CustomOption GuessCountOfMeeting;

@@ -13,7 +13,7 @@ namespace TheSpaceRoles
         {
             Team = Teams.Crewmate;
             Role = Roles.NiceMini;
-            Color = ColorFromColorcode("#ffeb57");
+            Color = ColorFromColorcode("#ffffff");
         }
         public override void HudManagerStart(HudManager hudManager)
         {

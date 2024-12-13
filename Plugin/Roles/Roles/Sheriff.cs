@@ -11,7 +11,7 @@ namespace TheSpaceRoles
 
             Team = Teams.Crewmate;
             Role = Roles.Sheriff;
-            Color = ColorFromColorcode("#ffd700");
+            Color = ColorFromColorcode("#f8cd46");
             HasKillButton = false;
         }
         public override void HudManagerStart(HudManager __instance)
