@@ -12,7 +12,7 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
  [English](https://github.com/supeshio/TheSpaceRoles/blob/main/README-EN.md)<br>
  
  ## リリース
- AmongUsのバージョン **2024.6.18**<br>
+ AmongUsのバージョン **2024.11.26**<br>
  **最新バージョン [Here](https://github.com/supeshio/TheSpaceRoles/releases/latest)**<br>
 
 ## [Mod機能(Wiki)](https://github.com/supeshio/TheSpaceRoles/wiki/MOD%E6%A9%9F%E8%83%BD)<br>
