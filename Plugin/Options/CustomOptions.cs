@@ -350,10 +350,13 @@ namespace TheSpaceRoles
                 categoryHeaderMasked.Title.text = Title();
                 categoryHeaderMasked.Title.outlineColor = Color.black;
                 categoryHeaderMasked.Title.outlineWidth = 0.1f;
-                categoryHeaderMasked.Title.fontSize = categoryHeaderMasked.Title.fontSizeMax = categoryHeaderMasked.Title.fontSizeMin = 3f;
+                categoryHeaderMasked.Title.fontSize = categoryHeaderMasked.Title.fontSizeMax  = 3f;
+                categoryHeaderMasked.Title.fontSizeMin = 1f;
                 categoryHeaderMasked.Title.fontStyle = TMPro.FontStyles.Bold;
                 categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, optionTypeCounter[optionType], -2f);
                 categoryHeaderMasked.transform.localScale = Vector3.one * 0.63f;
+                categoryHeaderMasked.Title.enableAutoSizing = true;
+                categoryHeaderMasked.Title.enableWordWrapping = false;
                 //categoryHeaderMasked.Background.color = color;
                 OptionTypeCounterCountup(optionType, -0.63f);
 
@@ -419,8 +422,11 @@ namespace TheSpaceRoles
                 ModOption.StringOption.TitleText.enableAutoSizing = false;
                 ModOption.StringOption.TitleText.enableWordWrapping = false;
                 ModOption.StringOption.TitleText.alignment = TextAlignmentOptions.Left;
-                ModOption.StringOption.TitleText.fontSize = ModOption.StringOption.TitleText.fontSizeMax = ModOption.StringOption.TitleText.fontSizeMin = 3f;
+                ModOption.StringOption.TitleText.fontSize = ModOption.StringOption.TitleText.fontSizeMax = 5f;
+                ModOption.StringOption.TitleText.fontSizeMin = 1f;
                 ModOption.StringOption.TitleText.fontStyle = TMPro.FontStyles.Bold;
+                ModOption.StringOption.TitleText.enableAutoSizing = true;
+                ModOption.StringOption.TitleText.enableWordWrapping = true;
                 ModOption.CustomOption = this;
                 Logger.Info(nameId);
 
@@ -429,7 +435,8 @@ namespace TheSpaceRoles
                 //ModOption.StringOption..transform.localPosition = new Vector3(3.5f, -0.05f, 0);
                 ModOption.StringOption.LabelBackground.transform.localPosition = new(-1.5f, -0.06f, 0);
                 ModOption.StringOption.LabelBackground.GetComponent<SpriteRenderer>().size = new(6, 0.7f);
-                ModOption.StringOption.TitleText.transform.localPosition = new Vector3(-3f, -0.06f, -3);
+                ModOption.StringOption.TitleText.rectTransform.sizeDelta = new Vector2(5.6f, 0.5f);
+                ModOption.StringOption.TitleText.transform.localPosition = new Vector3(-1.5f, -0.06f, -3);
                 ModOption.StringOption.transform.FindChild("ValueBox").localPosition = new(3.5f, -0.05f, 0);
                 ModOption.StringOption.transform.FindChild("MinusButton").localPosition = new(2.1f, -0.05f, 0);
                 ModOption.StringOption.transform.FindChild("PlusButton").localPosition = new(4.9f, -0.05f, 0);

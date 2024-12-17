@@ -37,7 +37,7 @@ namespace TheSpaceRoles
 
             if (www.isNetworkError || www.isHttpError)
             {
-                TSR.Logger.LogError(www.error);
+                Logger.Error(www.error);
                 yield break;
             }
 

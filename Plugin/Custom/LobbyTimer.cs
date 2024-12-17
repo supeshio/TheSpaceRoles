@@ -3,6 +3,7 @@ using Hazel;
 using InnerNet;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore;
 
 namespace TheSpaceRoles;
 
@@ -21,6 +22,8 @@ public class LobbyTimer
                 tmpro = __instance.PlayerCounter;
 
                 playercounter = __instance.PlayerCounter.text;
+                var t = __instance.HostInfoPanel.playerName;
+                t.fontStyle = TMPro.FontStyles.Bold;
             }
 
         }
