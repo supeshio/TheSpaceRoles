@@ -166,7 +166,7 @@ namespace TheSpaceRoles
         public static void ResetButtons()
         {
 
-            buttons.ToArray().Do(x => { try { GameObject.Destroy(x.actionButton.gameObject); } catch { } });
+            buttons.ToArray().Do(x => { try { GameObject.Destroy(x.gameObject); } catch { } });
             buttons.Clear();
         }
 

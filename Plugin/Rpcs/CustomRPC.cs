@@ -40,7 +40,7 @@ namespace TheSpaceRoles
                         DataBase.ResetAndPrepare();
                         break;
                     case Rpcs.SendRoomTimer:
-                        LobbyTimer.GameStartManagerUpdatePatch.TimerSet(reader.ReadSingle(), reader.ReadSingle());
+                        //LobbyTimer.GameStartManagerUpdatePatch.TimerSet(reader.ReadSingle(), reader.ReadSingle());
                         break;
                     case Rpcs.ShareOptions:
                         CustomOption.RecieveOption(reader);
@@ -96,7 +96,7 @@ namespace TheSpaceRoles
             return writer;
 
         }
-        public static MessageWriter SendRpcUsebility(Roles roleId, int playerId, int id)
+        public static MessageWriter SendRpcUseAbility(Roles roleId, int playerId, int id)
         {
 
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)Rpcs.UseAbility, SendOption.Reliable);

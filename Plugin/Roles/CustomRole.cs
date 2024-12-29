@@ -53,7 +53,7 @@ namespace TheSpaceRoles
             AdminMap = AdminMap == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).AdminMap : AdminMap;
             ShowingMapAllowedToMove = ShowingMapAllowedToMove == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).ShowingMapAllowedToMove : ShowingMapAllowedToMove;
             ShowingAdminIncludeDeadBodies = ShowingAdminIncludeDeadBodies == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).ShowingAdminIncludeDeadBodies : ShowingAdminIncludeDeadBodies;
-
+            RoleTextManager.TextChange(PlayerId);
         }
         public void ButtonReset()
         {
@@ -102,6 +102,7 @@ namespace TheSpaceRoles
         public virtual void MeetingUpdate(MeetingHud meeting) { }
         public virtual void BeforeMeetingStart(MeetingHud meeting) { }
         public virtual void MeetingStart(MeetingHud meeting) { }
+        public virtual void AfterMeetingEnd() { }
         public virtual void CheckForEndVoting(MeetingHud meeting, ref Dictionary<byte, int> dictionary) { }
         public virtual void VotingResultChange(MeetingHud meeting, ref List<MeetingHud.VoterState> states) { return; }
         public virtual void VotingResultChangePost(MeetingHud meeting, ref List<MeetingHud.VoterState> states) { return; }
@@ -250,6 +251,15 @@ namespace TheSpaceRoles
             DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Update();
             DataBase.AllPlayerRoles.Do(y => y.Value.APUpdate());
             DataBase.AllPlayerRoles.Do(y => y.Value.VentUpdate());
+        }
+        [HarmonyPatch(typeof(ExileController))]
+        [HarmonyPatch(nameof(ExileController.ReEnableGameplay)), HarmonyPostfix]
+        private static void StartPC(ExileController __instance)
+        {
+            if (!IsGameStarting) return;
+            if (PlayerControl.LocalPlayer?.PlayerId == null) return;
+            if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
+            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].AfterMeetingEnd();
         }
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start)), HarmonyPostfix]
         private static void StartGame()

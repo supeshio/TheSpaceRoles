@@ -399,7 +399,7 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
         public static class HudUpdate
         {
-            public static void Prefix(HudManager __instance)
+            public static void Postfix()
             {
                 if (DataBase.buttons.Count == 0) return;
                 DataBase.buttons.Do(x => x.HudUpdate());

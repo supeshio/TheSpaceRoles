@@ -109,7 +109,7 @@ namespace TheSpaceRoles
                 Logger.Info($"SwapPC2={targetplayer.Data.PlayerName}");
                 SwapPC2 = targetplayer;
                 targets.Do(x => x.gameObject.SetActive(false));
-                var m = CustomRPC.SendRpcUsebility(Roles.EvilSwapper, PlayerControl.LocalPlayer.PlayerId, 0);
+                var m = CustomRPC.SendRpcUseAbility(Roles.EvilSwapper, PlayerControl.LocalPlayer.PlayerId, 0);
                 m.Write(SwapPC1.PlayerId);
                 m.Write(SwapPC2.PlayerId);
             }

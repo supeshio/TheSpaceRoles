@@ -61,7 +61,7 @@ namespace TheSpaceRoles
                 () =>
                 {
                     var pc = GetPlayerControlFromId(CustomButton.SetTarget());
-                    var writer = CustomRPC.SendRpcUsebility(Role, PlayerControl.PlayerId, 0);
+                    var writer = CustomRPC.SendRpcUseAbility(Role, PlayerControl.PlayerId, 0);
                     writer.Write(pc);
                     writer.EndRpc();
                     SidekickPlayer(PlayerId, pc.PlayerId);

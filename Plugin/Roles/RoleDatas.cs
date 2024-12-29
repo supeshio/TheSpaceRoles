@@ -35,6 +35,7 @@ namespace TheSpaceRoles
         Thief,//泥棒?
         Vampire,//ヴァンパイア
         SerialKiller,//シリアルキラー
+        Shifter,
 
         Mayor,
 
@@ -110,6 +111,7 @@ namespace TheSpaceRoles
             new Trivia(),
             new Bait(),
             new Seer(),
+            new Shifter(),
             new Madmate(),
             new Impostor(),
             new Vampire(),

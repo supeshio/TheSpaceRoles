@@ -19,15 +19,7 @@ namespace TheSpaceRoles
                 Logger.Info("FreePlayStart");
                 foreach (var pc in PlayerControl.AllPlayerControls)
                 {
-                    if (pc.Data.Role.TeamType == RoleTeamTypes.Impostor)
-                    {
-                        SendRpcSetRole(Roles.Impostor, pc.PlayerId);
-                    }
-                    else
-                    {
-                        SendRpcSetRole(Roles.Crewmate, pc.PlayerId);
-
-                    }
+                    SendRpcSetRole(Roles.Crewmate, pc.PlayerId);
                 }
             }
         }
@@ -42,10 +34,6 @@ namespace TheSpaceRoles
 
             if (AmongUsClient.Instance.AmHost)
             {
-                //Resetするべ
-                //今回はC3 I1
-                //Sheriff 1
-                //です
                 Logger.Info("Owner");
                 Dictionary<Teams, List<Roles>> tr = [];
 
@@ -265,8 +253,7 @@ namespace TheSpaceRoles
             Logger.Info($"Player:{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName}({playerId}) -> Role:{(Roles)roleId}", "ChangeRole");
             var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
             p.ReSet(playerId);
-            DataBase.AllPlayerRoles.Remove(playerId);
-            DataBase.AllPlayerRoles.Add(playerId, p);
+            DataBase.AllPlayerRoles[playerId] = p;
         }
 
         public static void GameStartAndPrepare()
