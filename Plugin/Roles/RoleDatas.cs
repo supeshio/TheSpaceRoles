@@ -38,7 +38,7 @@ namespace TheSpaceRoles
         Shifter,
 
         Mayor,
-
+        Morphling,
         NiceSwapper,//all
         EvilSwapper,//all
         Sheriff,//c 
@@ -123,6 +123,7 @@ namespace TheSpaceRoles
             new Jester(),
             new Jackal(),
             new Sidekick(),
+            new Morphling(),
         ];
 
         public static List<CustomRole> GetCustomRoles_Normal =>

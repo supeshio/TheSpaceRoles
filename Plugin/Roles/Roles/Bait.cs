@@ -67,7 +67,6 @@ namespace TheSpaceRoles
                             vent.myRend.material.SetFloat("_Outline", 0);
                         }
                     }
-                    //DestroyableSingleton<VentCleaningMinigame>.Instance.
                 }
 
             }

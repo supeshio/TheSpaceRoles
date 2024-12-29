@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,32 @@ using UnityEngine;
 
 namespace TheSpaceRoles
 {
+    public class PlayerData
+    {
+        public PlayerControl pc;
+        public CustomRole CustomRole;
+        public int PlayerId => pc.PlayerId;
+        public string Name;
+        public int ColorId;
+        public string HatId;
+        public string SkinId;
+        public string VisorId;
+        public string PetId;
+        public string NamePlateId;
+        public PlayerData(PlayerControl pc,CustomRole customRole)
+        {
+            this.pc = pc;
+            this.Name = pc.CachedPlayerData.PlayerName;
+            this.ColorId = pc.CachedPlayerData.DefaultOutfit.ColorId;
+            this.PetId = pc.CachedPlayerData.DefaultOutfit.PetId;
+            this.SkinId = pc.CachedPlayerData.DefaultOutfit.SkinId;
+            this.HatId = pc.CachedPlayerData.DefaultOutfit.HatId;
+            this.VisorId = pc.CachedPlayerData.DefaultOutfit.VisorId;
+            this.NamePlateId = pc.CachedPlayerData.DefaultOutfit.NamePlateId;
+            this.CustomRole = customRole;
+
+        }
+    }
     public static class DataBase
     {
         /// <summary>
@@ -13,7 +40,8 @@ namespace TheSpaceRoles
         /// </summary>
         public static Dictionary<int, CustomRole> AllPlayerRoles = [];//playerId,roles
 
-
+        public static Dictionary<int, int> AllPlayerColorIds = [];
+        public static Dictionary<int, PlayerData> AllPlayerData = [];
 
         public static List<Roles> AssignedRoles()
         {
@@ -151,7 +179,9 @@ namespace TheSpaceRoles
         {
             AllPlayerTeams.Clear();
             AllPlayerRoles.Clear();
-            AllPlayerDeathReasons.Clear();
+            AllPlayerDeathReasons.Clear(); 
+            AllPlayerColorIds.Clear();
+            AllPlayerData.Clear();
             ResetButtons();
 
             ButtonsPositionSetter();

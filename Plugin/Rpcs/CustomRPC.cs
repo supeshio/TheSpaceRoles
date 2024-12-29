@@ -82,6 +82,18 @@ namespace TheSpaceRoles
                             case Roles.Jackal:
                                 Jackal.SidekickPlayer(useAbilityPlayerId, reader.ReadInt32());
                                 break;
+                            case Roles.Morphling:
+                                if(useAbilityPlayerId == 0)
+                                {
+                                    Morphling.RpcMorph(useAbilityPlayerId, reader.ReadInt32());
+
+                                }
+                                else
+                                {
+
+                                    Morphling.RpcMorphEnd(useAbilityPlayerId);
+                                }
+                                break;
                         }
 
                         break;

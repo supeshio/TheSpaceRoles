@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using static TheSpaceRoles.PlayerData;
 
 namespace TheSpaceRoles
 {
@@ -360,6 +361,26 @@ namespace TheSpaceRoles
             stream.Position = 0;
 
             return (T)formatter.Deserialize(stream);
+        }
+        public static void SetCosmetics(PlayerControl pc,PlayerControl parent)
+        {
+            var v = DataBase.AllPlayerData[parent.PlayerId];
+            pc.SetColor(v.ColorId);
+            pc.SetHat(v.HatId,v.ColorId);
+            pc.SetSkin(v.SkinId,v.ColorId);
+            pc.SetVisor(v.VisorId,v.ColorId);
+            pc.SetPet(v.PetId,v.ColorId);
+        }
+
+        public static void SetNamePlate(PlayerControl pc, PlayerControl parent)
+        {
+            var v = DataBase.AllPlayerData[parent.PlayerId];
+            pc.SetNamePlate(v.NamePlateId);
+        }
+        public static void SetName(PlayerControl pc, PlayerControl parent)
+        {
+            var v = DataBase.AllPlayerData[parent.PlayerId];
+            pc.SetName(v.Name);
         }
     }
 }

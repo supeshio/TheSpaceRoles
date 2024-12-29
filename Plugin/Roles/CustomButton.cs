@@ -130,7 +130,7 @@ namespace TheSpaceRoles
 
             actionButton.transform.SetSiblingIndex(pos[buttonPos].transform.GetSiblingIndex() + 1);
             actionButton.cooldownTimerText.text = ((int)Timer).ToString();
-
+            
             actionButton.gameObject.name = name;
             PassiveButton passiveButton = actionButton.GetComponent<PassiveButton>();
             passiveButton.enabled = true;
@@ -169,6 +169,7 @@ namespace TheSpaceRoles
         }
         public void HudUpdate()
         {
+            //1.ボタンの背景の色が変わらない問題
             if (Input.GetKeyDown(this.keyCode))
             {
                 Click();
@@ -196,6 +197,7 @@ namespace TheSpaceRoles
                 {
                     Timer = maxTimer;
                     isEffectActive = false;
+                    actionButton.SetCooldownFill(1);
                     actionButton.cooldownTimerText.color = Palette.EnabledColor;
 
                     this.OnEffectEnd?.Invoke();
@@ -279,6 +281,7 @@ namespace TheSpaceRoles
 
                         if (CanUse() == -1) return;
                         isEffectActive = true;
+                        OnEffectStart?.Invoke();
                         Timer = maxEffectTimer;
                         OnClick();
                         actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.AcceptedGreen;
