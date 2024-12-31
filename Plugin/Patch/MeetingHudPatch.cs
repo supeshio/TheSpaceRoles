@@ -34,8 +34,8 @@ namespace TheSpaceRoles
                         VotedForId = playerVoteArea.VotedFor
                     });
                 }
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].VotingResultChange(__instance, ref list);
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].VotingResultChangePost(__instance, ref list);
+                Helper.GetCustomRole(PlayerControl.LocalPlayer.PlayerId).VotingResultChange(__instance, ref list);
+                Helper.GetCustomRole(PlayerControl.LocalPlayer.PlayerId).VotingResultChangePost(__instance, ref list);
 
                 list = [.. list.OrderBy(x => x.VoterId)];
 
@@ -59,7 +59,7 @@ namespace TheSpaceRoles
         private static void End(MeetingHud __instance)
         {
             IsMeeting = false;
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].MeetingStart(__instance);
+            Helper.GetCustomRole(PlayerControl.LocalPlayer).MeetingStart(__instance);
 
         }
 
@@ -67,19 +67,19 @@ namespace TheSpaceRoles
         private static void Start(MeetingHud __instance)
         {
             IsMeeting = true;
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].MeetingStart(__instance);
+            Helper.GetCustomRole(PlayerControl.LocalPlayer).MeetingStart(__instance);
 
         }
         [HarmonyPatch(nameof(MeetingHud.Update)), HarmonyPostfix]
         private static void Update(MeetingHud __instance)
         {
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].MeetingUpdate(__instance);
+            Helper.GetCustomRole(PlayerControl.LocalPlayer).MeetingUpdate(__instance);
 
         }
         [HarmonyPatch(nameof(MeetingHud.CoStartCutscene)), HarmonyPostfix]
         private static void CustScene(MeetingHud __instance)
         {
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].BeforeMeetingStart(__instance);
+            Helper.GetCustomRole(PlayerControl.LocalPlayer.PlayerId).BeforeMeetingStart(__instance);
 
         }
     }

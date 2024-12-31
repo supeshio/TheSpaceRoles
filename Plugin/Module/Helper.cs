@@ -52,23 +52,27 @@ namespace TheSpaceRoles
         }
         public static Roles GetRole(this PlayerControl p)
         {
-            return DataBase.AllPlayerRoles[p.PlayerId].Role;
+            return DataBase.AllPlayerData[p.PlayerId].CustomRole.Role;
         }
         public static void Init(this PlayerControl p)
         {
-            DataBase.AllPlayerRoles[p.PlayerId].Init();
+            DataBase.AllPlayerData[p.PlayerId].CustomRole.Init();
         }
         public static void ButtonResetStart(this PlayerControl p)
         {
-            DataBase.AllPlayerRoles[p.PlayerId].ButtonReset();
+            DataBase.AllPlayerData[p.PlayerId].CustomRole.ButtonReset();
         }
         public static PlayerControl GetPlayerById(int id)
         {
             return PlayerControl.AllPlayerControls.ToArray().First(x => x.PlayerId == id);
         }
+        public static CustomRole GetCustomRole(int playerId)
+        {
+            return DataBase.AllPlayerData.First(x => x.Value.PlayerId == playerId).Value.CustomRole;
+        }
         public static CustomRole GetCustomRole(this PlayerControl p)
         {
-            return DataBase.AllPlayerRoles[p.PlayerId];
+            return DataBase.AllPlayerData.First(x=>x.Value.PlayerId==p.PlayerId).Value.CustomRole;
         }
         public static CustomRole GetCustomRole(this Roles role)
         {
@@ -76,11 +80,11 @@ namespace TheSpaceRoles
         }
         public static bool IsRole(this PlayerControl p, Roles role)
         {
-            return DataBase.AllPlayerRoles[p.PlayerId].Role == role;
+            return DataBase.AllPlayerData[p.PlayerId].CustomRole.Role == role;
         }
         public static bool IsTeam(this PlayerControl p, Teams team)
         {
-            return DataBase.AllPlayerRoles[p.PlayerId].Team == team;
+            return DataBase.AllPlayerData[p.PlayerId].CustomRole.Team == team;
         }
         public static byte MaxFrequency(this List<byte> self, out bool tie)
         {

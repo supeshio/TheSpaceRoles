@@ -196,7 +196,7 @@ namespace TheSpaceRoles
                             if (int.TryParse(chats[1], out int roleId))
                             {
 
-                                DataBase.AllPlayerRoles.Remove(PlayerControl.LocalPlayer.PlayerId);
+                                DataBase.AllPlayerData.Remove(PlayerControl.LocalPlayer.PlayerId);
                                 DataBase.ResetButtons();
                                 if (RoleData.GetCustomRoles[roleId].Team == Teams.Impostor)
                                 {
@@ -211,7 +211,7 @@ namespace TheSpaceRoles
                                 RoleSelect.SendRpcSetRole(RoleData.GetCustomRoles[roleId].Role, PlayerControl.LocalPlayer.PlayerId);
                                 PlayerControl.LocalPlayer.Init();
                                 PlayerControl.LocalPlayer.ButtonResetStart();
-                                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].HudManagerStart(HudManager.Instance);
+                                Helper.GetCustomRole(PlayerControl.LocalPlayer).HudManagerStart(HudManager.Instance);
                                 addchat += $"役職を設定しました。\n Role : {RoleData.GetCustomRoles[roleId].ColoredRoleName}";
                                 break;
                             }
@@ -221,7 +221,7 @@ namespace TheSpaceRoles
                                 {
                                     if (role.RoleName == chats[1])
                                     {
-                                        DataBase.AllPlayerRoles.Remove(PlayerControl.LocalPlayer.PlayerId);
+                                        DataBase.AllPlayerData.Remove(PlayerControl.LocalPlayer.PlayerId);
                                         DataBase.ResetButtons();
                                         if (role.Team == Teams.Impostor)
                                         {
@@ -236,7 +236,7 @@ namespace TheSpaceRoles
                                         RoleSelect.SendRpcSetRole(role.Role, PlayerControl.LocalPlayer.PlayerId);
                                         PlayerControl.LocalPlayer.Init();
                                         PlayerControl.LocalPlayer.ButtonResetStart();
-                                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].HudManagerStart(HudManager.Instance);
+                                        Helper.GetCustomRole(PlayerControl.LocalPlayer).HudManagerStart(HudManager.Instance);
                                         addchat += $"役職を設定しました。\n Role : {role.ColoredRoleName}";
 
                                         break;
@@ -301,13 +301,13 @@ namespace TheSpaceRoles
                             addchat += "meetingskip" + "\n";
                             break;
                         case "/m5":
-                            addchat += $"{DataBase.AllPlayerRoles.Join(x => x.Key + ":" + x.Value.ColoredRoleName + "\n")}";
+                            addchat += $"{DataBase.AllPlayerData.Join(x => x.Key + ":" + x.Value.CustomRole.ColoredRoleName + "\n")}";
                             break;
                         case "/":
                             if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
-                            addchat += "count : " + DataBase.AllPlayerRoles.Count + "\n";
+                            addchat += "count : " + DataBase.AllPlayerData.Count + "\n";
                             addchat += "playerlist : \n";
-                            addchat += DataBase.AllPlayerRoles.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.ColoredRoleName).Joinsep("\n");
+                            addchat += DataBase.AllPlayerData.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.CustomRole.ColoredRoleName).Joinsep("\n");
                             addchat += "assignedRole:" + DataBase.AssignedRoles().Select(x => x.ToString()).Joinsep("\n");
                             break;
                         case "/vent":

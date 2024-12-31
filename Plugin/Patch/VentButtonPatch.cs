@@ -29,7 +29,7 @@ namespace TheSpaceRoles
         {
             float num = float.MaxValue;
             PlayerControl pc = pinf.Object;
-            couldUse = DataBase.AllPlayerRoles[pc.PlayerId].CanUseVent == true;
+            couldUse = Helper.GetCustomRole(pc.PlayerId).CanUseVent == true;
             PlayerControl @object = pc;
 
             if (@object == null)
@@ -49,7 +49,7 @@ namespace TheSpaceRoles
 
             }
             var usableDistance = __instance.UsableDistance;
-            bool roleCouldUse = DataBase.AllPlayerRoles[pc.PlayerId].CanUseVent ?? DataBase.AllPlayerRoles[pc.PlayerId].CustomTeam.CanUseVent;
+            bool roleCouldUse = Helper.GetCustomRole(pc.PlayerId).CanUseVent ?? Helper.GetCustomRole(pc.PlayerId).CustomTeam.CanUseVent;
             couldUse = (@object.inVent || roleCouldUse) && !pc.Data.IsDead && (@object.CanMove || @object.inVent);
             canUse = couldUse;
             if (canUse)

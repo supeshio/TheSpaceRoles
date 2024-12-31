@@ -63,7 +63,7 @@ namespace TheSpaceRoles
         }
         protected void ActionBool(ActionButton button, bool show_hide)
         {
-            if (show_hide || (bool)DataBase.AllPlayerRoles[PlayerId].HasKillButton)
+            if (show_hide || (bool)Helper.GetCustomRole(PlayerId).HasKillButton)
             {
                 //button.enabled = true;
                 //button.gameObject.SetActive(true);
@@ -158,9 +158,9 @@ namespace TheSpaceRoles
                 if (PlayerControl.LocalPlayer != null)
                 {
 
-                    if (DataBase.AllPlayerRoles != null && DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
+                    if (DataBase.AllPlayerData != null && DataBase.AllPlayerData.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
                     {
-                        DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].ButtonReset();
+                        Helper.GetCustomRole(PlayerControl.LocalPlayer).ButtonReset();
                     }
                 }
                 else
@@ -184,8 +184,8 @@ namespace TheSpaceRoles
             static void Postfix(PlayerControl __instance)
             {
 
-                DataBase.AllPlayerRoles[__instance.PlayerId].CustomTeam.WasExiled();
-                DataBase.AllPlayerRoles[__instance.PlayerId].Exiled = true;
+                Helper.GetCustomRole(__instance).CustomTeam.WasExiled();
+                Helper.GetCustomRole(__instance).Exiled = true;
             }
         }
 
@@ -195,10 +195,10 @@ namespace TheSpaceRoles
             static void Postfix(PlayerControl __instance)
             {
 
-                DataBase.AllPlayerRoles[__instance.PlayerId].Die();
-                DataBase.AllPlayerRoles.Do(x => x.Value.APDie(__instance));
-                DataBase.AllPlayerRoles[__instance.PlayerId].Dead = true;
-                DataBase.AllPlayerRoles[__instance.PlayerId].PlayerId.ToString();
+                Helper.GetCustomRole(__instance).Die();
+                DataBase.GetCustomRoles().Do(x => x.APDie(__instance));
+                Helper.GetCustomRole(__instance).Dead = true;
+                Helper.GetCustomRole(__instance).PlayerId.ToString();
                 Logger.Info(__instance.PlayerId + "_" + __instance.Data.PlayerName);
             }
         }
@@ -208,7 +208,7 @@ namespace TheSpaceRoles
             static void Postfix(PlayerControl __instance,[HarmonyArgument(0)]PlayerControl target)
             {
                 Logger.Info($"{__instance.Data.PlayerName} - {target.Data.PlayerName}","Murder");
-                DataBase.AllPlayerRoles.Do(x=>x.Value.Murder(__instance, target));
+                DataBase.AllPlayerData.Do(x=>x.Value.CustomRole.Murder(__instance, target));
             }
         }
     }
@@ -227,13 +227,13 @@ namespace TheSpaceRoles
             ButtonCooldown = 10f;
             DataBase.buttons.Clear();
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
-            if (DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
+            if (DataBase.AllPlayerData.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
             {
                 //var k = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Select(x => x.Role.ToString()).ToArray();
                 //Logger.Info(string.Join(",", k));
 
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].HudManagerStart(__instance);
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].ButtonReset();
+                Helper.GetCustomRole(PlayerControl.LocalPlayer).HudManagerStart(__instance);
+                Helper.GetCustomRole(PlayerControl.LocalPlayer).ButtonReset();
                 DataBase.ButtonsPositionSetter();
             }
         }
@@ -246,11 +246,11 @@ namespace TheSpaceRoles
             //Logger.Message($"{IsGameStarting}");
             if (!IsGameStarting) return;
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
-            if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
+            if (DataBase.AllPlayerData == null || !DataBase.AllPlayerData.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
 
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Update();
-            DataBase.AllPlayerRoles.Do(y => y.Value.APUpdate());
-            DataBase.AllPlayerRoles.Do(y => y.Value.VentUpdate());
+            Helper.GetCustomRole(PlayerControl.LocalPlayer).Update();
+            DataBase.AllPlayerData.Do(y => y.Value.CustomRole.APUpdate());
+            DataBase.AllPlayerData.Do(y => y.Value.CustomRole.VentUpdate());
         }
         [HarmonyPatch(typeof(ExileController))]
         [HarmonyPatch(nameof(ExileController.ReEnableGameplay)), HarmonyPostfix]
@@ -258,8 +258,8 @@ namespace TheSpaceRoles
         {
             if (!IsGameStarting) return;
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
-            if (DataBase.AllPlayerRoles == null || !DataBase.AllPlayerRoles.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
-            DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].AfterMeetingEnd();
+            if (DataBase.AllPlayerData == null || !DataBase.AllPlayerData.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
+            Helper.GetCustomRole(PlayerControl.LocalPlayer).AfterMeetingEnd();
         }
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start)), HarmonyPostfix]
         private static void StartGame()
@@ -276,7 +276,7 @@ namespace TheSpaceRoles
             {
                 var map = __instance;
                 bool re = false;
-                var f = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId];
+                var f = Helper.GetCustomRole(PlayerControl.LocalPlayer);
 
 
                 f.ShowMap(ref map);

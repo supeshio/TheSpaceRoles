@@ -354,7 +354,7 @@ namespace TheSpaceRoles
                 }
                 if (notIncludeTeamIds != null && notIncludeTeamIds.Length > 0)
                 {
-                    if (notIncludeTeamIds.Contains(DataBase.AllPlayerRoles[x.PlayerId].Team))
+                    if (notIncludeTeamIds.Contains(Helper.GetCustomRole(x.PlayerId).Team))
                     {
                         continue;
                     }

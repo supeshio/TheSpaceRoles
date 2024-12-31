@@ -191,7 +191,7 @@ namespace TheSpaceRoles
         {
             foreach (var item in DataBase.AllPlayerControls().Select(x => x.PlayerId))
             {
-                if (DataBase.AllPlayerRoles.ContainsKey(item))
+                if (DataBase.AllPlayerData.ContainsKey(item))
                 {
 
                 }
@@ -242,7 +242,6 @@ namespace TheSpaceRoles
             //{
             var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
             p.ReSet(playerId);
-            DataBase.AllPlayerRoles.Add(playerId, p);
             if (DataBase.AllPlayerData.ContainsKey(playerId)){
                 DataBase.AllPlayerData.Remove(playerId);
             }
@@ -256,7 +255,6 @@ namespace TheSpaceRoles
             Logger.Info($"Player:{DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).Data.PlayerName}({playerId}) -> Role:{(Roles)roleId}", "ChangeRole");
             var p = RoleData.GetCustomRoleFromRole((Roles)roleId);
             p.ReSet(playerId);
-            DataBase.AllPlayerRoles[playerId] = p;
             DataBase.AllPlayerData[playerId].CustomRole = p;
         }
 

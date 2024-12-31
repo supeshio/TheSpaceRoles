@@ -12,9 +12,9 @@ namespace TheSpaceRoles
         }
         public override void APDie(PlayerControl pc)
         {
-            if (DataBase.AllPlayerRoles[pc.PlayerId].Team == Teams.Jackal)
+            if (Helper.GetCustomRole(pc.PlayerId).Team == Teams.Jackal)
             {
-                if (DataBase.AllPlayerRoles[pc.PlayerId].Role != Roles.Sidekick)
+                if (Helper.GetCustomRole(pc.PlayerId).Role != Roles.Sidekick)
                 {
                     RoleSelect.ChangeMainRole(PlayerId, (int)Roles.Jackal);
                 }

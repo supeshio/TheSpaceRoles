@@ -62,7 +62,7 @@ namespace TheSpaceRoles
                 if (RoleTextManager.RoleTexts?[pc.PlayerId] != null)
                 {
                     if (PlayerControl.LocalPlayer.PlayerId != pc.PlayerId && AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) return;
-                    RoleTextManager.RoleTexts[pc.PlayerId].text = DataBase.AllPlayerRoles[pc.PlayerId].ColoredRoleName;
+                    RoleTextManager.RoleTexts[pc.PlayerId].text = Helper.GetCustomRole(pc.PlayerId).ColoredRoleName;
 
 
 

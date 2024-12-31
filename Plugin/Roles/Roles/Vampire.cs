@@ -38,7 +38,7 @@ namespace TheSpaceRoles
         public override void HudManagerStart(HudManager __instance)
         {
             Logger.Warning($"{KillCoolDown.GetValue()},{KillDistance.GetValue()}");
-            DataBase.AllPlayerRoles.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r);
+            DataBase.AllPlayerData.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r);
             VampireBitebutton = new CustomButton(
                 __instance, "VampireBiteButton",
                 ButtonPos.Kill,

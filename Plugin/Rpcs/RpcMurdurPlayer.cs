@@ -10,11 +10,11 @@ namespace TheSpaceRoles
 
             if (source == PlayerControl.LocalPlayer.PlayerId)
             {
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Killed();
-            }
+                    Helper.GetCustomRole(PlayerControl.LocalPlayer).Killed();
+                }
             if (target == PlayerControl.LocalPlayer.PlayerId)
             {
-                DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].WasKilled();
+                Helper.GetCustomRole(PlayerControl.LocalPlayer).WasKilled();
                 DataBase.buttons.Do(x => x.actionButton.Hide());
             }
         }
@@ -22,7 +22,7 @@ namespace TheSpaceRoles
         {
 
             Logger.Message($"{id1} -> {id2}", "Murder");
-            DataBase.AllPlayerRoles.Do(x => x.Value.Murder(Helper.GetPlayerById(id1), Helper.GetPlayerById(id2)));
+            DataBase.AllPlayerData.Do(x => x.Value.CustomRole.Murder(Helper.GetPlayerById(id1), Helper.GetPlayerById(id2)));
             Helper.GetPlayerControlFromId(id1).MurderPlayer(Helper.GetPlayerControlFromId(id2), MurderResultFlags.Succeeded);
             /*
 

@@ -400,9 +400,9 @@ namespace TheSpaceRoles
                     return;
                 }
                 int rolec = 0;
-                foreach (var pr in DataBase.AllPlayerRoles)
+                foreach (var pr in DataBase.AllPlayerData)
                 {
-                    if (pr.Value.Role == role)
+                    if (pr.Value.CustomRole.Role == role)
                     {
                         int p = pr.Key;
                         if (!Helper.GetPlayerById(p).Data.IsDead)

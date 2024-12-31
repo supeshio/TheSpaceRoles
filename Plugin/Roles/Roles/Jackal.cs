@@ -27,7 +27,7 @@ namespace TheSpaceRoles
         }
         public override void HudManagerStart(HudManager __instance)
         {
-            if (DataBase.AllPlayerRoles.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r))
+            if (DataBase.AllPlayerData.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r))
             {
 
             }

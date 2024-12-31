@@ -14,11 +14,11 @@ namespace TheSpaceRoles
             {
 
                 __instance.BackgroundBar.material.color = TeamColor();
-                __instance.TeamTitle.text = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].CustomTeam.ColoredTeamName;
+                __instance.TeamTitle.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
 
             })));
         }
-        public static Color TeamColor() => DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].CustomTeam.Color;
+        public static Color TeamColor() => Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.Color;
 
     }
     [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
@@ -27,16 +27,16 @@ namespace TheSpaceRoles
         public static void Prefix(IntroCutscene __instance)
         {
             __instance.RoleBlurbText.color = RoleColor();
-            __instance.RoleBlurbText.text = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].ColoredIntro;
+            __instance.RoleBlurbText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredIntro;
             __instance.RoleText.color = RoleColor();
-            __instance.RoleText.text = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].ColoredRoleName;
+            __instance.RoleText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredRoleName;
             __instance.YouAreText.color = RoleColor();
             __instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
             {
                 __instance.RoleBlurbText.color = RoleColor();
-                __instance.RoleBlurbText.text = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].ColoredIntro;
+                __instance.RoleBlurbText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredIntro;
                 __instance.RoleText.color = RoleColor();
-                __instance.RoleText.text = DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].ColoredRoleName;
+                __instance.RoleText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredRoleName;
                 __instance.YouAreText.color = RoleColor();
             })));
         }
@@ -46,7 +46,7 @@ namespace TheSpaceRoles
         }
         public static Color RoleColor()
         {
-            return DataBase.AllPlayerRoles[PlayerControl.LocalPlayer.PlayerId].Color;
+            return Helper.GetCustomRole(PlayerControl.LocalPlayer).Color;
 
         }
 

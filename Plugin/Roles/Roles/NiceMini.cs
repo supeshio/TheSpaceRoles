@@ -64,7 +64,7 @@ namespace TheSpaceRoles
         public static void SetAge(int playerId, int _age)
         {
             var player = DataBase.AllPlayerControls().First(x => x.PlayerId == playerId);
-            var mini = (NiceMini)DataBase.AllPlayerRoles[playerId];
+            var mini = (NiceMini)Helper.GetCustomRole(playerId);
             mini.age = _age;
             DataBase.AllPlayerControls().First(x => x.PlayerId == playerId).cosmetics.nameText.text = $"{mini.PlayerName}({mini.age})";
 

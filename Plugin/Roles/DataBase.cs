@@ -35,13 +35,22 @@ namespace TheSpaceRoles
     }
     public static class DataBase
     {
+
+
         /// <summary>
         /// playerId,RoleMaster型で役職の型を入れれる
         /// </summary>
-        public static Dictionary<int, CustomRole> AllPlayerRoles = [];//playerId,roles
+        
+        //public static Dictionary<int, CustomRole> AllPlayerRoles = [];//playerId,roles
 
-        public static Dictionary<int, int> AllPlayerColorIds = [];
         public static Dictionary<int, PlayerData> AllPlayerData = [];
+
+        public static CustomRole[] GetCustomRoles()
+        {
+            return AllPlayerData.Values.Select(x => x.CustomRole).ToArray();
+        }
+
+
 
         public static List<Roles> AssignedRoles()
         {
@@ -178,9 +187,7 @@ namespace TheSpaceRoles
         public static void ResetAndPrepare()
         {
             AllPlayerTeams.Clear();
-            AllPlayerRoles.Clear();
             AllPlayerDeathReasons.Clear(); 
-            AllPlayerColorIds.Clear();
             AllPlayerData.Clear();
             ResetButtons();
 
@@ -209,11 +216,11 @@ namespace TheSpaceRoles
             {
                 result.Add(team, 0);
             }
-            foreach (var p in AllPlayerRoles)
+            foreach (var p in GetCustomRoles())
             {
-                if (!p.Value.Dead)
+                if (!p.Dead)
                 {
-                    result[p.Value.CustomTeam.Team]++;
+                    result[p.CustomTeam.Team]++;
                 }
             }
             //Logger.Info($"Impostor :{result[Teams.Impostor]},Crewmate :{GetAsCrewmatePlayerCount()}");
@@ -226,10 +233,10 @@ namespace TheSpaceRoles
         public static int GetAsCrewmatePlayerCount()
         {
             int i = 0;
-            foreach (var p in AllPlayerRoles)
+            foreach (var p in AllPlayerData)
             {
                 //Logger.Info(p.Value[0].Role.ToString());
-                if (!p.Value.Dead && p.Value.Team != Teams.Impostor && p.Value.Team != Teams.Jackal)
+                if (!p.Value.CustomRole.Dead && p.Value.CustomRole.Team != Teams.Impostor && p.Value.CustomRole.Team != Teams.Jackal)
                 {
                     i++;
                 }
