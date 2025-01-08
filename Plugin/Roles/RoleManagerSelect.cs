@@ -187,29 +187,6 @@ namespace TheSpaceRoles
                 }
             }
         }
-        public static void RemainingPlayerSetRoles()
-        {
-            foreach (var item in DataBase.AllPlayerControls().Select(x => x.PlayerId))
-            {
-                if (DataBase.AllPlayerData.ContainsKey(item))
-                {
-
-                }
-                else
-                {
-
-                    var roles = RoleData.GetCustomRole_NormalFromTeam(DataBase.AllPlayerTeams[item]).Role;
-                    SetRole(item, (int)roles);
-
-                    //Rpc
-                    var writer = CustomRPC.SendRpc(Rpcs.SetRole);
-                    writer.Write((int)item);
-                    writer.Write((int)roles);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-                }
-            }
-
-        }
         public static int SendRpcSetRole(Roles role, int playerId)
         {
             //設定作ってないけどここでほんとは分岐

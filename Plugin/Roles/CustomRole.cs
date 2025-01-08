@@ -234,7 +234,6 @@ namespace TheSpaceRoles
 
                 Helper.GetCustomRole(PlayerControl.LocalPlayer).HudManagerStart(__instance);
                 Helper.GetCustomRole(PlayerControl.LocalPlayer).ButtonReset();
-                DataBase.ButtonsPositionSetter();
             }
         }
         public static float ButtonCooldown;

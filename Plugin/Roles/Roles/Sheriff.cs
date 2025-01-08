@@ -31,7 +31,7 @@ namespace TheSpaceRoles
                 {
                     var pc = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(2.5f, Color));
 
-                    if (DataBase.AllPlayerTeams[pc.PlayerId] != Teams.Crewmate)
+                    if (DataBase.AllPlayerData[pc.PlayerId].Team != Teams.Crewmate)
                     {
                         CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, pc, DeathReason.SheriffKill);
 

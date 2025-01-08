@@ -424,6 +424,10 @@ namespace TheSpaceRoles
                         case "/sec":
                             LateTask.AddTask(Int32.Parse(chats[1]),() => Helper.AddChat(chats[1] + "秒後にメッセージ"));
                             break;
+                        case "/db":
+                            DeathGhost.ShowGhost(PlayerControl.LocalPlayer.GetTruePosition(), PlayerControl.LocalPlayer.PlayerId);
+                            LateTask.AddTask(0, () => Helper.AddChat("ShowGhost"));
+                            break;
 
                     }
                 }

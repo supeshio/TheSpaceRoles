@@ -23,7 +23,7 @@ namespace TheSpaceRoles
             bool wincheck = true;
             foreach (var item in DataBase.AllPlayerControls())
             {
-                if (!DataBase.AllPlayerTeams.Any(x => x.Value == Teams.Crewmate && x.Key == item.PlayerId))
+                if (!DataBase.AllPlayerData.Any(x => x.Value.Team == Teams.Crewmate && x.Key == item.PlayerId))
                 {
                     wincheck = false; break;
                 }

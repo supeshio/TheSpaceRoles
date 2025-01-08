@@ -31,5 +31,13 @@ namespace TheSpaceRoles
             FlashPatch.ShowFlash(Helper.ColorFromColorcode("#00ff00"));
             
         }
+        public override void AfterMeetingEnd()
+        {
+            DeathGhost.DisapperGhosts();
+            if (CanSeeSoul.GetBoolValue())
+            {
+                DeathGhost.ShowGhosts(DataBase.AllPlayerData.Where(x => x.Value.DeathMeetingCount + 1 == DataBase.MeetingCount).Select(x => x.Key).ToArray());
+            }
+        }
     }
 }

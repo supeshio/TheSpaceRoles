@@ -7,7 +7,9 @@ namespace TheSpaceRoles
     {
         public static void HappenedKill(int source, int target, DeathReason reason)
         {
-
+            DataBase.AllPlayerData[target].DeathPosition = Helper.GetPlayerById(target).GetTruePosition();
+            DataBase.AllPlayerData[target].DeathReason = reason;
+            DataBase.AllPlayerData[target].DeathMeetingCount = DataBase.MeetingCount;
             if (source == PlayerControl.LocalPlayer.PlayerId)
             {
                     Helper.GetCustomRole(PlayerControl.LocalPlayer).Killed();

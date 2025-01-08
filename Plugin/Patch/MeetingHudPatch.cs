@@ -67,6 +67,7 @@ namespace TheSpaceRoles
         private static void Start(MeetingHud __instance)
         {
             IsMeeting = true;
+            DataBase.MeetingCount++;
             Helper.GetCustomRole(PlayerControl.LocalPlayer).MeetingStart(__instance);
 
         }
