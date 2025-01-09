@@ -33,5 +33,16 @@ namespace TheSpaceRoles
         public abstract bool WinCheck();
         public virtual bool AdditionalWinCheck(Teams winteam) { return false; }
         public virtual bool WasExiled() { return false; }
+        public virtual float GetLightMod(ShipStatus shipStatus, float num)
+        {
+            float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
+            float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
+            /*|| (Jackal.jackal != null && Jackal.jackal.PlayerId == player.PlayerId && Jackal.hasImpostorVision))*/
+
+
+                return shipStatus.MaxLightRadius * ImpostorLightMod;
+                return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
+
+        }
     }
 }

@@ -111,6 +111,7 @@ namespace TheSpaceRoles
             new Trivia(),
             new Bait(),
             new Seer(),
+            new Lighter(),
             new Shifter(),
             new Madmate(),
             new Impostor(),

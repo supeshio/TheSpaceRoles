@@ -113,6 +113,11 @@ namespace TheSpaceRoles
         public virtual void Update() { }
         public virtual void APUpdate() { }
         public virtual void Murder(PlayerControl pc,PlayerControl target) { }
+        public virtual float GetLightMod(ShipStatus shipStatus,float num)
+        {
+            return CustomTeam.GetLightMod(shipStatus,num);
+
+        }
         public string ColoredRoleName => ColoredText(Color, Translation.GetString("role." + Role.ToString() + ".name"));
         public string RoleName => Translation.GetString("role." + Role.ToString() + ".name");
 
