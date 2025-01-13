@@ -11,6 +11,12 @@ namespace TheSpaceRoles
 
         public static void CreateCustomOptions()
         {
+            
+
+
+
+
+
             if (CustomOption.options.Count != 0) return;
             HeaderCreate(OptionType.General, "admin");
             //Create(OptionType.Default, "use_records_admin", true);

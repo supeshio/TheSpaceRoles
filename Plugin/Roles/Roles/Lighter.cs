@@ -13,16 +13,18 @@ namespace TheSpaceRoles
             Color = Helper.ColorFromColorcode("#eee5be");
         }
 
-        public static CustomOption ReportSeconds;
-        public static CustomOption CanSeePlayersinVent;
+        public static CustomOption LightCoolDown;
+        public static CustomOption LightSeconds;
+        public static CustomOption LightSize;
         public override void OptionCreate()
         {
-            if (ReportSeconds != null) return;
+            if (LightCoolDown != null) return;
 
-            ReportSeconds = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.reportseconds", new CustomIntRange(1, 15), 0);
-            CanSeePlayersinVent = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.canseeplayerinvent", true);
+            LightCoolDown = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightcooldown", range:CustomCoolDownRangefloat(), 12);
+            LightSeconds = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightseconds", new CustomFloatRange(2.5f,120f,2.5f),3);
+            LightSize = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightsize", new CustomFloatRange(0.25f,5f,0.25f),7);
 
-            Options = [ReportSeconds, CanSeePlayersinVent];
+            Options = [LightCoolDown, LightSeconds,LightSize];
         }
         public override void Update()
         {
@@ -43,7 +45,7 @@ namespace TheSpaceRoles
                 ,
                 ButtonPos.Custom,
                 KeyCode.F,
-                30,()=>0,
+                LightCoolDown.GetFloatValue(),()=>0,
                 Sprites.GetSpriteFromResources("ui.button.evilhacker_hack.png", 100f),
                 () =>
                 {
@@ -53,7 +55,7 @@ namespace TheSpaceRoles
                 {
                     LightButton.Timer = LightButton.maxTimer;
                 },
-                "Light",true,EffectDuration:10f
+                "Light",true,EffectDuration:LightSeconds.GetFloatValue()
                 );
             Logger.Info("button:Shifter Shifting");
 
@@ -70,7 +72,7 @@ namespace TheSpaceRoles
 
                 float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
 
-                return shipStatus.MaxLightRadius*2f;
+                return shipStatus.MaxLightRadius*LightSize.GetFloatValue();
             }
         }
     }
