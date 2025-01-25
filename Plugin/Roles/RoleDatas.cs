@@ -69,6 +69,7 @@ namespace TheSpaceRoles
         Sidekick,
         Trivia,
         Bait,
+        Ninja
 
 
     }
@@ -112,6 +113,7 @@ namespace TheSpaceRoles
             new Bait(),
             new Seer(),
             new Lighter(),
+            new Engineer(),
             new Shifter(),
             new Madmate(),
             new Impostor(),
@@ -125,6 +127,7 @@ namespace TheSpaceRoles
             new Jackal(),
             new Sidekick(),
             new Morphling(),
+            new Ninja(),
         ];
 
         public static List<CustomRole> GetCustomRoles_Normal =>

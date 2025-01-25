@@ -369,7 +369,7 @@ namespace TheSpaceRoles
                     continue;
                 }
                 if (target == x.PlayerId) continue;
-                PlayerControl p = Helper.GetPlayerControlFromId(target);
+                PlayerControl p = Helper.GetPlayerById(target);
                 Vector2 truePosition = x.GetTruePosition();
                 Vector2 vector = new Vector2(p.transform.position.x, p.transform.position.y) - truePosition;
                 float magnitude = vector.magnitude;
@@ -382,7 +382,7 @@ namespace TheSpaceRoles
             }
             if (targetdistance >= distance)
             {
-                Helper.GetPlayerControlFromId(id).cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 1f);
+                Helper.GetPlayerById(id).cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 1f);
                 return id;
 
 

@@ -29,7 +29,7 @@ namespace TheSpaceRoles
                 Sprites.GetSpriteFromResources("ui.button.evilhacker_hack.png", 100f),
                 () =>
                 {
-                    var pc = GetPlayerControlFromId(CustomButton.SetTarget());
+                    var pc = GetPlayerById(CustomButton.SetTarget());
                     var writer = CustomRPC.SendRpcUseAbility(Role, PlayerControl.PlayerId, 0);
                     writer.Write(pc);
                     writer.EndRpc();

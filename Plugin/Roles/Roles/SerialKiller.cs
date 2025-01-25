@@ -29,7 +29,7 @@ namespace TheSpaceRoles
                 __instance.KillButton.graphic.sprite,
                 () =>
                 {
-                    var pc = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(2.5f, Color, [Teams.Impostor]));
+                    var pc = GetPlayerById(KillButtons.KillButtonSetTarget(2.5f, Color, [Teams.Impostor]));
                     CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, pc, DeathReason.SerialKillerKill);
                     TimerStarted = true;
                     Timer = Maxtimer;

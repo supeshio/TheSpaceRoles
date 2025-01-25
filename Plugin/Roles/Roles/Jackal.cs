@@ -42,7 +42,7 @@ namespace TheSpaceRoles
                 __instance.KillButton.graphic.sprite,
                 () =>
                 {
-                    var pc = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(OSAS.killdistance_short.GetValueFromSelector(), Color, notIncludeTeamIds: [Teams.Jackal]));
+                    var pc = GetPlayerById(KillButtons.KillButtonSetTarget(OSAS.killdistance_short.GetValueFromSelector(), Color, notIncludeTeamIds: [Teams.Jackal]));
                     CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, pc, DeathReason.SheriffKill);
 
                 },
@@ -60,7 +60,7 @@ namespace TheSpaceRoles
                 Sprites.GetSpriteFromResources("ui.button.jackal_sidekick.png", 100),
                 () =>
                 {
-                    var pc = GetPlayerControlFromId(CustomButton.SetTarget());
+                    var pc = GetPlayerById(CustomButton.SetTarget());
                     var writer = CustomRPC.SendRpcUseAbility(Role, PlayerControl.PlayerId, 0);
                     writer.Write(pc);
                     writer.EndRpc();

@@ -1,5 +1,7 @@
 ﻿using BepInEx.Configuration;
+using Cpp2IL.Core.Extensions;
 using Il2CppInterop.Runtime;
+using Rewired;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,17 +64,15 @@ namespace TheSpaceRoles
         {
             DataBase.AllPlayerData[p.PlayerId].CustomRole.ButtonReset();
         }
-        public static PlayerControl GetPlayerById(int id)
-        {
-            return PlayerControl.AllPlayerControls.ToArray().First(x => x.PlayerId == id);
-        }
+        public static PlayerControl GetPlayerById(int id) => DataBase.AllPlayerControls().First(x => x.PlayerId == id);
+
         public static CustomRole GetCustomRole(int playerId)
         {
             return DataBase.AllPlayerData.First(x => x.Value.PlayerId == playerId).Value.CustomRole;
         }
         public static CustomRole GetCustomRole(this PlayerControl p)
         {
-            return DataBase.AllPlayerData.First(x=>x.Value.PlayerId==p.PlayerId).Value.CustomRole;
+            return DataBase.AllPlayerData.First(x => x.Value.PlayerId == p.PlayerId).Value.CustomRole;
         }
         public static CustomRole GetCustomRole(this Roles role)
         {
@@ -341,8 +341,6 @@ namespace TheSpaceRoles
             AddChat = AddChat + text + "を" + config.Value + "にしました";
             return Tuple.Create(AddChat, config.Value);
         }
-        public static PlayerControl GetPlayerControlFromId(int id) => DataBase.AllPlayerControls().First(x => x.PlayerId == id);
-
 
         public static void SetPlayerScale(PlayerControl pc, float scale)
         {
@@ -366,14 +364,14 @@ namespace TheSpaceRoles
 
             return (T)formatter.Deserialize(stream);
         }
-        public static void SetCosmetics(PlayerControl pc,PlayerControl parent)
+        public static void SetCosmetics(PlayerControl pc, PlayerControl parent)
         {
             var v = DataBase.AllPlayerData[parent.PlayerId];
             pc.SetColor(v.ColorId);
-            pc.SetHat(v.HatId,v.ColorId);
-            pc.SetSkin(v.SkinId,v.ColorId);
-            pc.SetVisor(v.VisorId,v.ColorId);
-            pc.SetPet(v.PetId,v.ColorId);
+            pc.SetHat(v.HatId, v.ColorId);
+            pc.SetSkin(v.SkinId, v.ColorId);
+            pc.SetVisor(v.VisorId, v.ColorId);
+            pc.SetPet(v.PetId, v.ColorId);
         }
 
         public static void SetNamePlate(PlayerControl pc, PlayerControl parent)
@@ -385,6 +383,52 @@ namespace TheSpaceRoles
         {
             var v = DataBase.AllPlayerData[parent.PlayerId];
             pc.SetName(v.Name);
+        }
+        public static void setOpacity(PlayerControl player, float opacity)
+        {
+            // Sometimes it just doesn't work?
+            var color = Color.Lerp(Palette.ClearWhite, Palette.White, opacity);
+            try
+            {
+                if (player.cosmetics?.normalBodySprite?.BodySprite != null)
+                    player.cosmetics.normalBodySprite.BodySprite.color = color;
+
+                if (player.cosmetics?.skin.layer != null)
+                    player.cosmetics.skin.layer.color = color;
+
+                if (player.cosmetics?.hat != null)
+                    player.cosmetics.hat.BackLayer.color = color;
+                player.cosmetics.hat.FrontLayer.color = color;
+
+                if (player.cosmetics.CurrentPet.renderers != null)
+                    foreach (var rend in player.cosmetics.CurrentPet.renderers)
+                    {
+                        rend.color = color;
+                    }
+
+                if (player.cosmetics.CurrentPet.shadows != null)
+                    foreach (var rend in player.cosmetics.CurrentPet.shadows)
+                    {
+                        rend.color = color;
+                    }
+
+
+                if (player.cosmetics.CurrentVisor != null)
+                    player.cosmetics.CurrentVisor.Image.color = color;
+            }
+            catch { }
+        }
+        public static void setNameOpacity(PlayerControl player, float opacity)
+        {
+            // Sometimes it just doesn't work?
+            var color = Color.Lerp(Palette.ClearWhite, Palette.White, opacity);
+            try
+            {
+                if (player.cosmetics?.nameText != null)
+                    player.cosmetics.nameText.color = color;
+
+            }
+            catch { }
         }
     }
 }

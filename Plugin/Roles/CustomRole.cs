@@ -1,6 +1,8 @@
-﻿using Epic.OnlineServices.Lobby;
+﻿using AmongUs.GameOptions;
+using Epic.OnlineServices.Lobby;
 using HarmonyLib;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using UnityEngine;
 using static TheSpaceRoles.Helper;
@@ -36,6 +38,7 @@ namespace TheSpaceRoles
         public bool? ShowingAdminIncludeDeadBodies = null;
         public bool canAssign = true;
         public List<CustomOption> Options = [];
+        public float speedMod=1;
         public void Init()
         {
             OptionCreate();
@@ -247,6 +250,7 @@ namespace TheSpaceRoles
         [HarmonyPatch(nameof(HudManager.Update)), HarmonyPostfix]
         private static void Update()
         {
+
             //Logger.Message($"{IsGameStarting}");
             if (!IsGameStarting) return;
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
@@ -255,6 +259,11 @@ namespace TheSpaceRoles
             Helper.GetCustomRole(PlayerControl.LocalPlayer).Update();
             DataBase.AllPlayerData.Do(y => y.Value.CustomRole.APUpdate());
             DataBase.AllPlayerData.Do(y => y.Value.CustomRole.VentUpdate());
+        }
+        [HarmonyPatch(typeof(PlayerPhysics),nameof(PlayerPhysics.FixedUpdate)),HarmonyPostfix]
+        public static void PPUp(PlayerPhysics __instance)
+        {
+            DataBase.AllPlayerData[__instance.myPlayer.PlayerId].CustomRole.PlayerControl.MyPhysics.body.velocity *= DataBase.AllPlayerData[__instance.myPlayer.PlayerId]?.CustomRole?.speedMod?? 1;
         }
         [HarmonyPatch(typeof(ExileController))]
         [HarmonyPatch(nameof(ExileController.ReEnableGameplay)), HarmonyPostfix]

@@ -309,6 +309,7 @@ namespace TheSpaceRoles
                             addchat += "playerlist : \n";
                             addchat += DataBase.AllPlayerData.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.CustomRole.ColoredRoleName).Joinsep("\n");
                             addchat += "assignedRole:" + DataBase.AssignedRoles().Select(x => x.ToString()).Joinsep("\n");
+                            addchat +=$"MyPhysics.Speed {PlayerControl.LocalPlayer.MyPhysics.TrueSpeed} {PlayerControl.LocalPlayer.MyPhysics.SpeedMod}";
                             break;
                         case "/vent":
                             if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
@@ -427,6 +428,9 @@ namespace TheSpaceRoles
                         case "/db":
                             DeathGhost.ShowGhost(PlayerControl.LocalPlayer.GetTruePosition(), PlayerControl.LocalPlayer.PlayerId);
                             LateTask.AddTask(0, () => Helper.AddChat("ShowGhost"));
+                            break;
+                        case "/anim":
+                            PlayerControl.LocalPlayer.PlayAnimation(byte.Parse(chats [1]));
                             break;
 
                     }

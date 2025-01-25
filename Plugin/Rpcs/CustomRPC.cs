@@ -94,6 +94,18 @@ namespace TheSpaceRoles
                                     Morphling.RpcMorphEnd(useAbilityPlayerId);
                                 }
                                 break;
+                            case Roles.Ninja:
+                                if (useAbilityPlayerId == 0)
+                                {
+                                    Ninja.NinjaHide(useAbilityPlayerId);
+
+                                }
+                                else
+                                {
+
+                                    Ninja.NinjaHideEnd(useAbilityPlayerId);
+                                }
+                                break;
                         }
 
                         break;

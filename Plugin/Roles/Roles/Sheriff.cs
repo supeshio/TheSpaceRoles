@@ -29,7 +29,7 @@ namespace TheSpaceRoles
                 __instance.KillButton.graphic.sprite,
                 () =>
                 {
-                    var pc = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(2.5f, Color));
+                    var pc = GetPlayerById(KillButtons.KillButtonSetTarget(2.5f, Color));
 
                     if (DataBase.AllPlayerData[pc.PlayerId].Team != Teams.Crewmate)
                     {

@@ -48,7 +48,7 @@ namespace TheSpaceRoles
                 Sprites.GetSpriteFromResources("ui.button.vampire_bite.png", 100),
                 () =>
                 {
-                    BittenPlayerControl = GetPlayerControlFromId(KillButtons.KillButtonSetTarget(KillDistance.GetValue(), Color, [Teams.Impostor]));
+                    BittenPlayerControl = GetPlayerById(KillButtons.KillButtonSetTarget(KillDistance.GetValue(), Color, [Teams.Impostor]));
                 },
                 () => VampireBitebutton.Timer = VampireBitebutton.maxTimer,
                 "BITE",

@@ -25,7 +25,7 @@ namespace TheSpaceRoles
 
             Logger.Message($"{id1} -> {id2}", "Murder");
             DataBase.AllPlayerData.Do(x => x.Value.CustomRole.Murder(Helper.GetPlayerById(id1), Helper.GetPlayerById(id2)));
-            Helper.GetPlayerControlFromId(id1).MurderPlayer(Helper.GetPlayerControlFromId(id2), MurderResultFlags.Succeeded);
+            Helper.GetPlayerById(id1).MurderPlayer(Helper.GetPlayerById(id2), MurderResultFlags.Succeeded);
             /*
 
             DataBase.AllPlayerDeathReasons.Add(id2, reason);
@@ -54,7 +54,7 @@ namespace TheSpaceRoles
         public static void Murder(int id1, int id2, DeathReason reason)
         {
             KillAnimationPatch.AnimCancel = true;
-            Helper.GetPlayerControlFromId(id1).MurderPlayer(Helper.GetPlayerControlFromId(id2), MurderResultFlags.Succeeded);
+            Helper.GetPlayerById(id1).MurderPlayer(Helper.GetPlayerById(id2), MurderResultFlags.Succeeded);
             /*
             DataBase.AllPlayerDeathReasons.Add(id2, reason);
             if (id2 == PlayerControl.LocalPlayer.PlayerId)
