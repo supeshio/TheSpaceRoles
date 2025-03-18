@@ -6,9 +6,10 @@
     <Description>Many Funny Roles!</Description>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Version>1.0.0</Version>
-    <LangVersion>preview</LangVersion>
-    <RootNamespace>TheSpaceRoles</RootNamespace>
+	  
+    <LangVersion>preview</LangVersion><RootNamespace>TheSpaceRoles</RootNamespace>
 	  <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    
 	  <DefineConstants>$(DefineConstants);STEAM</DefineConstants>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	  <ApplicationIcon />

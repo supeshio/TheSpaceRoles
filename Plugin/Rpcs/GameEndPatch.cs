@@ -31,24 +31,7 @@ namespace TheSpaceRoles
                 DataBase.EndGame();
                 Logger.Info($"EndGame!!,DeathReasons:\n{string.Join(",\n", DataBase.AllPlayerData.ToArray().Select(x => $"{DataBase.AllPlayerControls().First(y => y.PlayerId == x.Key).Data.PlayerName}  ({x.Key}):{x.Value}"))}");
 
-                if (DataBase.buttons.Count != 0)
-                {
-                    foreach (var item in DataBase.buttons)
-                    {
-                        try
-                        {
-
-                            GameObject.Destroy(item.actionButton.gameObject);
-                        }
-                        catch
-                        {
-
-                        }
-
-
-                    }
-                    DataBase.buttons.Clear();
-                }
+                DataBase.ResetButtons();
             }
         }
     }

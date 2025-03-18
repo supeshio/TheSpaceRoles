@@ -1,4 +1,7 @@
-﻿namespace TheSpaceRoles
+﻿using System;
+using UnityEngine;
+
+namespace TheSpaceRoles
 {
     public class JesterTeam : CustomTeam
     {
@@ -25,14 +28,14 @@
             }
             return false;
         }
-        public override float GetLightMod(ShipStatus shipStatus, float num)
+        public override Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
             float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
             float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
             /*|| (Jackal.jackal != null && Jackal.jackal.PlayerId == player.PlayerId && Jackal.hasImpostorVision))*/
 
 
-            return shipStatus.MaxLightRadius * ImpostorLightMod;
+            return (ChangeLightReason.Impostor, Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod).ToTuple();
             //return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
 
         }

@@ -93,7 +93,7 @@ namespace TheSpaceRoles
         /// </summary>
         //public static Dictionary<int, DeathReason> AllPlayerDeathReasons = [];
 
-        public static List<CustomButton> buttons = [];
+        public static List<CustomButton> Buttons = [];
         public static PlayerControl[] AllPlayerControls()
         {
             return PlayerControl.AllPlayerControls.ToArray();
@@ -109,6 +109,7 @@ namespace TheSpaceRoles
 
         public static void ResetAndPrepare()
         {
+            MeetingCount = 0;
             AllPlayerData.Clear();
             ResetButtons();
             DeathGhost.DisapperGhosts();
@@ -122,9 +123,8 @@ namespace TheSpaceRoles
         }
         public static void ResetButtons()
         {
-            MeetingCount = 0;
-            buttons.ToArray().Do(x => { try { GameObject.Destroy(x.gameObject); } catch { } });
-            buttons.Clear();
+            Buttons.ToArray().Do(x => { try { x.actionButton.gameObject.SetActive(false); GameObject.Destroy(x.actionButton.gameObject); } catch { } });
+            Buttons.Clear();
         }
 
         public static Dictionary<Teams, int> GetPlayerCountInTeam()

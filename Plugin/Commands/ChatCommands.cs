@@ -139,16 +139,16 @@ namespace TheSpaceRoles
                         }
                     case "/gameend":
                     case "/ge":
-                        if (((InnerNetClient)AmongUsClient.Instance).AmHost)
+                        if (AmongUsClient.Instance.AmHost)
                         {
-                            ((Behaviour)GameManager.Instance).enabled = false;
+                            GameManager.Instance.enabled = false;
                             GameManager.Instance.RpcEndGame((GameOverReason)3, false);
                             GameManager.Instance.RpcEndGame((GameOverReason)8, false);
                         }
                         break;
                     case "/skip":
                     case "/s":
-                        if (((InnerNetClient)AmongUsClient.Instance).AmHost)
+                        if (AmongUsClient.Instance.AmHost)
                         {
                             MeetingHud.Instance.RpcClose();
                             Logger.Message("会議スキップ", "", "Addedchat");
@@ -431,6 +431,41 @@ namespace TheSpaceRoles
                             break;
                         case "/anim":
                             PlayerControl.LocalPlayer.PlayAnimation(byte.Parse(chats [1]));
+                            break;
+                        case "/sr":
+                            if (AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
+                            {
+
+                                if (int.TryParse(chats[1], out int roleId))
+                                {
+                                    int playerId = PlayerControl.LocalPlayer.PlayerId;
+                                    if (int.TryParse(chats[2], out playerId))
+                                    {
+
+                                        DataBase.AllPlayerData.Remove(playerId);
+                                        DataBase.ResetButtons();
+                                        if (RoleData.GetCustomRoles[roleId].Team == Teams.Impostor)
+                                        {
+                                            Helper.GetPlayerById(playerId).RpcSetRole(RoleTypes.Impostor, true);
+                                        }
+                                        else
+                                        {
+
+
+                                            Helper.GetPlayerById(playerId).RpcSetRole(RoleTypes.Crewmate, true);
+                                        }
+                                        RoleSelect.SendRpcSetRole(RoleData.GetCustomRoles[roleId].Role, Helper.GetPlayerById(playerId).PlayerId);
+                                        Helper.GetPlayerById(playerId).Init();
+                                        Helper.GetPlayerById(playerId).ButtonResetStart();
+                                        Helper.GetCustomRole(Helper.GetPlayerById(playerId)).HudManagerStart(HudManager.Instance);
+                                        addchat += $"役職を設定しました。\n Role : {RoleData.GetCustomRoles[roleId].ColoredRoleName}";
+                                        break;
+                                    }
+                                }
+                                
+                                addchat += "役職を設定できませんでした。";
+                                break;
+                            }
                             break;
 
                     }

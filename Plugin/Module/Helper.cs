@@ -4,6 +4,7 @@ using Il2CppInterop.Runtime;
 using Rewired;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -64,19 +65,31 @@ namespace TheSpaceRoles
         {
             DataBase.AllPlayerData[p.PlayerId].CustomRole.ButtonReset();
         }
-        public static PlayerControl GetPlayerById(int id) => DataBase.AllPlayerControls().First(x => x.PlayerId == id);
+        public static T AnyFirst<T>(this ICollection<T> list, Func<T, bool> func)
+        {
+            return list.Any(func) ? list.First(func) : default;
+        }
+        public static T AnyFirst<T>(this IList<T> list,Func<T,bool> func)
+        {
+            return list.Any(func) ? list.First(func) : default;
+        }
+        public static T AnyFirst<T>(this T[] list, Func<T, bool> func)
+        {
+            return list.Any(func) ? list.First(func) : default;
+        }
+        public static PlayerControl GetPlayerById(int id) => DataBase.AllPlayerControls().AnyFirst(x => x.PlayerId == id);
 
         public static CustomRole GetCustomRole(int playerId)
         {
-            return DataBase.AllPlayerData.First(x => x.Value.PlayerId == playerId).Value.CustomRole;
+            return DataBase.AllPlayerData.AnyFirst(x => x.Value.PlayerId == playerId).Value?.CustomRole??null;
         }
         public static CustomRole GetCustomRole(this PlayerControl p)
         {
-            return DataBase.AllPlayerData.First(x => x.Value.PlayerId == p.PlayerId).Value.CustomRole;
+            return DataBase.AllPlayerData.AnyFirst(x => x.Value.PlayerId == p.PlayerId).Value?.CustomRole ?? null;
         }
         public static CustomRole GetCustomRole(this Roles role)
         {
-            return RoleData.GetCustomRoles.First(x => x.Role == role);
+            return RoleData.GetCustomRoles.AnyFirst(x => x.Role == role);
         }
         public static bool IsRole(this PlayerControl p, Roles role)
         {
@@ -94,7 +107,7 @@ namespace TheSpaceRoles
             }
 
             // Dictionary to count occurrences of each byte
-            Dictionary<byte, int> frequency = new Dictionary<byte, int>();
+            Dictionary<byte, int> frequency = new();
 
             // Count occurrences of each byte
             foreach (var num in self)
@@ -261,7 +274,7 @@ namespace TheSpaceRoles
         {
             return "<color=#" + ColorUtility.ToHtmlStringRGB(color) + ">" + text + "</color>";
         }
-        public static System.Random r = new System.Random((int)Environment.TickCount);
+        public static System.Random r = new((int)Environment.TickCount);
         public static int Random(int a, int b)
         {
             return r.Next(a, b + 1);
@@ -287,6 +300,10 @@ namespace TheSpaceRoles
             DestroyableSingleton<ChatController>.Instance.freeChatField.Clear();
         }
 
+        public static void RpcRepairSystem(this ShipStatus shipStatus, SystemTypes systemType, byte amount)
+        {
+            shipStatus.RpcUpdateSystem(systemType, amount);
+        }
         public static void AddChat(string Chat)
         {
             string name = (PlayerControl.LocalPlayer).name;

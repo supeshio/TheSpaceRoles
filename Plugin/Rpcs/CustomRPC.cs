@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Hazel;
+using UnityEngine;
 
 namespace TheSpaceRoles
 {
@@ -104,6 +105,20 @@ namespace TheSpaceRoles
                                 {
 
                                     Ninja.NinjaHideEnd(useAbilityPlayerId);
+                                }
+                                break;
+                            case Roles.Trickstar:
+                                switch (useAbilityId)
+                                {
+                                    case 0:
+                                        Trickstar.CreateOtherBox(new Vector2(reader.ReadSingle(), reader.ReadSingle()));
+                                        break;
+                                    case 1:
+                                        Trickstar.AppearOtherBox();
+                                        break;
+                                    case 2:
+                                        Trickstar.TrickLightDown(Helper.GetPlayerById(useAbilityPlayerId));
+                                        break;
                                 }
                                 break;
                         }

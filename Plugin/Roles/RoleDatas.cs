@@ -69,7 +69,9 @@ namespace TheSpaceRoles
         Sidekick,
         Trivia,
         Bait,
-        Ninja
+        Ninja,
+        SchrodingersCat,
+        Trickstar,
 
 
     }
@@ -80,6 +82,7 @@ namespace TheSpaceRoles
         Madmate,
         Impostor,
         Jackal,
+        Schrodingers,
         //Oppotunist,
         Jester,
         Arsonist,
@@ -117,7 +120,10 @@ namespace TheSpaceRoles
             new Shifter(),
             new Madmate(),
             new Impostor(),
+            new Morphling(),
+            new Ninja(),
             new Vampire(),
+            new Trickstar(),
             new SerialKiller(),
             new EvilMini(),
             new EvilGuesser(),
@@ -126,8 +132,7 @@ namespace TheSpaceRoles
             new Jester(),
             new Jackal(),
             new Sidekick(),
-            new Morphling(),
-            new Ninja(),
+            new SchrodingersCat(),
         ];
 
         public static List<CustomRole> GetCustomRoles_Normal =>
@@ -137,6 +142,7 @@ namespace TheSpaceRoles
             new Madmate(),
             new Jackal(),
             new Jester(),
+            new SchrodingersCat(),
         ];
 
         public static List<CustomTeam> GetCustomTeams =>
@@ -146,6 +152,7 @@ namespace TheSpaceRoles
             new JackalTeam(),
             new JesterTeam(),
             new MadmateTeam(),
+            new SchrodingersTeam(),
 
         ];
 

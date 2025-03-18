@@ -17,7 +17,7 @@ namespace TheSpaceRoles
                 var player = KillButtonSetTarget(
                     GameOptionsManager.Instance.currentNormalGameOptions.KillDistance,
                     RoleData.GetColorFromTeams(Teams.Impostor), notIncludeTeamIds: [Teams.Impostor]);
-                if (!__instance.isCoolingDown && __instance.gameObject.active)
+                if (!__instance.isCoolingDown && __instance.gameObject.active&&player!=-1)
                 {
                     CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, Helper.GetPlayerById(player), DeathReason.ImpostorKill);
                     __instance.ResetCoolDown();

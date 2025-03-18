@@ -45,7 +45,7 @@ namespace TheSpaceRoles
         public ButtonPos ButtonPosition;
         public float maxTimer;
         public float Timer;
-        public int count;
+        public int RemainCount;
 
         public bool isEffectActive = false;
 
@@ -106,7 +106,7 @@ namespace TheSpaceRoles
             this.OnEffectStart = OnEffectStart;
             this.OnEffectUpdate = OnEffectUpdate;
             this.OnEffectEnd = OnEffectEnd;
-            this.count = remainUses;
+            this.RemainCount = remainUses;
             actionButton = Instantiate(hudManager.AbilityButton, hudManager.KillButton.transform.parent);
             if (remainUses > 0)
             {
@@ -165,19 +165,19 @@ namespace TheSpaceRoles
 
 
 
-            DataBase.buttons.Add(this);
+            DataBase.Buttons.Add(this);
         }
         public void HudUpdate()
         {
             //1.ボタンの背景の色が変わらない問題
-            if (Input.GetKeyDown(this.keyCode))
+            if (Input.GetKeyDown(this.keyCode)&&actionButton.gameObject.active)
             {
                 Click();
             }
 
             PlayerControl local = PlayerControl.LocalPlayer;
 
-            if (Timer > 0 & count != 0)
+            if (Timer > 0 & RemainCount != 0)
             {
                 if (this.hasEffect && this.isEffectActive)
                 {
@@ -211,7 +211,7 @@ namespace TheSpaceRoles
 
                 if (canuse != -1)
                 {
-                    if (count != 0)
+                    if (RemainCount != 0)
                     {
                         actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.EnabledColor;
                         actionButton.graphic.material.SetFloat(Desat, 0f);
@@ -272,18 +272,20 @@ namespace TheSpaceRoles
         public void Click()
         {
 
-            if (count != 0)
+            if (RemainCount != 0)
             {
                 if (Timer <= 0 && !isEffectActive)
                 {
+                    //成功
                     if (hasEffect)
                     {
+                        //エフェクト処理
 
                         if (CanUse() == -1) return;
                         isEffectActive = true;
                         OnEffectStart?.Invoke();
                         Timer = maxEffectTimer;
-                        OnClick();
+                        OnClick?.Invoke();
                         actionButton.graphic.color = actionButton.buttonLabelText.color = Palette.AcceptedGreen;
                         actionButton.cooldownTimerText.color = Palette.AcceptedGreen;
                         actionButton.graphic.material.SetFloat(Desat, 0f);
@@ -292,14 +294,14 @@ namespace TheSpaceRoles
                     {
 
                         if (CanUse() == -1) return;
-                        OnClick();
+                        OnClick?.Invoke();
                         Timer = maxTimer;
                     }
-                }
-                if (count > 0)
-                {
-                    count--;
-                    actionButton.SetUsesRemaining(count);
+                    if (RemainCount > 0)
+                    {
+                        RemainCount--;
+                        actionButton.SetUsesRemaining(RemainCount);
+                    }
                 }
             }
 
@@ -404,8 +406,8 @@ namespace TheSpaceRoles
         {
             public static void Postfix()
             {
-                if (DataBase.buttons.Count == 0) return;
-                DataBase.buttons.Do(x => x.HudUpdate());
+                if (DataBase.Buttons.Count == 0) return;
+                DataBase.Buttons.Do(x => x.HudUpdate());
             }
         }
         [HarmonyPatch]
@@ -417,8 +419,8 @@ namespace TheSpaceRoles
             public static void Prefix()
             {
 
-                if (DataBase.buttons.Count == 0) return;
-                DataBase.buttons.Do(x => x.MeetingStarts());
+                if (DataBase.Buttons.Count == 0) return;
+                DataBase.Buttons.Do(x => x.MeetingStarts());
 
             }
 
@@ -430,8 +432,8 @@ namespace TheSpaceRoles
             public static void Prefix()
             {
 
-                if (DataBase.buttons.Count == 0) return;
-                DataBase.buttons.Do(x => x.MeetingEnds());
+                if (DataBase.Buttons.Count == 0) return;
+                DataBase.Buttons.Do(x => x.MeetingEnds());
             }
         }
         [HarmonyPatch]

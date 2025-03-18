@@ -26,6 +26,10 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
         public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] NetworkedPlayerInfo player)
         {
+            if (Helper.GetPlayerById(player.PlayerId)?.GetCustomRole() == null)
+            {
+                return true;
+            }
             float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
             float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
 
@@ -36,12 +40,54 @@ namespace TheSpaceRoles
 
             float num = (float)switchSystem.Value / 255f;
             PlayerControl pc = Helper.GetPlayerById(player.PlayerId) ?? null;
+            
+
             if (player == null || player.IsDead) // IsDead
                 __result = __instance.MaxLightRadius;
             else
-                __result = pc.GetCustomRole().GetLightMod(__instance,num);
+            {
+                Dictionary<ChangeLightReason, float> lights = [];
+                foreach (var v in DataBase.AllPlayerData.Values.Select(x => x.CustomRole))
+                {
+                    if (pc == null) continue;
+                    var k = v.GetOtherLight(pc, ShipStatus.Instance, num);
+                    if (k.Item2 < 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        lights.Add(k.Item1, k.Item2);
+                    }
+                }
+                Tuple<ChangeLightReason,float> light;
+                try
+                {
+
+                   light = pc.GetCustomRole().GetLightMod(__instance, num);
+                }
+                catch
+                {
+
+                    light = Tuple.Create(ChangeLightReason.None, -1f);
+                }
+                lights.Add(light.Item1,light.Item2);
+
+                __result = lights.MaxBy(x=>x.Key).Value;
+            }
+
             return false;
         }
 
+    }
+    public enum ChangeLightReason
+    {
+        None = 0,
+        Impostor,
+        Crewmate,
+        Other,
+        LightDown,
+        TrickstarLightdown,
+        LighterLight,
     }
 }

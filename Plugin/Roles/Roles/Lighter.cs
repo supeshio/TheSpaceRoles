@@ -1,4 +1,5 @@
 ﻿using Rewired;
+using System;
 using UnityEngine;
 using static TheSpaceRoles.Ranges;
 
@@ -46,7 +47,7 @@ namespace TheSpaceRoles
                 ButtonPos.Custom,
                 KeyCode.F,
                 LightCoolDown.GetFloatValue(),()=>0,
-                Sprites.GetSpriteFromResources("ui.button.evilhacker_hack.png", 100f),
+                Sprites.GetSpriteFromResources("ui.button.lighter_light.png", 100f),
                 () =>
                 {
                     var pc = Helper.GetPlayerById(CustomButton.SetTarget());
@@ -60,7 +61,7 @@ namespace TheSpaceRoles
             Logger.Info("button:Shifter Shifting");
 
         }
-        public override float GetLightMod(ShipStatus shipStatus, float num)
+        public override Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
             if (!LightButton.isEffectActive)
             {
@@ -72,7 +73,7 @@ namespace TheSpaceRoles
 
                 float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
 
-                return shipStatus.MaxLightRadius*LightSize.GetFloatValue();
+                return (ChangeLightReason.LighterLight,shipStatus.MaxLightRadius*LightSize.GetFloatValue()).ToTuple();
             }
         }
     }

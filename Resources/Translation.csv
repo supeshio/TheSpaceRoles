@@ -191,12 +191,19 @@ team.jester.wincodition,,,,,,,,,,,,投票により追放されること,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 #jackal,,,,,,,,,,,,,,,,,,
-team.jackal.name,Guesser,,,,,,,,,,,ジャッカル,,,,,ジャッカル陣営
+team.jackal.name,Jackal,,,,,,,,,,,ジャッカル,,,,,ジャッカル陣営
 team.jackal.sname,(Jk),,,,,,,,,,,,,,,,
 team.jackal.intro,*,,,,,,,,,,,,,,,,,*
 team.jackal.sintro,*,,,,,,,,,,,,,,,,,*
 team.jackal.description,*,,,,,,,,,,,,,,,,*
 team.jackal.wincodition,,,,,,,,,,,,,,,,,,
+#crewmate,,,,,,,,,,,,,,,,,
+team.crewmate.name,Schrodingers,,,,,,,,,,,シュレディンガー,,,,,?陣営
+team.crewmate.sname,(Sc),,,,,,,,,,,,,,,,
+team.crewmate.intro,,,,,,,,,,,,*,,,,,
+team.crewmate.sintro,,,,,,,,,,,,*,,,,,,
+team.crewmate.description,,,,,,,,,,,,*,,,,,
+team.crewmate.wincondition,,,,,,,,,,,,*,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
@@ -243,7 +250,7 @@ role.sheriff.description,"{role.sheriff.coloredname} has a kill button and can k
 ,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,
 #nicemini,,,,,,,,,,,,,,,,,
-role.nicemini.name,Nice Mini,,,,,,,,,,,ナイスミニ,,,,,小人
+role.nicemini.name,NiceMini,,,,,,,,,,,ナイスミニ,,,,,小人
 role.nicemini.intro,Fight while protected,,,,,,,,,,,守られながらインポスターを追放せよ,,,,,守られながらインポスターを追放せよ
 role.nicemini.sintro,Fight while protected,,,,,,,,,,,守られながらインポスターを追放せよ,,,,,守られながらインポスターを追放せよ
 role.nicemini.description,,,,,,,,,,,,,,,,,,
@@ -344,4 +351,20 @@ role.ninja.name,Ninja,,,,,,,,,,,ニンジャ,,,,,
 role.ninja.intro,*,,,,,,,,,,,忍法【隠れ身の術！】,,,,
 role.ninja.sintro,*,,,,,,,,,,,忍法【隠れ身の術！】,,,,,
 role.ninja.description,*,,,,,,,,,,,[透明化]を使用することで透明になることができる。\n透明化中の行動は制限されず、キルやベント等通常と同じように行動できる。\nまた、透明化中は移動速度も上昇するぞ。,,,,,
+,,,,,,,,,,,,,,,,,,
+#schrodingerscat,,,,,,,,,,,,,,,,,
+role.schrodingerscat.name,Schrödinger's Cat,,,,,,,,,,,シュレディンガーの猫,,,,,
+role.schrodingerscat.intro,*,,,,,,,,,,,*,,,,,
+role.schrodingerscat.sintro,*,,,,,,,,,,*,,,,,
+role.schrodingerscat.description,*,,,,,,,,,,,*,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,

@@ -59,7 +59,7 @@ namespace TheSpaceRoles
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
             try
             {
-                if (RoleTextManager.RoleTexts?[pc.PlayerId] != null)
+                if (RoleTextManager.RoleTexts?[pc.PlayerId] != null && Helper.GetCustomRole(pc.PlayerId) != null)
                 {
                     if (PlayerControl.LocalPlayer.PlayerId != pc.PlayerId && AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) return;
                     RoleTextManager.RoleTexts[pc.PlayerId].text = Helper.GetCustomRole(pc.PlayerId).ColoredRoleName;
@@ -70,6 +70,27 @@ namespace TheSpaceRoles
             }
             catch {}
 
+        }
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate)),HarmonyPostfix]
+        public static void Update(PlayerControl __instance)
+        {
+            PlayerControl pc = __instance;
+                if (RoleTextManager.RoleTexts== null)return;
+                if (!RoleTextManager.RoleTexts.ContainsKey(pc.PlayerId)) return;
+                if (PlayerControl.LocalPlayer?.PlayerId == null) return;
+                try
+                {
+                    if (RoleTextManager.RoleTexts?[pc.PlayerId] != null&& Helper.GetCustomRole(pc.PlayerId) != null)
+                    {
+                        if (PlayerControl.LocalPlayer.PlayerId != pc.PlayerId && AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) return;
+                        RoleTextManager.RoleTexts[pc.PlayerId].text = Helper.GetCustomRole(pc.PlayerId).ColoredRoleName ?? "";
+
+
+
+                    }
+                }
+                catch { }
+            
         }
     }
 }

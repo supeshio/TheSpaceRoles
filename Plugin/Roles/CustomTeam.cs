@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
@@ -33,16 +34,20 @@ namespace TheSpaceRoles
         public abstract bool WinCheck();
         public virtual bool AdditionalWinCheck(Teams winteam) { return false; }
         public virtual bool WasExiled() { return false; }
-        public virtual float GetLightMod(ShipStatus shipStatus, float num)
+        public virtual Tuple<ChangeLightReason,float> GetLightMod(ShipStatus shipStatus, float num)
         {
             float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
             float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
             /*|| (Jackal.jackal != null && Jackal.jackal.PlayerId == player.PlayerId && Jackal.hasImpostorVision))*/
 
 
-                return shipStatus.MaxLightRadius * ImpostorLightMod;
-                return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
+            return Tuple.Create(ChangeLightReason.None, shipStatus.MaxLightRadius * ImpostorLightMod);
+            //return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
 
+        }
+        public virtual Tuple<ChangeLightReason, float> GetOtherLight(PlayerControl pc,ShipStatus shipStatus, float num)
+        {
+            return Tuple.Create(ChangeLightReason.None, -1f);
         }
     }
 }

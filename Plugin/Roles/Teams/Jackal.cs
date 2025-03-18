@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TheSpaceRoles
 {
@@ -27,14 +28,14 @@ namespace TheSpaceRoles
             }
             return false;
         }
-        public override float GetLightMod(ShipStatus shipStatus, float num)
+        public override Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
             float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
             float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
             /*|| (Jackal.jackal != null && Jackal.jackal.PlayerId == player.PlayerId && Jackal.hasImpostorVision))*/
 
 
-            return shipStatus.MaxLightRadius * ImpostorLightMod;
+            return (ChangeLightReason.Impostor, shipStatus.MaxLightRadius * ImpostorLightMod).ToTuple();
             //return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
 
         }

@@ -35,7 +35,7 @@ namespace TheSpaceRoles
             //Ghost.transform.SetParent();
             Ghost.transform.SetPositionAndRotation(vector2+new Vector2(0f,0.3f), Quaternion.identity);
             var sp = Ghost.AddComponent<SpriteRenderer>();
-            sp.sprite = Sprites.GetSpriteFromResources("ui.ghost.png",400);
+            sp.sprite = Sprites.GetSpriteFromResources("object.ghost.png",400);
             sp.color = ColorEditHSV(Color.white, a: 0.6f);
             Ghosts.Add(Ghost);
             

@@ -1,6 +1,7 @@
 ﻿using AmongUs.GameOptions;
 using Epic.OnlineServices.Lobby;
 using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -113,12 +114,23 @@ namespace TheSpaceRoles
         public virtual void WasKilled() { }
         public virtual void Die() { }
         public virtual void APDie(PlayerControl pc) { }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pc"></param>
+        /// <param name="target">殺してきたやつ</param>
+        /// <returns>もしmurderのkillを防ぎたければtrue</returns>
+        public virtual bool BeMurdered(PlayerControl target) { return false; }
         public virtual void Update() { }
         public virtual void APUpdate() { }
         public virtual void Murder(PlayerControl pc,PlayerControl target) { }
-        public virtual float GetLightMod(ShipStatus shipStatus,float num)
+        public virtual Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus,float num)
         {
             return CustomTeam.GetLightMod(shipStatus,num);
+        }
+        public virtual Tuple<ChangeLightReason,float> GetOtherLight(PlayerControl pc,ShipStatus shipStatus, float num)
+        {
+            return CustomTeam.GetOtherLight(pc,shipStatus, num);
 
         }
         public string ColoredRoleName => ColoredText(Color, Translation.GetString("role." + Role.ToString() + ".name"));
@@ -233,7 +245,6 @@ namespace TheSpaceRoles
             DataBase.ResetButtons();
             ButtonCooldownEnabled = false;
             ButtonCooldown = 10f;
-            DataBase.buttons.Clear();
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
             if (DataBase.AllPlayerData.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
             {
@@ -263,6 +274,10 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(PlayerPhysics),nameof(PlayerPhysics.FixedUpdate)),HarmonyPostfix]
         public static void PPUp(PlayerPhysics __instance)
         {
+            if (!DataBase.AllPlayerData.ContainsKey(__instance.myPlayer.PlayerId)||DataBase.AllPlayerData[__instance.myPlayer.PlayerId]?.CustomRole?.PlayerControl?.MyPhysics?.body?.velocity == null)
+            {
+                return;
+            }
             DataBase.AllPlayerData[__instance.myPlayer.PlayerId].CustomRole.PlayerControl.MyPhysics.body.velocity *= DataBase.AllPlayerData[__instance.myPlayer.PlayerId]?.CustomRole?.speedMod?? 1;
         }
         [HarmonyPatch(typeof(ExileController))]

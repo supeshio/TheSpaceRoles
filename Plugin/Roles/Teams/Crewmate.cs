@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace TheSpaceRoles
@@ -38,7 +39,7 @@ namespace TheSpaceRoles
             }
             return false;
         }
-        public override float GetLightMod(ShipStatus shipStatus, float num)
+        public override Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
             float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
             float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
@@ -46,7 +47,7 @@ namespace TheSpaceRoles
 
 
             //return shipStatus.MaxLightRadius * ImpostorLightMod;
-            return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
+            return (ChangeLightReason.Crewmate,Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod).ToTuple();
 
         }
     }
