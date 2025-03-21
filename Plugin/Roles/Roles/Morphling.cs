@@ -31,7 +31,7 @@ namespace TheSpaceRoles
         {
             MorphButton = new CustomButton(
                 __instance, "MorphlingMorphButton"
-                ,
+                , this,
                 ButtonPos.Custom,
                 KeyCode.F,
                 0,
@@ -72,12 +72,12 @@ namespace TheSpaceRoles
             {
                 CopyButton = new CustomButton(
                     __instance, "MorphlingCopyButton"
-                    ,
+                    , this,
                     ButtonPos.Custom,
                     KeyCode.F,
                     0f,
                     () => CustomButton.SetTarget(),
-                    Sprites.GetSpriteFromResources("ui.button.vampire_bite.png", 100f),
+                    Sprites.GetSpriteFromResources("ui.button.morphing_copy.png", 100f),
                     () =>
                     {
                         target = GetPlayerById(CustomButton.SetTarget());

@@ -21,7 +21,7 @@ namespace TheSpaceRoles
         {
             SerialKillerKillButton = new CustomButton(
                 __instance, "SerialKillerButton"
-                ,
+                , this,
                 ButtonPos.Kill,
                 KeyCode.Q,
                 20,

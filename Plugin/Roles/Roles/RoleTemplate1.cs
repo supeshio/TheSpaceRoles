@@ -19,7 +19,7 @@ namespace TheSpaceRoles
 
             TemplateButton = new CustomButton(
                 hudManager:__instance,
-                name:"TemplateButton",
+                name:"TemplateButton", this,
                 buttonPos:ButtonPos.Custom,
                 keycode: KeyCode.F,
                 maxTimer: 30,

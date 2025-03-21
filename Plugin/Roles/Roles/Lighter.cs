@@ -43,7 +43,7 @@ namespace TheSpaceRoles
         {
             LightButton = new CustomButton(
                 __instance, "ShifterShiftButton"
-                ,
+                , this,
                 ButtonPos.Custom,
                 KeyCode.F,
                 LightCoolDown.GetFloatValue(),()=>0,

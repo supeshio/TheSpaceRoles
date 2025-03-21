@@ -65,12 +65,14 @@ namespace TheSpaceRoles
         public Action OnEffectUpdate;
         public Action OnEffectEnd;
         private static readonly int Desat = Shader.PropertyToID("_Desat");
+        public CustomRole role;
 
 
         public bool IsDead = false;
         public CustomButton(
             HudManager hudManager,
             string name,
+            CustomRole role,
             ButtonPos buttonPos,
             KeyCode keycode,
             float maxTimer,
@@ -107,6 +109,7 @@ namespace TheSpaceRoles
             this.OnEffectUpdate = OnEffectUpdate;
             this.OnEffectEnd = OnEffectEnd;
             this.RemainCount = remainUses;
+            this.role = role;
             actionButton = Instantiate(hudManager.AbilityButton, hudManager.KillButton.transform.parent);
             if (remainUses > 0)
             {
@@ -120,6 +123,7 @@ namespace TheSpaceRoles
             actionButton.buttonLabelText.text = buttonText;
             actionButton.graphic.sprite = sprite;
             actionButton.transform.SetAsLastSibling();
+            //actionButton.buttonLabelText.outlineColor = role.Color;
             pos = [];
             pos.TryAdd(ButtonPos.Use, (ActionButton)HudManager.Instance.PetButton ?? HudManager.Instance.UseButton);
             pos.TryAdd(ButtonPos.Report, (ActionButton)HudManager.Instance.ReportButton);
@@ -249,7 +253,6 @@ namespace TheSpaceRoles
 
             }
 
-
         }
         public void SetActive(bool isActive)
         {
@@ -304,6 +307,7 @@ namespace TheSpaceRoles
                     }
                 }
             }
+            actionButton.SetFillUp(Timer, maxTimer);
 
 
         }

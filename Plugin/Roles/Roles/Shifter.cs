@@ -18,7 +18,7 @@ namespace TheSpaceRoles
         {
             ShiftButton = new CustomButton(
                 __instance, "ShifterShiftButton"
-                ,
+                , this,
                 ButtonPos.Custom,
                 KeyCode.F,
                 30,

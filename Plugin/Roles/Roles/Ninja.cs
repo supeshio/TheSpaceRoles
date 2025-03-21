@@ -22,7 +22,7 @@ namespace TheSpaceRoles
 
             NinjaButton = new CustomButton(
                 __instance, "NinjaButton"
-                ,
+                , this,
                 ButtonPos.Custom/*ボタンタイプ*/,
                 KeyCode.F/*ボタンキー*/,
                 NinjaHideCoolDown.GetFloatValue()/*クールダウン*/,

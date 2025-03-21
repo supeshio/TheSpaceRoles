@@ -34,7 +34,7 @@ namespace TheSpaceRoles
             KillCoolDown = CustomOptionsHolder.roleFamilarOptions[Roles.Jackal].First(x => x.nameId == "role.jackal.killcooldown");
             Logger.Info(KillCoolDown.GetHashCode().ToString());
             JackalKillButton = new CustomButton(
-                __instance, "JackalKillButton",
+                __instance, "JackalKillButton", this,
                 ButtonPos.Kill,
                 KeyCode.Q,
                 KillCoolDown.GetFloatValue(),
@@ -52,7 +52,7 @@ namespace TheSpaceRoles
 
             JackalSidekickButton = new CustomButton(
                 __instance, "JackalSidekickButton"
-                ,
+                , this,
                 ButtonPos.Custom,
                 KeyCode.F,
                 SidekickCoolDown.GetFloatValue(),

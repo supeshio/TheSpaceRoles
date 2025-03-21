@@ -23,7 +23,7 @@ namespace TheSpaceRoles
             Boxes = [];
             TrickstarSetBoxButton = new CustomButton(
                 __instance, "TrickstarSetBoxButton"
-                ,
+                , this,
                 ButtonPos.Custom/*ボタンタイプ*/,
                 KeyCode.F/*ボタンキー*/,
                 12.5f/*クールダウン*/,
@@ -53,7 +53,7 @@ namespace TheSpaceRoles
 
             TrickstarLightdownButton = new CustomButton(
                 __instance, "TrickstarLightdownButton"
-                ,
+                , this,
                 ButtonPos.Custom/*ボタンタイプ*/,
                 KeyCode.F/*ボタンキー*/,
                 30/*クールダウン*/,

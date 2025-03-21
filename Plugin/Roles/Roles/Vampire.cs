@@ -40,7 +40,7 @@ namespace TheSpaceRoles
             Logger.Warning($"{KillCoolDown.GetValue()},{KillDistance.GetValue()}");
             DataBase.AllPlayerData.TryGetValue(PlayerControl.LocalPlayer.PlayerId, out var r);
             VampireBitebutton = new CustomButton(
-                __instance, "VampireBiteButton",
+                __instance, "VampireBiteButton", this,
                 ButtonPos.Kill,
                 KeyCode.Q,
                 KillCoolDown.GetFloatValue(),

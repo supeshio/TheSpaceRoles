@@ -21,7 +21,7 @@ namespace TheSpaceRoles
         {
             HackButton = new CustomButton(
                 __instance, "EvilHackerHackButton"
-                ,
+                , this,
                 ButtonPos.Custom,
                 KeyCode.F,
                 30,
