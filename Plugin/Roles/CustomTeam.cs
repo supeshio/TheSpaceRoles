@@ -24,6 +24,7 @@ namespace TheSpaceRoles
         public bool AdminMap = false;
         public bool ShowingMapAllowedToMove = true;
         public bool ShowingAdminIncludeDeadBodies = true;
+        public bool LightDirectional = false;
         public string ColoredTeamName => ColoredText(Color, Translation.GetString("team." + Team.ToString() + ".name"));
         public string RoleName => Translation.GetString("team." + Team.ToString() + ".name");
         public string ShortRoleName => Translation.GetString("team." + Team.ToString() + ".sname");

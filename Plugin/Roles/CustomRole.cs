@@ -37,6 +37,7 @@ namespace TheSpaceRoles
         public bool? AdminMap = null;
         public bool? ShowingMapAllowedToMove = null;
         public bool? ShowingAdminIncludeDeadBodies = null;
+        public bool? LightDirectional = null;
         public bool canAssign = true;
         public List<CustomOption> Options = [];
         public float speedMod=1;
@@ -57,6 +58,7 @@ namespace TheSpaceRoles
             AdminMap = AdminMap == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).AdminMap : AdminMap;
             ShowingMapAllowedToMove = ShowingMapAllowedToMove == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).ShowingMapAllowedToMove : ShowingMapAllowedToMove;
             ShowingAdminIncludeDeadBodies = ShowingAdminIncludeDeadBodies == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).ShowingAdminIncludeDeadBodies : ShowingAdminIncludeDeadBodies;
+            LightDirectional = LightDirectional == null ? RoleData.GetCustomTeamFromTeam(CustomTeam.Team).LightDirectional : LightDirectional;
             RoleTextManager.TextChange(PlayerId);
         }
         public void ButtonReset()

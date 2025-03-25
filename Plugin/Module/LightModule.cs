@@ -26,6 +26,7 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
         public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] NetworkedPlayerInfo player)
         {
+            LightmapSettings.lightmapsMode = LightmapsMode.NonDirectional;
             if (Helper.GetPlayerById(player.PlayerId)?.GetCustomRole() == null)
             {
                 return true;

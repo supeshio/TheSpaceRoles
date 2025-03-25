@@ -42,7 +42,7 @@ namespace TheSpaceRoles
         public override void HudManagerStart(HudManager __instance)
         {
             LightButton = new CustomButton(
-                __instance, "ShifterShiftButton"
+                __instance, "LightLightButton"
                 , this,
                 ButtonPos.Custom,
                 KeyCode.F,
