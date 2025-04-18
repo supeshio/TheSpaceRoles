@@ -63,7 +63,7 @@ namespace TheSpaceRoles
         {
             NinjaHideCoolDown = CustomOption.Create(CustomOption.OptionType.Impostor, "role.ninja.hidecooldown",CustomCoolDownRangefloat(),12);
             NinjaHideTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.ninja.hidetime",new CustomFloatRange(2.5f,60f,2.5f),5);
-            NinjaSkillSpeed = CustomOption.Create(CustomOption.OptionType.Impostor, "role.ninja.speed", new CustomFloatRange(1.0f, 5.0f, 0.2f), 1);
+            NinjaSkillSpeed = CustomOption.Create(CustomOption.OptionType.Impostor, "role.ninja.speed", new CustomFloatRange(1.0f, 5.0f, 0.25f), 1);
 
             Options = [NinjaHideCoolDown,NinjaHideTime];
         }
