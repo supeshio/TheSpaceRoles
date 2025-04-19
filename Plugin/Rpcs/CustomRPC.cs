@@ -107,17 +107,17 @@ namespace TheSpaceRoles
                                     Ninja.NinjaHideEnd(useAbilityPlayerId);
                                 }
                                 break;
-                            case Roles.Trickstar:
+                            case Roles.Trickster:
                                 switch (useAbilityId)
                                 {
                                     case 0:
-                                        Trickstar.CreateOtherBox(new Vector2(reader.ReadSingle(), reader.ReadSingle()));
+                                        Trickster.CreateOtherBox(new Vector2(reader.ReadSingle(), reader.ReadSingle()));
                                         break;
                                     case 1:
-                                        Trickstar.AppearOtherBox();
+                                        Trickster.AppearOtherBox();
                                         break;
                                     case 2:
-                                        Trickstar.TrickLightDown(Helper.GetPlayerById(useAbilityPlayerId));
+                                        Trickster.TrickLightDown(Helper.GetPlayerById(useAbilityPlayerId));
                                         break;
                                 }
                                 break;

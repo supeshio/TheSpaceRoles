@@ -26,9 +26,13 @@ namespace TheSpaceRoles
         public static PassiveButton NeutralButton;
         public static GameOptionsMenu ImpostorTab;
         public static PassiveButton ImpostorButton;
+
+        public static Sprite CrewSprite;
         [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start)), HarmonyPostfix]
         public static void ContinueCoStart(GameSettingMenu __instance)
         {
+            var crew = DestroyableSingleton<CrewmateTrackerEntry>.Instance.;
+            CrewSprite = crew.sprite;
             LegacyGameOptions.KillDistances = new(new float[] { 0.5f, 1f, 1.8f, 2.5f });
             LegacyGameOptions.KillDistanceStrings = new(new string[] { "Very Short", "Short", "Medium", "Long" });
 

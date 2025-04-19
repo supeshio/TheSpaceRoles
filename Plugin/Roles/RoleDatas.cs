@@ -71,7 +71,7 @@ namespace TheSpaceRoles
         Bait,
         Ninja,
         SchrodingersCat,
-        Trickstar,
+        Trickster,
 
 
     }
@@ -123,7 +123,7 @@ namespace TheSpaceRoles
             new Morphling(),
             new Ninja(),
             new Vampire(),
-            new Trickstar(),
+            new Trickster(),
             new SerialKiller(),
             new EvilMini(),
             new EvilGuesser(),

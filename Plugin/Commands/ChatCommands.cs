@@ -284,6 +284,7 @@ namespace TheSpaceRoles
                             }
                             break;
                         case "//":
+                            GameStartManager.Instance.HostInfoPanel.playerName.fontStyle = TMPro.FontStyles.Bold | TMPro.FontStyles.Normal;
                             addchat += Path.GetDirectoryName(Application.dataPath).ToString() + "\n";
                             for (int i = 0; i < Palette.PlayerColors.Length; i++)
                             {
