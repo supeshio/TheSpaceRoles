@@ -88,7 +88,7 @@ namespace TheSpaceRoles
         Crewmate,
         Other,
         LightDown,
-        TrickstarLightdown,
+        TricksterLightdown,
         LighterLight,
     }
 }

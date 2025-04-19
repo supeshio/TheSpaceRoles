@@ -19,6 +19,7 @@ namespace TheSpaceRoles
 {
     public static class InGameLog
     {
+        public static ActionButton LogButton;
         public static List<Log> logs =[];
         /// <summary>
         /// InGameLogType
@@ -35,6 +36,14 @@ namespace TheSpaceRoles
                 this.color = color;
             }
             
+        }
+        public static void CreateLogButton()
+        {
+            GameObject button = new GameObject("Log");
+            button.transform.SetParent(HudManager.Instance.transform);
+            var render = button.AddComponent<SpriteRenderer>();
+            //render.sprite = Sprites.GetSpriteFromResources()
+            LogButton = button.AddComponent<ActionButton>();
         }
         public static void CreateLogMaster(string message, string type, Color color)
         {

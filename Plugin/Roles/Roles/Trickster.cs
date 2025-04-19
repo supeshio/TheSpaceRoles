@@ -8,21 +8,21 @@ using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
-    public class Trickstar : CustomRole
+    public class Trickster : CustomRole
     {
-        public Trickstar()
+        public Trickster()
         {
             Team = Teams.Impostor;
-            Role = Roles.Trickstar;
+            Role = Roles.Trickster;
             Color = Palette.ImpostorRed;
         }
-        CustomButton TrickstarSetBoxButton;
-        CustomButton TrickstarLightdownButton;
+        CustomButton TricksterSetBoxButton;
+        CustomButton TricksterLightdownButton;
         public override void HudManagerStart(HudManager __instance)
         {
             Boxes = [];
-            TrickstarSetBoxButton = new CustomButton(
-                __instance, "TrickstarSetBoxButton"
+            TricksterSetBoxButton = new CustomButton(
+                __instance, "TricksterSetBoxButton"
                 , this,
                 ButtonPos.Custom/*ボタンタイプ*/,
                 KeyCode.F/*ボタンキー*/,
@@ -40,19 +40,19 @@ namespace TheSpaceRoles
                 },
                 () =>
                 {
-                    TrickstarSetBoxButton.Timer = TrickstarSetBoxButton.maxTimer;
-                    if (TrickstarSetBoxButton.RemainCount <= 0)
+                    TricksterSetBoxButton.Timer = TricksterSetBoxButton.maxTimer;
+                    if (TricksterSetBoxButton.RemainCount <= 0)
                     {
-                        TrickstarSetBoxButton.actionButton.Hide();
-                        TrickstarLightdownButton.actionButton.Show();
+                        TricksterSetBoxButton.actionButton.Hide();
+                        TricksterLightdownButton.actionButton.Show();
 
                     }
                 },
                 "Box",
                 false/*HasEffect*/, remainUses: 3/*残り使用回数*/);
 
-            TrickstarLightdownButton = new CustomButton(
-                __instance, "TrickstarLightdownButton"
+            TricksterLightdownButton = new CustomButton(
+                __instance, "TricksterLightdownButton"
                 , this,
                 ButtonPos.Custom/*ボタンタイプ*/,
                 KeyCode.F/*ボタンキー*/,
@@ -65,25 +65,25 @@ namespace TheSpaceRoles
                 },
                 () =>
                 {
-                    TrickstarLightdownButton.Timer = TrickstarLightdownButton.maxTimer;
-                    if (TrickstarSetBoxButton.RemainCount <= 0)
+                    TricksterLightdownButton.Timer = TricksterLightdownButton.maxTimer;
+                    if (TricksterSetBoxButton.RemainCount <= 0)
                     {
-                        TrickstarLightdownButton.actionButton.Show();
+                        TricksterLightdownButton.actionButton.Show();
 
                     }
                 },
                 "Lightout",
                 true/*HasEffect*/, EffectDuration: 7.5f, remainUses: -1/*残り使用回数*/);
             //Effect
-            TrickstarLightdownButton.actionButton.Hide();
+            TricksterLightdownButton.actionButton.Hide();
 
         }
         public static CustomOption LightOutSize;
         public static CustomOption LightOutTime;
         public override void OptionCreate()
         {
-            LightOutSize = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.trickstar.lightoutsize",new CustomFloatRange(0.1f,1.0f,0.1f));
-            LightOutTime = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.trickstar.lightouttime", new CustomFloatRange(0.5f, 20f, 0.5f));
+            LightOutSize = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.trickster.lightoutsize",new CustomFloatRange(0.1f,1.0f,0.1f));
+            LightOutTime = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.trickster.lightouttime", new CustomFloatRange(0.5f, 20f, 0.5f));
 
             Options = [LightOutSize, LightOutTime];
         }
@@ -168,13 +168,13 @@ namespace TheSpaceRoles
             var writer = CustomRPC.SendRpcUseAbility(Role, PlayerControl.PlayerId, 2);
 
             writer.EndRpc();
-            Trickstar.TrickLightDown(PlayerControl);
+            Trickster.TrickLightDown(PlayerControl);
 
         }
         public float Light = 1.0f;
         public static void TrickLightDown(PlayerControl pc)
         {
-            Trickstar f = (Trickstar)pc.GetCustomRole();
+            Trickster f = (Trickster)pc.GetCustomRole();
             LateTask.AddRepeatedTask(0, 0.3f, (sec) => {
                 if (sec == 0)
                 {
@@ -209,7 +209,7 @@ namespace TheSpaceRoles
             {
                 return Tuple.Create(ChangeLightReason.None, -1f);
             }
-            return Tuple.Create(ChangeLightReason.TrickstarLightdown, num - LightOutSize.GetFloatValue() * Light + LightOutSize.GetFloatValue());
+            return Tuple.Create(ChangeLightReason.TricksterLightdown, num - LightOutSize.GetFloatValue() * Light + LightOutSize.GetFloatValue());
         }
 
     }
