@@ -468,6 +468,19 @@ namespace TheSpaceRoles
                                 break;
                             }
                             break;
+                        case "/opt":
+                            if (int.TryParse(chats[1],out int k))
+                            {
+
+                                OptionTeamCrew.SetPlayers(k);
+                                addchat += $"optplayers sets {k}";
+                            }
+                            else
+                            {
+                                addchat += $"optplayers_set is faild";
+
+                            }
+                                break;
 
                     }
                 }

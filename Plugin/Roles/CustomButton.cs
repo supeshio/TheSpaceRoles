@@ -162,7 +162,7 @@ namespace TheSpaceRoles
             AdditionalText.autoSizeTextContainer = true;
             AdditionalText.transform.localPosition = new Vector3(0f, 0.6f, -1f);
             AdditionalText.gameObject.layer = HudManager.Instance.gameObject.layer;
-            AdditionalText.m_sharedMaterial = Data.textMaterial;
+            AdditionalText.m_sharedMaterial = Data.NormalMaterial;
             AdditionalText.text = "";
 
 

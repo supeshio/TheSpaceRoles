@@ -43,7 +43,7 @@ namespace TheSpaceRoles
         public static void Postfix(HudManager __instance)
         {
             GameStartManager.Instance.HostInfoPanel.playerName.fontStyle = TMPro.FontStyles.Bold | TMPro.FontStyles.Normal;
-            Data.textMaterial = __instance.Chat.quickChatMenu.timer.text.fontMaterial;
+            Data.NormalMaterial = __instance.Chat.quickChatMenu.timer.text.fontMaterial;
             CustomOptionsHolder.CreateCustomOptions();
 
             //var spriteredrer = new GameObject("TSRlogo").AddComponent<SpriteRenderer>();

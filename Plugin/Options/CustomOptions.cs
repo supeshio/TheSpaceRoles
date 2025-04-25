@@ -31,10 +31,8 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start)), HarmonyPostfix]
         public static void ContinueCoStart(GameSettingMenu __instance)
         {
-            var crew = DestroyableSingleton<CrewmateTrackerEntry>.Instance.;
-            CrewSprite = crew.sprite;
-            LegacyGameOptions.KillDistances = new(new float[] { 0.5f, 1f, 1.8f, 2.5f });
-            LegacyGameOptions.KillDistanceStrings = new(new string[] { "Very Short", "Short", "Medium", "Long" });
+            LegacyGameOptions.KillDistances = new([0.5f, 1f, 1.8f, 2.5f]);
+            LegacyGameOptions.KillDistanceStrings = new(["Very Short", "Short", "Medium", "Long"]);
 
 
 
@@ -42,6 +40,7 @@ namespace TheSpaceRoles
 
 
             Logger.Info("Start");
+            OptionTeamCrew.Create();
             __instance.PresetsTab.gameObject.SetActive(false);
             __instance.GamePresetsButton.gameObject.SetActive(false);
             __instance.RoleSettingsButton.gameObject.SetActive(false);
@@ -187,6 +186,7 @@ namespace TheSpaceRoles
                 sc.ContentYBounds = new FloatRange(0, -1.5f - optiontype.Value);
 
             }
+
         }
 
     }
