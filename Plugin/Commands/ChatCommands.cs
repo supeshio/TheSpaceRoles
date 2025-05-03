@@ -471,8 +471,8 @@ namespace TheSpaceRoles
                         case "/opt":
                             if (int.TryParse(chats[1],out int k))
                             {
-
-                                OptionTeamCrew.SetPlayers(k);
+                                OptionTeamCrew.PlayerCount = k;
+                                OptionTeamCrew.SetPlayers();
                                 addchat += $"optplayers sets {k}";
                             }
                             else

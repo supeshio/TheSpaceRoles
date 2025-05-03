@@ -10,9 +10,11 @@ using UnityEngine;
 using static UnityEngine.ParticleSystem.PlaybackState;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.TextCore;
 
 namespace TheSpaceRoles
 {
+    [HarmonyPatch]
     public static class OptionTeamCrew
     {
         public static GameObject TeamCrewParent;
@@ -23,20 +25,20 @@ namespace TheSpaceRoles
         public static List<GameObject> CrewList;
         public static SpriteRenderer DoubleRight;
         public static SpriteRenderer DoubleLeft;
-        public static int PlayerCount;
+        public static int PlayerCount = 0;
         public static TextMeshPro Text;
-        public static void Create()
+        public static void Create(GameSettingMenu __instance)
         {
-            if (TeamCrewParent != null) return;
+            if (TeamCrewParent?.gameObject != null) return;
             
             CrewSprite= Sprites.GetSpriteFromResources("ui.crewmate.png",400f);
             BackCrewSprite = Sprites.GetSpriteFromResources("ui.crewmate.png", 370f);
             DR = Sprites.GetSpriteFromResources("ui.double_right.png");
             DL = Sprites.GetSpriteFromResources("ui.double_left.png");
             TeamCrewParent = new GameObject("TeamCrewParent");
-            TeamCrewParent.transform.SetParent(HudManager.Instance.transform);
-            TeamCrewParent.transform.localPosition = new Vector3(0,0,-100f);
-            CrewList = new List<GameObject>();
+            TeamCrewParent.transform.SetParent(__instance.transform);
+            TeamCrewParent.transform.localPosition= new Vector3(0,0,-100f);
+            CrewList = [];
             for (int i = 0; i < 15; i++)
             {
                 GameObject a = new GameObject($"Crew{i}");
@@ -64,7 +66,8 @@ namespace TheSpaceRoles
                 var action = sp.gameObject.AddComponent<PassiveButton>();
 
                 var colider = sp.gameObject.AddComponent<BoxCollider2D>();
-                colider.size = sp.bounds.size;
+                colider.size = new Vector2(0.25f, 0.25f);
+                colider.bounds.size.Set(0.2f, 0.2f, 0.2f);
                 action.OnClick = new();
                 action.OnMouseOut = new UnityEvent();
                 action.OnMouseOver = new UnityEvent();
@@ -74,34 +77,71 @@ namespace TheSpaceRoles
                 action.OnClick.AddListener((System.Action)(() => { onClick.Invoke(); }));
                 action.OnMouseOver.AddListener((System.Action)(() => { sp.color = Palette.AcceptedGreen; }));
                 action.OnMouseOut.AddListener((System.Action)(() => { sp.color = Color.white; }));
-                action.HoverSound = HudManager.Instance.Chat.GetComponentsInChildren<ButtonRolloverHandler>().FirstOrDefault().HoverSound;
+                action.HoverSound = HudManager.Instance.Chat.chatScreen.GetComponentsInChildren<ButtonRolloverHandler>().FirstOrDefault().HoverSound;
                 action.ClickSound = HudManager.Instance.Chat.quickChatMenu.closeButton.ClickSound;
 
-                DoubleLeft.transform.localPosition = new Vector3(x, 2.2f, 0);
-                DoubleRight.sprite = sprite;
+                sp.transform.localPosition = new Vector3(x, 2.4f, 0);
+                sp.sprite = sprite;
             };
-            Double(DoubleLeft, -5.0f, DL, () => { PlayerCount++; SetPlayers(PlayerCount); });
-            Double(DoubleRight,-4.8f,DR, () => { PlayerCount--; SetPlayers(PlayerCount); });
-            
+            Double(DoubleLeft, -5.2f, DL, () => { PlayerCount--; SetPlayers(); });
+            Double(DoubleRight,-4.7f,DR, () => { PlayerCount++; SetPlayers(); });
+
+            Text = new GameObject("ShowCrewType").AddComponent<TextMeshPro>();
+            Text.transform.SetParent(TeamCrewParent.transform);
+            Text.transform.localPosition = new Vector2(-4.95f, 2.7f);
+            Text.m_sharedMaterial = Data.NormalMaterial;
+            Text.fontSizeMax =
+            Text.fontSize = 5f;
+            Text.fontSizeMin = 0.1f;
+            Text.enableAutoSizing = true;
+            //Text.bounds.size.Set(0.6f, 0.3f, 1);
+            Text.alignment = TextAlignmentOptions.Center;
+            Text.autoSizeTextContainer = false;
+            Text.enableAutoSizing = true;
+            Text.enableWordWrapping = false;
+            Text.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            Text.rectTransform.sizeDelta = new Vector2(0.6f, 1f);
+            Text.gameObject.layer = Data.UILayer;
+            Text.outlineWidth = 0.5f;
+
+            SetPlayers();
         }
-        public static void SetPlayers(int players)
+        public static bool isShowing;
+        private static int lastplayercount;
+        [HarmonyPatch(typeof(GameSettingMenu),nameof(GameSettingMenu.Update)),HarmonyPostfix]
+        public static void MenuUpdate()
         {
-            if(PlayerCount < 0) PlayerCount = 15;
-            if (PlayerCount > 15) PlayerCount = 0;
+            if(lastplayercount 
+                != PlayerCount)
+            {
+                lastplayercount = PlayerCount;
+
+                SetPlayers();
+            }
+        }
+        public static void SetPlayers()
+        {
+
+            if (HudManager.Instance.transform.parent.FindChild("PlayerOptionsMenu(Clone)") == null) { Logger.Info("PlayerOptionsMenu(Clone) is not found."); return; }
+
+            if (PlayerCount < 0) PlayerCount = GameOptionsManager.Instance.GameHostOptions.MaxPlayers;
+            if (PlayerCount > GameOptionsManager.Instance.GameHostOptions.MaxPlayers) PlayerCount = 0;
+            Text.text = PlayerCount == 0 ? Translation.GetString("option.teamcrew.nowplayer") : PlayerCount.ToString();
             DoubleLeft.gameObject.SetActive(true);
             DoubleRight.gameObject.SetActive(true);
             CrewList.Do(x => x.SetActive(false));
-            for (int i = 0; i < players; i++)
+            int player_count = PlayerCount==0 ? GameStartManager.Instance.LastPlayerCount : PlayerCount;
+            for (int i = 0; i < player_count; i++)
             {
                 var crew = CrewList[i];
                 crew.SetActive(true);
-                crew.transform.localPosition = new Vector3(i*0.48f -4.4f, 2.5f,0);
+                crew.transform.localPosition = new Vector3(i*0.48f -4.4f, 2.7f,0);
                 var sp = crew.GetComponent<SpriteRenderer>();
                 sp.color = new CrewmateTeam().Color;
             }
             var opt = CustomOptionsHolder.TeamOptions_Count;
             var opr = CustomOptionsHolder.RoleOptions_Count;
-            Dictionary<Teams, System.Collections.Generic.List<Tuple<Roles,CustomOption>>> CRoles = [];
+            Dictionary<Teams, List<Tuple<Roles,CustomOption>>> CRoles = [];
             foreach((var role,var cus) in opr)
             {
                 var c = RoleData.GetCustomRoleFromRole(role);
@@ -149,8 +189,11 @@ namespace TheSpaceRoles
                 backsp.gameObject.SetActive(true);
                 backsp.color = Helper.ColorFromColorcode("#0f0f0f");
             });
-            DoubleLeft.gameObject.SetActive(false);
-            DoubleRight.gameObject.SetActive(false);
+            if (DoubleLeft != null)
+            {
+                DoubleLeft.gameObject.SetActive(false);
+                DoubleRight.gameObject.SetActive(false);
+            }
         }
 
     }
