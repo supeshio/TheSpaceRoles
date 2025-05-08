@@ -41,7 +41,7 @@ namespace TheSpaceRoles
             CrewList = [];
             for (int i = 0; i < 15; i++)
             {
-                GameObject a = new GameObject($"Crew{i}");
+                GameObject a = new($"Crew{i}");
                 a.transform.SetParent(TeamCrewParent.transform);
                 a.layer = Data.UILayer;
                 var sp = a.AddComponent<SpriteRenderer>();
@@ -49,8 +49,8 @@ namespace TheSpaceRoles
                 sp.material = Data.NormalMaterial;
                 GameObject b = GameObject.Instantiate(a);
                 b.transform.SetParent(a.transform);
-                b.transform.localPosition = new Vector3(-0.005f, 0.005f, 1);
-                b.GetComponent<SpriteRenderer>().sprite = BackCrewSprite;
+                b.transform.localPosition = new Vector3(-0.02f, -0.02f, 1);
+                b.GetComponent<SpriteRenderer>().sprite = CrewSprite;
                 CrewList.Add(a);
             }
             Hide();

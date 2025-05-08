@@ -82,8 +82,8 @@ namespace TheSpaceRoles
         public static CustomOption LightOutTime;
         public override void OptionCreate()
         {
-            LightOutSize = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.trickster.lightoutsize",new CustomFloatRange(0.1f,1.0f,0.1f));
-            LightOutTime = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.trickster.lightouttime", new CustomFloatRange(0.5f, 20f, 0.5f));
+            LightOutSize = CustomOption.Create(CustomOption.OptionType.Impostor, "role.trickster.lightoutsize",new CustomFloatRange(0.1f,1.0f,0.1f));
+            LightOutTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.trickster.lightouttime", new CustomFloatRange(0.5f, 20f, 0.5f));
 
             Options = [LightOutSize, LightOutTime];
         }

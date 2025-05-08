@@ -45,7 +45,7 @@ namespace TheSpaceRoles
         public static CustomOption SHasKillButton;
         public override void OptionCreate()
         {
-            SHasKillButton = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.schrodingerscat", false);
+            SHasKillButton = CustomOption.Create(CustomOption.OptionType.Neutral, "role.schrodingerscat.haskillbutton", false);
 
             Options = [SHasKillButton];
         }
