@@ -41,7 +41,7 @@ namespace TheSpaceRoles
                 yield break;
             }
 
-            var response = JsonSerializer.Deserialize<SkinsConfigFile>(www.downloadHandler.text, new JsonSerializerOptions
+            var response = JsonSerializer.Deserialize<SkinsConfigFile>(www.downloadHandler.GetText(), new JsonSerializerOptions
             {
                 AllowTrailingCommas = true
             });
@@ -66,7 +66,7 @@ namespace TheSpaceRoles
                 yield break;
             }
 
-            var response2 = JsonSerializer.Deserialize<repoConfig>(www.downloadHandler.text, new JsonSerializerOptions
+            var response2 = JsonSerializer.Deserialize<repoConfig>(www.downloadHandler.GetText(), new JsonSerializerOptions
             {
                 AllowTrailingCommas = true
             });
@@ -102,7 +102,7 @@ namespace TheSpaceRoles
                     yield break;
                 }
 
-                var res = JsonSerializer.Deserialize<SkinsConfigFile>(www.downloadHandler.text, new JsonSerializerOptions
+                var res = JsonSerializer.Deserialize<SkinsConfigFile>(www.downloadHandler.GetText(), new JsonSerializerOptions
                 {
                     AllowTrailingCommas = true
                 });

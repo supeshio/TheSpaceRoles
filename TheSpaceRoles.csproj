@@ -25,10 +25,10 @@
 	</ItemGroup>
 
 
-
-
     <Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" UseSymboliclinksIfPossible="true" />
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="Pre" UseSymboliclinksIfPossible="true" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="./libs" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="./libs/TSR/BepinEx/plugins" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="Pre" />
     </Target>
 </Project>

@@ -5,25 +5,23 @@ using UnityEngine;
 namespace TheSpaceRoles
 {
     [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
-    public static class StartMenu
+    public static class VersionShowerPatch
     {
 
-        public static void Prefix(VersionShower __instance)
+        static void Prefix(VersionShower __instance)
         {
         }
-        public static void Postfix(VersionShower __instance)
+        static void Postfix(VersionShower __instance)
         {
-            TextMeshPro AddtionalText = new GameObject("text").AddComponent<TextMeshPro>();
-            AddtionalText.text = TSR.c_name_v;
-            AddtionalText.fontSize = 2;
-            AddtionalText.alignment = TextAlignmentOptions.Right;
-            AddtionalText.enableWordWrapping = false;
-            AddtionalText.transform.SetParent(__instance.transform);
-            AddtionalText.transform.localPosition = new Vector3(0, 0, 0);
-            AddtionalText.transform.localScale = Vector3.one;
-
-
-            //spriteredrer.transform.@obj_parent = __instance.transform;
+            TextMeshPro Text = new GameObject("VersionText").AddComponent<TextMeshPro>();
+            Text.text = $"v{TSR.version}";
+            Text.color = Helper.ColorFromColorcode("#87cefa");
+            Text.fontSize = 3;
+            Text.alignment = TextAlignmentOptions.Right;
+            Text.enableWordWrapping = false;
+            Text.transform.SetParent(__instance.transform);
+            Text.transform.localPosition = new Vector3(0, 0.8f, -1f);
+            Text.transform.localScale = Vector3.one;
 
         }
     }
