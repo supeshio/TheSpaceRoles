@@ -34,7 +34,7 @@ public class TSR : BasePlugin
         TheSpaceRoles.Logger.Info($"Plugin {Id} is loaded!");
         //LobbyTimer = Config.Bind("Lobby", "LobbyTimer", true, "ロビータイマーを使うか");
         DebugMode = Config.Bind("Debug", "DebugMode", false, "デバッグモードを使うか");
-        CustomHatManager.LoadHats();
+        //CustomHatManager.LoadHats();
         //Instance = new TSR();
         //Instance = this;
         Harmony.PatchAll();

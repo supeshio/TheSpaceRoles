@@ -81,9 +81,8 @@ namespace TheSpaceRoles
                 typeof(StringNames),
                 typeof(Il2CppReferenceArray<Il2CppSystem.Object>)
             ])]
-            private class ColorStringPatch
+            public static class ColorStringPatch
             {
-                [HarmonyPriority(Priority.Last)]
                 public static bool Prefix(ref string __result, [HarmonyArgument(0)] StringNames name)
                 {
                     if ((int)name >= 50000)

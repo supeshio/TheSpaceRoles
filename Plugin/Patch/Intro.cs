@@ -4,45 +4,101 @@ using UnityEngine;
 
 namespace TheSpaceRoles
 {
-    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowTeam))]
+    [HarmonyPatch]
     public static class IntroShowTeam
     {
-        public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
+        [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
+        class BeginCrewmatePatch
         {
-
-            __instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
+            public static void Prefix(IntroCutscene __instance, [HarmonyArgument(0)] ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
             {
 
-                __instance.BackgroundBar.material.color = TeamColor();
-                __instance.TeamTitle.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
+            }
 
-            })));
+            public static void Postfix(IntroCutscene __instance, [HarmonyArgument(0)] ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
+            {
+                SetupIntroTeam(__instance, ref teamToDisplay);
+            }
+        }
+
+        [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginImpostor))]
+        class BeginImpostorPatch
+        {
+            public static void Prefix(IntroCutscene __instance, [HarmonyArgument(0)]ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
+            {
+
+            }
+
+            public static void Postfix(IntroCutscene __instance, [HarmonyArgument(0)] ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
+            {
+                SetupIntroTeam(__instance, ref yourTeam);
+            }
+        }
+        //public static void Prefix(IntroCutscene __instance ,ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay )
+        //{
+
+        //    //__instance.StartCoroutine(Effects.Lerp(10f, new Action<float>((p) =>
+        //    //{
+
+        //    //    __instance.BackgroundBar.material.color = TeamColor();
+        //    //    __instance.TeamTitle.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
+        //    //})));
+        //}
+        public static void SetupIntroTeam(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay )
+        {
+            __instance.BackgroundBar.material.color = TeamColor();
+            __instance.TeamTitle.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
         }
         public static Color TeamColor() => Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.Color;
 
     }
-    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__41), nameof(IntroCutscene._ShowRole_d__41.MoveNext))]
     public static class IntroShowRole
     {
-        public static void Prefix(IntroCutscene __instance)
-        {
-            __instance.RoleBlurbText.color = RoleColor();
-            __instance.RoleBlurbText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredIntro;
-            __instance.RoleText.color = RoleColor();
-            __instance.RoleText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredRoleName;
-            __instance.YouAreText.color = RoleColor();
-            __instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
-            {
-                __instance.RoleBlurbText.color = RoleColor();
-                __instance.RoleBlurbText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredIntro;
-                __instance.RoleText.color = RoleColor();
-                __instance.RoleText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredRoleName;
-                __instance.YouAreText.color = RoleColor();
-            })));
-        }
-        public static void Postfix(IntroCutscene __instance)
+        public static void Prefix(IntroCutscene._ShowRole_d__41 __instance)
         {
 
+            __instance.__4__this.RoleBlurbText.gameObject.SetActive(false);
+            __instance.__4__this.RoleText.gameObject.SetActive(false);
+            __instance.__4__this.YouAreText.gameObject.SetActive(false);
+        }
+        private static int last;
+        public static void Postfix(IntroCutscene._ShowRole_d__41 __instance)
+        {
+
+            if (__instance.__4__this.GetInstanceID() == last)
+                return;
+            last = __instance.__4__this.GetInstanceID();
+            __instance.__4__this.RoleBlurbText.gameObject.SetActive(true);
+            __instance.__4__this.RoleText.gameObject.SetActive(true);
+            __instance.__4__this.YouAreText.gameObject.SetActive(true);
+
+            __instance.__4__this.RoleBlurbText.color = RoleColor();
+            __instance.__4__this.RoleBlurbText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredIntro;
+            __instance.__4__this.RoleText.color = RoleColor();
+            __instance.__4__this.RoleText.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).ColoredRoleName;
+            __instance.__4__this.YouAreText.color = RoleColor();
+            __instance.__4__this.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
+            {
+            })));
         }
         public static Color RoleColor()
         {

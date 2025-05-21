@@ -19,7 +19,7 @@ namespace TheSpaceRoles
             }
             public static void Postfix(byte callId, MessageReader reader)
             {
-                if (callId >= 60)
+                if (callId >= 80)
                 {
                     Logger.Info($"{(Rpcs)callId}");
                 }
