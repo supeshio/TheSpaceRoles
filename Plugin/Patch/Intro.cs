@@ -10,12 +10,12 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
         class BeginCrewmatePatch
         {
-            public static void Prefix(IntroCutscene __instance, [HarmonyArgument(0)] ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
+            public static void Prefix(IntroCutscene __instance,  ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
             {
 
             }
 
-            public static void Postfix(IntroCutscene __instance, [HarmonyArgument(0)] ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
+            public static void Postfix(IntroCutscene __instance,  ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
             {
                 SetupIntroTeam(__instance, ref teamToDisplay);
             }
@@ -24,12 +24,12 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginImpostor))]
         class BeginImpostorPatch
         {
-            public static void Prefix(IntroCutscene __instance, [HarmonyArgument(0)]ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
+            public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
             {
-
+                //yourTeam = PlayerControl.AllPlayerControls;
             }
 
-            public static void Postfix(IntroCutscene __instance, [HarmonyArgument(0)] ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
+            public static void Postfix(IntroCutscene __instance,  ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
             {
                 SetupIntroTeam(__instance, ref yourTeam);
             }
@@ -44,10 +44,31 @@ namespace TheSpaceRoles
         //    //    __instance.TeamTitle.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
         //    //})));
         //}
-        public static void SetupIntroTeam(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay )
+        public static void SetupIntroTeam(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> team )
         {
-            __instance.BackgroundBar.material.color = TeamColor();
-            __instance.TeamTitle.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
+            Color color=Color.cyan;
+            string TeamTitle=__instance.TeamTitle.text;
+            string ImpostorText= __instance.ImpostorText.text;
+
+
+            color = TeamColor();
+            try
+            {
+
+                TeamTitle = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
+                //TeamTitle = new JackalTeam().ColoredTeamName;
+            }
+            catch (Exception e)
+            {
+                Logger.Fatel(e.Message,e.Source);
+            }
+
+            __instance.BackgroundBar.material.color = __instance.BackgroundBar.material.color = color;
+            //__instance.TeamTitle.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
+            __instance.TeamTitle.text = TeamTitle;
+
+            __instance.ImpostorText.text = ImpostorText;
+            Logger.Info(TeamTitle,"SetupTeamIntro");
         }
         public static Color TeamColor() => Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.Color;
 
