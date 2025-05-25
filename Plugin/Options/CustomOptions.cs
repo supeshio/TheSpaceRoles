@@ -353,7 +353,7 @@ namespace TheSpaceRoles
                 categoryHeaderMasked.Title.text = Title();
                 categoryHeaderMasked.Title.outlineColor = Color.black;
                 categoryHeaderMasked.Title.outlineWidth = 0.1f;
-                categoryHeaderMasked.Title.fontSize = categoryHeaderMasked.Title.fontSizeMax  = 3f;
+                categoryHeaderMasked.Title.fontSize = categoryHeaderMasked.Title.fontSizeMax = 3f;
                 categoryHeaderMasked.Title.fontSizeMin = 1f;
                 categoryHeaderMasked.Title.fontStyle = TMPro.FontStyles.Bold;
                 categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, optionTypeCounter[optionType], -2f);
@@ -571,7 +571,10 @@ namespace TheSpaceRoles
                 string str = reader.ReadString();
                 uint value = reader.ReadUInt32();
                 Logger.Message(str + ":" + options.FirstOrDefault(x => x.nameId == str).Selection().ToString() + "->" + value, "RecieveOption");
-                options.FirstOrDefault(x => x.nameId == str).UpdateSelection((int)value);
+                var k = options.FirstOrDefault(x => x.nameId == str);
+                k.UpdateSelection((int)value);
+                k.onChange?.Invoke();
+
             }
         }
         [HarmonyPatch(typeof(StringOption))]
@@ -580,7 +583,7 @@ namespace TheSpaceRoles
             [HarmonyPatch(nameof(StringOption.Increase)), HarmonyPrefix]
             private static bool Increase(StringOption __instance)
             {
-                CustomOption option = CustomOption.options.First(x => x.ModOption.StringOption == __instance);
+                CustomOption? option = CustomOption.options.First(x => x.ModOption.StringOption == __instance) ?? null;
                 if (option == null) return true;
                 option.UpdateSelection(option.Selection() + 1);
                 //option.ModOption.Increase();
@@ -589,7 +592,7 @@ namespace TheSpaceRoles
             [HarmonyPatch(nameof(StringOption.Decrease)), HarmonyPrefix]
             private static bool Decrease(StringOption __instance)
             {
-                CustomOption option = CustomOption.options.First(x => x.ModOption.StringOption == __instance);
+                CustomOption? option = CustomOption.options.First(x => x.ModOption.StringOption == __instance) ?? null;
                 if (option == null) return true;
                 option.UpdateSelection(option.Selection() - 1);
                 //option.ModOption.Decrease();

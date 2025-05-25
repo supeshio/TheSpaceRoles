@@ -21,10 +21,10 @@ namespace TheSpaceRoles
         {
             if (MorphlingTime != null) return;
 
-            MorphlingTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.morphling.morphlingtime",CustomCoolDownRangefloat(), 12);
+            MorphlingTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.morphling.morphlingtime", CustomCoolDownRangefloat(), 12);
             MorphCoolDown = CustomOption.Create(CustomOption.OptionType.Impostor, "role.morphling.morphcooldown", CustomCoolDownRangefloat(), 12);
 
-            Options = [MorphlingTime,MorphCoolDown];
+            Options = [MorphlingTime, MorphCoolDown];
         }
 
         public override void HudManagerStart(HudManager __instance)
@@ -57,7 +57,7 @@ namespace TheSpaceRoles
                 },
 
                 OnEffectEnd:
-                ()=>
+                () =>
                 {
                     var writer = CustomRPC.SendRpcUseAbility(Role, PlayerControl.PlayerId, 1);
                     writer.Write(target.PlayerId);
@@ -97,11 +97,11 @@ namespace TheSpaceRoles
             MorphButton.actionButton.gameObject.SetActive(false);
             CopyButton.actionButton.gameObject.SetActive(true);
         }
-        public static void RpcMorph(int playerId,int target)
+        public static void RpcMorph(int playerId, int target)
         {
-            
-            Helper.SetCosmetics(GetPlayerById(playerId),GetPlayerById(target));
-            Helper.SetName(GetPlayerById(playerId),GetPlayerById(target));
+
+            Helper.SetCosmetics(GetPlayerById(playerId), GetPlayerById(target));
+            Helper.SetName(GetPlayerById(playerId), GetPlayerById(target));
         }
         public static void RpcMorphEnd(int playerId)
         {

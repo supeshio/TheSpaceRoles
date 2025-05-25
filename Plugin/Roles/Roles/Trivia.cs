@@ -114,47 +114,47 @@ namespace TheSpaceRoles
         {
             if (meeting?.meetingContents == null) return;
             if (remainIdea <= 0 || remainIdeaOfMeeting <= 0) return;
-        this.gameObject = new();
-        gameObject.name = "TargetButton";
-        gameObject.transform.SetParent(meeting.meetingContents.transform);
-        gameObject.transform.localPosition = new(0f, -1.8f, -10);
-        this.renderer = gameObject.AddComponent<SpriteRenderer>();
-        renderer.sprite = Sprites.GetSpriteFromResources("ui.target.png", 800f);
-        renderer.gameObject.layer = HudManager.Instance.gameObject.layer;
-
-        renderer.color = Helper.ColorEditHSV(Color.gray);
-        var box = gameObject.AddComponent<BoxCollider2D>();
-        box.size = renderer.bounds.size;
-        passiveButton = gameObject.AddComponent<PassiveButton>();
-        passiveButton.OnClick = new();
-        passiveButton.OnMouseOut = new();
-        passiveButton.OnMouseOver = new();
-        passiveButton._CachedZ_k__BackingField = 0.1f;
-        passiveButton.CachedZ = 0.1f;
-        passiveButton.Colliders = new[] { box };
-        passiveButton.OnClick.AddListener((System.Action)(() =>
-        {
-            ShowRoles(meeting);
-            GameObject.Destroy(gameObject);
-            try
-            {
-
-                passiveButton.OnClick = new();
-                UnityEngine.Object.Destroy(passiveButton);
-            }
-            catch { }
-
-        }));
-        passiveButton.OnMouseOver.AddListener((System.Action)(() =>
-        {
-            renderer.color = Color.white;
-        }));
-        passiveButton.OnMouseOut.AddListener((System.Action)(() =>
-        {
+            this.gameObject = new();
+            gameObject.name = "TargetButton";
+            gameObject.transform.SetParent(meeting.meetingContents.transform);
+            gameObject.transform.localPosition = new(0f, -1.8f, -10);
+            this.renderer = gameObject.AddComponent<SpriteRenderer>();
+            renderer.sprite = Sprites.GetSpriteFromResources("ui.target.png", 800f);
+            renderer.gameObject.layer = HudManager.Instance.gameObject.layer;
 
             renderer.color = Helper.ColorEditHSV(Color.gray);
-        }));
-    }
+            var box = gameObject.AddComponent<BoxCollider2D>();
+            box.size = renderer.bounds.size;
+            passiveButton = gameObject.AddComponent<PassiveButton>();
+            passiveButton.OnClick = new();
+            passiveButton.OnMouseOut = new();
+            passiveButton.OnMouseOver = new();
+            passiveButton._CachedZ_k__BackingField = 0.1f;
+            passiveButton.CachedZ = 0.1f;
+            passiveButton.Colliders = new[] { box };
+            passiveButton.OnClick.AddListener((System.Action)(() =>
+            {
+                ShowRoles(meeting);
+                GameObject.Destroy(gameObject);
+                try
+                {
+
+                    passiveButton.OnClick = new();
+                    UnityEngine.Object.Destroy(passiveButton);
+                }
+                catch { }
+
+            }));
+            passiveButton.OnMouseOver.AddListener((System.Action)(() =>
+            {
+                renderer.color = Color.white;
+            }));
+            passiveButton.OnMouseOut.AddListener((System.Action)(() =>
+            {
+
+                renderer.color = Helper.ColorEditHSV(Color.gray);
+            }));
+        }
         public static SpriteRenderer crewmateRend;
         public static SpriteRenderer impostorRend;
         public static SpriteRenderer neutralRend;

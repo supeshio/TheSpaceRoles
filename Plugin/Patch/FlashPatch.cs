@@ -1,19 +1,5 @@
-﻿using AmongUs.Data.Legacy;
-using AmongUs.GameOptions;
-using BepInEx.Configuration;
-using Cpp2IL.Core.Extensions;
-using HarmonyLib;
-using Hazel;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
-using static TheSpaceRoles.CustomOption;
-using static TheSpaceRoles.Helper;
-using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
@@ -33,7 +19,8 @@ namespace TheSpaceRoles
             if (HudManager.Instance == null || HudManager.Instance.FullScreen == null) return;
             HudManager.Instance.FullScreen.gameObject.SetActive(true);
             HudManager.Instance.FullScreen.enabled = true;
-            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) => {
+            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) =>
+            {
                 var renderer = HudManager.Instance.FullScreen;
                 //renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01(1 - (p * p / duration * duration)));
 
@@ -63,19 +50,20 @@ namespace TheSpaceRoles
             if (HudManager.Instance == null || HudManager.Instance.FullScreen == null) return;
             HudManager.Instance.FullScreen.gameObject.SetActive(true);
             HudManager.Instance.FullScreen.enabled = true;
-            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) => {
+            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) =>
+            {
                 var renderer = HudManager.Instance.FullScreen;
                 //renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01(1 - (p * p / duration * duration)));
 
                 if (p < 0.5)
                 {
                     if (renderer != null)
-                        renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((p * p )* 3f));
+                        renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((p * p) * 3f));
                 }
                 else
                 {
                     if (renderer != null)
-                        renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((1-(p* p) )*3f));
+                        renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((1 - (p * p)) * 3f));
                 }
                 if (p == 1f && renderer != null) renderer.enabled = false;
             })));
@@ -93,8 +81,9 @@ namespace TheSpaceRoles
             if (HudManager.Instance == null || HudManager.Instance.FullScreen == null) return;
             HudManager.Instance.FullScreen.gameObject.SetActive(true);
             HudManager.Instance.FullScreen.enabled = true;
-            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) => {
-                var renderer = HudManager.Instance.FullScreen; 
+            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) =>
+            {
+                var renderer = HudManager.Instance.FullScreen;
                 renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01(1 - (p * p / duration * duration)));
                 if (p == 1f && renderer != null) renderer.enabled = false;
             })));

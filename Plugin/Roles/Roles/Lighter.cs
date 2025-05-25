@@ -1,5 +1,4 @@
-﻿using Rewired;
-using System;
+﻿using System;
 using UnityEngine;
 using static TheSpaceRoles.Ranges;
 
@@ -21,11 +20,11 @@ namespace TheSpaceRoles
         {
             if (LightCoolDown != null) return;
 
-            LightCoolDown = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightcooldown", range:CustomCoolDownRangefloat(), 12);
-            LightSeconds = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightseconds", new CustomFloatRange(2.5f,120f,2.5f),3);
-            LightSize = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightsize", new CustomFloatRange(0.25f,5f,0.25f),7);
+            LightCoolDown = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightcooldown", range: CustomCoolDownRangefloat(), 12);
+            LightSeconds = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightseconds", new CustomFloatRange(2.5f, 120f, 2.5f), 3);
+            LightSize = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.lighter.lightsize", new CustomFloatRange(0.25f, 5f, 0.25f), 7);
 
-            Options = [LightCoolDown, LightSeconds,LightSize];
+            Options = [LightCoolDown, LightSeconds, LightSize];
         }
         public override void Update()
         {
@@ -33,7 +32,8 @@ namespace TheSpaceRoles
             {
                 DestroyableSingleton<LightSource>.Instance.SetupLightingForGameplay(true, 8.0f, DestroyableSingleton<LightSource>.Instance.transform);
             }
-            else{
+            else
+            {
                 DestroyableSingleton<LightSource>.Instance.flashlightSize = GameOptionsManager.Instance.normalGameHostOptions.CrewLightMod;
 
             }
@@ -46,7 +46,7 @@ namespace TheSpaceRoles
                 , this,
                 ButtonPos.Custom,
                 KeyCode.F,
-                LightCoolDown.GetFloatValue(),()=>0,
+                LightCoolDown.GetFloatValue(), () => 0,
                 Sprites.GetSpriteFromResources("ui.button.lighter_light.png", 100f),
                 () =>
                 {
@@ -56,7 +56,7 @@ namespace TheSpaceRoles
                 {
                     LightButton.Timer = LightButton.maxTimer;
                 },
-                "Light",true,EffectDuration:LightSeconds.GetFloatValue()
+                "Light", true, EffectDuration: LightSeconds.GetFloatValue()
                 );
             Logger.Info("button:Shifter Shifting");
 
@@ -73,7 +73,7 @@ namespace TheSpaceRoles
 
                 float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
 
-                return (ChangeLightReason.LighterLight,shipStatus.MaxLightRadius*LightSize.GetFloatValue()).ToTuple();
+                return (ChangeLightReason.LighterLight, shipStatus.MaxLightRadius * LightSize.GetFloatValue()).ToTuple();
             }
         }
     }

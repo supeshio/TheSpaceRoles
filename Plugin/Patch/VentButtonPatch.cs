@@ -49,7 +49,7 @@ namespace TheSpaceRoles
 
             }
             var usableDistance = __instance.UsableDistance;
-            bool roleCouldUse = Helper.GetCustomRole(pc.PlayerId)?.CanUseVent ?? Helper.GetCustomRole(pc.PlayerId)?.CustomTeam.CanUseVent==true;
+            bool roleCouldUse = Helper.GetCustomRole(pc.PlayerId)?.CanUseVent ?? Helper.GetCustomRole(pc.PlayerId)?.CustomTeam.CanUseVent == true;
             couldUse = (@object.inVent || roleCouldUse) && !pc.Data.IsDead && (@object.CanMove || @object.inVent);
             canUse = couldUse;
             if (canUse)

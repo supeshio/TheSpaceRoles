@@ -1,12 +1,10 @@
 ﻿using AmongUs.GameOptions;
 using HarmonyLib;
-using InnerNet;
 using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using static TheSpaceRoles.Helper;
 
 namespace TheSpaceRoles
 {
@@ -263,7 +261,6 @@ namespace TheSpaceRoles
                 }
                 if (TSR.DebugMode.Value)
                 {
-
                     switch (chats[0])
                     {
 
@@ -310,7 +307,7 @@ namespace TheSpaceRoles
                             addchat += "playerlist : \n";
                             addchat += DataBase.AllPlayerData.Select(x => PlayerControl.AllPlayerControls.ToArray().First(z => z.PlayerId == x.Key).Data.PlayerName + ":" + x.Value.CustomRole.ColoredRoleName).Joinsep("\n");
                             addchat += "assignedRole:" + DataBase.AssignedRoles().Select(x => x.ToString()).Joinsep("\n");
-                            addchat +=$"MyPhysics.Speed {PlayerControl.LocalPlayer.MyPhysics.TrueSpeed} {PlayerControl.LocalPlayer.MyPhysics.SpeedMod}";
+                            addchat += $"MyPhysics.Speed {PlayerControl.LocalPlayer.MyPhysics.TrueSpeed} {PlayerControl.LocalPlayer.MyPhysics.SpeedMod}";
                             break;
                         case "/vent":
                             if (AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) break;
@@ -359,15 +356,17 @@ namespace TheSpaceRoles
 
                             var ph = (string player) =>
                             {
-                                if(player == ":me:")
+                                if (player == ":me:")
                                 {
                                     return PlayerControl.LocalPlayer;
-                                }else if(Int32.TryParse(player, out int k))
+                                }
+                                else if (Int32.TryParse(player, out int k))
                                 {
                                     return Helper.GetPlayerById(k);
-                                }else
+                                }
+                                else
                                 {
-                                    return DataBase.AllPlayerControls().FirstOrDefault(x=>x.Data.PlayerName==player);
+                                    return DataBase.AllPlayerControls().FirstOrDefault(x => x.Data.PlayerName == player);
                                 }
                             };
                             if (chats[2] != null)
@@ -424,14 +423,14 @@ namespace TheSpaceRoles
                             }
                             break;
                         case "/sec":
-                            LateTask.AddTask(Int32.Parse(chats[1]),() => Helper.AddChat(chats[1] + "秒後にメッセージ"));
+                            LateTask.AddTask(Int32.Parse(chats[1]), () => Helper.AddChat(chats[1] + "秒後にメッセージ"));
                             break;
                         case "/db":
                             DeathGhost.ShowGhost(PlayerControl.LocalPlayer.GetTruePosition(), PlayerControl.LocalPlayer.PlayerId);
                             LateTask.AddTask(0, () => Helper.AddChat("ShowGhost"));
                             break;
                         case "/anim":
-                            PlayerControl.LocalPlayer.PlayAnimation(byte.Parse(chats [1]));
+                            PlayerControl.LocalPlayer.PlayAnimation(byte.Parse(chats[1]));
                             break;
                         case "/sr":
                             if (AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay)
@@ -463,13 +462,13 @@ namespace TheSpaceRoles
                                         break;
                                     }
                                 }
-                                
+
                                 addchat += "役職を設定できませんでした。";
                                 break;
                             }
                             break;
                         case "/opt":
-                            if (int.TryParse(chats[1],out int k))
+                            if (int.TryParse(chats[1], out int k))
                             {
                                 OptionTeamCrew.PlayerCount = k;
                                 OptionTeamCrew.SetPlayers();
@@ -480,8 +479,13 @@ namespace TheSpaceRoles
                                 addchat += $"optplayers_set is faild";
 
                             }
-                                break;
-
+                            break;
+                        case "/pp":
+                            foreach(PlayerControl pc in PlayerControl.AllPlayerControls)
+                            {
+                                addchat += pc.CachedPlayerData.PlayerName  +pc.GetRole()+"\n";
+                            }
+                            break;
                     }
                 }
                 if (addchat != "")

@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace TheSpaceRoles
 {
@@ -39,7 +38,7 @@ namespace TheSpaceRoles
             /*|| (Jackal.jackal != null && Jackal.jackal.PlayerId == player.PlayerId && Jackal.hasImpostorVision))*/
 
 
-            return (ChangeLightReason.Impostor,shipStatus.MaxLightRadius * ImpostorLightMod).ToTuple();
+            return (ChangeLightReason.Impostor, shipStatus.MaxLightRadius * ImpostorLightMod).ToTuple();
             //return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
 
         }

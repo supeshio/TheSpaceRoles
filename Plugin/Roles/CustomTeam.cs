@@ -35,7 +35,7 @@ namespace TheSpaceRoles
         public abstract bool WinCheck();
         public virtual bool AdditionalWinCheck(Teams winteam) { return false; }
         public virtual bool WasExiled() { return false; }
-        public virtual Tuple<ChangeLightReason,float> GetLightMod(ShipStatus shipStatus, float num)
+        public virtual Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
             float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
             float CrewLightMod = GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
@@ -46,7 +46,7 @@ namespace TheSpaceRoles
             //return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
 
         }
-        public virtual Tuple<ChangeLightReason, float> GetOtherLight(PlayerControl pc,ShipStatus shipStatus, float num)
+        public virtual Tuple<ChangeLightReason, float> GetOtherLight(PlayerControl pc, ShipStatus shipStatus, float num)
         {
             return Tuple.Create(ChangeLightReason.None, -1f);
         }

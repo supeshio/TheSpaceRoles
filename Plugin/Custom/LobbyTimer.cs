@@ -1,9 +1,5 @@
 using HarmonyLib;
-using Hazel;
 using InnerNet;
-using TMPro;
-using UnityEngine;
-using UnityEngine.TextCore;
 
 namespace TheSpaceRoles;
 

@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ namespace TheSpaceRoles
     {
         public PlayerControl pc;
         public CustomRole CustomRole;
-        public Roles Role=> CustomRole.Role;
+        public Roles Role => CustomRole.Role;
         public Teams Team => CustomRole.Team;
         public CustomTeam CustomTeam => CustomRole.CustomTeam;
         public DeathReason DeathReason;
@@ -25,7 +24,7 @@ namespace TheSpaceRoles
         public string VisorId;
         public string PetId;
         public string NamePlateId;
-        public PlayerData(PlayerControl pc,CustomRole customRole)
+        public PlayerData(PlayerControl pc, CustomRole customRole)
         {
             this.pc = pc;
             this.Name = pc.CachedPlayerData.PlayerName;
@@ -41,7 +40,6 @@ namespace TheSpaceRoles
     }
     public static class DataBase
     {
-
 
         /// <summary>
         /// playerId,RoleMaster型で役職の型を入れれる
@@ -180,6 +178,11 @@ namespace TheSpaceRoles
                 i += team.Value;
             }
             return i;
+        }
+        public static int GamePlayerCount;
+        public static void RoleSelect(int c)
+        {
+            GamePlayerCount = c;
         }
     }
 

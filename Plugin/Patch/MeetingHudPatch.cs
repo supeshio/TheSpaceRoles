@@ -41,7 +41,7 @@ namespace TheSpaceRoles
 
 
                 byte frequentry = list.Where(x => x.VotedForId != 252 && x.VotedForId != 254 && x.VotedForId != 255).Select(x => x.VotedForId).ToList().MaxFrequency(out bool tie);
-                NetworkedPlayerInfo exiled = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(v => !tie && v.PlayerId == list.First(x => x.VoterId == frequentry).VoterId && !v.IsDead)??null;
+                NetworkedPlayerInfo exiled = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(v => !tie && v.PlayerId == list.First(x => x.VoterId == frequentry).VoterId && !v.IsDead) ?? null;
                 //Helper.AddChat($"VoterList:\n{list.Join(x=>$"Voter:{x.VoterId},VotedFor:{x.VotedForId}",",\n")}\n,Exiled:{exiled?.PlayerName},Tie:{tie}");
                 //Helper.AddChat($"Dictionary:\n{list.Where(x => x.VotedForId != 252 && x.VotedForId != 254 && x.VotedForId != 255).Join(x => $"{x.VotedForId}", ",")}");
                 __instance.RpcVotingComplete(list.ToArray(), exiled, tie);

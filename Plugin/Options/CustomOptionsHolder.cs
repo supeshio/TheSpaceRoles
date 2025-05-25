@@ -1,5 +1,4 @@
-﻿using Epic.OnlineServices.Lobby;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static TheSpaceRoles.CustomOption;
@@ -48,11 +47,11 @@ namespace TheSpaceRoles
         {
             HeaderCreate(OptionType.Roles, $"rolemax");
             //teamoptions.Add( Teams.Crewmate,Create(OptionType.Roles, $"team_{Teams.Crewmate.ToString().ToLower()}", GetCountList(), 0,colorcode: "#cccccc"));
-            TeamOptions_Count.Add(Teams.Impostor, Create(OptionType.Roles, $"team_{Teams.Impostor.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc", onChange: () => OptionTeamCrew.SetPlayers()));
-            TeamOptions_Count.Add(Teams.Madmate, Create(OptionType.Roles, $"team_{Teams.Madmate.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc", onChange: () => OptionTeamCrew.SetPlayers()));
-            TeamOptions_Count.Add(Teams.Jackal, Create(OptionType.Roles, $"team_{Teams.Jackal.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc", onChange: () => OptionTeamCrew.SetPlayers()));
-            TeamOptions_Count.Add(Teams.Jester, Create(OptionType.Roles, $"team_{Teams.Jester.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc", onChange: () => OptionTeamCrew.SetPlayers())); 
-            TeamOptions_Count.Add(Teams.Schrodingers, Create(OptionType.Roles, $"team_{Teams.Schrodingers.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc", onChange: () => OptionTeamCrew.SetPlayers()));
+            TeamOptions_Count.Add(Teams.Impostor, Create(OptionType.Roles, $"team_{Teams.Impostor.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc"));
+            TeamOptions_Count.Add(Teams.Madmate, Create(OptionType.Roles, $"team_{Teams.Madmate.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc"));
+            TeamOptions_Count.Add(Teams.Jackal, Create(OptionType.Roles, $"team_{Teams.Jackal.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc"));
+            TeamOptions_Count.Add(Teams.Jester, Create(OptionType.Roles, $"team_{Teams.Jester.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc"));
+            TeamOptions_Count.Add(Teams.Schrodingers, Create(OptionType.Roles, $"team_{Teams.Schrodingers.ToString().ToLower()}", new CustomIntRange(0, 15, 1), 0, colorcode: "#cccccc"));
             foreach (Teams team in RoleData.GetAllTeams())
             {
                 if (Teams.None == team) continue;
@@ -69,7 +68,7 @@ namespace TheSpaceRoles
                         {
 
                             RoleOptions_Count.Add(role.Role, Create(OptionType.Roles, $"role_{role.Role}_count", new CustomIntRange(0, 15, 1), 0,
-                                onChange: ()=>OptionTeamCrew.SetPlayers()));
+                                onChange: () => OptionTeamCrew.SetPlayers()));
                         }
                     }
                     //GetLink.CustomTeamLink.First(x => x.Team.ToString().ToLower() == ids[1].ToLower()).ColoredTeamName;

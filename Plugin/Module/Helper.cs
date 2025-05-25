@@ -1,16 +1,12 @@
 ﻿using BepInEx.Configuration;
-using Cpp2IL.Core.Extensions;
 using Il2CppInterop.Runtime;
-using Rewired;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using static TheSpaceRoles.PlayerData;
 
 namespace TheSpaceRoles
 {
@@ -69,7 +65,7 @@ namespace TheSpaceRoles
         {
             return list.Any(func) ? list.First(func) : default;
         }
-        public static T AnyFirst<T>(this IList<T> list,Func<T,bool> func)
+        public static T AnyFirst<T>(this IList<T> list, Func<T, bool> func)
         {
             return list.Any(func) ? list.First(func) : default;
         }
@@ -77,19 +73,19 @@ namespace TheSpaceRoles
         {
             return list.Any(func) ? list.First(func) : default;
         }
-        public static PlayerControl GetPlayerById(int id) => DataBase.AllPlayerControls().AnyFirst(x => x.PlayerId == id);
+        public static PlayerControl GetPlayerById(int id) => DataBase.AllPlayerControls().First(x => x.PlayerId == id) ?? null;
 
         public static CustomRole GetCustomRole(int playerId)
         {
-            return DataBase.AllPlayerData.AnyFirst(x => x.Value.PlayerId == playerId).Value?.CustomRole??null;
+            return DataBase.AllPlayerData.First(x => x.Value.PlayerId == playerId).Value?.CustomRole ?? null;
         }
         public static CustomRole GetCustomRole(this PlayerControl p)
         {
-            return DataBase.AllPlayerData.AnyFirst(x => x.Value.PlayerId == p.PlayerId).Value?.CustomRole ?? null;
+            return DataBase.AllPlayerData.First(x => x.Value.PlayerId == p.PlayerId).Value?.CustomRole ?? null;
         }
         public static CustomRole GetCustomRole(this Roles role)
         {
-            return RoleData.GetCustomRoles.AnyFirst(x => x.Role == role);
+            return RoleData.GetCustomRoles.First(x => x.Role == role);
         }
         public static bool IsRole(this PlayerControl p, Roles role)
         {

@@ -56,11 +56,11 @@ namespace TheSpaceRoles
                 ButtonPos.Custom,
                 KeyCode.F,
                 SidekickCoolDown.GetFloatValue(),
-                () => CustomButton.SetTarget(notIncludeTeamIds: [Teams.Jackal]),
+                () => CustomButton.SetTarget(notIncludeTeams: [Teams.Jackal]),
                 Sprites.GetSpriteFromResources("ui.button.jackal_sidekick.png", 100),
                 () =>
                 {
-                    var pc = GetPlayerById(CustomButton.SetTarget(notIncludeTeamIds: [Teams.Jackal]));
+                    var pc = GetPlayerById(CustomButton.SetTarget(notIncludeTeams: [Teams.Jackal]));
                     var writer = CustomRPC.SendRpcUseAbility(Role, PlayerControl.PlayerId, 0);
                     writer.Write(pc);
                     writer.EndRpc();

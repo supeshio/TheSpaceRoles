@@ -47,7 +47,7 @@ namespace TheSpaceRoles
 
 
             //return shipStatus.MaxLightRadius * ImpostorLightMod;
-            return (ChangeLightReason.Crewmate,Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod).ToTuple();
+            return (ChangeLightReason.Crewmate, Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod).ToTuple();
 
         }
     }

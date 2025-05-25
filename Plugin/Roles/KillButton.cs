@@ -17,7 +17,7 @@ namespace TheSpaceRoles
                 var player = KillButtonSetTarget(
                     GameOptionsManager.Instance.currentNormalGameOptions.KillDistance,
                     RoleData.GetColorFromTeams(Teams.Impostor), notIncludeTeamIds: [Teams.Impostor]);
-                if (!__instance.isCoolingDown && __instance.gameObject.active&&player!=-1)
+                if (!__instance.isCoolingDown && __instance.gameObject.active && player != -1)
                 {
                     CheckedMurderPlayer.RpcMurder(PlayerControl.LocalPlayer, Helper.GetPlayerById(player), DeathReason.ImpostorKill);
                     __instance.ResetCoolDown();
@@ -39,28 +39,30 @@ namespace TheSpaceRoles
                 RoleData.GetColorFromTeams(Teams.Impostor), notIncludeTeamIds: [Teams.Impostor]);
             if (player != -1)
             {
+                //キル対象が存在する場合
                 __instance.currentTarget = DataBase.AllPlayerControls().First(x => x.PlayerId == player);
 
                 __instance.graphic.material.SetFloat(Desat, 0f);
                 __instance.graphic.color = __instance.buttonLabelText.color = Palette.EnabledColor;
+                //Logger.Info($"killtarget is {player}");
             }
             else
             {
 
+                //キル対象が存在しない場合
                 __instance.currentTarget = null;
                 __instance.graphic.material.SetFloat(Desat, 1f);
                 __instance.graphic.color = __instance.buttonLabelText.color = Palette.DisabledClear;
+                //Logger.Info("killtarget do not exists");
+                return;
 
             }
-            if (player == -1)
-            {
-                return;
-            }
+
             target = Helper.GetPlayerById(player);
             //Logger.Info(string.Join(",", DataBase.AllPlayerRoles.Where(x => x.Value.Any(y => y.Role == Roles.Mini)).Select(x => x.Key).ToArray()));
         }
 
-        public static int KillButtonSetTarget(float targetdistance, Color color, Teams[] notIncludeTeamIds = null, int[] notIncludeIds = null, int target = -1, bool canBeTargetInVentPlayer = false, int[] IncludeIds = null)
+        public static int KillButtonSetTarget(float targetdistance, Color color, Teams[] notIncludeTeamIds = null, int[] notIncludeIds = null, PlayerControl? target = null, bool canBeTargetInVentPlayer = false, int[] IncludeIds = null)
         {
             var nIids = notIncludeIds?.ToList() ?? [];
             nIids.AddRange(DataBase.AllPlayerData.Where(x => x.Value.CustomRole.Role == Roles.NiceMini).Select(x => x.Key).ToList());

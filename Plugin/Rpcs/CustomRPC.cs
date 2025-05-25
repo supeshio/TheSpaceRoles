@@ -1,5 +1,8 @@
-﻿using HarmonyLib;
+﻿using AmongUs.GameOptions;
+using HarmonyLib;
 using Hazel;
+using MonoMod.Cil;
+using System.Linq;
 using UnityEngine;
 
 namespace TheSpaceRoles
@@ -29,6 +32,9 @@ namespace TheSpaceRoles
                         int r1 = reader.ReadInt32();
                         int r2 = reader.ReadInt32();
                         RoleSelect.SetRole(r1, r2);
+                        break;
+                    case Rpcs.SetNativeRole:
+                        RpcReader.SetNativeRole(reader.ReadByte(),(RoleTypes)reader.ReadByte());
                         break;
                     case Rpcs.CheckedMurderPlayer:
                         CheckedMurderPlayer.Murder(reader.ReadInt32(), reader.ReadInt32(), (DeathReason)reader.ReadInt32());
@@ -84,7 +90,7 @@ namespace TheSpaceRoles
                                 Jackal.SidekickPlayer(useAbilityPlayerId, reader.ReadInt32());
                                 break;
                             case Roles.Morphling:
-                                if(useAbilityPlayerId == 0)
+                                if (useAbilityPlayerId == 0)
                                 {
                                     Morphling.RpcMorph(useAbilityPlayerId, reader.ReadInt32());
 
@@ -153,12 +159,22 @@ namespace TheSpaceRoles
         }
 
     }
+    public static class RpcReader {
+        public static void SetNativeRole(int playerId,RoleTypes roleTypes)
+        {
+            DestroyableSingleton<RoleManager>.Instance.SetRole(Helper.GetPlayerById(playerId), roleTypes);
+            Helper.GetPlayerById(playerId).roleAssigned = false;
+            Logger.Info($"{Helper.GetPlayerById(playerId)}(id:{playerId}) -> Roletype:{roleTypes.ToString()}");
+        }
+    }
+
 
     public enum Rpcs : int
     {
         SetRole = 80,
         SetTeam,
         ChangeRole,
+        SetNativeRole,
         DataBaseReset,
         SendRoomTimer,
         GameEnd,

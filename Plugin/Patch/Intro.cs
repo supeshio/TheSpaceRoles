@@ -10,12 +10,12 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
         class BeginCrewmatePatch
         {
-            public static void Prefix(IntroCutscene __instance,  ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
+            public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
             {
 
             }
 
-            public static void Postfix(IntroCutscene __instance,  ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
+            public static void Postfix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
             {
                 SetupIntroTeam(__instance, ref teamToDisplay);
             }
@@ -29,7 +29,7 @@ namespace TheSpaceRoles
                 //yourTeam = PlayerControl.AllPlayerControls;
             }
 
-            public static void Postfix(IntroCutscene __instance,  ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
+            public static void Postfix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
             {
                 SetupIntroTeam(__instance, ref yourTeam);
             }
@@ -44,11 +44,11 @@ namespace TheSpaceRoles
         //    //    __instance.TeamTitle.text = Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.ColoredTeamName;
         //    //})));
         //}
-        public static void SetupIntroTeam(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> team )
+        public static void SetupIntroTeam(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> team)
         {
-            Color color=Color.cyan;
-            string TeamTitle=__instance.TeamTitle.text;
-            string ImpostorText= __instance.ImpostorText.text;
+            Color color = Color.cyan;
+            string TeamTitle = __instance.TeamTitle.text;
+            string ImpostorText = __instance.ImpostorText.text;
 
 
             color = TeamColor();
@@ -60,7 +60,7 @@ namespace TheSpaceRoles
             }
             catch (Exception e)
             {
-                Logger.Fatel(e.Message,e.Source);
+                Logger.Fatal(e.Message, e.Source);
             }
 
             __instance.BackgroundBar.material.color = __instance.BackgroundBar.material.color = color;
@@ -68,9 +68,26 @@ namespace TheSpaceRoles
             __instance.TeamTitle.text = TeamTitle;
 
             __instance.ImpostorText.text = ImpostorText;
-            Logger.Info(TeamTitle,"SetupTeamIntro");
+            Logger.Info(TeamTitle, "SetupTeamIntro");
         }
-        public static Color TeamColor() => Helper.GetCustomRole(PlayerControl.LocalPlayer).CustomTeam.Color;
+        public static Color TeamColor()
+        {
+            var local = PlayerControl.LocalPlayer;
+            if (local == null)
+            {
+                Logger.Fatal("LocalPlayer is null", "TeamColor");
+                return Color.white;
+            }
+
+            var role = Helper.GetCustomRole(local);
+            if (role?.CustomTeam == null)
+            {
+                Logger.Fatal("CustomRole or CustomTeam is null", "TeamColor");
+                return Color.white;
+            }
+
+            return role.CustomTeam.Color;
+        }
 
     }
 
@@ -123,9 +140,23 @@ namespace TheSpaceRoles
         }
         public static Color RoleColor()
         {
-            return Helper.GetCustomRole(PlayerControl.LocalPlayer).Color;
+            var local = PlayerControl.LocalPlayer;
+            if (local == null)
+            {
+                Logger.Fatal("LocalPlayer is null", "RoleColor");
+                return Color.white;
+            }
 
+            var role = Helper.GetCustomRole(local);
+            if (role == null)
+            {
+                Logger.Fatal("CustomRole is null", "RoleColor");
+                return Color.white;
+            }
+
+            return role.Color;
         }
+
 
     }
 }

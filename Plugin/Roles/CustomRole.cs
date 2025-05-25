@@ -1,9 +1,6 @@
-﻿using AmongUs.GameOptions;
-using Epic.OnlineServices.Lobby;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using UnityEngine;
 using static TheSpaceRoles.Helper;
@@ -40,7 +37,7 @@ namespace TheSpaceRoles
         public bool? LightDirectional = null;
         public bool canAssign = true;
         public List<CustomOption> Options = [];
-        public float speedMod=1;
+        public float speedMod = 1;
         public void Init()
         {
             OptionCreate();
@@ -125,14 +122,14 @@ namespace TheSpaceRoles
         public virtual bool BeMurdered(PlayerControl target) { return false; }
         public virtual void Update() { }
         public virtual void APUpdate() { }
-        public virtual void Murder(PlayerControl pc,PlayerControl target) { }
-        public virtual Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus,float num)
+        public virtual void Murder(PlayerControl pc, PlayerControl target) { }
+        public virtual Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
-            return CustomTeam.GetLightMod(shipStatus,num);
+            return CustomTeam.GetLightMod(shipStatus, num);
         }
-        public virtual Tuple<ChangeLightReason,float> GetOtherLight(PlayerControl pc,ShipStatus shipStatus, float num)
+        public virtual Tuple<ChangeLightReason, float> GetOtherLight(PlayerControl pc, ShipStatus shipStatus, float num)
         {
-            return CustomTeam.GetOtherLight(pc,shipStatus, num);
+            return CustomTeam.GetOtherLight(pc, shipStatus, num);
 
         }
         public string ColoredRoleName => ColoredText(Color, Translation.GetString("role." + Role.ToString() + ".name"));
@@ -224,13 +221,13 @@ namespace TheSpaceRoles
                 Logger.Info(__instance.PlayerId + "_" + __instance.Data.PlayerName);
             }
         }
-        [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.MurderPlayer))]
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
         private static class MurderPlayerPatch
         {
-            static void Postfix(PlayerControl __instance,[HarmonyArgument(0)]PlayerControl target)
+            static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
             {
-                Logger.Info($"{__instance.Data.PlayerName} - {target.Data.PlayerName}","Murder");
-                DataBase.AllPlayerData.Do(x=>x.Value.CustomRole.Murder(__instance, target));
+                Logger.Info($"{__instance.Data.PlayerName} - {target.Data.PlayerName}", "Murder");
+                DataBase.AllPlayerData.Do(x => x.Value.CustomRole.Murder(__instance, target));
             }
         }
     }
@@ -273,14 +270,14 @@ namespace TheSpaceRoles
             DataBase.AllPlayerData.Do(y => y.Value.CustomRole.APUpdate());
             DataBase.AllPlayerData.Do(y => y.Value.CustomRole.VentUpdate());
         }
-        [HarmonyPatch(typeof(PlayerPhysics),nameof(PlayerPhysics.FixedUpdate)),HarmonyPostfix]
+        [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.FixedUpdate)), HarmonyPostfix]
         public static void PPUp(PlayerPhysics __instance)
         {
-            if (!DataBase.AllPlayerData.ContainsKey(__instance.myPlayer.PlayerId)||DataBase.AllPlayerData[__instance.myPlayer.PlayerId]?.CustomRole?.PlayerControl?.MyPhysics?.body?.velocity == null)
+            if (!DataBase.AllPlayerData.ContainsKey(__instance.myPlayer.PlayerId) || DataBase.AllPlayerData[__instance.myPlayer.PlayerId]?.CustomRole?.PlayerControl?.MyPhysics?.body?.velocity == null)
             {
                 return;
             }
-            DataBase.AllPlayerData[__instance.myPlayer.PlayerId].CustomRole.PlayerControl.MyPhysics.body.velocity *= DataBase.AllPlayerData[__instance.myPlayer.PlayerId]?.CustomRole?.speedMod?? 1;
+            DataBase.AllPlayerData[__instance.myPlayer.PlayerId].CustomRole.PlayerControl.MyPhysics.body.velocity *= DataBase.AllPlayerData[__instance.myPlayer.PlayerId]?.CustomRole?.speedMod ?? 1;
         }
         [HarmonyPatch(typeof(ExileController))]
         [HarmonyPatch(nameof(ExileController.ReEnableGameplay)), HarmonyPostfix]
@@ -299,83 +296,7 @@ namespace TheSpaceRoles
             Logger.Message("shipstatus", "start");
 
         }
-        [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.Show))]
-        private static class MapShow
-        {
-            static bool Prefix(MapBehaviour __instance, [HarmonyArgument(0)] MapOptions mapOptions)
-            {
-                var map = __instance;
-                bool re = false;
-                var f = Helper.GetCustomRole(PlayerControl.LocalPlayer);
-
-
-                f.ShowMap(ref map);
-                if (mapOptions.Mode == MapOptions.Modes.Normal)
-                {
-                    return true;
-                }
-
-
-                if (mapOptions.Mode == MapOptions.Modes.CountOverlay)
-                {
-                    //re = true;
-                    //map.ShowCountOverlay(false, true, true);
-                    return false;
-                }
-
-
-
-                if ((bool)f.ImpostorMap)
-                {
-                    map.ShowSabotageMap();
-                    re = true;
-                    if ((bool)f.AdminMap)
-                    {
-
-                        map.countOverlay.enabled = true;
-                        map.countOverlay.gameObject.SetActive(true);
-                        map.countOverlay.SetOptions((bool)f.ShowingMapAllowedToMove, (bool)f.ShowingAdminIncludeDeadBodies);
-                        map.countOverlayAllowsMovement = true;
-                        map.taskOverlay.Hide();
-                        map.countOverlay.showLivePlayerPosition = true;
-                        map.countOverlay.transform.SetLocalZ(-10f);
-                        //map.infectedOverlay.allButtons.Do(x => x.transform.localPosition += new Vector3(0, -0.1f, 0));
-                        map.infectedOverlay.allButtons.Do(x => x.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f));
-                        map.ColorControl.baseColor = Palette.ImpostorRed;
-                        map.countOverlay.BackgroundColor.baseColor = Palette.ImpostorRed;
-                    }
-                }
-                else
-                {
-                    map.ShowNormalMap();
-                    re = true;
-                    if ((bool)f.AdminMap)
-                    {
-                        map.countOverlay.BackgroundColor.baseColor = invisible;
-                        map.countOverlay.enabled = true;
-                        map.countOverlayAllowsMovement = (bool)f.ShowingMapAllowedToMove;
-                        map.countOverlay.includeDeadBodies = true;
-                        map.countOverlay.showLivePlayerPosition = true;
-                    }
-                }
-                if (f.MapBackColor != null)
-                {
-                    map.ColorControl.baseColor = (Color)f.MapBackColor;
-                    map.countOverlay.BackgroundColor.baseColor = (Color)f.MapBackColor;
-                }
-                //if ((bool)f.AdminMap)
-                //{
-                //    map.ShowCountOverlay((bool)f.ShowingMapAllowedToMove, true, (bool)f.ShowingMapAllowedToMove);
-                //    map.countOverlay.enabled = true;
-                //    map.countOverlayAllowsMovement = (bool)f.ShowingMapAllowedToMove;
-                //    map.countOverlay.includeDeadBodies = true;
-                //    map.countOverlay.showLivePlayerPosition = true;
-
-                //}
-                return !re;
-
-            }
-        }
+        
     }
 
 }

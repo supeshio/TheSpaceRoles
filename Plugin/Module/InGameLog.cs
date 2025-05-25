@@ -1,26 +1,13 @@
-﻿using AmongUs.Data.Legacy;
-using AmongUs.GameOptions;
-using BepInEx.Configuration;
-using Cpp2IL.Core.Extensions;
-using HarmonyLib;
-using Hazel;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using static TheSpaceRoles.CustomOption;
 using static TheSpaceRoles.Helper;
-using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
     public static class InGameLog
     {
         public static ActionButton LogButton;
-        public static List<Log> logs =[];
+        public static List<Log> logs = [];
         /// <summary>
         /// InGameLogType
         /// </summary>
@@ -29,13 +16,13 @@ namespace TheSpaceRoles
             string message = "";
             string type = "";
             Color color = ColorFromColorcode("#afeeee");
-            public Log(string message,string type,Color color)
+            public Log(string message, string type, Color color)
             {
                 this.message = message;
                 this.type = type;
                 this.color = color;
             }
-            
+
         }
         public static void CreateLogButton()
         {
@@ -47,11 +34,11 @@ namespace TheSpaceRoles
         }
         public static void CreateLogMaster(string message, string type, Color color)
         {
-            _ = new Log(message,type,color);
+            _ = new Log(message, type, color);
         }
         public static void CreateLogSystem(string message)
         {
-            CreateLogMaster(message,"System",ColorFromColorcode("#a9a9a9"));
+            CreateLogMaster(message, "System", ColorFromColorcode("#a9a9a9"));
         }
         public static void CreateLogAbility(string message)
         {

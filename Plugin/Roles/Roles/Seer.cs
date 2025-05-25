@@ -1,10 +1,4 @@
-﻿using System;
-using UnityEngine;
-using AmongUs.GameOptions;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
-using static TheSpaceRoles.Ranges;
+﻿using System.Linq;
 
 namespace TheSpaceRoles
 {
@@ -21,15 +15,15 @@ namespace TheSpaceRoles
         {
             if (CanSeeSoul != null) return;
 
-            CanSeeSoul = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.seer.canseesoul",true);
+            CanSeeSoul = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.seer.canseesoul", true);
 
             Options = [CanSeeSoul];
         }
         public override void Murder(PlayerControl pc, PlayerControl target)
         {
-            if(target!=PlayerControl.LocalPlayer&&!PlayerControl.LocalPlayer.CachedPlayerData.IsDead)
-            FlashPatch.ShowFlash(Helper.ColorFromColorcode("#00ff00"));
-            
+            if (target != PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.CachedPlayerData.IsDead)
+                FlashPatch.ShowFlash(Helper.ColorFromColorcode("#00ff00"));
+
         }
         public override void AfterMeetingEnd()
         {

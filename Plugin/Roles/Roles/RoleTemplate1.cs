@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using static TheSpaceRoles.Helper;
-using static TheSpaceRoles.CustomButton;
-using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
@@ -18,9 +16,9 @@ namespace TheSpaceRoles
         {
 
             TemplateButton = new CustomButton(
-                hudManager:__instance,
-                name:"TemplateButton", this,
-                buttonPos:ButtonPos.Custom,
+                hudManager: __instance,
+                name: "TemplateButton", this,
+                buttonPos: ButtonPos.Custom,
                 keycode: KeyCode.F,
                 maxTimer: 30,
                 canUse: () => CustomButton.SetTarget()/*-1以外なら成功判定*/,
@@ -36,15 +34,15 @@ namespace TheSpaceRoles
                 {
                     TemplateButton.Timer = TemplateButton.maxTimer;
                 },
-                buttonText:"Shift",
+                buttonText: "Shift",
                 HasEffect: false,
                 canEffectCancel: false,
                 EffectDuration: 30,
-                OnEffectStart:() => { },
+                OnEffectStart: () => { },
                 OnEffectUpdate: () => { },
-                OnEffectEnd:() => { },
+                OnEffectEnd: () => { },
                 remainUses: -1);
-            
+
         }
         public static CustomOption Option1;
         public override void OptionCreate()
@@ -53,6 +51,6 @@ namespace TheSpaceRoles
 
             Options = [Option1];
         }
-         
+
     }
 }

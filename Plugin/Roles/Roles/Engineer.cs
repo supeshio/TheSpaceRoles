@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static TheSpaceRoles.Helper;
 using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
@@ -8,7 +7,7 @@ namespace TheSpaceRoles
     {
         public Engineer()
         {
-            Team= Teams.Crewmate;
+            Team = Teams.Crewmate;
             Role = Roles.Engineer;
             Color = Helper.ColorFromColorcode("#0028f5");
             CanUseVent = true;
@@ -18,7 +17,7 @@ namespace TheSpaceRoles
         public static CustomOption RepairTimes;
         public override void OptionCreate()
         {
-            RepairTimes = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.engineer.repairtimes", new CustomIntRange(0,20),1);
+            RepairTimes = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.engineer.repairtimes", new CustomIntRange(0, 20), 1);
 
             Options = [RepairTimes];
         }

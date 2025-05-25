@@ -23,7 +23,7 @@ namespace TheSpaceRoles
         {
             if (SwapCount != null) return;
 
-            SwapCount = CustomOption.Create(CustomOption.OptionType.Impostor,"role.evilswapper.swapcount", new CustomIntRange(1, 15, 1), 2);
+            SwapCount = CustomOption.Create(CustomOption.OptionType.Impostor, "role.evilswapper.swapcount", new CustomIntRange(1, 15, 1), 2);
 
             Options = [SwapCount];
         }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using static TheSpaceRoles.Helper;
 namespace TheSpaceRoles
 {
@@ -37,7 +35,7 @@ namespace TheSpaceRoles
                     ShiftButton.Timer = ShiftButton.maxTimer;
                 },
                 "Shift",
-                false,remainUses:1);
+                false, remainUses: 1);
             Logger.Info("button:Shifter Shifting");
 
         }
@@ -49,11 +47,11 @@ namespace TheSpaceRoles
         {
             if (target.GetCustomRole().Team == Teams.Crewmate)
             {
-                RoleSelect.ChangeMainRole(PlayerId,(int)target.GetCustomRole().Role);
-                RoleSelect.ChangeMainRole(target.PlayerId,(int)Roles.Crewmate);
-                
+                RoleSelect.ChangeMainRole(PlayerId, (int)target.GetCustomRole().Role);
+                RoleSelect.ChangeMainRole(target.PlayerId, (int)Roles.Crewmate);
+
             }
-            
+
         }
     }
 }

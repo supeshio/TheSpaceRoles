@@ -1,21 +1,8 @@
-﻿using AmongUs.Data.Legacy;
-using AmongUs.GameOptions;
-using BepInEx.Configuration;
-using Cpp2IL.Core.Extensions;
-using HarmonyLib;
-using Hazel;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using MonoMod.Cil;
+﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using static HarmonyLib.InlineSignature;
-using static TheSpaceRoles.CustomOption;
-using static TheSpaceRoles.Helper;
-using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
@@ -27,7 +14,7 @@ namespace TheSpaceRoles
         public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] NetworkedPlayerInfo player)
         {
             LightmapSettings.lightmapsMode = LightmapsMode.NonDirectional;
-            if (Helper.GetPlayerById(player.PlayerId)?.GetCustomRole() == null)
+            if (Helper.GetPlayerById(player.PlayerId) == null)
             {
                 return true;
             }
@@ -41,7 +28,7 @@ namespace TheSpaceRoles
 
             float num = (float)switchSystem.Value / 255f;
             PlayerControl pc = Helper.GetPlayerById(player.PlayerId) ?? null;
-            
+
 
             if (player == null || player.IsDead) // IsDead
                 __result = __instance.MaxLightRadius;
@@ -61,20 +48,20 @@ namespace TheSpaceRoles
                         lights.Add(k.Item1, k.Item2);
                     }
                 }
-                Tuple<ChangeLightReason,float> light;
+                Tuple<ChangeLightReason, float> light;
                 try
                 {
 
-                   light = pc.GetCustomRole().GetLightMod(__instance, num);
+                    light = pc.GetCustomRole().GetLightMod(__instance, num);
                 }
                 catch
                 {
 
                     light = Tuple.Create(ChangeLightReason.None, -1f);
                 }
-                lights.Add(light.Item1,light.Item2);
+                lights.Add(light.Item1, light.Item2);
 
-                __result = lights.MaxBy(x=>x.Key).Value;
+                __result = lights.MaxBy(x => x.Key).Value;
             }
 
             return false;

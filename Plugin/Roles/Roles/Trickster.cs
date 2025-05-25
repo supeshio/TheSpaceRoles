@@ -1,8 +1,6 @@
-﻿using Il2CppSystem.Runtime.Remoting.Messaging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static TheSpaceRoles.CustomButton;
 using static TheSpaceRoles.Helper;
 using static TheSpaceRoles.Ranges;
 
@@ -36,7 +34,7 @@ namespace TheSpaceRoles
                     writer.Write(vec2.x);
                     writer.Write(vec2.y);
                     writer.EndRpc();
-    
+
                 },
                 () =>
                 {
@@ -57,7 +55,7 @@ namespace TheSpaceRoles
                 ButtonPos.Custom/*ボタンタイプ*/,
                 KeyCode.F/*ボタンキー*/,
                 30/*クールダウン*/,
-                () =>0/*-1以外なら成功判定*/,
+                () => 0/*-1以外なら成功判定*/,
                 Sprites.GetSpriteFromResources("ui.button.evilhacker_hack.png", 100f),//トリックスター､停電
                 () =>
                 {
@@ -82,15 +80,15 @@ namespace TheSpaceRoles
         public static CustomOption LightOutTime;
         public override void OptionCreate()
         {
-            LightOutSize = CustomOption.Create(CustomOption.OptionType.Impostor, "role.trickster.lightoutsize",new CustomFloatRange(0.1f,1.0f,0.1f));
+            LightOutSize = CustomOption.Create(CustomOption.OptionType.Impostor, "role.trickster.lightoutsize", new CustomFloatRange(0.1f, 1.0f, 0.1f));
             LightOutTime = CustomOption.Create(CustomOption.OptionType.Impostor, "role.trickster.lightouttime", new CustomFloatRange(0.5f, 20f, 0.5f));
 
             Options = [LightOutSize, LightOutTime];
         }
 
-        public Dictionary<GameObject,bool> Boxes = new();
+        public Dictionary<GameObject, bool> Boxes = new();
         public static GameObject BoxParent;
-        public Vector2 CreateBox(bool active =false)
+        public Vector2 CreateBox(bool active = false)
         {
             if (BoxParent?.layer == null)
             {
@@ -98,19 +96,19 @@ namespace TheSpaceRoles
                 BoxParent.transform.SetParent(ShipStatus.Instance.transform, false);
             }
 
-            GameObject box = new("Box" + (Boxes.Count+1));
+            GameObject box = new("Box" + (Boxes.Count + 1));
             box.transform.SetParent(BoxParent.transform);
             var sp = box.AddComponent<SpriteRenderer>();
-            sp.sprite = Sprites.GetSpriteFromResources("object.box.png",256f);
-            sp.color = Helper.ColorEditHSV(Color.white, a:active? 1f:0.5f);
-            Boxes.Add(box,active);
+            sp.sprite = Sprites.GetSpriteFromResources("object.box.png", 256f);
+            sp.color = Helper.ColorEditHSV(Color.white, a: active ? 1f : 0.5f);
+            Boxes.Add(box, active);
             var vec2 = PlayerControl.GetTruePosition();
-            box.transform.position = new(vec2.x,vec2.y,1);
+            box.transform.position = new(vec2.x, vec2.y, 1);
             box.layer = 11;
             return vec2;
         }
         public static Dictionary<GameObject, bool> OtherBoxes = new();
-        public static Vector2 CreateOtherBox(Vector2 vec2,bool active = false)
+        public static Vector2 CreateOtherBox(Vector2 vec2, bool active = false)
         {
             if (BoxParent?.layer == null)
             {
@@ -135,7 +133,7 @@ namespace TheSpaceRoles
             {
                 if (!item.Value)
                 {
-                    Boxes[item.Key]= true;
+                    Boxes[item.Key] = true;
 
                     var pc = GetPlayerById(CustomButton.SetTarget());
                     active = true;
@@ -175,7 +173,8 @@ namespace TheSpaceRoles
         public static void TrickLightDown(PlayerControl pc)
         {
             Trickster f = (Trickster)pc.GetCustomRole();
-            LateTask.AddRepeatedTask(0, 0.3f, (sec) => {
+            LateTask.AddRepeatedTask(0, 0.3f, (sec) =>
+            {
                 if (sec == 0)
                 {
                     return;
@@ -188,12 +187,13 @@ namespace TheSpaceRoles
 
             });
 
-            LateTask.AddRepeatedTask(LightOutTime.GetFloatValue(), 0.3f, (sec) => {
+            LateTask.AddRepeatedTask(LightOutTime.GetFloatValue(), 0.3f, (sec) =>
+            {
                 if (sec == 0)
                 {
                     return;
                 }
-                f.Light = 1- (0.3f / sec);
+                f.Light = 1 - (0.3f / sec);
                 if (sec >= 0.3f)
                 {
                     f.Light = 1f;
@@ -205,7 +205,7 @@ namespace TheSpaceRoles
 
         public override Tuple<ChangeLightReason, float> GetOtherLight(PlayerControl pc, ShipStatus shipStatus, float num)
         {
-            if(Light == 1f)
+            if (Light == 1f)
             {
                 return Tuple.Create(ChangeLightReason.None, -1f);
             }

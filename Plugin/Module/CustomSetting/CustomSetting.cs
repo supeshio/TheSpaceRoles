@@ -1,9 +1,5 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -44,7 +40,8 @@ namespace TheSpaceRoles
 
         public class SettingOption : Setting
         {
-            public SettingOption(string SettingName, string SkipSettingName, string ParentSettingName, Action<bool> Showing) {
+            public SettingOption(string SettingName, string SkipSettingName, string ParentSettingName, Action<bool> Showing)
+            {
                 this.SettingName = SettingName;
                 this.SkipSettingName = SkipSettingName;
                 this.ParentSettingName = ParentSettingName;
@@ -53,7 +50,7 @@ namespace TheSpaceRoles
 
                 this.Text = SettingObj.AddComponent<TextMeshPro>();
                 this.Arrow = SettingObj.AddComponent<SpriteRenderer>();
-                
+
 
             }
         }
@@ -63,7 +60,7 @@ namespace TheSpaceRoles
         }
 
 
-        [HarmonyPatch(typeof(HudManager),nameof(HudManager.Start)),HarmonyPostfix]
+        [HarmonyPatch(typeof(HudManager), nameof(HudManager.Start)), HarmonyPostfix]
         public static void Create(HudManager __instance)
         {
             SettingBG = new GameObject("SettingBG")
@@ -82,7 +79,7 @@ namespace TheSpaceRoles
             //backsp.sprite.border.Set(100, 100, 100, 100);
             backsp.size = new Vector2(9f, 5f);
             backsp.gameObject.AddComponent<BoxCollider2D>().size = backsp.size;
-            var backspbutton =backsp.gameObject.AddComponent<PassiveButton>();
+            var backspbutton = backsp.gameObject.AddComponent<PassiveButton>();
             backspbutton.Colliders = new[] { backsp.gameObject.GetComponent<BoxCollider2D>() };
             //backsp.color = Helper.ColorFromColorcode("#2f2f2fcf");
             SettingBG.SetActive(false);
@@ -104,19 +101,19 @@ namespace TheSpaceRoles
         {
 
 
-                if (Input.GetKeyDown(KeyCode.H))
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                Logger.Message("H");
+                if (active)
                 {
-                    Logger.Message("H");
-                    if (active)
-                    {
-                        Hide();
-                    }
-                    else
-                    {
-
-                        Show();
-                    }
+                    Hide();
                 }
+                else
+                {
+
+                    Show();
+                }
+            }
 
         }
         public static bool active = false;
@@ -130,8 +127,8 @@ namespace TheSpaceRoles
         {
             active = false;
             SettingBG.SetActive(false);
-            BGCol.enabled =false;
+            BGCol.enabled = false;
         }
-    
+
     }
 }

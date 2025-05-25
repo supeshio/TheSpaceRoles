@@ -1,9 +1,6 @@
-﻿using System;
-using UnityEngine;
-using AmongUs.GameOptions;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
+using UnityEngine;
 using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
@@ -22,22 +19,25 @@ namespace TheSpaceRoles
         {
             if (ReportSeconds != null) return;
 
-            ReportSeconds = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.bait.reportseconds", new CustomIntRange(1, 15),0);
+            ReportSeconds = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.bait.reportseconds", new CustomIntRange(1, 15), 0);
             CanSeePlayersinVent = CustomOption.Create(CustomOption.OptionType.Crewmate, "role.bait.canseeplayerinvent", true);
 
-            Options = [ReportSeconds,CanSeePlayersinVent];
+            Options = [ReportSeconds, CanSeePlayersinVent];
         }
         public override void Murder(PlayerControl pc, PlayerControl target)
         {
             if (target.PlayerId == PlayerId)
             {
-                LateTask.AddTask(ReportSeconds.GetIntValue(),()=> { pc.CmdReportDeadBody(target.Data);
-                Logger.Info("BaitReport "+ $"{pc.PlayerId} - {target.PlayerId}", "Bait"); });
+                LateTask.AddTask(ReportSeconds.GetIntValue(), () =>
+                {
+                    pc.CmdReportDeadBody(target.Data);
+                    Logger.Info("BaitReport " + $"{pc.PlayerId} - {target.PlayerId}", "Bait");
+                });
             }
         }
         public override void Update()
         {
-            if (PlayerControl.LocalPlayer.PlayerId == PlayerId&&CanSeePlayersinVent.GetBoolValue())
+            if (PlayerControl.LocalPlayer.PlayerId == PlayerId && CanSeePlayersinVent.GetBoolValue())
             {
                 // Bait Vents (From TOR系)
                 if (ShipStatus.Instance?.AllVents != null)

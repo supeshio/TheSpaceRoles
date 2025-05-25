@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace TheSpaceRoles
     //[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.OnEnable))]
     public static class RoleTextManager
     {
-        public static Dictionary<int,TextMeshPro> RoleTexts=[];
+        public static Dictionary<int, TextMeshPro> RoleTexts = [];
         public static void Postfix(PlayerControl __instance)
         {
 
@@ -38,7 +37,7 @@ namespace TheSpaceRoles
             RoleText.m_sharedMaterial = d.m_sharedMaterial;
             RoleText.fontStyle = d.fontStyle;
             RoleText.fontSizeMin = RoleText.fontSizeMax = RoleText.fontSize = 2f;
-            if(RoleTexts.ContainsKey(__instance.PlayerId))
+            if (RoleTexts.ContainsKey(__instance.PlayerId))
             {
                 RoleTexts[__instance.PlayerId] = RoleText;
             }
@@ -68,29 +67,29 @@ namespace TheSpaceRoles
 
                 }
             }
-            catch {}
+            catch { }
 
         }
-        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate)),HarmonyPostfix]
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate)), HarmonyPostfix]
         public static void Update(PlayerControl __instance)
         {
             PlayerControl pc = __instance;
-                if (RoleTextManager.RoleTexts== null)return;
-                if (!RoleTextManager.RoleTexts.ContainsKey(pc.PlayerId)) return;
-                if (PlayerControl.LocalPlayer?.PlayerId == null) return;
-                try
+            if (RoleTextManager.RoleTexts == null) return;
+            if (!RoleTextManager.RoleTexts.ContainsKey(pc.PlayerId)) return;
+            if (PlayerControl.LocalPlayer?.PlayerId == null) return;
+            try
+            {
+                if (RoleTextManager.RoleTexts?[pc.PlayerId] != null && Helper.GetCustomRole(pc.PlayerId) != null)
                 {
-                    if (RoleTextManager.RoleTexts?[pc.PlayerId] != null&& Helper.GetCustomRole(pc.PlayerId) != null)
-                    {
-                        if (PlayerControl.LocalPlayer.PlayerId != pc.PlayerId && AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) return;
-                        RoleTextManager.RoleTexts[pc.PlayerId].text = Helper.GetCustomRole(pc.PlayerId).ColoredRoleName ?? "";
+                    if (PlayerControl.LocalPlayer.PlayerId != pc.PlayerId && AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay) return;
+                    RoleTextManager.RoleTexts[pc.PlayerId].text = Helper.GetCustomRole(pc.PlayerId).ColoredRoleName ?? "";
 
 
 
-                    }
                 }
-                catch { }
-            
+            }
+            catch { }
+
         }
     }
 }

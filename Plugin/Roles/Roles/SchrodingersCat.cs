@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using static TheSpaceRoles.CustomButton;
-using static TheSpaceRoles.Helper;
-using static TheSpaceRoles.Ranges;
 
 namespace TheSpaceRoles
 {
@@ -13,7 +10,7 @@ namespace TheSpaceRoles
             Role = Roles.SchrodingersCat;
             Color = Color.grey;
         }
-        public bool IsDeadOnce=false;
+        public bool IsDeadOnce = false;
         public override void HudManagerStart(HudManager __instance)
         {
 
@@ -31,7 +28,7 @@ namespace TheSpaceRoles
             CustomTeam = RoleData.GetCustomTeamFromTeam(target.GetCustomRole().Team);
             Team = CustomTeam.Team;
             Color = CustomTeam.Color;
-            HasKillButton = CustomTeam.HasKillButton&&CustomTeam.HasKillButton;
+            HasKillButton = CustomTeam.HasKillButton && CustomTeam.HasKillButton;
             Init();
 
             IsDeadOnce = true;

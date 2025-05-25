@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
 using Hazel;
-using Il2CppMono.Security.Cryptography;
-using UnityEngine.Purchasing;
 
 namespace TheSpaceRoles
 {
@@ -10,19 +8,19 @@ namespace TheSpaceRoles
         public static void HappenedKill(int source, int target, DeathReason reason)
         {
 
-                DataBase.AllPlayerData[target].DeathPosition = Helper.GetPlayerById(target).GetTruePosition();
-                DataBase.AllPlayerData[target].DeathReason = reason;
-                DataBase.AllPlayerData[target].DeathMeetingCount = DataBase.MeetingCount;
-                if (source == PlayerControl.LocalPlayer.PlayerId)
-                {
-                    Helper.GetCustomRole(PlayerControl.LocalPlayer).Killed();
-                }
-                if (target == PlayerControl.LocalPlayer.PlayerId)
-                {
-                    Helper.GetCustomRole(PlayerControl.LocalPlayer).WasKilled();
-                    DataBase.Buttons.Do(x => x.actionButton.Hide());
-                }
-            
+            DataBase.AllPlayerData[target].DeathPosition = Helper.GetPlayerById(target).GetTruePosition();
+            DataBase.AllPlayerData[target].DeathReason = reason;
+            DataBase.AllPlayerData[target].DeathMeetingCount = DataBase.MeetingCount;
+            if (source == PlayerControl.LocalPlayer.PlayerId)
+            {
+                Helper.GetCustomRole(PlayerControl.LocalPlayer).Killed();
+            }
+            if (target == PlayerControl.LocalPlayer.PlayerId)
+            {
+                Helper.GetCustomRole(PlayerControl.LocalPlayer).WasKilled();
+                DataBase.Buttons.Do(x => x.actionButton.Hide());
+            }
+
 
 
         }
@@ -67,17 +65,17 @@ namespace TheSpaceRoles
         public static void Murder(int id1, int id2, DeathReason reason)
         {
 
-                KillAnimationPatch.AnimCancel = true;
-                Helper.GetPlayerById(id1).MurderPlayer(Helper.GetPlayerById(id2), MurderResultFlags.Succeeded);
-                /*
-                DataBase.AllPlayerDeathReasons.Add(id2, reason);
-                if (id2 == PlayerControl.LocalPlayer.PlayerId)
-                {
-                    DataBase.buttons.Do(x => x.Death());
+            KillAnimationPatch.AnimCancel = true;
+            Helper.GetPlayerById(id1).MurderPlayer(Helper.GetPlayerById(id2), MurderResultFlags.Succeeded);
+            /*
+            DataBase.AllPlayerDeathReasons.Add(id2, reason);
+            if (id2 == PlayerControl.LocalPlayer.PlayerId)
+            {
+                DataBase.buttons.Do(x => x.Death());
 
-                    Logger.Info($"Death, reason:{reason}");
-                }*/
-                CheckedMurderPlayer.HappenedKill(id1, id2, reason);
+                Logger.Info($"Death, reason:{reason}");
+            }*/
+            CheckedMurderPlayer.HappenedKill(id1, id2, reason);
         }
         public static void RpcMurder(PlayerControl source, PlayerControl target, DeathReason reason, bool DoCustomRpcMurder = true)
         {

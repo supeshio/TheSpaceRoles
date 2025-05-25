@@ -134,7 +134,7 @@ namespace TheSpaceRoles
 
             actionButton.transform.SetSiblingIndex(pos[buttonPos].transform.GetSiblingIndex() + 1);
             actionButton.cooldownTimerText.text = ((int)Timer).ToString();
-            
+
             actionButton.gameObject.name = name;
             PassiveButton passiveButton = actionButton.GetComponent<PassiveButton>();
             passiveButton.enabled = true;
@@ -174,7 +174,7 @@ namespace TheSpaceRoles
         public void HudUpdate()
         {
             //1.ボタンの背景の色が変わらない問題
-            if (Input.GetKeyDown(this.keyCode)&&actionButton.gameObject.active)
+            if (Input.GetKeyDown(this.keyCode) && actionButton.gameObject.active)
             {
                 Click();
             }
@@ -329,76 +329,80 @@ namespace TheSpaceRoles
         /// ターゲットに対しての距離を測って一番近いplayerのidを出力
         /// </summary>
         /// <param name="targetdistance">ターゲットの許容距離</param>
-        /// <param name="notIncludeTeamIds">含まないチーム</param>
+        /// <param name="notIncludeTeams">含まないチーム</param>
         /// <param name="notIncludeIds">含まないPlayerID</param>
         /// <param name="target">誰基準か</param>
         /// <param name="canBeTargetInVentPlayer">ベント内のプレイヤーを含むか</param>
         /// <returns>一番近いplayerのid  もし-1が帰ってきたらターゲットいないです</returns>
-        public static int SetTarget(float targetdistance = 1f, Color? color = null, Teams[] notIncludeTeamIds = null, int[] notIncludeIds = null, int target = -1, bool canBeTargetInVentPlayer = false)
+        public static int SetTarget(float targetdistance = 1f, Color? color = null, Teams[] notIncludeTeams = null, int[] notIncludeIds = null, PlayerControl target = null, bool canBeTargetInVentPlayer = false)
         {
-            DataBase.AllPlayerControls().Do(x => x.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 0f));
-            if (color != null)
+            foreach (var pc in PlayerControl.AllPlayerControls)
             {
-                DataBase.AllPlayerControls().Do(x => x.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", (UnityEngine.Color)color));
-
+                var sprite = pc?.cosmetics?.currentBodySprite?.BodySprite;
+                if (sprite?.material != null)
+                {
+                    sprite.material.SetFloat("_Outline", 0f);
+                    if (color != null)
+                    {
+                        sprite.material.SetColor("_OutlineColor", (Color)color);
+                    }
+                }
             }
+
+            if (target == null)
+            {
+                target = PlayerControl.LocalPlayer;
+                if (target == null)
+                {
+                    UnityEngine.Debug.LogError("SetTarget: LocalPlayer is null");
+                    return -1;
+                }
+            }
+
             int id = -1;
             float distance = float.MaxValue;
 
-            if (target == -1)
-            {
-                target = PlayerControl.LocalPlayer.PlayerId;
-            }
             foreach (var x in PlayerControl.AllPlayerControls)
             {
-                if (notIncludeIds != null && notIncludeIds.Length > 0)
-                {
-                    if (notIncludeIds.Contains(x.PlayerId))
-                    {
-                        continue;
-                    }
-                }
-                if (notIncludeTeamIds != null && notIncludeTeamIds.Length > 0)
-                {
-                    if (notIncludeTeamIds.Contains(Helper.GetCustomRole(x.PlayerId).Team))
-                    {
-                        continue;
-                    }
+                if (x == null || x == target || x.Data == null || x.Data.IsDead) continue;
 
-                }
-                if (x.inVent)
-                {
-                    if (!canBeTargetInVentPlayer) { continue; }
-                }
-                if (x.Data.IsDead)
-                {
-                    continue;
-                }
-                if (target == x.PlayerId) continue;
-                PlayerControl p = Helper.GetPlayerById(target);
-                Vector2 truePosition = x.GetTruePosition();
-                Vector2 vector = new Vector2(p.transform.position.x, p.transform.position.y) - truePosition;
+                if (notIncludeIds?.Contains(x.PlayerId) == true) continue;
+
+                var role = Helper.GetCustomRole(x.PlayerId);
+                if (role == null) continue;
+
+                if (notIncludeTeams?.Contains(role.Team) == true) continue;
+
+                if (x.inVent && !canBeTargetInVentPlayer) continue;
+
+                Vector2 vector = x.GetTruePosition() - target.GetTruePosition();
                 float magnitude = vector.magnitude;
-                if (magnitude <= distance && !PhysicsHelpers.AnyNonTriggersBetween(truePosition, vector.normalized, magnitude, Constants.ShipAndObjectsMask))
+
+                if (magnitude <= distance &&
+                    !PhysicsHelpers.AnyNonTriggersBetween(target.GetTruePosition(), vector.normalized, magnitude, Constants.ShipAndObjectsMask))
                 {
                     id = x.PlayerId;
                     distance = magnitude;
                 }
-
             }
-            if (targetdistance >= distance)
+
+            if (id != -1 && distance <= targetdistance)
             {
-                Helper.GetPlayerById(id).cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 1f);
+                var targetPlayer = Helper.GetPlayerById(id);
+                var sprite = targetPlayer?.cosmetics?.currentBodySprite?.BodySprite;
+                if (sprite?.material != null)
+                {
+                    sprite.material.SetFloat("_Outline", 1f);
+                }
+                else
+                {
+                    UnityEngine.Debug.LogWarning($"SetTarget: Unable to highlight PlayerId {id} (sprite/material missing)");
+                }
                 return id;
-
-
             }
+
             return -1;
-
-
-
         }
-
 
     }
     [HarmonyPatch]
