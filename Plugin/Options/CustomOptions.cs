@@ -197,7 +197,7 @@ namespace TheSpaceRoles
             if (AmongUsClient.Instance.AmHost)
             {
                 ShareAllOptions();
-
+               
             }
         }
     }

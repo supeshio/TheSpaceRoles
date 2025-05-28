@@ -20,25 +20,6 @@ namespace TheSpaceRoles
             CanUseVital = true;
             HasTask = true;
         }
-        public override bool WinCheck()
-        {
-            bool wincheck = true;
-            foreach (var item in DataBase.AllPlayerControls())
-            {
-                if (!DataBase.AllPlayerData.Any(x => x.Value.Team == Teams.Crewmate && x.Key == item.PlayerId))
-                {
-                    wincheck = false; break;
-                }
-            }
-
-
-            if (wincheck) return wincheck;
-            if (DataBase.AlivingKillPlayer() == 0)
-            {
-                return true;
-            }
-            return false;
-        }
         public override Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
             float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
@@ -49,6 +30,11 @@ namespace TheSpaceRoles
             //return shipStatus.MaxLightRadius * ImpostorLightMod;
             return (ChangeLightReason.Crewmate, Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod).ToTuple();
 
+        }
+
+        public override Teams CheckCount()
+        {
+            return Teams.Crewmate;
         }
     }
 }

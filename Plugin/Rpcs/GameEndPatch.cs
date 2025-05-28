@@ -7,9 +7,10 @@ namespace TheSpaceRoles
     [HarmonyPatch]
     public static class GameEnd
     {
-        public static void CustomRpcEndGame(Teams winteams, Teams[] additionalwinteams)
+
+        public static void CustomRpcEndGame(WinCheck.WinData data)
         {
-            GameManager.Instance.RpcEndGame((GameOverReason)winteams + 10, true);
+            GameManager.Instance.RpcEndGame((GameOverReason)data.wincondition + 20, true);
         }
         public static Teams WinnerTeam = Teams.None;
         public static System.Collections.Generic.List<Teams> AdditionalWinnerTeams = [];
@@ -32,6 +33,33 @@ namespace TheSpaceRoles
 
                 DataBase.ResetButtons();
             }
+        }
+        [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]
+        public class OnGameEndPatch
+        {
+            private static void Prefix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
+            {
+                WinCheck.Check();
+                WinCheck.WinCondition c = (WinCheck.WinCondition)((int)endGameResult.GameOverReason - 20);
+                Logger.Info(c.ToString());
+            }
+        }
+        [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
+        public static class CheckEndCriteriaPatch
+        {
+            public static bool Prefix(LogicGameFlowNormal __instance)
+            {
+                var data = WinCheck.Check();
+                if (data.Winners.Count > 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;    
+                }
+            }
+
         }
     }
 }

@@ -99,6 +99,7 @@ namespace TheSpaceRoles
         public bool Dead = false;
         public bool Exiled = false;
 
+        public virtual Teams CheckCount() { return CustomTeam.CheckCount(); }
         public virtual void OptionCreate() { }
         public virtual void HudManagerStart(HudManager hudManager) { }
         public virtual void ShowMap(ref MapBehaviour mapBehaviour) { }
@@ -122,6 +123,8 @@ namespace TheSpaceRoles
         public virtual bool BeMurdered(PlayerControl target) { return false; }
         public virtual void Update() { }
         public virtual void APUpdate() { }
+        public virtual void CompleteTask(uint idx) { }
+        public virtual void AllTaskCompleted() { }
         public virtual void Murder(PlayerControl pc, PlayerControl target) { }
         public virtual Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
@@ -218,6 +221,7 @@ namespace TheSpaceRoles
                 DataBase.GetCustomRoles().Do(x => x.APDie(__instance));
                 Helper.GetCustomRole(__instance).Dead = true;
                 Helper.GetCustomRole(__instance).PlayerId.ToString();
+                WinCheck.Check();
                 Logger.Info(__instance.PlayerId + "_" + __instance.Data.PlayerName);
             }
         }
@@ -228,6 +232,7 @@ namespace TheSpaceRoles
             {
                 Logger.Info($"{__instance.Data.PlayerName} - {target.Data.PlayerName}", "Murder");
                 DataBase.AllPlayerData.Do(x => x.Value.CustomRole.Murder(__instance, target));
+                WinCheck.Check();
             }
         }
     }
@@ -287,6 +292,7 @@ namespace TheSpaceRoles
             if (PlayerControl.LocalPlayer?.PlayerId == null) return;
             if (DataBase.AllPlayerData == null || !DataBase.AllPlayerData.ContainsKey(PlayerControl.LocalPlayer.PlayerId)) return;
             Helper.GetCustomRole(PlayerControl.LocalPlayer).AfterMeetingEnd();
+            WinCheck.Check();
         }
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start)), HarmonyPostfix]
         private static void StartGame()
@@ -296,7 +302,17 @@ namespace TheSpaceRoles
             Logger.Message("shipstatus", "start");
 
         }
-        
+        [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.CompleteTask)),HarmonyPostfix]
+        private static void CompleteTask(PlayerControl __instance,uint idx)
+        {
+            Helper.GetCustomRole(__instance).CompleteTask(idx);
+        }
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.AllTasksCompleted)), HarmonyPostfix]
+        private static void AllTaskCompleted(PlayerControl __instance)
+        {
+            Helper.GetCustomRole(__instance).AllTaskCompleted();
+            WinCheck.Check();
+        }
     }
 
 }

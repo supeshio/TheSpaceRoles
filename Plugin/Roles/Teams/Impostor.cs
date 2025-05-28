@@ -22,15 +22,6 @@ namespace TheSpaceRoles
             ImpostorMap = true;
             AdminMap = false;
         }
-        public override bool WinCheck()
-        {
-            var v = DataBase.GetPlayerCountInTeam();
-            if (v[Teams.Impostor] >= DataBase.GetAsCrewmatePlayerCount() && v[Teams.Jackal] == 0)
-            {
-                return true;
-            }
-            return false;
-        }
         public override Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {
             float ImpostorLightMod = GameOptionsManager.Instance.currentNormalGameOptions.ImpostorLightMod;
@@ -41,6 +32,10 @@ namespace TheSpaceRoles
             return (ChangeLightReason.Impostor, shipStatus.MaxLightRadius * ImpostorLightMod).ToTuple();
             //return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, num) * CrewLightMod;
 
+        }
+        public override Teams CheckCount()
+        {
+            return Teams.Impostor;
         }
     }
 }

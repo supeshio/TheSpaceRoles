@@ -148,7 +148,7 @@ namespace TheSpaceRoles
         /// Impostor,Jackalじゃないやつの総数
         /// </summary>
         /// <returns></returns>
-        public static int GetAsCrewmatePlayerCount()
+        public static int GetPlayerAsCrewmateCount()
         {
             int i = 0;
             foreach (var p in AllPlayerData)

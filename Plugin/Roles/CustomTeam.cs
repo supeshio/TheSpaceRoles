@@ -32,8 +32,7 @@ namespace TheSpaceRoles
         public string ColoredIntro => ColoredText(Color, Translation.GetString("intro.cosmetic", [Translation.GetString("team." + Team.ToString() + ".intro")]));
         public string Description => Translation.GetString("team." + Team.ToString() + ".description");
         public string WinConditionTeam => Translation.GetString("wincondition.pre", [Translation.GetString("team." + Team.ToString() + ".wincondition")]);
-        public abstract bool WinCheck();
-        public virtual bool AdditionalWinCheck(Teams winteam) { return false; }
+        public abstract Teams CheckCount();
         public virtual bool WasExiled() { return false; }
         public virtual Tuple<ChangeLightReason, float> GetLightMod(ShipStatus shipStatus, float num)
         {

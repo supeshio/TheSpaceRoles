@@ -31,7 +31,7 @@ namespace TheSpaceRoles
         [HarmonyPatch(typeof(RoleManager))]
         [HarmonyPatch(nameof(RoleManager.SelectRoles)), HarmonyPrefix]
         public static void SelectRolesPatch() {
-            GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors = 1;
+            GameOptionsManager.Instance.currentNormalGameOptions.NumImpostors = CustomOptionsHolder.TeamOptions_Count[Teams.Impostor].GetIntValue();
         }
         [HarmonyPatch(typeof(RoleManager))]
         [HarmonyPatch(nameof(RoleManager.SelectRoles)), HarmonyPostfix]
@@ -67,43 +67,43 @@ namespace TheSpaceRoles
                 }
                 TeamPlayerConuts.Add(Teams.Crewmate, DataBase.GamePlayerCount - TeamPlayerConuts.Values.Sum());
 
-                if (GameOptionsManager.Instance.CurrentGameOptions.NumImpostors > TeamPlayerConuts[Teams.Impostor])
-                {
-                    List<PlayerControl> Impostors = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Data.RoleType == RoleTypes.Impostor).ToList();
-                    for (int i = 0; i > GameOptionsManager.Instance.CurrentGameOptions.NumImpostors - TeamPlayerConuts[Teams.Impostor]; i++)
-                    {
-                        int rn = RandomNext(Impostors.Count);
-                        MessageWriter writer = CustomRPC.SendRpc(Rpcs.SetNativeRole);
-                        writer.Write((byte)Impostors[rn].PlayerId);
-                        writer.Write((byte)RoleTypes.Crewmate);
-                        writer.EndRpc();
-                        RpcReader.SetNativeRole(Impostors[rn].PlayerId, RoleTypes.Crewmate);
+                //if (GameOptionsManager.Instance.CurrentGameOptions.NumImpostors > TeamPlayerConuts[Teams.Impostor])
+                //{
+                //    List<PlayerControl> Impostors = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Data.RoleType == RoleTypes.Impostor).ToList();
+                //    for (int i = 0; i > GameOptionsManager.Instance.CurrentGameOptions.NumImpostors - TeamPlayerConuts[Teams.Impostor]; i++)
+                //    {
+                //        int rn = RandomNext(Impostors.Count);
+                //        MessageWriter writer = CustomRPC.SendRpc(Rpcs.SetNativeRole);
+                //        writer.Write((byte)Impostors[rn].PlayerId);
+                //        writer.Write((byte)RoleTypes.Crewmate);
+                //        writer.EndRpc();
+                //        RpcReader.SetNativeRole(Impostors[rn].PlayerId, RoleTypes.Crewmate);
 
-                        Impostors.RemoveAt(rn);
+                //        Impostors.RemoveAt(rn);
 
-                    }
-                }
-                else if (GameOptionsManager.Instance.CurrentGameOptions.NumImpostors < TeamPlayerConuts[Teams.Impostor])
-                {
+                //    }
+                //}
+                //else if (GameOptionsManager.Instance.CurrentGameOptions.NumImpostors < TeamPlayerConuts[Teams.Impostor])
+                //{
 
-                    List<PlayerControl> Crewmates = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Data.RoleType == RoleTypes.Crewmate).ToList();
-                    for (int i = 0; i > Mathf.Abs(GameOptionsManager.Instance.CurrentGameOptions.NumImpostors - TeamPlayerConuts[Teams.Impostor]); i++)
-                    {
-                        int rn = RandomNext(Crewmates.Count);
-                        MessageWriter writer = CustomRPC.SendRpc(Rpcs.SetNativeRole);
-                        writer.Write((byte)Crewmates[rn].PlayerId);
-                        writer.Write((byte)RoleTypes.Impostor);
-                        writer.EndRpc();
-                        RpcReader.SetNativeRole(Crewmates[rn].PlayerId, RoleTypes.Crewmate);
+                //    List<PlayerControl> Crewmates = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Data.RoleType == RoleTypes.Crewmate).ToList();
+                //    for (int i = 0; i > Mathf.Abs(GameOptionsManager.Instance.CurrentGameOptions.NumImpostors - TeamPlayerConuts[Teams.Impostor]); i++)
+                //    {
+                //        int rn = RandomNext(Crewmates.Count);
+                //        MessageWriter writer = CustomRPC.SendRpc(Rpcs.SetNativeRole);
+                //        writer.Write((byte)Crewmates[rn].PlayerId);
+                //        writer.Write((byte)RoleTypes.Impostor);
+                //        writer.EndRpc();
+                //        RpcReader.SetNativeRole(Crewmates[rn].PlayerId, RoleTypes.Crewmate);
 
-                        Crewmates.RemoveAt(rn);
-                    }
-                }
+                //        Crewmates.RemoveAt(rn);
+                //    }
+                //}
 
                 List<Roles> RoleList = [];
                 List<PlayerControl> pl = PlayerControl.AllPlayerControls.ToArray().ToList();
 
-                void setrole(Roles role)
+                void setroleOther(Roles role)
                 {
                     if (pl.Count == 0)
                     {
@@ -111,9 +111,26 @@ namespace TheSpaceRoles
                     }
                     else
                     {
-                        int rn = RandomNext(pl.Count);
-                        SendRpcSetRole(role, pl[rn].PlayerId);
-                        pl.RemoveAt(rn);
+                        var p = pl.ToArray().Where(X => X.Data.Role.TeamType!=RoleTeamTypes.Impostor).ToList();
+                        int rn = RandomNext(p.Count);
+                        SendRpcSetRole(role, p[rn].PlayerId);
+                        pl.RemoveAll(X => X.PlayerId == p[rn].PlayerId);
+                        RoleList.Add(role);
+
+                    }
+                }
+                void setroleI(Roles role)
+                {
+                    if (pl.Count == 0)
+                    {
+                        Logger.Info("SettingRoles is too much");
+                    }
+                    else
+                    {
+                        var p = pl.ToArray().Where(X => X.Data.Role.TeamType == RoleTeamTypes.Impostor).ToList();
+                        int rn = RandomNext(p.Count);
+                        SendRpcSetRole(role, p[rn].PlayerId);
+                        pl.RemoveAll(X => X.PlayerId == p[rn].PlayerId);
                         RoleList.Add(role);
 
                     }
@@ -128,12 +145,12 @@ namespace TheSpaceRoles
                     if (role.Count > 0)
                     {
                         int rn = RandomNext(role.Count);
-                        setrole(role[rn]);
+                        setroleI(role[rn]);
                         RolesInSettings[teamh].RemoveAt(rn);
                     }
                     else
                     {
-                        setrole(RoleData.GetCustomRole_NormalFromTeam(teamh).Role);
+                        setroleI(RoleData.GetCustomRole_NormalFromTeam(teamh).Role);
                     }
 
                 }
@@ -146,12 +163,12 @@ namespace TheSpaceRoles
                     if (role.Count > 0)
                     {
                         int rn = RandomNext(role.Count);
-                        setrole(role[rn]);
+                        setroleOther(role[rn]);
                         RolesInSettings[teamh].RemoveAt(rn);
                     }
                     else
                     {
-                        setrole(RoleData.GetCustomRole_NormalFromTeam(teamh).Role);
+                        setroleOther(RoleData.GetCustomRole_NormalFromTeam(teamh).Role);
                     }
 
                 }
@@ -164,12 +181,12 @@ namespace TheSpaceRoles
                         if (role.Count > 0)
                         {
                             int rn = RandomNext(role.Count);
-                            setrole(role[rn]);
+                            setroleOther(role[rn]);
                             RolesInSettings[team].RemoveAt(rn);
                         }
                         else
                         {
-                            setrole(RoleData.GetCustomRole_NormalFromTeam(teamh).Role);
+                            setroleOther(RoleData.GetCustomRole_NormalFromTeam(teamh).Role);
                         }
 
                     }
