@@ -39,7 +39,7 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 
   シェリフの参考元<br>
   Among-Us-Sheriff-Modのデベロッパーの皆様ありがとうございます!<br>
-- [KY](https://github.com/KYMario)さん作 SmartPatch
-  コレがなかったらmod開発をすでにやめていたかもしれません
-  ありがとうございます!
+- [KY](https://github.com/KYMario)さん作 SmartPatch<br>
+  コレがなかったらmod開発をすでにやめていたかもしれません<br>
+  ありがとうございます!<br>
 
