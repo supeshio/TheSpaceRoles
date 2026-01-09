@@ -3,3 +3,16 @@ obj/
 bin/
 .gitignore
 Properties/
+
+.vs/
+.vscode/
+.idea/
+.aiassistant
+obj/
+bin/
+.gitignore
+Properties/
+libs/
+TSR/.vscode/TSR.code-workspace
+*.user
+*.DotSettings

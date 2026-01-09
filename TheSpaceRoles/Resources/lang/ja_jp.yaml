@@ -1,0 +1,41 @@
+id: "日本語"
+
+option:
+    selection:
+        on: "オン"
+        off: "オフ"
+        px: "{0}px"
+        percent: "{0}%"
+        seconds: "{0}秒"
+        minutes: "{0}分"
+        hours: "{0}時間"
+        times: "{0}回"
+        x: "{0}x"
+        enabled: "有効"
+        disabled: "無効"
+    cooldown: "クールダウン"
+    duration: "持続時間"
+    kill_button: "キルボタン"
+    remain: "残り {0}回"
+
+team:
+    crewmates:
+        name: "クルーメイト"
+    impostors:
+        name: "インポスター"
+    neutral:
+        name: "ニュートラル"
+role:
+    sheriff:
+        name: "シェリフ"
+    crewmate:
+        name: "クルーメイト"
+    impostor:
+        name: "インポスター"
+    madmate:
+        name: "マッドメイト"
+ability:
+    sheriff_kill_button:
+        name: "シェリフの射撃"
+    madmate_rage:
+        name: "マッドメイトの怒り"

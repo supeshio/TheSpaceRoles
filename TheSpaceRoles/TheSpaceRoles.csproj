@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>TSR</AssemblyName>
+    <Product>TSR</Product>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>TSR</RootNamespace>
+  </PropertyGroup>
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="$(AmongUsDev)/BepInEx/core/*.dll" />
+		<Reference Include="$(AmongUsDev)/BepInEx/interop/*.dll" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\**" />
+	</ItemGroup>
+	<Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUsDev)' != ''">
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUsDev)/BepInEx/plugins/" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="./libs" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="./libs/TSR/BepInEx/plugins" />
+	</Target>
+</Project>
