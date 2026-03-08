@@ -13,8 +13,8 @@ namespace TSR.Patch
         private static void Postfix(VersionShower __instance)
         {
             TextMeshPro text = new GameObject("VersionText").AddComponent<TextMeshPro>();
-            text.text = $"v{TSR.version}";
-            text.color = TSR.color;
+            text.text = $"v{TSR.Version}";
+            text.color = TSR.Color;
             text.fontSize = 3;
             text.alignment = TextAlignmentOptions.Right;
             text.enableWordWrapping = false;
@@ -59,7 +59,7 @@ namespace TSR.Patch
             //sp.gameObject.layer = 5;
 
             TextMeshPro TSRText = new GameObject("TSR").AddComponent<TextMeshPro>();
-            TSRText.text = TSR.c_name_v;
+            TSRText.text = TSR.ColoredNameAndVersion;
             TSRText.fontSize = 2;
             TSRText.alignment = TextAlignmentOptions.Midline;
             TSRText.enableWordWrapping = false;

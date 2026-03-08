@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
 
-namespace TSR
+namespace TSR.Module.Translation
 {
     public static class Translation
     {

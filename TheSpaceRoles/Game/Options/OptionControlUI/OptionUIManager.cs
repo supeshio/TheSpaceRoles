@@ -82,14 +82,13 @@ public static class OptionUIManager
         bg.transform.localScale = new Vector2(1,1);
         bg.color = Helper.ColorFromColorcode("#aaa");
             
-        Tint = GameObject.Instantiate(Helper.ClassLib<PlayerCustomizationMenu>().transform.FindChild("Tint")
-            .gameObject);
-        Tint.transform.SetParent(OptionUI.transform);
+        Tint = Object.Instantiate(Helper.ClassLib<PlayerCustomizationMenu>().transform.FindChild("Tint")
+            .gameObject, OptionUI.transform, true);
         Tint.transform.localPosition = new Vector3(0, 0, 0);
             
         //Header
-        Header = GameObject.Instantiate(Helper.ClassLib<PlayerCustomizationMenu>().transform.FindChild("Header").gameObject);
-        Header.transform.SetParent(OptionUI.transform);
+        Header = Object.Instantiate(Helper.ClassLib<PlayerCustomizationMenu>().transform.FindChild("Header")
+            .gameObject, OptionUI.transform, true);
         Header.transform.localPosition = new Vector3(0, 2.6408f, -50);
         for (int i = 0; i < Header.transform.FindChild("Tabs").GetChildCount(); i++)
         {

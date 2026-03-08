@@ -37,10 +37,14 @@ namespace TSR
 
     public static class Helper
     {
-        public static readonly Color32 invisible = ColorFromColorcode("#00000000");
-        public static readonly Color32 white = Color.white;
-        public static readonly Color32 black = Color.black;
-        public static readonly Color32 magenta = Color.magenta;
+        public static class ColorPalette
+        {
+            
+            public static readonly Color32 invisible = ColorFromColorcode("#00000000");
+            public static readonly Color32 White = Color.white;
+            public static readonly Color32 Black = Color.black;
+            public static readonly Color32 magenta = Color.magenta;
+        }
         public const int UILayer = 5;
         public static byte MaxFrequency(this List<byte> self, out bool tie)
         {
@@ -211,7 +215,7 @@ namespace TSR
             Logger.Info("show chat", "", "AllAddChat");
             if (chpname == null)
             {
-                PlayerControl.LocalPlayer.RpcSetName($"<size=180%>{TSR.cs_name_v}");
+                PlayerControl.LocalPlayer.RpcSetName($"<size=180%>{TSR.ColoredShortNameAndVersion}");
             }
             else
             {
@@ -230,7 +234,7 @@ namespace TSR
         public static void AddChat(string Chat)
         {
             string name = (PlayerControl.LocalPlayer).name;
-            PlayerControl.LocalPlayer.SetName($"<size=180%>{TSR.cs_name_v}");
+            PlayerControl.LocalPlayer.SetName($"<size=180%>{TSR.ColoredShortNameAndVersion}");
             DestroyableSingleton<ChatController>.Instance.AddChat(PlayerControl.LocalPlayer, "\n<size=90%>" + Chat, true);
             PlayerControl.LocalPlayer.SetName(name);
         }

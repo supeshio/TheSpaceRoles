@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
 using TSR.Game.Options.OptionControlUI.Scroll;
+using TSR.Module.Translation;
 using TSR.Patch;
 using UnityEngine;
 

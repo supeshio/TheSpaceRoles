@@ -6,7 +6,7 @@
     <Product>TSR</Product>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
     <RestoreAdditionalProjectSources>
       https://api.nuget.org/v3/index.json;
       https://nuget.bepinex.dev/v3/index.json;
@@ -28,6 +28,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Patch\ColorPatch\" />
 	</ItemGroup>
 	<Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUsDev)' != ''">
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUsDev)/BepInEx/plugins/" />

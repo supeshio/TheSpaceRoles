@@ -14,7 +14,7 @@ namespace TSR;
 
 public static class SmartPatchLoader
 {
-    public static BepInEx.Logging.ManualLogSource Logger = TSR._Logger;
+    public static BepInEx.Logging.ManualLogSource Logger = TSR.Logger;
     public static Dictionary<Type, HashSet<MethodInfo>> EnumeratorInfos;
 
     private enum SmartType

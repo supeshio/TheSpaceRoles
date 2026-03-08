@@ -45,13 +45,16 @@ namespace TSR.Game.Options.OptionControlUI.OptionTab.Option.Level
             _bg.size = new Vector2(0.5f,0.5f);
             _bg.gameObject.layer = Helper.UILayer;
             _bg.color = Helper.ColorFromColorcode("#05c0c5");
-            
+            _bg.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            var bg_mask =_bg.gameObject.AddComponent<SpriteMask>();
+            bg_mask.sprite = _bg.sprite;
+            //bg_mask.maskSource = SpriteMask.MaskSource.SupportedRenderers;
             //left:Create
             _left = new GameObject("Left").AddComponent<PassiveButton>();
             _left.transform.SetParent(_bg.transform, false);
             var leftSprite = _left.gameObject.AddComponent<SpriteRenderer>();
             leftSprite.sprite = Assets.AssetLoader.Sprites["double_left"];
-            leftSprite.color = Helper.white;
+            leftSprite.color = Helper.ColorPalette.White;
             _left.gameObject.layer = Helper.UILayer;
             _left.transform.SetParent(leftSprite.transform, false);
             _left.ClickSound = Assets.AssetLoader.AudioClips["mouseclick1"];
@@ -60,13 +63,13 @@ namespace TSR.Game.Options.OptionControlUI.OptionTab.Option.Level
                 SelectionUpdate(Selection-1);
             }));
             _left.transform.localScale = Vector3.one;
-            
+            leftSprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
             //right:Create
             _right = new GameObject("Right").AddComponent<PassiveButton>();
             _right.transform.SetParent(_bg.transform, false);
             var rightSprite = _right.gameObject.AddComponent<SpriteRenderer>();
             rightSprite.sprite = Assets.AssetLoader.Sprites["double_right"];
-            rightSprite.color = Helper.white;
+            rightSprite.color = Helper.ColorPalette.White;
             _right.gameObject.layer = Helper.UILayer;
             _right.transform.SetParent(rightSprite.transform, false);
             _right.ClickSound = Assets.AssetLoader.AudioClips["mouseclick1"];
@@ -75,6 +78,7 @@ namespace TSR.Game.Options.OptionControlUI.OptionTab.Option.Level
                 SelectionUpdate(Selection+1);
             }));
             _right.transform.localScale = Vector3.one;
+            rightSprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
             
             //
             //Material material = UnityEngine.Object.Instantiate(Helper.ClassLib<PlayerVoteArea>().Background.material);

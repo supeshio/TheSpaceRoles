@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TSR.Game.Role.Ability;
+using TSR.Module.Translation;
 using UnityEngine;
 
 namespace TSR.Game.Role

@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using TSR.Game;
 using TSR.Game.Options.OptionControlUI;
 using TSR.Game.Role;
+using TSR.Module.Translation;
 
 namespace TSR.Patch.Command;
 

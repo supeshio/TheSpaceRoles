@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using TSR.Assets;
+using TSR.Module.Translation;
 using TSR.Patch;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -54,10 +55,10 @@ namespace TSR.Game.Options.OptionControlUI.OptionTab.Option.Level
             _title.autoSizeTextContainer = true;
             _title.fontStyle = FontStyles.Bold;
             _title.enableAutoSizing =false;
-            _title.color = _color ?? Helper.white;
+            _title.color = _color ?? Helper.ColorPalette.White;
             _title.gameObject.layer = Helper.UILayer;
             _title.alignment = TextAlignmentOptions.TopLeft;
-            _title.color = Helper.black;
+            _title.color = Helper.ColorPalette.Black;
             _title.enableWordWrapping = false;
             
             _inner = new GameObject("Inner");

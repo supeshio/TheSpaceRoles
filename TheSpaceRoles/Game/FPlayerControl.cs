@@ -136,19 +136,21 @@ namespace TSR.Game
             }
             this.RoleText.color = RoleColor;
             this.RoleText.text = RoleText;
-            if(MeetingRoleText!=null)
+            if (MeetingRoleText == null)
             {
-                this.MeetingRoleText?.color = RoleColor;
-                this.MeetingRoleText?.text = RoleText;
-                this.MeetingPlayerNameText()?.color = TeamColor;
+                return;
             }
+
+            this.MeetingRoleText.color = RoleColor;
+            this.MeetingRoleText.text = RoleText;
+            this.MeetingPlayerNameText().color = TeamColor;
         }
         public static void MeetingSetUp(MeetingHud meeting)
         {
             foreach (var p in meeting.playerStates)
             {
                 var fpc = FPlayerControl.AllPlayer[p.TargetPlayerId];
-                fpc.MeetingRoleText = GameObject.Instantiate(p.NameText.gameObject).GetComponent<TextMeshPro>();
+                fpc.MeetingRoleText = Object.Instantiate(p.NameText.gameObject).GetComponent<TextMeshPro>();
                 fpc.MeetingRoleText.transform.SetParent(p.NameText.transform.parent);
                 fpc.MeetingRoleText.name = "RoleText";
                 fpc.MeetingRoleText.transform.localPosition = new Vector3(0.3384f, 0.2f, 0);
