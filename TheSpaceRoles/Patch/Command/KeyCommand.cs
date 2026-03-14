@@ -66,7 +66,7 @@ namespace TSR.Patch.Command
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
-                OptionUIManager.ShowHide();
+                OptionUI.ShowSwitch();
             }
         }
 

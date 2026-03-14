@@ -1,6 +1,14 @@
 id: "日本語"
 
 option:
+    type:
+        game: "ゲーム設定"
+        role: "役職設定"
+    id:
+        second: "{0}秒"
+        times: "{0}回"
+        "tsr:sheriff.kill-button.max-cooldown": "クールダウン"
+        "tsr:sheriff.kill-button.count": "使用回数"
     selection:
         on: "オン"
         off: "オフ"
@@ -19,23 +27,21 @@ option:
     remain: "残り {0}回"
 
 team:
-    crewmates:
+    "tsr:crewmate":
         name: "クルーメイト"
-    impostors:
+    "tsr:impostor":
         name: "インポスター"
-    neutral:
+    "tsr:neutral":
         name: "ニュートラル"
 role:
-    sheriff:
+    "tsr:sheriff":
         name: "シェリフ"
-    crewmate:
+    "tsr:crewmate":
         name: "クルーメイト"
-    impostor:
+    "tsr:impostor":
         name: "インポスター"
-    madmate:
+    "tsr:madmate":
         name: "マッドメイト"
 ability:
     sheriff_kill_button:
         name: "シェリフの射撃"
-    madmate_rage:
-        name: "マッドメイトの怒り"

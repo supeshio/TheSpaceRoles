@@ -10,7 +10,7 @@ namespace TSR.Patch
         [SmartPatch(nameof(HudManager.Start)), SmartPostfix]
         public static void Start(HudManager __instance)
         {
-            OptionUIManager.Create();
+            OptionUI.Create();
         }
 
         [SmartPatch(nameof(HudManager.Update)), SmartPostfix]

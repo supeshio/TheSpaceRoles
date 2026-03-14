@@ -188,7 +188,7 @@ public static class ChatControllerPatch
             //    (addchat, TSR.DebugMode.Value) = Helper.ChatBool(chats, "DebugMode", TSR.LobbyTimer, ref addchat);
             //    break;
             case "//":
-                OptionUIManager.Create();
+                
                 //Resources.FindObjectsOfTypeAll(Il2CppType.Of<MeetingHud>()).Select(x => ((GameObject)x).GetComponent<MeetingHud>().meetingContents.FindChild("PhoneUI").GetComponent<SpriteRenderer>().sprite).ToList()[0];
                 break;
         }
@@ -202,7 +202,7 @@ public static class ChatControllerPatch
                     if (int.TryParse(chats[1], out int q))
                     {
                         
-                        if (TeamBaseRegister.TeamBaseTypeMap.ContainsKey(chats[2]))
+                        if (RoleBaseRegister.RoleBaseTypeMap.ContainsKey(chats[2]))
                         {
                             
                             RoleAssigner.RpcChangeRole(FPlayerControl.AllPlayer[q],RoleBase.GetRoleBase(chats[2]));

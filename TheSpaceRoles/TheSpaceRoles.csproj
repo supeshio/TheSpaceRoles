@@ -28,9 +28,16 @@
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\**" />
+		<EmbeddedResource Remove="libs\Assembly-CSharp\**" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Patch\ColorPatch\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Remove="libs\Assembly-CSharp\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="libs\Assembly-CSharp\**" />
 	</ItemGroup>
 	<Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUsDev)' != ''">
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUsDev)/BepInEx/plugins/" />
