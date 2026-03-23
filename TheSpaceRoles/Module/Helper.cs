@@ -45,6 +45,16 @@ namespace TSR
             public static readonly Color32 Black = Color.black;
             public static readonly Color32 magenta = Color.magenta;
         }
+
+        public static class FontMaterial
+        {
+            public static Material OutlinedMaterial = DestroyableSingleton<PingTracker>.Instance.text.material;
+        }
+
+        public static class Fonts
+        {
+            public static TMP_FontAsset Font => DestroyableSingleton<PingTracker>.Instance.text.font;
+        }
         public const int UILayer = 5;
         public static byte MaxFrequency(this List<byte> self, out bool tie)
         {

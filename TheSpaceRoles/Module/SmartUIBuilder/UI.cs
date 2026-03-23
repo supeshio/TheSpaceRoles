@@ -55,7 +55,7 @@ public static class UI
     public static Image Panel(Transform parent, Vector2 size, Color? color = null)
     {
         var sprite = DefaultPanelSprite;
-        return ImageSliced(parent, sprite, size, color ?? new Color32(0x20, 0x22, 0x28, 0xff));
+        return ImageSliced(parent, sprite, size, color ?? new Color32(0x28, 0x28, 0x28, 0xff));
     }
 
     #endregion
@@ -85,10 +85,16 @@ public static class UI
         float fontSize = 16,
         TextAlignmentOptions alignment = TextAlignmentOptions.Center,
         Color? color = null,
-        float outlineThickness = 0.15f,
+        float outlineThickness = 1f,
         Color? outlineColor = null)
     {
         var tmp = Text(parent, content, fontSize, alignment, color);
+        tmp.m_sharedMaterial = new Material(Helper.FontMaterial.OutlinedMaterial) ;
+        
+        //tmp.m_sharedMaterial.SetFloat("_OutlineWidth", outlineThickness);
+        //tmp.m_sharedMaterial.SetFloat("_OutlineThickness", outlineThickness);
+        tmp.m_sharedMaterial.SetColor("_OutlineColor",outlineColor ?? Color.black);
+        //
         tmp.outlineWidth = outlineThickness;
         tmp.outlineColor = outlineColor ?? Color.black;
         return tmp;
@@ -98,10 +104,11 @@ public static class UI
 
     #region Button
 
-    /// <summary>画像ベースのボタン</summary>
-    public static Button Button(Transform parent, Image image, UnityAction onClick = null)
+// 既存のメソッド (Image を基に Button を生成)
+public static Button Button(Image image, UnityAction onClick = null)
     {
         var btn = image.gameObject.AddComponent<Button>();
+        image.raycastTarget = true;
         btn.targetGraphic = image;
         btn.transition = Selectable.Transition.ColorTint;
         btn.colors = DefaultButtonColors();
@@ -116,7 +123,7 @@ public static class UI
         Color? bgColor = null,
         UnityAction onClick = null)
     {
-        var panel = Panel(parent, size, bgColor ?? new Color32(0x30, 0x30, 0x40, 0xff));
+        var panel = Panel(parent, size, bgColor ?? new Color32(0x30, 0x30, 0x30, 0xff));
         bgImage = panel;
         var le = panel.gameObject.AddComponent<LayoutElement>();
         le.preferredWidth = size.x;
@@ -126,7 +133,7 @@ public static class UI
         txt.rectTransform.anchorMax = Vector2.one;
         txt.rectTransform.offsetMin = Vector2.zero;
         txt.rectTransform.offsetMax = Vector2.zero;
-        return Button(parent, panel, onClick);
+        return Button(panel, onClick);
     }
 
     /// <summary>パネル＋ラベルでボタン作成</summary>
@@ -134,13 +141,13 @@ public static class UI
         Color? bgColor = null,
         UnityAction onClick = null)
     {
-        var panel = Panel(parent, size, bgColor ?? new Color32(0x40, 0x45, 0x55, 0xff));
+        var panel = Panel(parent, size, bgColor ?? new Color32(0x40, 0x40, 0x40, 0xff));
         var txt = Text(panel.transform, label, 18);
         txt.rectTransform.anchorMin = Vector2.zero;
         txt.rectTransform.anchorMax = Vector2.one;
         txt.rectTransform.offsetMin = Vector2.zero;
         txt.rectTransform.offsetMax = Vector2.zero;
-        var btn = Button(parent, panel, onClick);
+        var btn = Button(panel, onClick);
         return btn;
     }
 
@@ -223,7 +230,8 @@ public static class UI
         sliderLe.flexibleWidth = 1;
         sliderLe.preferredHeight = height;
 
-        var sliderBg = ImageSliced(sliderArea, DefaultPanelSprite, Vector2.zero, new Color32(0x30, 0x32, 0x3a, 0xff));
+        var sliderBg = 
+            ImageSliced(sliderArea, DefaultPanelSprite, Vector2.zero, new Color32(0x3a, 0x3a, 0x3a, 0xff));
         sliderBg.rectTransform.anchorMin = new Vector2(0, 0.25f);
         sliderBg.rectTransform.anchorMax = new Vector2(1, 0.75f);
         sliderBg.rectTransform.offsetMin = Vector2.zero;
@@ -236,7 +244,7 @@ public static class UI
         fillArea.offsetMin = new Vector2(4, 4);
         fillArea.offsetMax = new Vector2(-4, -4);
 
-        var fill = ImageSliced(fillArea, DefaultPanelSprite, Vector2.zero, new Color32(0x50, 0x70, 0x90, 0xff));
+        var fill = ImageSliced(fillArea, DefaultPanelSprite, Vector2.zero, new Color32(0x58, 0x62, 0x70, 0xff));
         fill.rectTransform.anchorMin = Vector2.zero;
         fill.rectTransform.anchorMax = Vector2.one;
         fill.rectTransform.offsetMin = Vector2.zero;
@@ -250,11 +258,8 @@ public static class UI
         handleArea.offsetMax = Vector2.zero;
 
         var handle = new GameObject("Handle").AddComponent<RectTransform>();
-        handle.SetParent(handleArea, false);
-        handle.sizeDelta = new Vector2(16, 0);
-        var handleImg = handle.gameObject.AddComponent<Image>();
-        handleImg.color = new Color32(0x80, 0x90, 0xb0, 0xff);
-
+        var handleImg = UI.Panel(handleArea,new Vector2(16, 0),new Color32(0xb0, 0xb0, 0xb0, 0xff));
+        handleImg.raycastTarget = true;
         var slider = sliderArea.gameObject.AddComponent<Slider>();
         slider.fillRect = fill.rectTransform;
         slider.handleRect = handle;
@@ -396,7 +401,7 @@ public static class UI
         viewport.anchorMax = Vector2.one;
         viewport.offsetMin = showScrollbar ? new Vector2(0, 0) : Vector2.zero;
         viewport.offsetMax = showScrollbar ? new Vector2(-28, 0) : Vector2.zero;
-        viewportGo.AddComponent<RectMask2D>();
+        //viewportGo.AddComponent<RectMask2D>();
 
         var contentGo = new GameObject("Content");
         var content = contentGo.AddComponent<RectTransform>();
@@ -433,7 +438,7 @@ public static class UI
         scrollRect.viewport = viewport;
         scrollRect.vertical = direction == ScrollDirection.Vertical;
         scrollRect.horizontal = direction == ScrollDirection.Horizontal;
-        scrollRect.scrollSensitivity = 30;
+        scrollRect.scrollSensitivity = 50;
         scrollRect.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
 
         UnityEngine.UI.Scrollbar? scrollbar = null;
@@ -447,50 +452,50 @@ public static class UI
         return (viewport, content, scrollbar);
     }
 
+    private static Sprite GetSpriteForScrollbar()
+    {
+        var s = DefaultPanelSprite;
+        if (s != null) return s;
+        var tex = Texture2D.whiteTexture;
+        return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+    }
+
     private static (UnityEngine.UI.Scrollbar scrollbar, RectTransform handle) CreateScrollbar(RectTransform parent, float height)
     {
-        var sprite = DefaultPanelSprite;
-        var trackGo = new GameObject("Scrollbar");
-        var trackRt = trackGo.AddComponent<RectTransform>();
-        trackRt.SetParent(parent, false);
+        // Track
+        var trackImg = Panel(parent, Vector2.zero, new Color32(0x40, 0x40, 0x50, 0xff));
+        var trackRt = trackImg.rectTransform;
         trackRt.anchorMin = new Vector2(1, 0);
         trackRt.anchorMax = new Vector2(1, 1);
         trackRt.pivot = new Vector2(1, 0.5f);
         trackRt.anchoredPosition = Vector2.zero;
-        trackRt.sizeDelta = new Vector2(20, 0);
-        var trackImg = trackGo.AddComponent<Image>();
-        trackImg.sprite = sprite;
-        trackImg.type = Image.Type.Simple;
-        trackImg.color = new Color32(0x40, 0x40, 0x50, 0xff);
+        trackRt.sizeDelta = new Vector2(24, 0);
         trackImg.raycastTarget = true;
 
-        var slidingArea = new GameObject("SlidingArea").AddComponent<RectTransform>();
-        slidingArea.SetParent(trackRt, false);
-        slidingArea.anchorMin = Vector2.zero;
-        slidingArea.anchorMax = Vector2.one;
-        slidingArea.offsetMin = new Vector2(4, 4);
-        slidingArea.offsetMax = new Vector2(-4, -4);
+        // Sliding Area
+        var slidingArea = ContentArea(trackRt, marginLeft: 2, marginRight: 2, marginTop: 4, marginBottom: 4);
+        slidingArea.gameObject.name = "SlidingArea";
 
-        var handleGo = new GameObject("Handle");
-        var handleRt = handleGo.AddComponent<RectTransform>();
-        handleRt.SetParent(slidingArea, false);
+        // Handle
+        var handleImg = Panel(slidingArea, Vector2.zero, new Color32(0x90, 0x98, 0xb0, 0xff));
+        var handleRt = handleImg.rectTransform;
         handleRt.anchorMin = new Vector2(0, 0);
         handleRt.anchorMax = new Vector2(1, 0);
         handleRt.pivot = new Vector2(0.5f, 0);
         handleRt.anchoredPosition = Vector2.zero;
-        handleRt.sizeDelta = new Vector2(0, 40);
-        var handleImg = handleGo.AddComponent<Image>();
-        handleImg.sprite = sprite;
-        handleImg.type = Image.Type.Simple;
-        handleImg.color = new Color32(0x80, 0x85, 0xa0, 0xff);
+        handleRt.sizeDelta = new Vector2(0, 0);//0,32
         handleImg.raycastTarget = true;
 
-        var scrollbar = trackGo.AddComponent<UnityEngine.UI.Scrollbar>();
+        var scrollbar = trackImg.gameObject.AddComponent<UnityEngine.UI.Scrollbar>();
         scrollbar.handleRect = handleRt;
         scrollbar.targetGraphic = handleImg;
         scrollbar.direction = UnityEngine.UI.Scrollbar.Direction.BottomToTop;
+        scrollbar.transition = Selectable.Transition.ColorTint;
+        scrollbar.colors = DefaultButtonColors();
+        scrollbar.interactable = true;
         scrollbar.numberOfSteps = 0;
         scrollbar.Set(1f);
+
         return (scrollbar, handleRt);
     }
 
